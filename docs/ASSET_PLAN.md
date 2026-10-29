@@ -1,62 +1,58 @@
-# Piano asset — The Warriors · Night Run
-29 ottobre 2026. Tutte le voci sotto sono **mancanti in questa repo** alla redazione. Non è un inventario di file già prodotti.
+# Inventario di produzione
 
-## Priorità 1: provare il combattimento nel parco
-| Famiglia | Consegna | Uso |
+Baseline 1.0 · 29 ottobre 2026. Inventario dettagliato in [asset_catalog.json](../design/asset_catalog.json), articolazione per capitolo in [LEVELS.md](LEVELS.md), standard in [ART_AND_AUDIO.md](ART_AND_AUDIO.md).
+
+## Conteggi di questa baseline
+
+| Famiglia | Pacchetti | Contenuto |
+|---|---:|---|
+| Warriors giocabili | 9 | Model, ritratto, corpo, armi, atlas e animazioni |
+| Archetipi nemici | 15 | Model, sheet, atlas e animazioni |
+| Personaggi narrativi | 8 | Mercy, Cyrus, Luther, Masai, DJ, testimone, poliziotta e capo Orphans |
+| Folla e comparse | 6 | Raduno, Riffs, passeggeri, Rogues, agenti e coppia nel treno |
+| Aree ambiente | 35 | Fondo, terreno, primo piano, layout e miniatura |
+| Cinematiche | 22 | Storyboard, pose e timeline |
+| Props | 15 | Oggetti separati con stati e metadati |
+| Veicoli | 3 | Bus, treno, veicolo Rogues |
+| Oggetti narrativi | 4 | Coltello, pistola Luther, manette, bottiglie Luther |
+| Oggetti raccoglibili | 7 | Quattro armi, tre recuperi salute |
+| Effetti visivi | 12 | Impatti, rotture e segnali funzionali |
+| Interfaccia | 15 | Logo, schermate e input icons |
+| Font | 2 | Titoli e testo, file e licenza |
+| Musica | 16 | Cue distinti, master/loop da produrre o fornire |
+| Ambience | 12 | Loop dei luoghi |
+| Effetti sonori | 44 | Unità di suono base, varianti in produzione |
+| Dialoghi | 30 | Scene testuali con cue audio e tempi per battuta |
+| Bark Warriors | 9 | Un pacchetto contestuale per ciascun Warrior |
+| Reference ricevute | 3 | Due tavole e un fondale, esterni alla repo |
+| **Totale** | **267** | **264 mancanti e 3 sorgenti ricevuti** |
+
+Il catalogo elenca **684 percorsi di file futuri**, incluse immagini, metadati e audio. Non sono 684 immagini, non sono altrettante generazioni, non sono file già presenti. La condivisione di moduli ambiente e rig riduce il lavoro artistico, ma non elimina i controlli di ogni montaggio.
+
+Animazioni pianificate: nove eroi × 140 frame = 1.260; 15 nemici × 36 frame base = 540, più 108 estensioni definite nel catalogo. Restano pose narrative/cinematiche e varianti da produrre nei rispettivi pacchetti; non sommarle come se fossero già note nel dettaglio di un montaggio finale.
+
+## Materiali ricevuti
+
+| ID | Sorgente | Stato attuale |
 |---|---|---|
-| Swan | Reference del personaggio, spritesheet di combattimento, ritratto, metadati animazioni | Primo protagonista |
-| Ajax | Stesso pacchetto, con silhouette e mosse proprie | Secondo protagonista |
-| Baseball Furies | Due archetipi (pressione e mazza), pose, ferite/KO, metadati | Prima arena |
-| Parco | Fondale scorrevole, terreno, primo piano separato, uscita | Scala e profondità |
-| Armi | Mazza e tubo a terra, impugnati e in lancio; durabilità e icone | Raccolta e combattimento |
-| Props | Panchina, cestino e oggetto distruttibile con stati | Collisioni |
-| FX | Impatto, polvere, rottura e indicatore di soccorso | Leggibilità |
-| HUD | Due ritratti, salute, furia, arma, prompt controller/tastiera | Singolo e due giocatori |
-| Suoni | Pugni, calci, mazza, passi, caduta, raccolta, rottura | Feedback sincronizzato |
-| Musica | Brano Furies e loop ambientale del parco | Mixer e transizioni |
+| source_warrior | de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png | Tavola Warrior non identificato, otto pose, osservata |
+| source_fury | ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png | Tavola Fury, otto pose, osservata |
+| source_park | 65bc58_MCatdEcrTfWSAvto3TAplg_image.png | Fondale parco notturno, osservato |
 
-Animazioni di ogni personaggio: vedere GAME_DESIGN.md. Nessun frame deve tagliare mani, arma o piedi. Prima approvare scala e ancoraggi in movimento, poi estendere il roster.
+Non ancora importati nel repository, ritagliati, corretti o animati. Il catalogo registra status=source e in_repository=false. I percorsi assets/source/ sono destinazioni future, non dichiarazioni di upload.
 
-## Priorità 2: campagna
-| Blocco | Consegne |
-|---|---|
-| Warriors | Snow, Cochise, Vermin, Rembrandt, Cowboy; Cleon e Fox narrativi inizialmente |
-| Personaggi di storia | Mercy, Cyrus, Luther, rappresentanti Riffs, poliziotta, DJ |
-| Gang | Turnbull ACs, Orphans, altre varianti Furies, Lizzies, Punks, Rogues |
-| Polizia e folla | Agenti, folla del raduno, passeggeri e comparse di raccordo |
-| Bronx | Raduno, accessi e percorso verso la metro |
-| Strade / Orphans | Strada, edifici e raccordi verso la stazione |
-| Metro | Banchina, accessi, corridoi e interno del treno |
-| Lizzies | Appartamento, porta, finestra e punto sicuro di arrivo |
-| Union Square | Stazione e bagno pubblico con cabine, porte, lavabi |
-| Coney Island | Strada all’alba, lungomare, spiaggia, veicolo dei Rogues |
-| Oggetti | Bottiglie, assi, armi aggiuntive, risorse e oggetti di scena |
-| Cinematiche | Raduno, omicidio/accusa, separazioni, arresto Ajax, trappola, ricongiungimento, bottiglie, disarmo, Riffs, camminata finale |
-| Interfaccia | Titolo, selezione, mappa del viaggio, checkpoint, pausa, opzioni, sconfitta e conclusione |
+## Stati e consegna
 
-I raccordi visivi devono rispettare anno, abiti e cambiamenti di luce. La mappa racconta il viaggio; non è una promessa di mondo aperto.
+missing → source → processed → integrated → verified. Source significa che il materiale esiste come sorgente disponibile; processed richiede esportazione e controlli; integrated richiede caricamento nel gioco; verified richiede osservazione nel caso d'uso. Nessun salto da una descrizione testuale a verified.
 
-## Audio effettivo
-Scaletta prevista: titolo, raduno, fuga, strade, Furies, Lizzies, Punks, ultimo viaggio, Rogues e finale.
-Separare musica, effetti e voci. Per “In the City” e qualsiasi altro master del film occorrono i file effettivi: non sono presenti nella repo e non sono stati recuperati in questa consegna.
-Battute e annunci: asset audio con sottotitoli sincronizzati; se la registrazione manca, sottotitoli e stato mancante esplicito. Non dichiarare un doppiaggio completo.
+Ogni record ha ID stabile e planned_files. Il runtime futuro richiederà file presenti e ID risolti. Per file musicali annotare origine, autore, durata e loop. L'autore dichiara la licenza; i master effettivi, incluso quello del finale, non sono stati forniti in questa sessione.
 
-## Contratto tecnico e avanzamento
-Per ogni asset registrare: ID stabile, percorso relativo, tipo, autore/provenienza, versione, capitoli, dimensioni/durata, metadati e stato.
-Stati:
-1. missing — previsto, nessun file;
-2. source — sorgente disponibile;
-3. processed — esportato e controllato tecnicamente;
-4. integrated — referenziato e caricato dal gioco;
-5. verified — osservato nel gioco nel caso d’uso previsto.
+## Ordine produttivo dopo la progettazione
 
-Un’immagine esistente in un altro progetto non è automaticamente un asset di questa repo. Nessuno stato verified senza verifica in esecuzione.
+1. Reference e model sheet Swan/Ajax/Fury; attribuire correttamente o sostituire la tavola Warrior generica.
+2. Scala/animazioni/ambiente parco con props realmente separati.
+3. Resto dei Warriors e famiglie nemiche, poi pacchetti ambiente secondo ordine campagna.
+4. Cinematiche e UI a partire dal copione, riutilizzando asset approvati.
+5. Musica, effetti e voci, integrati insieme al relativo capitolo e verificati sul mixer.
 
-Sprite: rettangoli atlas nei limiti dell’immagine, ancoraggio ai piedi, pivot e durata per frame, PNG trasparente.
-Fondali: dimensioni e livelli di profondità espliciti; terreno allineato al piano di gioco.
-Audio: formato supportato dai browser scelti, volume coerente, loop e durata dichiarati.
-Percorsi: minuscolo, senza spazi, locali al progetto; niente dipendenze da link temporanei.
-
-## Definition of done per capitolo
-File presenti → manifest corretto → caricamento riuscito → integrazione visiva/sonora → percorso completo verificato.
-Un elenco di nomi o una tavola non ancora montata non costituiscono un capitolo completo.
+Questo ordine non cambia la richiesta dell'autore di avere prima tutte le schede di design. La fase produttiva inizia dopo questa baseline, senza presentare materiale ancora mancante come già consegnato.

@@ -1,0 +1,2628 @@
+{
+  "schema_version": 1,
+  "purpose": "Design baseline, not executable runtime content",
+  "implementation_status": "not_started",
+  "story_players": [
+    1,
+    2
+  ],
+  "arcade_players_target": [
+    1,
+    4
+  ],
+  "heroes": [
+    "cleon",
+    "swan",
+    "ajax",
+    "snow",
+    "cowboy",
+    "cochise",
+    "vermin",
+    "rembrandt",
+    "fox"
+  ],
+  "enemy_archetypes": [
+    "turnbull_rusher",
+    "turnbull_heavy",
+    "orphan_brawler",
+    "orphan_board",
+    "fury_batter",
+    "fury_flanker",
+    "fury_veteran",
+    "lizzie_blocker",
+    "lizzie_shooter",
+    "punk_grappler",
+    "punk_brawler",
+    "punk_leader",
+    "rogue_brawler",
+    "rogue_bottle",
+    "police_pursuer"
+  ],
+  "chapters": [
+    {
+      "id": "P0",
+      "title": "Coney Island",
+      "duration_minutes_target": [
+        5,
+        7
+      ],
+      "area_ids": [
+        "P0-01",
+        "P0-02",
+        "P0-03",
+        "P0-04"
+      ],
+      "warriors_present_at_entry": [
+        "cleon",
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "flags_committed_by_end": [
+        "tutorial_complete",
+        "departed_coney"
+      ]
+    },
+    {
+      "id": "C1",
+      "title": "Il raduno",
+      "duration_minutes_target": [
+        7,
+        9
+      ],
+      "area_ids": [
+        "C1-01",
+        "C1-02",
+        "C1-03",
+        "C1-04"
+      ],
+      "warriors_present_at_entry": [
+        "cleon",
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "flags_committed_by_end": [
+        "cyrus_killed",
+        "warriors_accused",
+        "cleon_missing",
+        "swan_leader"
+      ]
+    },
+    {
+      "id": "C2",
+      "title": "Braccati",
+      "duration_minutes_target": [
+        8,
+        10
+      ],
+      "area_ids": [
+        "C2-01",
+        "C2-02",
+        "C2-03",
+        "C2-04"
+      ],
+      "warriors_present_at_entry": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "flags_committed_by_end": [
+        "train_boarded"
+      ]
+    },
+    {
+      "id": "C3",
+      "title": "Territorio nemico",
+      "duration_minutes_target": [
+        9,
+        11
+      ],
+      "area_ids": [
+        "C3-01",
+        "C3-02",
+        "C3-03",
+        "C3-04"
+      ],
+      "warriors_present_at_entry": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "flags_committed_by_end": [
+        "mercy_joined",
+        "fox_lost",
+        "party_split"
+      ]
+    },
+    {
+      "id": "C4",
+      "title": "Baseball Furies",
+      "duration_minutes_target": [
+        10,
+        12
+      ],
+      "area_ids": [
+        "C4-01",
+        "C4-02",
+        "C4-03",
+        "C4-04"
+      ],
+      "warriors_present_at_entry": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy"
+      ],
+      "flags_committed_by_end": [
+        "furies_defeated",
+        "ajax_separated"
+      ]
+    },
+    {
+      "id": "C5",
+      "title": "La banda divisa",
+      "duration_minutes_target": [
+        10,
+        13
+      ],
+      "area_ids": [
+        "C5-01",
+        "C5-02",
+        "C5-03",
+        "C5-04",
+        "C5-05"
+      ],
+      "warriors_present_at_entry": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "flags_committed_by_end": [
+        "ajax_arrested",
+        "lizzies_escaped",
+        "swan_mercy_link",
+        "rendezvous_reached"
+      ]
+    },
+    {
+      "id": "C6",
+      "title": "Union Square",
+      "duration_minutes_target": [
+        9,
+        11
+      ],
+      "area_ids": [
+        "C6-01",
+        "C6-02",
+        "C6-03",
+        "C6-04"
+      ],
+      "warriors_present_at_entry": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "flags_committed_by_end": [
+        "reunited",
+        "punks_defeated",
+        "riffs_informed",
+        "last_train_boarded"
+      ]
+    },
+    {
+      "id": "C7",
+      "title": "L'ultimo treno",
+      "duration_minutes_target": [
+        4,
+        6
+      ],
+      "area_ids": [
+        "C7-01",
+        "C7-02"
+      ],
+      "warriors_present_at_entry": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "flags_committed_by_end": [
+        "train_conversation_seen",
+        "home_arrived"
+      ]
+    },
+    {
+      "id": "C8",
+      "title": "Coney Island",
+      "duration_minutes_target": [
+        7,
+        9
+      ],
+      "area_ids": [
+        "C8-01",
+        "C8-02",
+        "C8-03",
+        "C8-04"
+      ],
+      "warriors_present_at_entry": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "flags_committed_by_end": [
+        "luther_disarmed",
+        "warriors_cleared",
+        "campaign_complete"
+      ]
+    }
+  ],
+  "areas": [
+    {
+      "id": "P0-01",
+      "chapter": "P0",
+      "kind": "traversal",
+      "location": "Ritrovo della banda, 1 schermata, profondità 170",
+      "goal_and_events": "Muoversi, interagire con due compagni; tutte le presentazioni facoltative restano consultabili. Uscita dopo movimento e una conversazione",
+      "required_materials_note": "Ritrovo, nove Warriors in attesa, sedute, ritratto Cleon, cue ambientale quartiere",
+      "playable_pool": [
+        "cleon",
+        "swan"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_p0_01",
+      "cinematic_assets": [],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "P0-02",
+      "music_asset": "mus_p0",
+      "ambience_asset": "amb_coney_evening",
+      "required_flag_on_entry": null,
+      "plot_flags_at_event_points": [],
+      "flag_on_exit": "area_p0_01_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_bench"
+      ],
+      "required_asset_ids": [
+        "amb_coney_evening",
+        "env_p0_01",
+        "hero_cleon",
+        "hero_swan",
+        "mus_p0",
+        "prop_bench",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_p0_welcome",
+        "dlg_p0_introductions",
+        "dlg_p0_training",
+        "dlg_p0_departure"
+      ]
+    },
+    {
+      "id": "P0-02",
+      "chapter": "P0",
+      "kind": "training",
+      "location": "Spazio libero del ritrovo, 1 schermata, profondità 210",
+      "goal_and_events": "Cleon/Swan provano leggero, pesante, salto e schivata; un compagno sparring restituisce la guardia. Nessun KO o danno permanente",
+      "required_materials_note": "Sagoma bersaglio, compagno in guardia, indicatori attacco e schiva",
+      "playable_pool": [
+        "cleon",
+        "swan"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_p0_02",
+      "cinematic_assets": [],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": false,
+      "next": "P0-03",
+      "music_asset": "mus_p0",
+      "ambience_asset": "amb_coney_evening",
+      "required_flag_on_entry": "area_p0_01_complete",
+      "plot_flags_at_event_points": [],
+      "flag_on_exit": "area_p0_02_complete",
+      "completion_rule": "training_complete_or_skip",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_coney_evening",
+        "env_p0_02",
+        "hero_cleon",
+        "hero_swan",
+        "mus_p0",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_p0_welcome",
+        "dlg_p0_introductions",
+        "dlg_p0_training",
+        "dlg_p0_departure"
+      ]
+    },
+    {
+      "id": "P0-03",
+      "chapter": "P0",
+      "kind": "training",
+      "location": "Passaggio verso l'uscita, 1 schermata",
+      "goal_and_events": "Presa e rilascio su sparring, pickup di un tubo d'allenamento, soccorso simulato. In singolo CPU dimostra l'azione se richiesta; tutti i passi saltabili dal menu",
+      "required_materials_note": "Tubo, materassino o area dichiarata training, prompt soccorso, cancello",
+      "playable_pool": [
+        "cleon",
+        "swan"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_p0_03",
+      "cinematic_assets": [],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": false,
+      "next": "P0-04",
+      "music_asset": "mus_p0",
+      "ambience_asset": "amb_coney_evening",
+      "required_flag_on_entry": "area_p0_02_complete",
+      "plot_flags_at_event_points": [
+        "tutorial_complete"
+      ],
+      "flag_on_exit": "area_p0_03_complete",
+      "completion_rule": "training_complete_or_skip",
+      "pickup_budgets": [],
+      "props": [
+        "prop_gate"
+      ],
+      "required_asset_ids": [
+        "amb_coney_evening",
+        "env_p0_03",
+        "hero_cleon",
+        "hero_swan",
+        "mus_p0",
+        "prop_gate",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_p0_welcome",
+        "dlg_p0_introductions",
+        "dlg_p0_training",
+        "dlg_p0_departure"
+      ]
+    },
+    {
+      "id": "P0-04",
+      "chapter": "P0",
+      "kind": "cinematic",
+      "location": "Accesso metro, 1 schermata",
+      "goal_and_events": "Raccogliersi e partire. La selezione assegna due Warriors ammessi a C1. Breve viaggio e titolo del gioco",
+      "required_materials_note": "Accesso metro di casa, vagone, title card, scena gruppo in partenza",
+      "playable_pool": [
+        "cleon",
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_p0_04",
+      "cinematic_assets": [],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C1-01",
+      "music_asset": "mus_p0",
+      "ambience_asset": "amb_subway",
+      "required_flag_on_entry": "area_p0_03_complete",
+      "plot_flags_at_event_points": [
+        "departed_coney"
+      ],
+      "flag_on_exit": "area_p0_04_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_open_turnstile"
+      ],
+      "required_asset_ids": [
+        "amb_subway",
+        "env_p0_04",
+        "hero_ajax",
+        "hero_cleon",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_p0",
+        "prop_open_turnstile",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_p0_welcome",
+        "dlg_p0_introductions",
+        "dlg_p0_training",
+        "dlg_p0_departure"
+      ]
+    },
+    {
+      "id": "C1-01",
+      "chapter": "C1",
+      "kind": "traversal",
+      "location": "Accesso al raduno nel Bronx, 1,5 schermate, profondità 180",
+      "goal_and_events": "Camminare con la banda fra delegazioni. Combattimento disabilitato per tregua. Raggiungere il punto assegnato",
+      "required_materials_note": "Folla modulare e silhouette di gang, accesso parco, cartelli senza linee inventate",
+      "playable_pool": [
+        "cleon",
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c1_01",
+      "cinematic_assets": [],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C1-02",
+      "music_asset": "mus_c1_discourse",
+      "ambience_asset": "amb_rally",
+      "required_flag_on_entry": "area_p0_04_complete",
+      "plot_flags_at_event_points": [],
+      "flag_on_exit": "area_c1_01_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_low_barrier"
+      ],
+      "required_asset_ids": [
+        "amb_rally",
+        "env_c1_01",
+        "hero_ajax",
+        "hero_cleon",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c1_discourse",
+        "prop_low_barrier",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c1_arrival",
+        "dlg_c1_cyrus",
+        "dlg_c1_accusation",
+        "dlg_c1_leadership"
+      ]
+    },
+    {
+      "id": "C1-02",
+      "chapter": "C1",
+      "kind": "cinematic",
+      "location": "Radura e palco, composizione larga",
+      "goal_and_events": "Discorso di Cyrus; sparo, accusatore, irruzione della polizia. Nessuna mira o scelta capace di salvare Cyrus",
+      "required_materials_note": "Palco, Cyrus, Luther, Riffs, lampi e folla in fuga; cine_cyrus e cine_accusation",
+      "playable_pool": [
+        "cleon",
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c1_02",
+      "cinematic_assets": [
+        "cine_accusation",
+        "cine_cyrus"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": false,
+      "next": "C1-03",
+      "music_asset": "mus_c1_discourse",
+      "ambience_asset": "amb_rally",
+      "required_flag_on_entry": "area_c1_01_complete",
+      "plot_flags_at_event_points": [
+        "cyrus_killed",
+        "warriors_accused",
+        "cleon_missing"
+      ],
+      "flag_on_exit": "area_c1_02_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_rally",
+        "cine_accusation",
+        "cine_cyrus",
+        "env_c1_02",
+        "hero_ajax",
+        "hero_cleon",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c1_discourse",
+        "npc_cyrus",
+        "npc_luther",
+        "npc_masai",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c1_arrival",
+        "dlg_c1_cyrus",
+        "dlg_c1_accusation",
+        "dlg_c1_leadership"
+      ]
+    },
+    {
+      "id": "C1-03",
+      "chapter": "C1",
+      "kind": "escape + micro-arena",
+      "location": "Sentiero fra transenne, 2 schermate, profondità 160–210",
+      "goal_and_events": "Raggiungere gli altri; due orphan_brawler / tre, delegati riconoscibili che ostacolano, in una breve strettoia. Dopo il varco riparte la fuga. Due police_pursuer / tre inseguono ma non sono obiettivo KO",
+      "required_materials_note": "Transenne, uscita laterale, foliage, folla con percorsi non solidi",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c1_03",
+      "cinematic_assets": [],
+      "mandatory_enemies": {
+        "solo": {
+          "orphan_brawler": 2
+        },
+        "duo": {
+          "orphan_brawler": 3
+        }
+      },
+      "escape_threats": {
+        "solo": {
+          "police_pursuer": 2
+        },
+        "duo": {
+          "police_pursuer": 3
+        }
+      },
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C1-04",
+      "music_asset": "mus_c1_escape",
+      "ambience_asset": "amb_rally",
+      "required_flag_on_entry": "area_c1_02_complete",
+      "plot_flags_at_event_points": [],
+      "flag_on_exit": "area_c1_03_complete",
+      "completion_rule": "group_reaches_safe_exit_after_required_events",
+      "pickup_budgets": [
+        {
+          "item_id": "drink",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_low_barrier"
+      ],
+      "required_asset_ids": [
+        "amb_rally",
+        "enemy_orphan_brawler",
+        "enemy_police_pursuer",
+        "env_c1_03",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "item_drink",
+        "mus_c1_escape",
+        "prop_low_barrier",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c1_arrival",
+        "dlg_c1_cyrus",
+        "dlg_c1_accusation",
+        "dlg_c1_leadership"
+      ]
+    },
+    {
+      "id": "C1-04",
+      "chapter": "C1",
+      "kind": "traversal",
+      "location": "Sottopasso sicuro, 1 schermata",
+      "goal_and_events": "Ricontare il gruppo; Cleon non torna. Swan assume la guida. Interazione sulla scala chiude il capitolo",
+      "required_materials_note": "Sottopasso, scala verso strada, otto pose stanche; cine_swan_leads",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c1_04",
+      "cinematic_assets": [
+        "cine_swan_leads"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C2-01",
+      "music_asset": "mus_c1_escape",
+      "ambience_asset": "amb_subway",
+      "required_flag_on_entry": "area_c1_03_complete",
+      "plot_flags_at_event_points": [
+        "swan_leader"
+      ],
+      "flag_on_exit": "area_c1_04_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_subway",
+        "cine_swan_leads",
+        "env_c1_04",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c1_escape",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c1_arrival",
+        "dlg_c1_cyrus",
+        "dlg_c1_accusation",
+        "dlg_c1_leadership"
+      ]
+    },
+    {
+      "id": "C2-01",
+      "chapter": "C2",
+      "kind": "traversal",
+      "location": "Isolato del Bronx, 2 schermate, profondità 220",
+      "goal_and_events": "Trovare l'accesso alla metro; il bus dei Turnbull compare sullo sfondo e i compagni segnalano la minaccia",
+      "required_materials_note": "Facciate, bus, fermata, auto parcheggiate, freccia obiettivo contestuale",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c2_01",
+      "cinematic_assets": [],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C2-02",
+      "music_asset": "mus_c2",
+      "ambience_asset": "amb_street",
+      "required_flag_on_entry": "area_c1_04_complete",
+      "plot_flags_at_event_points": [
+        "turnbull_spotted"
+      ],
+      "flag_on_exit": "area_c2_01_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_street",
+        "env_c2_01",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c2",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c2_bus",
+        "dlg_c2_run"
+      ]
+    },
+    {
+      "id": "C2-02",
+      "chapter": "C2",
+      "kind": "arena",
+      "location": "Vicolo con cancello, 1,5 schermate, profondità 190",
+      "goal_and_events": "3 turnbull_rusher + 1 turnbull_heavy / 4 + 2. Aprire il cancello dopo l'incontro, non distruggere il bus",
+      "required_materials_note": "Cancello, cassa, tubo e cartoni; uscite sempre visibili",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c2_02",
+      "cinematic_assets": [],
+      "mandatory_enemies": {
+        "solo": {
+          "turnbull_rusher": 3,
+          "turnbull_heavy": 1
+        },
+        "duo": {
+          "turnbull_rusher": 4,
+          "turnbull_heavy": 2
+        }
+      },
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C2-03",
+      "music_asset": "mus_c2",
+      "ambience_asset": "amb_street",
+      "required_flag_on_entry": "area_c2_01_complete",
+      "plot_flags_at_event_points": [
+        "alley_clear"
+      ],
+      "flag_on_exit": "area_c2_02_complete",
+      "completion_rule": "mandatory_enemies_defeated_then_group_exit",
+      "pickup_budgets": [
+        {
+          "item_id": "snack",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        },
+        {
+          "item_id": "pipe",
+          "solo": 1,
+          "duo": 1,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_gate",
+        "prop_crate",
+        "prop_cardboard"
+      ],
+      "required_asset_ids": [
+        "amb_street",
+        "enemy_turnbull_heavy",
+        "enemy_turnbull_rusher",
+        "env_c2_02",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "item_pipe",
+        "item_snack",
+        "mus_c2",
+        "prop_cardboard",
+        "prop_crate",
+        "prop_gate",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c2_bus",
+        "dlg_c2_run"
+      ]
+    },
+    {
+      "id": "C2-03",
+      "chapter": "C2",
+      "kind": "escape",
+      "location": "Strada verso le scale, 3 schermate, profondità 180–230",
+      "goal_and_events": "2 turnbull_rusher / 3 inseguono con coda finita; transenne basse e deviazioni. Bus nella corsia superiore segnala la pressione. 70 s per raggiungere le scale, 85 in Facile",
+      "required_materials_note": "Strada continua, tre moduli ostacolo, bus animato, lampioni, clacson",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c2_03",
+      "cinematic_assets": [],
+      "mandatory_enemies": {},
+      "escape_threats": {
+        "solo": {
+          "turnbull_rusher": 2
+        },
+        "duo": {
+          "turnbull_rusher": 3
+        }
+      },
+      "timer_seconds_normal": 70,
+      "checkpoint_before": true,
+      "next": "C2-04",
+      "music_asset": "mus_c2",
+      "ambience_asset": "amb_street",
+      "required_flag_on_entry": "area_c2_02_complete",
+      "plot_flags_at_event_points": [],
+      "flag_on_exit": "area_c2_03_complete",
+      "completion_rule": "group_reaches_safe_exit_after_required_events",
+      "pickup_budgets": [
+        {
+          "item_id": "drink",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_low_barrier"
+      ],
+      "required_asset_ids": [
+        "amb_street",
+        "enemy_turnbull_rusher",
+        "env_c2_03",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "item_drink",
+        "mus_c2",
+        "prop_low_barrier",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c2_bus",
+        "dlg_c2_run"
+      ]
+    },
+    {
+      "id": "C2-04",
+      "chapter": "C2",
+      "kind": "escape + cinematic",
+      "location": "Scale e banchina, 1,5 schermate",
+      "goal_and_events": "Ultimo tratto di 25 s senza nuovo combattimento obbligatorio. Entrare nel treno; porte aspettano la condizione di gruppo, non chiudono su 2P già arrivato. Scena di partenza",
+      "required_materials_note": "Scale, tornello aperto, banchina, porte/vagone e cine_train_escape",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c2_04",
+      "cinematic_assets": [
+        "cine_train_escape"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": 25,
+      "checkpoint_before": true,
+      "next": "C3-01",
+      "music_asset": "mus_c2",
+      "ambience_asset": "amb_subway",
+      "required_flag_on_entry": "area_c2_03_complete",
+      "plot_flags_at_event_points": [
+        "metro_reached",
+        "train_boarded"
+      ],
+      "flag_on_exit": "area_c2_04_complete",
+      "completion_rule": "group_reaches_safe_exit_after_required_events",
+      "pickup_budgets": [],
+      "props": [
+        "prop_open_turnstile"
+      ],
+      "required_asset_ids": [
+        "amb_subway",
+        "cine_train_escape",
+        "env_c2_04",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c2",
+        "prop_open_turnstile",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c2_bus",
+        "dlg_c2_run"
+      ]
+    },
+    {
+      "id": "C3-01",
+      "chapter": "C3",
+      "kind": "dialogue",
+      "location": "Strada degli Orphans, 1,5 schermate, profondità 200",
+      "goal_and_events": "Capo Orphans impedisce il passaggio. Si può chiedere passaggio o invitare alla calma; entrambe le risposte conducono al confronto con tono diverso. Mercy interviene",
+      "required_materials_note": "Facciate, insegna quartiere, Orphans in guardia, ritratti capo/Mercy",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c3_01",
+      "cinematic_assets": [],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C3-02",
+      "music_asset": "mus_c3",
+      "ambience_asset": "amb_street",
+      "required_flag_on_entry": "area_c2_04_complete",
+      "plot_flags_at_event_points": [
+        "orphans_confrontation"
+      ],
+      "flag_on_exit": "area_c3_01_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_door"
+      ],
+      "required_asset_ids": [
+        "amb_street",
+        "env_c3_01",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c3",
+        "npc_mercy",
+        "npc_orphans_leader",
+        "prop_door",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c3_orphans",
+        "dlg_c3_breakaway",
+        "dlg_c3_police"
+      ]
+    },
+    {
+      "id": "C3-02",
+      "chapter": "C3",
+      "kind": "arena",
+      "location": "Cortile e strettoia, 2 schermate, profondità 190",
+      "goal_and_events": "3 orphan_brawler + 1 orphan_board / 5 + 2, due ondate. Boss non necessario. Una breve scena introduce la distrazione incendiaria, senza minigioco di fabbricazione",
+      "required_materials_note": "Cortile, asse, cassa, barriera scenica fuoco e FX sicurezza",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c3_02",
+      "cinematic_assets": [],
+      "mandatory_enemies": {
+        "solo": {
+          "orphan_brawler": 3,
+          "orphan_board": 1
+        },
+        "duo": {
+          "orphan_brawler": 5,
+          "orphan_board": 2
+        }
+      },
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C3-03",
+      "music_asset": "mus_c3",
+      "ambience_asset": "amb_street",
+      "required_flag_on_entry": "area_c3_01_complete",
+      "plot_flags_at_event_points": [],
+      "flag_on_exit": "area_c3_02_complete",
+      "completion_rule": "mandatory_enemies_defeated_then_group_exit",
+      "pickup_budgets": [
+        {
+          "item_id": "board",
+          "solo": 1,
+          "duo": 1,
+          "placement": "fixed; see LEVELS.md"
+        },
+        {
+          "item_id": "snack",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_crate",
+        "prop_cardboard"
+      ],
+      "required_asset_ids": [
+        "amb_street",
+        "enemy_orphan_board",
+        "enemy_orphan_brawler",
+        "env_c3_02",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "item_board",
+        "item_snack",
+        "mus_c3",
+        "prop_cardboard",
+        "prop_crate",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c3_orphans",
+        "dlg_c3_breakaway",
+        "dlg_c3_police"
+      ]
+    },
+    {
+      "id": "C3-03",
+      "chapter": "C3",
+      "kind": "escape",
+      "location": "Strada laterale verso metro, 2 schermate, profondità 220",
+      "goal_and_events": "Uscire mentre gli Orphans si ritirano; nessuna nuova ondata obbligatoria. Mercy segue, non ha HP da scorta",
+      "required_materials_note": "Strada di raccordo, uscita, insegna stazione, cine_mercy_joins",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c3_03",
+      "cinematic_assets": [
+        "cine_mercy_joins"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C3-04",
+      "music_asset": "mus_c3",
+      "ambience_asset": "amb_street",
+      "required_flag_on_entry": "area_c3_02_complete",
+      "plot_flags_at_event_points": [
+        "mercy_joined",
+        "orphans_escape"
+      ],
+      "flag_on_exit": "area_c3_03_complete",
+      "completion_rule": "group_reaches_safe_exit_after_required_events",
+      "pickup_budgets": [
+        {
+          "item_id": "drink",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [],
+      "required_asset_ids": [
+        "amb_street",
+        "cine_mercy_joins",
+        "env_c3_03",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "item_drink",
+        "mus_c3",
+        "npc_mercy",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c3_orphans",
+        "dlg_c3_breakaway",
+        "dlg_c3_police"
+      ]
+    },
+    {
+      "id": "C3-04",
+      "chapter": "C3",
+      "kind": "escape + cinematic",
+      "location": "Banchina/accessi, 1,5 schermate, profondità 170",
+      "goal_and_events": "2 police_pursuer / 3, obiettivo fuga. La separazione di Fox e Mercy è raccontata con tagli ellittici; Fox non rientra. Le vie dividono i superstiti",
+      "required_materials_note": "Banchina, bordo protetto, passaggio, agente, ombre treno; cine_police_split",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt",
+        "fox"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c3_04",
+      "cinematic_assets": [
+        "cine_police_split"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {
+        "solo": {
+          "police_pursuer": 2
+        },
+        "duo": {
+          "police_pursuer": 3
+        }
+      },
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C4-01",
+      "music_asset": "mus_c3",
+      "ambience_asset": "amb_subway",
+      "required_flag_on_entry": "area_c3_03_complete",
+      "plot_flags_at_event_points": [
+        "fox_lost",
+        "party_split"
+      ],
+      "flag_on_exit": "area_c3_04_complete",
+      "completion_rule": "group_reaches_safe_exit_after_required_events",
+      "pickup_budgets": [],
+      "props": [
+        "prop_handrail"
+      ],
+      "required_asset_ids": [
+        "amb_subway",
+        "cine_police_split",
+        "enemy_police_pursuer",
+        "env_c3_04",
+        "hero_ajax",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_fox",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c3",
+        "npc_mercy",
+        "prop_handrail",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c3_orphans",
+        "dlg_c3_breakaway",
+        "dlg_c3_police"
+      ]
+    },
+    {
+      "id": "C4-01",
+      "chapter": "C4",
+      "kind": "traversal → escape",
+      "location": "Uscita e ingresso del parco, 1,5 schermate, profondità 200",
+      "goal_and_events": "Prima apparizione silenziosa dei Furies; per 45 s raggiungere il sentiero. 2 fury_flanker / 3 minacciano, non requisito KO",
+      "required_materials_note": "Accesso, sagome Furies, alberi e luci; cine_furies_appear",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c4_01",
+      "cinematic_assets": [
+        "cine_furies_appear"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {
+        "solo": {
+          "fury_flanker": 2
+        },
+        "duo": {
+          "fury_flanker": 3
+        }
+      },
+      "timer_seconds_normal": 45,
+      "checkpoint_before": true,
+      "next": "C4-02",
+      "music_asset": "mus_c4_chase",
+      "ambience_asset": "amb_park",
+      "required_flag_on_entry": "area_c3_04_complete",
+      "plot_flags_at_event_points": [
+        "furies_seen"
+      ],
+      "flag_on_exit": "area_c4_01_complete",
+      "completion_rule": "group_reaches_safe_exit_after_required_events",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_park",
+        "cine_furies_appear",
+        "enemy_fury_flanker",
+        "env_c4_01",
+        "hero_ajax",
+        "hero_cowboy",
+        "hero_snow",
+        "hero_swan",
+        "mus_c4_chase",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c4_silence",
+        "dlg_c4_stand",
+        "dlg_c4_split"
+      ]
+    },
+    {
+      "id": "C4-02",
+      "chapter": "C4",
+      "kind": "arena",
+      "location": "Sentiero con panchine, 2 schermate, profondità 230",
+      "goal_and_events": "2 fury_batter + 1 fury_flanker / 3 + 2. Prima spiegazione del disarmo: pesante sulla ripresa, poi interazione",
+      "required_materials_note": "Panchine solide, cestino separato, mazza, icona disarmo",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c4_02",
+      "cinematic_assets": [],
+      "mandatory_enemies": {
+        "solo": {
+          "fury_batter": 2,
+          "fury_flanker": 1
+        },
+        "duo": {
+          "fury_batter": 3,
+          "fury_flanker": 2
+        }
+      },
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C4-03",
+      "music_asset": "mus_c4_fight",
+      "ambience_asset": "amb_park",
+      "required_flag_on_entry": "area_c4_01_complete",
+      "plot_flags_at_event_points": [
+        "furies_path_clear"
+      ],
+      "flag_on_exit": "area_c4_02_complete",
+      "completion_rule": "mandatory_enemies_defeated_then_group_exit",
+      "pickup_budgets": [
+        {
+          "item_id": "drink",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_bench",
+        "prop_bin"
+      ],
+      "required_asset_ids": [
+        "amb_park",
+        "enemy_fury_batter",
+        "enemy_fury_flanker",
+        "env_c4_02",
+        "hero_ajax",
+        "hero_cowboy",
+        "hero_snow",
+        "hero_swan",
+        "item_drink",
+        "mus_c4_fight",
+        "prop_bench",
+        "prop_bin",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c4_silence",
+        "dlg_c4_stand",
+        "dlg_c4_split"
+      ]
+    },
+    {
+      "id": "C4-03",
+      "chapter": "C4",
+      "kind": "arena principale",
+      "location": "Radura/passeggiata, 2 schermate, profondità 240",
+      "goal_and_events": "Ondata A: 2 fury_batter + 1 fury_flanker / 3 + 2. Ondata B: 1 fury_veteran + 1 fury_batter / 1 + 2. Veterano resta umano e disarmabile. Barra élite solo nell'ultima ondata",
+      "required_materials_note": "Parco raccordato al fondale ricevuto, terreno, mazza caduta, FX impatto",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c4_03",
+      "cinematic_assets": [],
+      "mandatory_enemies": {
+        "solo": {
+          "fury_batter": 3,
+          "fury_flanker": 1,
+          "fury_veteran": 1
+        },
+        "duo": {
+          "fury_batter": 5,
+          "fury_flanker": 2,
+          "fury_veteran": 1
+        }
+      },
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C4-04",
+      "music_asset": "mus_c4_fight",
+      "ambience_asset": "amb_park",
+      "required_flag_on_entry": "area_c4_02_complete",
+      "plot_flags_at_event_points": [
+        "furies_defeated"
+      ],
+      "flag_on_exit": "area_c4_03_complete",
+      "completion_rule": "mandatory_enemies_defeated_then_group_exit",
+      "pickup_budgets": [
+        {
+          "item_id": "snack",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        },
+        {
+          "item_id": "medkit",
+          "solo": 1,
+          "duo": 1,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_bench",
+        "prop_bin"
+      ],
+      "required_asset_ids": [
+        "amb_park",
+        "enemy_fury_batter",
+        "enemy_fury_flanker",
+        "enemy_fury_veteran",
+        "env_c4_03",
+        "hero_ajax",
+        "hero_cowboy",
+        "hero_snow",
+        "hero_swan",
+        "item_medkit",
+        "item_snack",
+        "mus_c4_fight",
+        "prop_bench",
+        "prop_bin",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c4_silence",
+        "dlg_c4_stand",
+        "dlg_c4_split"
+      ]
+    },
+    {
+      "id": "C4-04",
+      "chapter": "C4",
+      "kind": "traversal + cinematic",
+      "location": "Sentiero di uscita e bivio, 1 schermata",
+      "goal_and_events": "Recupero, richiamo alla metro. Ajax resta indietro mentre il gruppo si separa. Nessun combattimento aggiuntivo che svuoti il climax",
+      "required_materials_note": "Bivio, panchina distante come anticipazione, pose affaticate; cine_ajax_stays",
+      "playable_pool": [
+        "swan",
+        "ajax",
+        "snow",
+        "cowboy"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c4_04",
+      "cinematic_assets": [
+        "cine_ajax_stays"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C5-01",
+      "music_asset": "mus_c4_fight",
+      "ambience_asset": "amb_park",
+      "required_flag_on_entry": "area_c4_03_complete",
+      "plot_flags_at_event_points": [
+        "ajax_separated"
+      ],
+      "flag_on_exit": "area_c4_04_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_bench"
+      ],
+      "required_asset_ids": [
+        "amb_park",
+        "cine_ajax_stays",
+        "env_c4_04",
+        "hero_ajax",
+        "hero_cowboy",
+        "hero_snow",
+        "hero_swan",
+        "mus_c4_fight",
+        "prop_bench",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c4_silence",
+        "dlg_c4_stand",
+        "dlg_c4_split"
+      ]
+    },
+    {
+      "id": "C5-01",
+      "chapter": "C5",
+      "kind": "cinematic",
+      "location": "Ajax; Snow/Cowboy nei raccordi, panchina nel parco",
+      "goal_and_events": "Scelta imprudente e rivelazione della poliziotta; arresto. Nessun obiettivo di seduzione, molestia o pestaggio. Tutti gli input di danno bloccati",
+      "required_materials_note": "Panchina separata dal fondale, poliziotta, manette e agenti; cine_ajax_arrest",
+      "playable_pool": [],
+      "max_human_slots": 0,
+      "environment_asset": "env_c5_01",
+      "cinematic_assets": [
+        "cine_ajax_arrest"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C5-02",
+      "music_asset": "mus_c5_quiet",
+      "ambience_asset": "amb_park",
+      "required_flag_on_entry": "area_c4_04_complete",
+      "plot_flags_at_event_points": [
+        "ajax_arrested"
+      ],
+      "flag_on_exit": "area_c5_01_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_bench"
+      ],
+      "required_asset_ids": [
+        "amb_park",
+        "cine_ajax_arrest",
+        "env_c5_01",
+        "mus_c5_quiet",
+        "npc_undercover",
+        "prop_bench",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c5_arrest",
+        "dlg_c5_welcome",
+        "dlg_c5_trap",
+        "dlg_c5_mercy",
+        "dlg_c5_rendezvous"
+      ]
+    },
+    {
+      "id": "C5-02",
+      "chapter": "C5",
+      "kind": "dialogue",
+      "location": "Vermin, Cochise, Rembrandt; appartamento Lizzies",
+      "goal_and_events": "Accoglienza e apparente sicurezza; breve movimento verso la stanza, segnali inquietanti notati da Rembrandt. Nessuna scelta erotica o romance a punteggio",
+      "required_materials_note": "Appartamento integro, Lizzies in attesa, porta, radio, ritratti",
+      "playable_pool": [
+        "vermin",
+        "cochise",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c5_02",
+      "cinematic_assets": [],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C5-03",
+      "music_asset": "mus_c5_welcome",
+      "ambience_asset": "amb_apartment",
+      "required_flag_on_entry": "area_c5_01_complete",
+      "plot_flags_at_event_points": [
+        "lizzies_entered"
+      ],
+      "flag_on_exit": "area_c5_02_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_door",
+        "prop_window"
+      ],
+      "required_asset_ids": [
+        "amb_apartment",
+        "env_c5_02",
+        "hero_cochise",
+        "hero_rembrandt",
+        "hero_vermin",
+        "mus_c5_welcome",
+        "prop_door",
+        "prop_window",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c5_arrest",
+        "dlg_c5_welcome",
+        "dlg_c5_trap",
+        "dlg_c5_mercy",
+        "dlg_c5_rendezvous"
+      ]
+    },
+    {
+      "id": "C5-03",
+      "chapter": "C5",
+      "kind": "escape",
+      "location": "Stesso gruppo; stanza e finestra, 1,5 schermate, profondità 170",
+      "goal_and_events": "Trappola rivelata. 1 lizzie_blocker + 1 lizzie_shooter / 2 + 2. 55 s per aprire il varco e raggiungere la finestra. Sparatrici presidiano postazioni, non sono KO obbligatori; finestra si attiva dopo un pannello fragile aperto",
+      "required_materials_note": "Ripari solidi, vetro, porta chiusa, finestra e piattaforma di uscita; cine_lizzies_trap",
+      "playable_pool": [
+        "vermin",
+        "cochise",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c5_03",
+      "cinematic_assets": [
+        "cine_lizzies_trap"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {
+        "solo": {
+          "lizzie_blocker": 1,
+          "lizzie_shooter": 1
+        },
+        "duo": {
+          "lizzie_blocker": 2,
+          "lizzie_shooter": 2
+        }
+      },
+      "timer_seconds_normal": 55,
+      "checkpoint_before": true,
+      "next": "C5-04",
+      "music_asset": "mus_c5_escape",
+      "ambience_asset": "amb_apartment",
+      "required_flag_on_entry": "area_c5_02_complete",
+      "plot_flags_at_event_points": [
+        "lizzies_revealed",
+        "lizzies_escaped"
+      ],
+      "flag_on_exit": "area_c5_03_complete",
+      "completion_rule": "group_reaches_safe_exit_after_required_events",
+      "pickup_budgets": [
+        {
+          "item_id": "drink",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_door",
+        "prop_window",
+        "prop_solid_cover",
+        "prop_cardboard"
+      ],
+      "required_asset_ids": [
+        "amb_apartment",
+        "cine_lizzies_trap",
+        "enemy_lizzie_blocker",
+        "enemy_lizzie_shooter",
+        "env_c5_03",
+        "hero_cochise",
+        "hero_rembrandt",
+        "hero_vermin",
+        "item_drink",
+        "mus_c5_escape",
+        "prop_cardboard",
+        "prop_door",
+        "prop_solid_cover",
+        "prop_window",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c5_arrest",
+        "dlg_c5_welcome",
+        "dlg_c5_trap",
+        "dlg_c5_mercy",
+        "dlg_c5_rendezvous"
+      ]
+    },
+    {
+      "id": "C5-04",
+      "chapter": "C5",
+      "kind": "traversal",
+      "location": "Swan e Mercy; collegamento sotterraneo, 1,5 schermate",
+      "goal_and_events": "Secondo ruolo Mercy in coop: entrambi attraversano, si aspettano e interagiscono con una porta; nessun combattimento. Pausa dialogata e avvicinamento emotivo. Nessun puzzle a due impossibile in singolo",
+      "required_materials_note": "Tunnel sicuro, porta azionabile da uno, due pose di pausa, luce lontana; cine_swan_mercy",
+      "playable_pool": [
+        "swan",
+        "mercy"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c5_04",
+      "cinematic_assets": [
+        "cine_swan_mercy"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C5-05",
+      "music_asset": "mus_c5_quiet",
+      "ambience_asset": "amb_tunnel",
+      "required_flag_on_entry": "area_c5_03_complete",
+      "plot_flags_at_event_points": [
+        "swan_mercy_link"
+      ],
+      "flag_on_exit": "area_c5_04_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_door"
+      ],
+      "required_asset_ids": [
+        "amb_tunnel",
+        "cine_swan_mercy",
+        "env_c5_04",
+        "hero_swan",
+        "mus_c5_quiet",
+        "npc_mercy",
+        "prop_door",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c5_arrest",
+        "dlg_c5_welcome",
+        "dlg_c5_trap",
+        "dlg_c5_mercy",
+        "dlg_c5_rendezvous"
+      ]
+    },
+    {
+      "id": "C5-05",
+      "chapter": "C5",
+      "kind": "traversal + dialogue",
+      "location": "Snow/Cowboy e poi tutti i superstiti; accesso Union Square, 1 schermata",
+      "goal_and_events": "Raccordo di uscita dal parco e arrivo di Vermin/Cochise/Rembrandt. Resoconto dell'arresto e obiettivo ritrovo. Selezione della coppia C6",
+      "required_materials_note": "Accesso stazione, sei Warriors e Mercy in scene di raccordo; cine_reunion_approach",
+      "playable_pool": [
+        "snow",
+        "cowboy"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c5_05",
+      "cinematic_assets": [
+        "cine_reunion_approach"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C6-01",
+      "music_asset": "mus_c5_quiet",
+      "ambience_asset": "amb_subway",
+      "required_flag_on_entry": "area_c5_04_complete",
+      "plot_flags_at_event_points": [
+        "rendezvous_reached"
+      ],
+      "flag_on_exit": "area_c5_05_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_subway",
+        "cine_reunion_approach",
+        "env_c5_05",
+        "hero_cowboy",
+        "hero_snow",
+        "mus_c5_quiet",
+        "npc_mercy",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c5_arrest",
+        "dlg_c5_welcome",
+        "dlg_c5_trap",
+        "dlg_c5_mercy",
+        "dlg_c5_rendezvous"
+      ]
+    },
+    {
+      "id": "C6-01",
+      "chapter": "C6",
+      "kind": "traversal + dialogue",
+      "location": "Atrio e corridoio, 1,5 schermate, profondità 180",
+      "goal_and_events": "Ricongiungimento visibile; il capo Punks osserva e si avvicina. Scegliere l'accesso al bagno, nessun bivio di trama",
+      "required_materials_note": "Atrio, insegne, Punks riconoscibili, ritrovo; cine_reunion",
+      "playable_pool": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c6_01",
+      "cinematic_assets": [
+        "cine_reunion"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C6-02",
+      "music_asset": "mus_c6",
+      "ambience_asset": "amb_subway",
+      "required_flag_on_entry": "area_c5_05_complete",
+      "plot_flags_at_event_points": [
+        "reunited"
+      ],
+      "flag_on_exit": "area_c6_01_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_subway",
+        "cine_reunion",
+        "env_c6_01",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c6",
+        "npc_mercy",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c6_reunion",
+        "dlg_c6_punks",
+        "dlg_c6_truth"
+      ]
+    },
+    {
+      "id": "C6-02",
+      "chapter": "C6",
+      "kind": "arena",
+      "location": "Antibagno, 1 schermata, profondità 140",
+      "goal_and_events": "2 punk_brawler + 1 punk_grappler / 3 + 2. Spazio ristretto, porte e profondità obbligano al posizionamento",
+      "required_materials_note": "Porta battente, corrimano, cestino e icona presa nemica",
+      "playable_pool": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c6_02",
+      "cinematic_assets": [],
+      "mandatory_enemies": {
+        "solo": {
+          "punk_brawler": 2,
+          "punk_grappler": 1
+        },
+        "duo": {
+          "punk_brawler": 3,
+          "punk_grappler": 2
+        }
+      },
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C6-03",
+      "music_asset": "mus_c6",
+      "ambience_asset": "amb_bathroom",
+      "required_flag_on_entry": "area_c6_01_complete",
+      "plot_flags_at_event_points": [],
+      "flag_on_exit": "area_c6_02_complete",
+      "completion_rule": "mandatory_enemies_defeated_then_group_exit",
+      "pickup_budgets": [
+        {
+          "item_id": "medkit",
+          "solo": 1,
+          "duo": 1,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_door",
+        "prop_bin",
+        "prop_handrail"
+      ],
+      "required_asset_ids": [
+        "amb_bathroom",
+        "enemy_punk_brawler",
+        "enemy_punk_grappler",
+        "env_c6_02",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "item_medkit",
+        "mus_c6",
+        "prop_bin",
+        "prop_door",
+        "prop_handrail",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c6_reunion",
+        "dlg_c6_punks",
+        "dlg_c6_truth"
+      ]
+    },
+    {
+      "id": "C6-03",
+      "chapter": "C6",
+      "kind": "arena principale",
+      "location": "Bagno, 1,5 schermate, profondità 150–190",
+      "goal_and_events": "Ondata A 2 punk_brawler + 1 punk_grappler / 3 + 2; poi 1 punk_leader + 1 punk_brawler / 1 + 2. Leader unico, supporti finiti. Lavabo e cabine reagiscono ai colpi definiti",
+      "required_materials_note": "Cabine, due stati porte, lavabi integri/rotti, specchio con crepe; cine_punks_confrontation",
+      "playable_pool": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c6_03",
+      "cinematic_assets": [
+        "cine_punks_confrontation"
+      ],
+      "mandatory_enemies": {
+        "solo": {
+          "punk_brawler": 3,
+          "punk_grappler": 1,
+          "punk_leader": 1
+        },
+        "duo": {
+          "punk_brawler": 5,
+          "punk_grappler": 2,
+          "punk_leader": 1
+        }
+      },
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C6-04",
+      "music_asset": "mus_c6",
+      "ambience_asset": "amb_bathroom",
+      "required_flag_on_entry": "area_c6_02_complete",
+      "plot_flags_at_event_points": [
+        "punks_defeated"
+      ],
+      "flag_on_exit": "area_c6_03_complete",
+      "completion_rule": "mandatory_enemies_defeated_then_group_exit",
+      "pickup_budgets": [
+        {
+          "item_id": "pipe",
+          "solo": 1,
+          "duo": 1,
+          "placement": "fixed; see LEVELS.md"
+        },
+        {
+          "item_id": "snack",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_stall_door",
+        "prop_sink"
+      ],
+      "required_asset_ids": [
+        "amb_bathroom",
+        "cine_punks_confrontation",
+        "enemy_punk_brawler",
+        "enemy_punk_grappler",
+        "enemy_punk_leader",
+        "env_c6_03",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "item_pipe",
+        "item_snack",
+        "mus_c6",
+        "prop_sink",
+        "prop_stall_door",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c6_reunion",
+        "dlg_c6_punks",
+        "dlg_c6_truth"
+      ]
+    },
+    {
+      "id": "C6-04",
+      "chapter": "C6",
+      "kind": "traversal + intermezzo",
+      "location": "Uscita bagno e banchina, 1 schermata",
+      "goal_and_events": "Ricomporsi e salire. Intermezzo: il testimone informa i Riffs, senza scelta del giocatore che cambi la verità",
+      "required_materials_note": "Uscita, vagone, stanza dei Riffs; cine_truth_reaches_riffs",
+      "playable_pool": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c6_04",
+      "cinematic_assets": [
+        "cine_truth_reaches_riffs"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C7-01",
+      "music_asset": "mus_c6",
+      "ambience_asset": "amb_subway",
+      "required_flag_on_entry": "area_c6_03_complete",
+      "plot_flags_at_event_points": [
+        "riffs_informed",
+        "last_train_boarded"
+      ],
+      "flag_on_exit": "area_c6_04_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_door"
+      ],
+      "required_asset_ids": [
+        "amb_subway",
+        "cine_truth_reaches_riffs",
+        "env_c6_04",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c6",
+        "npc_masai",
+        "npc_mercy",
+        "npc_witness",
+        "prop_door",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c6_reunion",
+        "dlg_c6_punks",
+        "dlg_c6_truth"
+      ]
+    },
+    {
+      "id": "C7-01",
+      "chapter": "C7",
+      "kind": "narrative traversal",
+      "location": "Vagone, 1,5 schermate, profondità 110",
+      "goal_and_events": "Camminare brevemente e interagire con due punti; dialogo Swan/Mercy, compagni affaticati e contrasto con passeggeri eleganti. Si può restare ad ascoltare, mai timer",
+      "required_materials_note": "Interno treno, sedute, finestrini con loop urbano, passeggeri, pose sedute; cine_train_dawn",
+      "playable_pool": [
+        "swan",
+        "mercy"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c7_01",
+      "cinematic_assets": [
+        "cine_train_dawn"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C7-02",
+      "music_asset": "mus_c7",
+      "ambience_asset": "amb_train_motion",
+      "required_flag_on_entry": "area_c6_04_complete",
+      "plot_flags_at_event_points": [
+        "train_conversation_seen"
+      ],
+      "flag_on_exit": "area_c7_01_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [
+        "prop_train_seat"
+      ],
+      "required_asset_ids": [
+        "amb_train_motion",
+        "cine_train_dawn",
+        "env_c7_01",
+        "hero_swan",
+        "mus_c7",
+        "npc_mercy",
+        "prop_train_seat",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c7_train",
+        "dlg_c7_home"
+      ]
+    },
+    {
+      "id": "C7-02",
+      "chapter": "C7",
+      "kind": "cinematic + traversal",
+      "location": "Banchina di casa, 1 schermata",
+      "goal_and_events": "Il treno arriva, il gruppo scende. Riconoscere l'accesso visto nel prologo. Interazione dell'uscita conduce alla strada",
+      "required_materials_note": "Banchina alba, scala corrispondente al prologo, cambio luce; cine_home_arrival",
+      "playable_pool": [
+        "swan",
+        "mercy"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c7_02",
+      "cinematic_assets": [
+        "cine_home_arrival"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C8-01",
+      "music_asset": "mus_c7",
+      "ambience_asset": "amb_subway",
+      "required_flag_on_entry": "area_c7_01_complete",
+      "plot_flags_at_event_points": [
+        "home_arrived"
+      ],
+      "flag_on_exit": "area_c7_02_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_subway",
+        "cine_home_arrival",
+        "env_c7_02",
+        "hero_swan",
+        "mus_c7",
+        "npc_mercy",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c7_train",
+        "dlg_c7_home"
+      ]
+    },
+    {
+      "id": "C8-01",
+      "chapter": "C8",
+      "kind": "traversal + cinematic",
+      "location": "Strada di casa, 1,5 schermate",
+      "goal_and_events": "Ripresa degli scorci del prologo all'alba; carro dei Rogues, bottiglie e richiamo Luther. Non riempire la strada di gang di altri capitoli",
+      "required_materials_note": "Facciate riutilizzate con luce alba, veicolo, bottiglie animate; cine_bottles",
+      "playable_pool": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c8_01",
+      "cinematic_assets": [
+        "cine_bottles"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C8-02",
+      "music_asset": "mus_c8",
+      "ambience_asset": "amb_coney_dawn",
+      "required_flag_on_entry": "area_c7_02_complete",
+      "plot_flags_at_event_points": [
+        "rogues_arrived"
+      ],
+      "flag_on_exit": "area_c8_01_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_coney_dawn",
+        "cine_bottles",
+        "env_c8_01",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c8",
+        "npc_luther",
+        "npc_mercy",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c8_bottles",
+        "dlg_c8_confrontation",
+        "dlg_c8_riffs",
+        "dlg_c8_epilogue"
+      ]
+    },
+    {
+      "id": "C8-02",
+      "chapter": "C8",
+      "kind": "arena di varco",
+      "location": "Passaggio verso lungomare, 1,5 schermate, profondità 220",
+      "goal_and_events": "2 rogue_brawler + 1 rogue_bottle / 3 + 2. Breve raccordo ludico aggiunto rispetto alla scena conclusiva. Aprire il varco, non sconfiggere Luther qui",
+      "required_materials_note": "Passaggio, staccionata, bottiglie e uscita spiaggia",
+      "playable_pool": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c8_02",
+      "cinematic_assets": [],
+      "mandatory_enemies": {
+        "solo": {
+          "rogue_brawler": 2,
+          "rogue_bottle": 1
+        },
+        "duo": {
+          "rogue_brawler": 3,
+          "rogue_bottle": 2
+        }
+      },
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C8-03",
+      "music_asset": "mus_c8",
+      "ambience_asset": "amb_coney_dawn",
+      "required_flag_on_entry": "area_c8_01_complete",
+      "plot_flags_at_event_points": [
+        "beach_path_clear"
+      ],
+      "flag_on_exit": "area_c8_02_complete",
+      "completion_rule": "mandatory_enemies_defeated_then_group_exit",
+      "pickup_budgets": [
+        {
+          "item_id": "snack",
+          "solo": 1,
+          "duo": 2,
+          "placement": "fixed; see LEVELS.md"
+        },
+        {
+          "item_id": "bottle",
+          "solo": 1,
+          "duo": 1,
+          "placement": "fixed; see LEVELS.md"
+        }
+      ],
+      "props": [
+        "prop_fence"
+      ],
+      "required_asset_ids": [
+        "amb_coney_dawn",
+        "enemy_rogue_bottle",
+        "enemy_rogue_brawler",
+        "env_c8_02",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "item_bottle",
+        "item_snack",
+        "mus_c8",
+        "prop_fence",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c8_bottles",
+        "dlg_c8_confrontation",
+        "dlg_c8_riffs",
+        "dlg_c8_epilogue"
+      ]
+    },
+    {
+      "id": "C8-03",
+      "chapter": "C8",
+      "kind": "confrontation + cinematic",
+      "location": "Spiaggia, 1 schermata larga, profondità 230",
+      "goal_and_events": "Swan avanza al segno di confronto; altri mantengono posizione. Luther mostra la pistola. Da quel momento scena diretta: coltello, disarmo, arrivo Riffs e riconoscimento dell'innocenza. Nessun QTE capace di creare un finale diverso",
+      "required_materials_note": "Sabbia, mare, coltello narrativo, pistola Luther, ferita al braccio; cine_disarm e cine_riffs_arrival",
+      "playable_pool": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c8_03",
+      "cinematic_assets": [
+        "cine_disarm",
+        "cine_riffs_arrival"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "C8-04",
+      "music_asset": "mus_c8",
+      "ambience_asset": "amb_beach_wind",
+      "required_flag_on_entry": "area_c8_02_complete",
+      "plot_flags_at_event_points": [
+        "luther_disarmed",
+        "warriors_cleared"
+      ],
+      "flag_on_exit": "area_c8_03_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_beach_wind",
+        "cine_disarm",
+        "cine_riffs_arrival",
+        "env_c8_03",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_c8",
+        "npc_luther",
+        "npc_masai",
+        "npc_mercy",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c8_bottles",
+        "dlg_c8_confrontation",
+        "dlg_c8_riffs",
+        "dlg_c8_epilogue"
+      ]
+    },
+    {
+      "id": "C8-04",
+      "chapter": "C8",
+      "kind": "epilogue",
+      "location": "Battigia all'alba, scorrimento 1,5 schermate",
+      "goal_and_events": "Camminata finale del gruppo, Mercy con Swan, musica e crediti. Movimento facoltativo controllato o automatico dopo attesa; nessuna minaccia residua",
+      "required_materials_note": "Battigia, cielo alba, pose cammino stanco, titoli; cine_epilogue",
+      "playable_pool": [
+        "swan",
+        "snow",
+        "cowboy",
+        "cochise",
+        "vermin",
+        "rembrandt"
+      ],
+      "max_human_slots": 2,
+      "environment_asset": "env_c8_04",
+      "cinematic_assets": [
+        "cine_epilogue"
+      ],
+      "mandatory_enemies": {},
+      "escape_threats": {},
+      "timer_seconds_normal": null,
+      "checkpoint_before": true,
+      "next": "credits",
+      "music_asset": "mus_finale",
+      "ambience_asset": "amb_sea",
+      "required_flag_on_entry": "area_c8_03_complete",
+      "plot_flags_at_event_points": [
+        "campaign_complete"
+      ],
+      "flag_on_exit": "area_c8_04_complete",
+      "completion_rule": "scene_or_interaction_complete",
+      "pickup_budgets": [],
+      "props": [],
+      "required_asset_ids": [
+        "amb_sea",
+        "cine_epilogue",
+        "env_c8_04",
+        "hero_cochise",
+        "hero_cowboy",
+        "hero_rembrandt",
+        "hero_snow",
+        "hero_swan",
+        "hero_vermin",
+        "mus_finale",
+        "npc_mercy",
+        "ui_hud",
+        "ui_input_icons"
+      ],
+      "chapter_dialogue_asset_ids": [
+        "dlg_c8_bottles",
+        "dlg_c8_confrontation",
+        "dlg_c8_riffs",
+        "dlg_c8_epilogue"
+      ]
+    }
+  ],
+  "final_warriors": [
+    "swan",
+    "snow",
+    "cowboy",
+    "cochise",
+    "vermin",
+    "rembrandt"
+  ],
+  "narrative_companion": "mercy",
+  "out_of_roster_after": {
+    "C1": [
+      "cleon"
+    ],
+    "C3": [
+      "fox"
+    ],
+    "C4": [
+      "ajax"
+    ]
+  },
+  "global_asset_ids": [
+    "item_bat",
+    "item_pipe",
+    "item_board",
+    "item_bottle",
+    "item_snack",
+    "item_drink",
+    "item_medkit",
+    "fx_hand_impact",
+    "fx_wood_impact",
+    "fx_dust",
+    "fx_wood_break",
+    "fx_glass",
+    "fx_porcelain",
+    "fx_spark",
+    "fx_muzzle",
+    "fx_fire_smoke",
+    "fx_disarm",
+    "fx_revive",
+    "fx_exit_marker",
+    "ui_logo",
+    "ui_title",
+    "ui_journey_map",
+    "ui_character_select",
+    "ui_hud",
+    "ui_pause",
+    "ui_options",
+    "ui_tutorial",
+    "ui_loading",
+    "ui_group_change",
+    "ui_retry",
+    "ui_chapter_results",
+    "ui_campaign_results",
+    "ui_credits",
+    "ui_input_icons",
+    "font_display",
+    "font_body",
+    "sfx_punch_light",
+    "sfx_punch_heavy",
+    "sfx_kick",
+    "sfx_hit_wood",
+    "sfx_hit_metal",
+    "sfx_hit_body",
+    "sfx_step_asphalt",
+    "sfx_step_tile",
+    "sfx_step_soil",
+    "sfx_step_sand",
+    "sfx_fall",
+    "sfx_rise",
+    "sfx_breath",
+    "sfx_pickup",
+    "sfx_weapon_break",
+    "sfx_throw",
+    "sfx_disarm",
+    "sfx_revive_start",
+    "sfx_revive_done",
+    "sfx_door_open",
+    "sfx_door_slam",
+    "sfx_gate",
+    "sfx_glass_break",
+    "sfx_porcelain_break",
+    "sfx_barrier",
+    "sfx_bus_engine",
+    "sfx_bus_horn",
+    "sfx_train_depart",
+    "sfx_train_doors",
+    "sfx_train_brake",
+    "sfx_siren",
+    "sfx_crowd_react",
+    "sfx_gunshot",
+    "sfx_handcuffs",
+    "sfx_bottles",
+    "sfx_sea_transition",
+    "sfx_ui_move",
+    "sfx_ui_confirm",
+    "sfx_ui_back",
+    "sfx_ui_pause",
+    "sfx_ui_resume",
+    "sfx_ui_error",
+    "sfx_ui_checkpoint",
+    "sfx_ui_results",
+    "barks_cleon",
+    "barks_swan",
+    "barks_ajax",
+    "barks_snow",
+    "barks_cowboy",
+    "barks_cochise",
+    "barks_vermin",
+    "barks_rembrandt",
+    "barks_fox",
+    "mus_title",
+    "mus_results"
+  ]
+}

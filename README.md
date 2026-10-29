@@ -1,16 +1,25 @@
 # The Warriors · Night Run
 
-Beat ’em up a scorrimento ambientato nella notte del ritorno a Coney Island.
+Beat ’em up 2D: una notte attraverso New York, dal ritrovo dei Warriors al ritorno a Coney Island all'alba.
 
 ## Stato
-Ripartenza del progetto: **specifica della logica**, non ancora una build giocabile.
 
-- [Logica, campagna e piano di realizzazione](docs/GAME_DESIGN.md)
-- [Piano degli asset e stato delle consegne](docs/ASSET_PLAN.md)
-- Reference tecnica: [Primal Sentinels II](https://github.com/b3pz/Primal_sentinel_II), commit `7817d4c2cf121dd43ded6d72532f47b3ed7a154f`.
+**Prima stesura completa della progettazione. Il gioco non è ancora implementato.**
 
-La campagna prevista comprende il raduno di Cyrus, la fuga dal Bronx, gli Orphans, la caccia della polizia, i Baseball Furies, le Lizzies, i Punks e il ritorno a Coney Island.
+Prologo + otto capitoli, 35 aree, nove Warriors caratterizzati, gang e personaggi narrativi, regole del combattimento, eventi, checkpoint, dialoghi e inventario dei materiali.
 
-Primo traguardo tecnico: un tratto di parco giocabile con Swan e Ajax, Furies, armi raccoglibili e combattimento verificato in singolo e in due.
+Partire da [GAME_DESIGN.md](docs/GAME_DESIGN.md), indice della baseline 1.0.
 
-Nessun asset definitivo, master musicale o motore della reference è stato ancora trasferito. I documenti distinguono le funzionalità previste da quelle implementate.
+- [Cast e gang](docs/CAST.md)
+- [Combattimento e sistemi](docs/COMBAT_AND_SYSTEMS.md)
+- [Tutti i livelli, area per area](docs/LEVELS.md)
+- [Regia e dialoghi](docs/NARRATIVE.md)
+- [Grafica e audio](docs/ART_AND_AUDIO.md)
+- [Inventario asset](docs/ASSET_PLAN.md)
+- [Piano produttivo e verifiche](docs/PRODUCTION_AND_QA.md)
+- [Memoria delle decisioni](docs/PROJECT_MEMORY.md)
+- [Campagna strutturata](design/campaign.json) e [catalogo asset](design/asset_catalog.json)
+
+Reference tecnica scelta dall'autore: [Primal Sentinels II](https://github.com/b3pz/Primal_sentinel_II), analisi statica del commit 7817d4c2cf121dd43ded6d72532f47b3ed7a154f.
+
+La richiesta è definire prima tutto il gioco e poi costruirlo. Tre immagini sono state ricevute come reference esterne; nessuna nuova tavola, musica o motore è stata importata in questa consegna. I percorsi nei cataloghi sono destinazioni di produzione, non file già esistenti.
