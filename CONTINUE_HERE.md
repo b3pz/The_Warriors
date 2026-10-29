@@ -18,7 +18,9 @@ Checkpoint aggiornato il 29 ottobre 2026 (sera), dopo «puoi sviluppare questo?�
 | park_night.png | integrated | fondale 720 px ripetuto a specchio per aree di due schermate |
 | pixel_sheet_c4_cast_props_bg.png | source | tavola pixel art etichettata (Swan, Ajax, Furies, Orphans, Turnbull, Polizia, oggetti, FX, HUD, fondali a livelli). Stile diverso dalle tavole illustrate: **decidere quale stile è definitivo** prima di ritagliarla |
 
-Non è stato possibile verificare che questi file coincidano con gli allegati de893e/ff5f23/65bc58 citati in precedenza (ricevuti di nuovo senza nome).
+Verificato via sha256 sul pacchetto 02: warrior_a_8pose = de893e, fury_8pose = ff5f23. Il parco del pacchetto (parco_originale.png) è la versione con alpha dello stesso fondale.
+
+**Asset Pack 02** (assets/source/pack_02, stato source, non integrato): varianti delle due tavole illustrate (stesse otto pose, nessuna posa nuova), ritagli a griglia delle tavole, due atlanti in pixel art con molte gang, pose a terra, civili, oggetti, FX e fondali parco/metro/Coney Island/industriale a bassa risoluzione. Prima di ritagliarli serve la decisione sullo stile.
 
 ## Pose mancanti per completare C4 (rilevate in integrazione)
 
@@ -33,7 +35,7 @@ Non eseguito: playtest umano reale, controller fisici, due tastiere (rollover), 
 ## Prossime azioni
 
 1. Playtest umano della prova C4; regolare tempi e danni.
-2. Decidere lo stile definitivo (illustrato vs pixel) e produrre le pose mancanti elencate sopra.
+2. Decidere lo stile definitivo (illustrato ad alta risoluzione come nel gioco attuale, oppure pixel art degli atlanti del pacchetto 02) e produrre le pose mancanti elencate sopra.
 3. C4-01 (fuga) e C4-04 (scena), poi P0 e C1 secondo LEVELS.md.
 4. Musica/voci reali al posto dei suoni sintetizzati.
 

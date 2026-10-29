@@ -3118,7 +3118,7 @@
    "derived_files": [
     "assets/sprites/warrior_a_*.png"
    ],
-   "integration_note": "Usato nella prova C4 (nucleo 0.4). Corrispondenza con il file originale de893e/ff5f23/65bc58 non verificabile: ricevuto di nuovo in chat senza nome file."
+   "integration_note": "Usato nella prova C4 (nucleo 0.4). Coincide byte per byte con de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png (verificato sul pacchetto 02)."
   },
   {
    "id": "source_fury",
@@ -3138,7 +3138,7 @@
     "assets/sprites/fury_*.png",
     "assets/sprites/fury_nobat_*.png"
    ],
-   "integration_note": "Usato nella prova C4 (nucleo 0.4). Corrispondenza con il file originale de893e/ff5f23/65bc58 non verificabile: ricevuto di nuovo in chat senza nome file."
+   "integration_note": "Usato nella prova C4 (nucleo 0.4). Coincide byte per byte con ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png (verificato sul pacchetto 02)."
   },
   {
    "id": "source_park",
@@ -3168,6 +3168,14 @@
    "sha256": "f70d6c169070fca545331a1931a870f7f98482474dcd97bec4b742c6d541da7a",
    "description": "Tavola pixel art etichettata: Swan, Ajax, Furies, Orphans, Turnbull AC's, Polizia, oggetti, effetti, HUD, fondali a livelli. Stile diverso dalle tavole illustrate: non ancora integrata.",
    "identity_verified": false
+  },
+  {
+   "id": "source_pack_02",
+   "kind": "supplied_reference",
+   "status": "source",
+   "in_repository": true,
+   "repository_file": "assets/source/pack_02/",
+   "description": "Asset Pack 02: varianti delle tavole illustrate, due atlanti pixel art (Warriors, Furies, Orphans, Turnbull, Lizzies, Punks, polizia, civili, oggetti, FX) e fondali parco/metro/Coney Island/industriale a bassa risoluzione. Da rifinire; non integrato."
   }
  ]
 }

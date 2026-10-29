@@ -8,7 +8,8 @@
   "mode": "RGBA",
   "received": "2026-10-29",
   "status": "source",
-  "note": "Fury con mazza, 8 pose (riposo, 2 passi, swing orizzontale, carica, swing basso, colpito, a terra)."
+  "note": "Fury con mazza, 8 pose (riposo, 2 passi, swing orizzontale, carica, swing basso, colpito, a terra). Coincidenza byte per byte con l'originale verificata via sha256 sul pacchetto 02.",
+  "original_name": "ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png"
  },
  "park_night.png": {
   "sha256": "2c3d717bfc17a2610e1efe3fae4cf2a4aea118f6c555c892388d0c15cc181140",
@@ -41,6 +42,222 @@
   "mode": "RGBA",
   "received": "2026-10-29",
   "status": "source",
-  "note": "Warrior in gilet rosso e jeans, 8 pose (guardia, 2 passi, diretto, calcio, mazza, colpito, salto). Identità non confermata dall'autore."
+  "note": "Warrior in gilet rosso e jeans, 8 pose (guardia, 2 passi, diretto, calcio, mazza, colpito, salto). Identità non confermata dall'autore. Coincidenza byte per byte con l'originale verificata via sha256 sul pacchetto 02.",
+  "original_name": "de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png"
+ },
+ "_pack_02": {
+  "received": "2026-10-29",
+  "file": "The_Warriors_Asset_Pack_02.zip",
+  "note": "Archiviato senza i due duplicati de893e/ff5f23 (identici a warrior_a_8pose/fury_8pose). Ritagli geometrici e atlanti da rifinire: non integrati.",
+  "files": {
+   "pack_02/Effetti/effetti_01.png": {
+    "sha256": "73e1f134499a0a1316f4cdf5e60f17a4d41264dd01d99bd7dd58daeb9df3fff5",
+    "status": "source"
+   },
+   "pack_02/Fondali/Coney_Island/coney_extra_01.png": {
+    "sha256": "dc845426bcccd18146cd40f2b2daddc47a0515a6b75f9c1447b4173c0b3646ba",
+    "status": "source"
+   },
+   "pack_02/Fondali/Coney_Island/coney_sheet_01.png": {
+    "sha256": "7f47935224b57cfda84d101c36773261da5296872fea7a0c2f928ffc3ebbe79a",
+    "status": "source"
+   },
+   "pack_02/Fondali/Industriale/industriale_extra_01.png": {
+    "sha256": "4428dcfdcb7656b225ec6456a723491b39dbe837de343afcbd68860782baf4d2",
+    "status": "source"
+   },
+   "pack_02/Fondali/Industriale/industriale_sheet_01.png": {
+    "sha256": "29793021cb2d6f5ebde39ad307ff33f4b4a545eac06cf4b9e556bbe124919dbc",
+    "status": "source"
+   },
+   "pack_02/Fondali/Metro/metro_extra_01.png": {
+    "sha256": "a1276bbb91c7cbc870289b520f55039d7f21dc37c9c386f83b2ec7054e2e3dff",
+    "status": "source"
+   },
+   "pack_02/Fondali/Metro/metro_sheet_01.png": {
+    "sha256": "f3a81bcd452b7f136b371cd2ce60a9d45f193a00fbf40cad8b446db3b1cb2922",
+    "status": "source"
+   },
+   "pack_02/Fondali/Metro/metro_sheet_02.png": {
+    "sha256": "4b3bb10150d99472a5692b6ca618b4e05200bf13a40f0bd1da1599eaffaaf164",
+    "status": "source"
+   },
+   "pack_02/Fondali/Parco/parco_alternativo.png": {
+    "sha256": "c504f1e7b32f15d96f6f7451f595b7ead9d3040545fdad81a55a79d6b1dceb26",
+    "status": "source"
+   },
+   "pack_02/Fondali/Parco/parco_extra_01.png": {
+    "sha256": "bbe93ced079daab961d3103393d36d563da03416c54191fbfce3bc3e601ae8c4",
+    "status": "source"
+   },
+   "pack_02/Fondali/Parco/parco_originale.png": {
+    "sha256": "ab3b533d32d29483aa24ce7c585b9435796879bf4de628637ba9768ff0652819",
+    "status": "source"
+   },
+   "pack_02/Fondali/Parco/parco_sheet_01.png": {
+    "sha256": "1e48fa304f0a75b815ce643cc98607f90641ad42ff0c85cab99bb5e388df32fd",
+    "status": "source"
+   },
+   "pack_02/Nemici/Altre_bande/nemici_panorama_01.png": {
+    "sha256": "c5dc8e166feaaa5bb653027ce8351117b3bea824f2ae6c5a9749538fd9c12d14",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_01.png": {
+    "sha256": "cf0ef789064e9ec746acdc752ea87bbdb88f53e4e4e844f65a3b1882212acbb5",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_02.png": {
+    "sha256": "4fdaf8b26e58a5ace1c70b025c5d7fb75fee2763a3bca14adaa41577684701e9",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_03.png": {
+    "sha256": "d30bd87b449ad81696da7542b17105abba37728c32a799c1f68be6b693178be0",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_04.png": {
+    "sha256": "6c97830ef22fd3e9070317362aa7cd2e9543d0d5cabd481dc7a57abda95b9c51",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_05.png": {
+    "sha256": "b8f6bf449ed44faf011d4419f766ef66bebe22e1f6fa6059333fb47edf5ad4ff",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_06.png": {
+    "sha256": "17228ac303287b0951a8e90edee4d0beb049a497c810384bb519c31c24d3e53a",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_07.png": {
+    "sha256": "9ac1fbded5c3ff5401d22e694e9da6bc505782135748210a8a353e52374a451f",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_08.png": {
+    "sha256": "d7df6d049023b1cbd91db17409fadf7e8e4c52dbf5cfcc2329c573f84ca36f10",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_alt_01.png": {
+    "sha256": "55f97949c6337bc5896cbe4e55ba45ef064d605e802c1e353e4d4079dc51705b",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_alt_02.png": {
+    "sha256": "35424a6b9f77eb3570c5104d910cdf72ada0130e42e3e5a444e2a35465bb17a4",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_alt_03.png": {
+    "sha256": "3ff08c61130c7e507306272354b74a12a7832d0422111b2ba08a5ae04d788cf4",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_alt_04.png": {
+    "sha256": "d4d50f26eb177f2726ba672d0e0871b776ff4a2966130df5bdd2554e5273a26f",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_alt_05.png": {
+    "sha256": "f2cd9dbb5ba6e71c6a94a856030ef1841539fb783e70210797b266cedbd1772f",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_alt_06.png": {
+    "sha256": "9d34cde4b21bf5ff65c77a4ae20fd56de17f9364559aa31d6eb36db775cd39b6",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_alt_07.png": {
+    "sha256": "b13a9f97ae0a923995f5fa0755d409b4021560fd250455323f7af68bb4c1541c",
+    "status": "source"
+   },
+   "pack_02/Nemici/Baseball_Furies/fury_alt_08.png": {
+    "sha256": "f1918c386705fd91a9c36f866e2daa6e9dc52483661d936f2a1e72cbdcac5b2b",
+    "status": "source"
+   },
+   "pack_02/Oggetti/oggetti_01.png": {
+    "sha256": "64727eb0e1b8501ca330dd46be913c3fc5500819e05fd9fefd6ed2af61afaa82",
+    "status": "source"
+   },
+   "pack_02/Oggetti/oggetti_02.png": {
+    "sha256": "81a596d4df67fedd207244c7198d69e2edfd5385d03fd76acb7be04e6dc7f214",
+    "status": "source"
+   },
+   "pack_02/Oggetti/oggetti_extra_01.png": {
+    "sha256": "658f49b8ee253f6d75e549f98cd3a9632bb688ad093ff02b2fe5633a437c921d",
+    "status": "source"
+   },
+   "pack_02/Sorgenti/atlante_nuovo_01.png": {
+    "sha256": "6f81b1809a5dad31c85e6b60d499cbaf3569e29afdf03a22ce433240322472a0",
+    "status": "source"
+   },
+   "pack_02/Sorgenti/atlante_nuovo_02.png": {
+    "sha256": "7ac502b270bf7c96d19951e8bde48dd82183353f281fabee5cc2763783b0b910",
+    "status": "source"
+   },
+   "pack_02/Sorgenti/eroe_da_picchiaduro_in_otto_pose.png": {
+    "sha256": "7668717bc119bd41f7951551c3e02c3101dbe4f3f773597e6cdc642db368f9d6",
+    "status": "source"
+   },
+   "pack_02/Sorgenti/sprite_sheet_del_baseball_thug_in_otto_pose.png": {
+    "sha256": "5a42b869402550ca6169f9e48968f709ba3c8076fa8472c4d99d1c87cf2274f4",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_01.png": {
+    "sha256": "7c7d404d5453f327ee2cc213039bfa30499a7c777513ed42cc3c9f4c8e1b5017",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_02.png": {
+    "sha256": "b66ca1b22c22460e883fbf2af781e8d20661d768fcf422ebbb2a18b50819359c",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_03.png": {
+    "sha256": "2160c529c075eee58579eab8a3213cdc6c412c9c324fe86f0a0f9c77c67c3fb0",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_04.png": {
+    "sha256": "508534e9c13bf1a90daf03b6f617b7741d38206c1511efc01200e8ef00305321",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_05.png": {
+    "sha256": "315244a51172780c59116e37b5fdb041277af74a3b985441fe198ceaab1f90e3",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_06.png": {
+    "sha256": "2218bb4c04091b172f9a36677643e6bcfa2220b3e89ea015aa3c8e3a7e0d47e5",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_07.png": {
+    "sha256": "6e585bc2951d6e70da5816c26162e9790e9fbb99878afa52a99d5691116b2625",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_08.png": {
+    "sha256": "23d84267d9189e2c0f4650d5c844dfc8beb6ff7ce0c094e4334cbe17f27d60f4",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_alt_01.png": {
+    "sha256": "69cbb28b8a5b7fd825b9f210853da5c80ea1a856eec97a18963dfa57428aa8f9",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_alt_02.png": {
+    "sha256": "668649dd44fc3bb3c4174ec7a270c66505b6f3526e4d72fdfe66fab39994aeec",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_alt_03.png": {
+    "sha256": "663dbcad8a6b9a3bb11ed6e26a19fdb63ca55b8ff1dd3ddcc4580c011e319f4c",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_alt_04.png": {
+    "sha256": "2139ca1351719e14f679c0587663b7bad37d82142eb0e1fd0dd3a3f29e10cc08",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_alt_05.png": {
+    "sha256": "90e6cb8beebc3a088768bfef4526eaa072c34b7936dac309e5f5a2d5631ee31d",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_alt_06.png": {
+    "sha256": "286cb7c6c3abd66100d7d19d309b61b303763351439374750cd94cc888c9ef17",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_alt_07.png": {
+    "sha256": "63711141a1d6f127e06598f3dccea87ce2bfdf402fbdb5a15d015ffc8c1a2f81",
+    "status": "source"
+   },
+   "pack_02/Warriors/Warrior_reference/warrior_alt_08.png": {
+    "sha256": "5035fa19fb918afb219d75eb6b85199dc918eefd2bb0dd4ee508cc93f8d15b1b",
+    "status": "source"
+   }
+  }
  }
 }
