@@ -1,1 +1,15 @@
-LOTTO 04 — tavole aggiuntive senza scritte. Le due nuove immagini complete sono in Sorgenti/Nuove_tavole/. I ritagli in Fondali sono panorami estratti da queste tavole e possono contenere elementi sovrapposti o bordi: non sono livelli multilayer definitivi. I nuovi personaggi sono esempi non attribuiti: NON sono sprite finali identificati di Ajax, Snow, Cowboy, Cochise, Vermin, Rembrandt, Fox e Cleon. Gli sprite singoli precedenti rimangono nella raccolta. Da verificare trasparenza, identità e sequenza animazioni prima dell’integrazione in Claude.
+LOTTO 04 — TAVOLE APPROVATE DALL'AUTORE (29 ottobre 2026)
+
+Le tavole di questo lotto sono la grafica giusta e approvata per The Warriors · Night Run:
+- Sorgenti/Nuove_tavole/atlante_03_01.png
+- Sorgenti/Nuove_tavole/atlante_03_02.png
+- Sorgenti/Nuove_tavole/personaggi_nemici_fondali_04.png
+- Sorgenti/Nuove_tavole/personaggi_nemici_oggetti_05.png
+- i ritagli dei fondali in Fondali/ (parco, metro, vicolo, strada, porto, Coney Island)
+
+Stile di riferimento del gioco: pixel art di queste tavole. Sostituisce le tavole illustrate ad alta risoluzione usate nella prima prova C4.
+
+Lavoro tecnico ancora da fare prima dell'uso in gioco (non riguarda l'approvazione):
+- scontornare il fondo nero di atlante_03_02, personaggi_nemici_fondali_04 e dei ritagli senza alpha;
+- ritagliare i singoli frame, fissare pivot ai piedi e sequenze di animazione;
+- registrare quale figura corrisponde a quale personaggio (Swan, Ajax, Snow, Cowboy, Cochise, Vermin, Rembrandt, Fox, Cleon, gang e comparse).

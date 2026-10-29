@@ -23,7 +23,7 @@ Questa scaletta sostituisce la prima bozza che aveva P0 al raduno. C5 sviluppato
 
 Tre allegati osservati: de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png (Warrior non identificato, otto pose); ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png (Fury, otto pose); 65bc58_MCatdEcrTfWSAvto3TAplg_image.png (parco notturno con panchine e cestini dipinti).
 
-Non identificare la prima tavola come Swan o Ajax senza confronto. Non dichiarare immagini già ritagliate/animate/caricate. Stile illustrato candidato di lavoro; l'autore non ha espresso un'approvazione visiva definitiva. Bordi, trasparenza, ancoraggi e separazione dei props richiedono verifica.
+Non identificare la prima tavola come Swan o Ajax senza confronto. Non dichiarare immagini già ritagliate/animate/caricate. Stile illustrato usato come candidato di lavoro fino al 29 ottobre 2026, poi superato (vedi sotto). Bordi, trasparenza, ancoraggi e separazione dei props richiedono verifica.
 
 ## Prima stesura completa sviluppata dall'assistente
 
@@ -44,3 +44,7 @@ Analisi della reference: statica, commit 7817d4c2cf121dd43ded6d72532f47b3ed7a154
 Leggere GAME_DESIGN.md come indice e i documenti collegati per dettagli. Per cambi dell'autore aggiornare insieme LEVELS.md, campaign.json, asset_catalog.json e riepiloghi; mai tenere una seconda scaletta incompatibile nel README.
 
 Il lavoro successivo alla progettazione è produzione e implementazione, partendo da scala/animazioni e nucleo Furies. Non promettere che il design statico garantisca la qualità: colpi, animazioni e ritmo richiedono verifiche vere. Non chiedere di nuovo decisioni già espresse; distinguere modifiche creative dell'autore da controlli tecnici ordinari.
+
+## Decisione grafica (29 ottobre 2026, sera)
+
+L'autore ha approvato come grafica giusta le tavole della Raccolta 04 (`assets/source/raccolta_04`): lo stile del gioco è la loro pixel art. Le tavole illustrate integrate nella prima prova C4 sono provvisorie e vanno sostituite. Le note del lotto sono state riscritte di conseguenza.

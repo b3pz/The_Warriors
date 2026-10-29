@@ -1,6 +1,6 @@
 # Direzione visiva, interfaccia e audio
 
-Baseline 1.0. Stile di lavoro proposto: personaggi 2D illustrati e ritagliati con volumi leggibili, coerenti con le tavole ricevute; ambienti notturni pittorici dettagliati. Non chiamarlo pixel art 16-bit se i materiali hanno questo trattamento. Evitare mischiare sprite miniaturizzati, fondali realistici e HUD da supereroi.
+Baseline 1.0, aggiornata il 29 ottobre 2026. Stile approvato dall'autore: la pixel art delle tavole della Raccolta 04 (`assets/source/raccolta_04`), per personaggi, oggetti, effetti e fondali notturni. Le tavole illustrate precedenti sono superate. Evitare mischiare sprite miniaturizzati, fondali realistici e HUD da supereroi.
 
 ## Personaggi e animazione
 

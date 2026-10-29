@@ -6,7 +6,7 @@ Beat ’em up 2D: una notte attraverso New York, dal ritrovo dei Warriors al rit
 
 **Progettazione completa (baseline 1.0) + nucleo giocabile 0.4: prova del capitolo C4, aree C4-02 e C4-03.**
 
-Aprire `index.html` in un browser (o `dist/night-run.html`, un unico file con le immagini incluse). Nucleo: input tastiera/controller, simulazione 60 Hz, catene di colpi, pesante, corsa, salto e calcio volante, schivata, prese e lanci, mazza con durabilità e disarmo, furia, recuperi, cestino apribile, nemici con coordinatore degli attacchi, compagno CPU, due giocatori locali, KO/soccorso/retry con assistenza, salvataggio di checkpoint, pausa, opzioni. Grafica dalle tavole dell'autore (Warrior, Fury, parco); audio sintetizzato segnaposto. Dettagli in [CONTINUE_HERE.md](CONTINUE_HERE.md).
+Aprire `index.html` in un browser (o `dist/night-run.html`, un unico file con le immagini incluse). Nucleo: input tastiera/controller, simulazione 60 Hz, catene di colpi, pesante, corsa, salto e calcio volante, schivata, prese e lanci, mazza con durabilità e disarmo, furia, recuperi, cestino apribile, nemici con coordinatore degli attacchi, compagno CPU, due giocatori locali, KO/soccorso/retry con assistenza, salvataggio di checkpoint, pausa, opzioni. Grafica approvata: pixel art della Raccolta 04 (`assets/source/raccolta_04`), da integrare; la prova usa ancora le prime tavole illustrate, provvisorie. Audio sintetizzato segnaposto. Dettagli in [CONTINUE_HERE.md](CONTINUE_HERE.md).
 
 Verifiche automatiche: `node tools/qa.js` (richiede Playwright). Rigenerare sprite e atlas: `python3 tools/slice_sprites.py`; file singolo: `python3 tools/build_single.py`.
 

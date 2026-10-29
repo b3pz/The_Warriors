@@ -3118,7 +3118,8 @@
    "derived_files": [
     "assets/sprites/warrior_a_*.png"
    ],
-   "integration_note": "Usato nella prova C4 (nucleo 0.4). Coincide byte per byte con de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png (verificato sul pacchetto 02)."
+   "integration_note": "Usato nella prova C4 (nucleo 0.4). Coincide byte per byte con de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png (verificato sul pacchetto 02).",
+   "superseded_by": "source_raccolta_04"
   },
   {
    "id": "source_fury",
@@ -3138,7 +3139,8 @@
     "assets/sprites/fury_*.png",
     "assets/sprites/fury_nobat_*.png"
    ],
-   "integration_note": "Usato nella prova C4 (nucleo 0.4). Coincide byte per byte con ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png (verificato sul pacchetto 02)."
+   "integration_note": "Usato nella prova C4 (nucleo 0.4). Coincide byte per byte con ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png (verificato sul pacchetto 02).",
+   "superseded_by": "source_raccolta_04"
   },
   {
    "id": "source_park",
@@ -3157,7 +3159,8 @@
    "derived_files": [
     "assets/backgrounds/park_night_720.jpg"
    ],
-   "integration_note": "Usato nella prova C4 (nucleo 0.4). Corrispondenza con il file originale de893e/ff5f23/65bc58 non verificabile: ricevuto di nuovo in chat senza nome file."
+   "integration_note": "Usato nella prova C4 (nucleo 0.4). Corrispondenza con il file originale de893e/ff5f23/65bc58 non verificabile: ricevuto di nuovo in chat senza nome file.",
+   "superseded_by": "source_raccolta_04"
   },
   {
    "id": "source_pixel_sheet",
@@ -3183,7 +3186,9 @@
    "status": "source",
    "in_repository": true,
    "repository_file": "assets/source/raccolta_04/",
-   "description": "Quattro tavole pixel art nuove (atlante_03_01/02, personaggi_nemici_fondali_04, personaggi_nemici_oggetti_05) e 15 ritagli di fondali. Personaggi non attribuiti secondo STATO_LOTTO_04. atlante_03_02 e personaggi_nemici_fondali_04 senza alpha (fondo nero). Non integrato."
+   "description": "Grafica approvata dall'autore come quella giusta: quattro tavole pixel art (atlante_03_01/02, personaggi_nemici_fondali_04, personaggi_nemici_oggetti_05) e 15 ritagli di fondali. Stile di riferimento del gioco. Da scontornare (atlante_03_02, personaggi_nemici_fondali_04 e 7 ritagli senza alpha) e ritagliare in frame prima dell'integrazione.",
+   "approved_by_author": true,
+   "approved_on": "2026-10-29"
   }
  ]
 }

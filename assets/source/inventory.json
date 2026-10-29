@@ -8,7 +8,7 @@
   "mode": "RGBA",
   "received": "2026-10-29",
   "status": "source",
-  "note": "Fury con mazza, 8 pose (riposo, 2 passi, swing orizzontale, carica, swing basso, colpito, a terra). Coincidenza byte per byte con l'originale verificata via sha256 sul pacchetto 02.",
+  "note": "Fury con mazza, 8 pose (riposo, 2 passi, swing orizzontale, carica, swing basso, colpito, a terra). Coincidenza byte per byte con l'originale verificata via sha256 sul pacchetto 02. Superato dalla Raccolta 04 approvata: resta solo come grafica provvisoria della prima prova.",
   "original_name": "ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png"
  },
  "park_night.png": {
@@ -20,7 +20,7 @@
   "mode": "RGB",
   "received": "2026-10-29",
   "status": "source",
-  "note": "Fondale parco notturno con lungofiume, panchine e cestini dipinti; senza alpha."
+  "note": "Fondale parco notturno con lungofiume, panchine e cestini dipinti; senza alpha. Superato dalla Raccolta 04 approvata: resta solo come grafica provvisoria della prima prova."
  },
  "pixel_sheet_c4_cast_props_bg.png": {
   "sha256": "f70d6c169070fca545331a1931a870f7f98482474dcd97bec4b742c6d541da7a",
@@ -42,7 +42,7 @@
   "mode": "RGBA",
   "received": "2026-10-29",
   "status": "source",
-  "note": "Warrior in gilet rosso e jeans, 8 pose (guardia, 2 passi, diretto, calcio, mazza, colpito, salto). Identità non confermata dall'autore. Coincidenza byte per byte con l'originale verificata via sha256 sul pacchetto 02.",
+  "note": "Warrior in gilet rosso e jeans, 8 pose (guardia, 2 passi, diretto, calcio, mazza, colpito, salto). Identità non confermata dall'autore. Coincidenza byte per byte con l'originale verificata via sha256 sul pacchetto 02. Superato dalla Raccolta 04 approvata: resta solo come grafica provvisoria della prima prova.",
   "original_name": "de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png"
  },
  "_pack_02": {
@@ -264,7 +264,7 @@
   "received": "2026-10-29",
   "file": "The_Warriors_Grafiche_Raccolta_04.zip",
   "duplicates_skipped": 54,
-  "note": "Quattro tavole pixel art nuove (atlante_03_01/02, personaggi_nemici_fondali_04, personaggi_nemici_oggetti_05) e 15 ritagli di fondali. Personaggi non attribuiti secondo STATO_LOTTO_04. atlante_03_02 e personaggi_nemici_fondali_04 senza alpha (fondo nero). Non integrato.",
+  "note": "Grafica approvata dall'autore come quella giusta: quattro tavole pixel art (atlante_03_01/02, personaggi_nemici_fondali_04, personaggi_nemici_oggetti_05) e 15 ritagli di fondali. Stile di riferimento del gioco. Da scontornare (atlante_03_02, personaggi_nemici_fondali_04 e 7 ritagli senza alpha) e ritagliare in frame prima dell'integrazione.",
   "files": {
    "raccolta_04/Fondali/Concept_ritagliati/coney_luna_park_concept_03.png": {
     "sha256": "d638254f03aa4d09576cebe25dd0e7e51a516011f55076abd5e8832dff4185ac",
@@ -437,6 +437,8 @@
     "alpha": true,
     "status": "source"
    }
-  }
+  },
+  "approved_by_author": true,
+  "approved_on": "2026-10-29"
  }
 }

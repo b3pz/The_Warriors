@@ -1,1 +1,7 @@
-NON COMPLETATI: tavole individuali verificate di Ajax, Snow, Cowboy, Cochise, Vermin, Rembrandt, Fox, Cleon e resto cast; cicli animazione integrali; separazione alpha/props/fondali multilayer. Vedere README.md.
+Grafica approvata: tavole della Raccolta 04 (pixel art).
+
+Da completare per l'integrazione:
+- scontorno, ritaglio frame, pivot e sequenze per ogni personaggio delle tavole;
+- associazione documentata di ogni figura ai nove Warriors, alle gang e alle comparse;
+- eventuali pose o personaggi ancora assenti dalle tavole, da verificare durante il ritaglio rispetto al cast di docs/CAST.md;
+- separazione props/fondali a livelli dove serve il collider o la profondità.

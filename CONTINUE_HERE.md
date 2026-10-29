@@ -1,6 +1,6 @@
 # Riprendere The Warriors · Night Run
 
-Checkpoint aggiornato il 29 ottobre 2026 (sera), dopo «puoi sviluppare questo?» e la consegna delle tavole in chat. Questo file serve a continuare da qualsiasi chat o assistente senza ricostruire le decisioni.
+Checkpoint aggiornato il 29 ottobre 2026 (sera). **Decisione dell'autore: le tavole della Raccolta 04 sono la grafica giusta e approvata; lo stile del gioco è la loro pixel art.** Questo file serve a continuare da qualsiasi chat o assistente senza ricostruire le decisioni.
 
 ## Stato verificato
 
@@ -9,24 +9,15 @@ Checkpoint aggiornato il 29 ottobre 2026 (sera), dopo «puoi sviluppare questo?�
 - Moduli: `config.js` (valori di COMBAT_AND_SYSTEMS/CAST), `input.js`, `sim.js` (attori, colpi con ID e insieme bersagli, prese, armi, coordinatore, CPU, KO/soccorso, snapshot), `areas.js` (dati C4-02/C4-03), `render.js`, `audio.js`, `main.js` (flusso, menu, save `warriors-story-v1`, opzioni `warriors-options-v1`), `atlas_data.js` (generato).
 - Codice scritto da zero seguendo i documenti; nessuna routine copiata da Primal Sentinels II.
 
-## Asset (assets/source/inventory.json con sha256)
+## Grafica approvata
 
-| File | Stato | Uso |
-|---|---|---|
-| warrior_a_8pose.png | integrated | 8 pose ritagliate in assets/sprites/warrior_a_*.png, usate per **tutti** i Warriors della prova. Identità (Swan?) non confermata dall'autore |
-| fury_8pose.png | integrated | 8 pose in fury_*.png; varianti senza mazza fury_nobat_* ricavate in automatico (buchi sui pantaloni nel cammino, mano tagliata a terra): **ripiego da sostituire** |
-| park_night.png | integrated | fondale 720 px ripetuto a specchio per aree di due schermate |
-| pixel_sheet_c4_cast_props_bg.png | source | tavola pixel art etichettata (Swan, Ajax, Furies, Orphans, Turnbull, Polizia, oggetti, FX, HUD, fondali a livelli). Stile diverso dalle tavole illustrate: **decidere quale stile è definitivo** prima di ritagliarla |
+**Raccolta 04** (`assets/source/raccolta_04`), approvata dall'autore il 29 ottobre 2026: quattro tavole pixel art in `Sorgenti/Nuove_tavole/` (Warriors con camminata, attacchi, calci, colpiti e pose a terra; Baseball Furies anche incappucciati; Orphans, Punks, Lizzies, Rogues, polizia, civili; armi, props, effetti; fondali parco, metro, vicolo, porto, Coney Island) e 15 ritagli di fondali. Hash in `assets/source/inventory.json`.
 
-Verificato via sha256 sul pacchetto 02: warrior_a_8pose = de893e, fury_8pose = ff5f23. Il parco del pacchetto (parco_originale.png) è la versione con alpha dello stesso fondale.
+Lavoro tecnico per l'integrazione: scontornare il fondo nero (atlante_03_02, personaggi_nemici_fondali_04 e 7 ritagli senza alpha), ritagliare i frame, pivot ai piedi, sequenze, separare props e livelli dei fondali, registrare l'associazione figura → personaggio.
 
-**Asset Pack 02** (assets/source/pack_02, stato source, non integrato): varianti delle due tavole illustrate (stesse otto pose, nessuna posa nuova), ritagli a griglia delle tavole, due atlanti in pixel art con molte gang, pose a terra, civili, oggetti, FX e fondali parco/metro/Coney Island/industriale a bassa risoluzione. Prima di ritagliarli serve la decisione sullo stile.
+## Grafica provvisoria ancora nel gioco
 
-**Raccolta 04** (assets/source/raccolta_04, stato source, non integrata): 54 immagini identiche ai lotti precedenti non duplicate; nuove 4 tavole pixel art (Warriors con pose a terra e calci, Furies anche incappucciati, Orphans, Punks, Lizzies, Rogues, polizia, civili, oggetti, FX, fondali parco/metro/vicolo/porto/Coney Island) e 15 ritagli di fondali piccoli. Personaggi **non attribuiti** (STATO_LOTTO_04): non assegnarli ai nove Warriors senza tavole individuali. atlante_03_02 e personaggi_nemici_fondali_04 non hanno alpha (fondo nero da scontornare). Con questo lotto la pixel art copre molte più pose e ambienti delle tavole illustrate.
-
-## Pose mancanti per completare C4 (rilevate in integrazione)
-
-Warrior: a terra/KO, rialzata, swing orizzontale con mazza, camminata con mazza, presa, lancio, schivata, calcio volante. Fury: pose a mani nude (idle, cammino, spinta), rialzata, lanciato. Props in primo piano nello stile del fondale: panchina e cestino separati (ora disegnati a codice). Ogni Warrior della campagna ha bisogno del proprio set.
+La prova C4 attuale usa ancora le tavole illustrate de893e (warrior_a_8pose), ff5f23 (fury_8pose) e il parco illustrato, ora **superate** dalla Raccolta 04. Vanno sostituite. Restano in `assets/source` come storico, insieme alla tavola pixel etichettata e all'Asset Pack 02 (`assets/source/pack_02`), che contiene atlanti precedenti dello stesso stile.
 
 ## Verifiche eseguite (`node tools/qa.js`)
 
@@ -37,7 +28,7 @@ Non eseguito: playtest umano reale, controller fisici, due tastiere (rollover), 
 ## Prossime azioni
 
 1. Playtest umano della prova C4; regolare tempi e danni.
-2. Decidere lo stile definitivo (illustrato ad alta risoluzione come nel gioco attuale, oppure pixel art degli atlanti del pacchetto 02) e produrre le pose mancanti elencate sopra.
+2. Ritagliare le tavole approvate della Raccolta 04 e sostituire nella prova C4 Warrior, Furies, fondale, oggetti ed effetti; registrare figura → personaggio.
 3. C4-01 (fuga) e C4-04 (scena), poi P0 e C1 secondo LEVELS.md.
 4. Musica/voci reali al posto dei suoni sintetizzati.
 
