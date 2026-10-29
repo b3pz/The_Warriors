@@ -60,7 +60,11 @@ var W = window.W;
     if (def.pursuers) { var pc = duo ? def.pursuers.duo : def.pursuers.solo; this.pursuerType = Object.keys(pc)[0]; this.pursuersMax = pc[this.pursuerType]; this.pursuersLeft = this.pursuersMax * 2; }
     if (def.timer) this.timer = (opts.difficulty === 'facile' && def.timerEasy) ? def.timerEasy : def.timer;
     // coda scene d'ingresso
-    if (def.chapterCard && W.CHAPTERS[def.ch]) this.sceneQueue.push({ cine: 'card_' + def.ch, steps: [['title', W.CHAPTERS[def.ch].split(' · ')[1] || W.CHAPTERS[def.ch], W.CHAPTERS[def.ch].split(' · ')[0], 2.6]], letterbox: false });
+    if (def.chapterCard && W.CHAPTERS[def.ch]) {
+      var parts = W.CHAPTERS[def.ch].split(' · '), card = ['title', parts[1] || parts[0], parts[0], 2.6];
+      if (W.RADIO[def.ch]) this.sceneQueue.push({ cine: 'radio_' + def.ch, radio: true, mood: 'radio', letterbox: false, steps: W.RADIO[def.ch].map(function (l) { return ['say', 'dj', l]; }).concat([card]) });
+      else this.sceneQueue.push({ cine: 'card_' + def.ch, steps: [card], letterbox: false });
+    }
     if (def.enter) this.sceneQueue.push(W.SCENES[def.enter]);
     if (def.kind === 'scene' || def.kind === 'epilogue') (def.scenes || []).forEach(function (s) { self.sceneQueue.push(W.SCENES[s]); });
     if (def.kind === 'traversal' && !def.needTalks && !def.midScene) world.exitOpen = !def.exitInteract;

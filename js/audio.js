@@ -1,78 +1,174 @@
-// Mixer minimo con bus separati musica/effetti. Suoni sintetizzati SEGNAPOSTO, da sostituire con i master del catalogo.
+// Mixer con bus separati (musica, ambiente, effetti, radio). Tutto sintetizzato in tempo reale,
+// da sostituire con i master del catalogo. Tono: notte sporca, synth cupi, silenzi; niente fanfare.
+//   musica:   setMood('silence' | 'tension' | 'chase' | 'fight' | 'dawn' | 'radio')
+//   ambiente: setAmbience('city' | 'subway' | 'park' | 'interior' | 'beach' | 'none')
 'use strict';
 var W = window.W;
 
 W.Audio = (function () {
-  var ac = null, master, sfx, amb, seen = {}, vol = { sfx: 0.8, music: 0.5 }, ambNode = null;
+  var ac = null, master, sfx, mus, amb, seen = {}, vol = { sfx: 0.8, music: 0.5 };
+  var mood = 'silence', ambName = 'none', layers = {}, ambNodes = null, seqT = null, step = 0, noiseBuf = null;
   function ensure() {
     if (ac) return true;
     try {
       ac = new (window.AudioContext || window.webkitAudioContext)();
-      master = ac.createGain(); master.gain.value = 0.8; master.connect(ac.destination);
-      sfx = ac.createGain(); sfx.gain.value = vol.sfx; sfx.connect(master);
-      amb = ac.createGain(); amb.gain.value = vol.music * 0.35; amb.connect(master);
+      master = ac.createGain(); master.gain.value = 0.85; master.connect(ac.destination);
+      var comp = ac.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3; comp.connect(master);
+      sfx = ac.createGain(); sfx.gain.value = vol.sfx; sfx.connect(comp);
+      mus = ac.createGain(); mus.gain.value = vol.music; mus.connect(comp);
+      amb = ac.createGain(); amb.gain.value = vol.music * 0.9; amb.connect(comp);
+      noiseBuf = ac.createBuffer(1, ac.sampleRate * 3, ac.sampleRate);
+      var d = noiseBuf.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
     } catch (e) { ac = null; }
     return !!ac;
   }
-  function noise(dur) {
-    var b = ac.createBuffer(1, Math.max(1, ac.sampleRate * dur), ac.sampleRate), d = b.getChannelData(0);
-    for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    var s = ac.createBufferSource(); s.buffer = b; return s;
-  }
-  function env(node, t, a, peak, dur) { node.gain.setValueAtTime(0.0001, t); node.gain.exponentialRampToValueAtTime(peak, t + a); node.gain.exponentialRampToValueAtTime(0.0001, t + dur); }
-  function tone(type, f0, f1, dur, peak, out) {
-    var t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  function noise(loop) { var s = ac.createBufferSource(); s.buffer = noiseBuf; s.loop = !!loop; return s; }
+  function env(g, t, a, peak, dur) { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); }
+  function tone(type, f0, f1, dur, peak, out, when) {
+    var t = (when || ac.currentTime), o = ac.createOscillator(), g = ac.createGain();
     o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(Math.max(20, f1), t + dur);
-    env(g, t, 0.005, peak, dur); o.connect(g); g.connect(out || sfx); o.start(t); o.stop(t + dur + 0.02);
+    env(g, t, 0.004, peak, dur); o.connect(g); g.connect(out || sfx); o.start(t); o.stop(t + dur + 0.05);
   }
-  function burst(dur, peak, fType, freq, q) {
-    var t = ac.currentTime, n = noise(dur), f = ac.createBiquadFilter(), g = ac.createGain();
-    f.type = fType; f.frequency.value = freq; f.Q.value = q || 1;
-    env(g, t, 0.004, peak, dur); n.connect(f); f.connect(g); g.connect(sfx); n.start(t);
+  function burst(dur, peak, fType, freq, q, out, when) {
+    var t = (when || ac.currentTime), n = noise(), f = ac.createBiquadFilter(), g = ac.createGain();
+    f.type = fType; f.frequency.value = freq; f.Q.value = q || 0.8;
+    env(g, t, 0.003, peak, dur); n.connect(f); f.connect(g); g.connect(out || sfx); n.start(t, Math.random() * 2); n.stop(t + dur + 0.05);
   }
+
+  // ------------------------------------------------------------------ effetti: secchi, bassi, sporchi
   var SFX = {
-    hit: function (e) { tone('sine', e.heavy ? 140 : 190, 50, e.heavy ? 0.18 : 0.11, e.heavy ? 0.9 : 0.6); burst(0.06, 0.4, 'lowpass', 1800); if (e.weapon) burst(0.05, 0.5, 'bandpass', 900, 6); },
-    swing: function (e) { burst(e.heavy ? 0.16 : 0.1, e.enemy ? 0.12 : 0.18, 'bandpass', e.weapon ? 700 : 1400, 1.5); },
-    disarm: function () { burst(0.08, 0.5, 'bandpass', 1200, 8); tone('triangle', 600, 300, 0.2, 0.2); },
-    'break': function () { burst(0.22, 0.6, 'highpass', 2500); },
-    pickup: function () { tone('square', 520, 780, 0.08, 0.15); },
-    heal: function () { tone('triangle', 520, 1040, 0.18, 0.2); },
-    ko: function () { tone('sawtooth', 200, 60, 0.6, 0.3); },
-    fury: function () { tone('sawtooth', 120, 480, 0.3, 0.3); },
-    wave: function () { tone('square', 98, 92, 0.5, 0.15); },
-    open: function () { burst(0.12, 0.3, 'bandpass', 400, 3); },
-    revive: function () { tone('triangle', 330, 660, 0.3, 0.2); },
-    toss: function () { burst(0.15, 0.2, 'bandpass', 1000, 2); },
-    throw: function () { tone('sine', 120, 40, 0.3, 0.6); },
-    shot: function () { burst(0.25, 0.9, 'lowpass', 2500); tone('square', 90, 30, 0.2, 0.5); },
-    siren: function () { tone('sawtooth', 700, 980, 0.6, 0.12); setTimeout(function () { ac && tone('sawtooth', 980, 700, 0.6, 0.12); }, 600); },
-    horn: function () { tone('square', 233, 233, 0.5, 0.18); tone('square', 277, 277, 0.5, 0.12); },
-    train: function () { burst(1.6, 0.35, 'lowpass', 300); tone('sine', 60, 50, 1.6, 0.25); },
-    fire: function () { burst(0.9, 0.4, 'bandpass', 600, 0.7); },
-    bottle: function () { burst(0.12, 0.4, 'highpass', 3000); tone('triangle', 1200, 900, 0.12, 0.2); },
-    ricochet: function () { tone('sine', 2200, 600, 0.18, 0.15); },
-    aim: function (e) { if (!e.bottle) tone('square', 880, 880, 0.08, 0.06); },
-    clear: function () { tone('triangle', 392, 392, 0.15, 0.2); setTimeout(function () { ac && tone('triangle', 523, 523, 0.3, 0.2); }, 140); }
+    hit: function (e) {
+      burst(e.heavy ? 0.16 : 0.09, e.heavy ? 0.9 : 0.6, 'lowpass', e.heavy ? 380 : 650, 1);
+      tone('sine', e.heavy ? 90 : 120, 40, e.heavy ? 0.2 : 0.12, e.heavy ? 0.8 : 0.5);
+      if (e.weapon) burst(0.05, 0.35, 'bandpass', 1600, 4);
+    },
+    swing: function (e) { burst(e.heavy ? 0.2 : 0.12, e.enemy ? 0.08 : 0.12, 'bandpass', e.weapon ? 500 : 900, 0.9); },
+    disarm: function () { burst(0.07, 0.4, 'bandpass', 1100, 6); tone('triangle', 300, 200, 0.25, 0.08); },
+    'break': function () { burst(0.3, 0.5, 'highpass', 2600, 0.7); },
+    pickup: function () { burst(0.04, 0.2, 'bandpass', 1800, 3); },
+    heal: function () { burst(0.06, 0.15, 'bandpass', 1200, 3); },
+    ko: function () { tone('sine', 110, 45, 0.9, 0.35); burst(0.4, 0.25, 'lowpass', 220); },
+    fury: function () { tone('sawtooth', 70, 140, 0.35, 0.2); burst(0.3, 0.25, 'lowpass', 500); },
+    wave: function () { tone('sawtooth', 55, 52, 1.2, 0.14, mus); },
+    clear: function () { tone('sine', 110, 110, 1.4, 0.08, mus); tone('sine', 164.8, 164.8, 1.4, 0.05, mus); },
+    open: function () { burst(0.14, 0.25, 'bandpass', 380, 3); },
+    revive: function () { tone('triangle', 220, 330, 0.3, 0.08); },
+    toss: function () { burst(0.15, 0.18, 'bandpass', 900, 1.5); },
+    throw: function () { tone('sine', 100, 38, 0.35, 0.6); burst(0.2, 0.3, 'lowpass', 300); },
+    shot: function () { burst(0.35, 1, 'lowpass', 3000, 0.5); tone('square', 80, 30, 0.25, 0.4); },
+    siren: function () { var t = ac.currentTime; for (var i = 0; i < 3; i++) { tone('sawtooth', 620, 880, 0.55, 0.05, amb, t + i * 1.1); tone('sawtooth', 880, 620, 0.55, 0.05, amb, t + i * 1.1 + 0.55); } },
+    horn: function () { tone('square', 196, 196, 0.7, 0.14); tone('square', 233, 233, 0.7, 0.1); },
+    train: function () { burst(2.5, 0.4, 'lowpass', 220); tone('sine', 55, 48, 2.5, 0.25); burst(0.6, 0.15, 'bandpass', 3200, 8, sfx, ac.currentTime + 1.6); },
+    fire: function () { burst(1.2, 0.4, 'bandpass', 500, 0.6); },
+    bottle: function () { burst(0.06, 0.35, 'bandpass', 2600, 6); tone('triangle', 2100, 1700, 0.08, 0.1); },
+    ricochet: function () { tone('sine', 2400, 500, 0.2, 0.1); },
+    aim: function (e) { if (!e.bottle) tone('sine', 1400, 1400, 0.05, 0.05); },
+    line: function () {},
+    flashfx: function () {}, shakefx: function () {}
   };
-  function startAmbience() {
-    if (!ensure() || ambNode) return;
-    // vento notturno: rumore filtrato lento
-    var n = noise(4); n.loop = true;
-    var f = ac.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 380;
-    var lfo = ac.createOscillator(), lg = ac.createGain(); lfo.frequency.value = 0.08; lg.gain.value = 160; lfo.connect(lg); lg.connect(f.frequency); lfo.start();
-    var g = ac.createGain(); g.gain.value = 0.5; n.connect(f); f.connect(g); g.connect(amb); n.start();
-    ambNode = n;
+
+  // ------------------------------------------------------------------ musica: bordone in minore + pulsazione
+  // Re minore: bordone su Re e La, ostinato di basso che cambia con lo stato.
+  var MOODS = {
+    silence: { drone: 0, pulse: 0, kick: 0, cut: 300 },
+    tension: { drone: 0.16, pulse: 0, kick: 0, cut: 520 },
+    chase:   { drone: 0.12, pulse: 0.16, kick: 0.12, cut: 900, bpm: 128 },
+    fight:   { drone: 0.12, pulse: 0.14, kick: 0.18, cut: 760, bpm: 112 },
+    dawn:    { drone: 0.12, pulse: 0, kick: 0, cut: 1400, bright: true },
+    radio:   { drone: 0.05, pulse: 0, kick: 0, cut: 400 }
+  };
+  function startMusic() {
+    if (layers.drone) return;
+    var f = ac.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 500; f.Q.value = 2;
+    var lfo = ac.createOscillator(), lg = ac.createGain(); lfo.frequency.value = 0.05; lg.gain.value = 180; lfo.connect(lg); lg.connect(f.frequency); lfo.start();
+    var dg = ac.createGain(); dg.gain.value = 0; f.connect(dg); dg.connect(mus);
+    var oscs = [[73.42, -7], [73.42, 6], [110, -4], [146.83, 3]].map(function (p) {
+      var o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = p[0]; o.detune.value = p[1]; o.connect(f); o.start(); return o;
+    });
+    layers.drone = { gain: dg, filter: f, oscs: oscs };
+    layers.pulse = ac.createGain(); layers.pulse.gain.value = 0; layers.pulse.connect(mus);
+    layers.kick = ac.createGain(); layers.kick.gain.value = 0; layers.kick.connect(mus);
+    var BASS = [36.71, 36.71, 0, 36.71, 43.65, 0, 36.71, 32.7, 36.71, 36.71, 0, 36.71, 48.99, 0, 43.65, 41.2];
+    seqT = setInterval(function () {
+      if (!ac || ac.state !== 'running') return;
+      var M = MOODS[mood]; if (!M.bpm) return;
+      var now = ac.currentTime, n = BASS[step % 16];
+      if (n && M.pulse) {
+        var o = ac.createOscillator(), g = ac.createGain(), lf = ac.createBiquadFilter();
+        o.type = 'sawtooth'; o.frequency.value = n * 2; lf.type = 'lowpass'; lf.frequency.setValueAtTime(M.cut, now); lf.frequency.exponentialRampToValueAtTime(120, now + 0.18);
+        env(g, now, 0.005, 0.9, 0.2); o.connect(lf); lf.connect(g); g.connect(layers.pulse); o.start(now); o.stop(now + 0.25);
+      }
+      if (M.kick && step % 4 === 0) { var k = ac.createOscillator(), kg = ac.createGain(); k.frequency.setValueAtTime(110, now); k.frequency.exponentialRampToValueAtTime(40, now + 0.15); env(kg, now, 0.002, 1, 0.25); k.connect(kg); kg.connect(layers.kick); k.start(now); k.stop(now + 0.3); }
+      if (M.kick && step % 8 === 4) { var hn = noise(), hf = ac.createBiquadFilter(), hg = ac.createGain(); hf.type = 'highpass'; hf.frequency.value = 6000; env(hg, now, 0.002, 0.25, 0.06); hn.connect(hf); hf.connect(hg); hg.connect(layers.kick); hn.start(now); hn.stop(now + 0.1); }
+      step++;
+    }, 60000 / 128 / 4);
   }
+  function applyMood() {
+    if (!ac || !layers.drone) return;
+    var M = MOODS[mood] || MOODS.silence, t = ac.currentTime;
+    layers.drone.gain.gain.setTargetAtTime(M.drone, t, 1.2);
+    layers.drone.filter.frequency.setTargetAtTime(M.cut, t, 1.5);
+    layers.drone.oscs[3].frequency.setTargetAtTime(M.bright ? 174.6 : 146.83, t, 2); // all'alba la terza sale: Re maggiore → Fa
+    layers.pulse.gain.setTargetAtTime(M.pulse, t, 0.6);
+    layers.kick.gain.setTargetAtTime(M.kick, t, 0.6);
+  }
+
+  // ------------------------------------------------------------------ ambienti
+  var AMB = {
+    city:     { rumble: [140, 0.22], hiss: [2500, 0.025], sirens: 18 },
+    subway:   { rumble: [70, 0.35], hiss: [1800, 0.03], screech: 14 },
+    park:     { rumble: [260, 0.12], hiss: [900, 0.05], crickets: true },
+    interior: { rumble: [55, 0.12], hum: 60 },
+    beach:    { rumble: [400, 0.08], hiss: [600, 0.12], waves: true },
+    none:     {}
+  };
+  function stopAmb() { if (ambNodes) { ambNodes.forEach(function (n) { try { n.stop ? n.stop() : n.disconnect(); } catch (e) {} }); ambNodes = null; } }
+  function startAmb(name) {
+    stopAmb(); var A = AMB[name] || {}, nodes = [];
+    if (A.rumble) { var n = noise(true), f = ac.createBiquadFilter(), g = ac.createGain(); f.type = 'lowpass'; f.frequency.value = A.rumble[0]; g.gain.value = A.rumble[1]; n.connect(f); f.connect(g); g.connect(amb); n.start(); nodes.push(n); }
+    if (A.hiss) { var n2 = noise(true), f2 = ac.createBiquadFilter(), g2 = ac.createGain(); f2.type = 'bandpass'; f2.frequency.value = A.hiss[0]; f2.Q.value = 0.4; g2.gain.value = A.hiss[1]; n2.connect(f2); f2.connect(g2); g2.connect(amb);
+      if (A.waves) { var wl = ac.createOscillator(), wg = ac.createGain(); wl.frequency.value = 0.12; wg.gain.value = A.hiss[1] * 0.9; wl.connect(wg); wg.connect(g2.gain); wl.start(); nodes.push(wl); }
+      n2.start(); nodes.push(n2); }
+    if (A.hum) { var h = ac.createOscillator(), hg = ac.createGain(); h.frequency.value = A.hum; hg.gain.value = 0.015; h.connect(hg); hg.connect(amb); h.start(); nodes.push(h); }
+    ambNodes = nodes; ambName = name;
+    var ev = setInterval(function () {
+      if (ambName !== name) { clearInterval(ev); return; }
+      if (!ac || ac.state !== 'running') return;
+      var t = ac.currentTime;
+      if (A.sirens && Math.random() < 1 / A.sirens) { tone('sine', 700, 950, 1.2, 0.012, amb); tone('sine', 950, 700, 1.2, 0.012, amb, t + 1.2); }
+      if (A.screech && Math.random() < 1 / A.screech) burst(1.4, 0.04, 'bandpass', 3400, 14, amb);
+      if (A.crickets && Math.random() < 0.5) for (var c = 0; c < 3; c++) tone('sine', 4200, 4200, 0.03, 0.006, amb, t + c * 0.07);
+    }, 1000);
+  }
+
+  // ------------------------------------------------------------------ radio della DJ: crepitio e banda stretta
+  var radioNodes = null;
+  function radio(on) {
+    if (!ensure()) return;
+    if (on && !radioNodes) {
+      var n = noise(true), f = ac.createBiquadFilter(), g = ac.createGain(); f.type = 'bandpass'; f.frequency.value = 2200; f.Q.value = 1.2; g.gain.value = 0.03;
+      n.connect(f); f.connect(g); g.connect(sfx); n.start();
+      var crackle = setInterval(function () { if (ac && Math.random() < 0.6) burst(0.015, 0.08 + Math.random() * 0.1, 'highpass', 3000, 1); }, 90);
+      radioNodes = { n: n, crackle: crackle };
+      burst(0.3, 0.25, 'bandpass', 1500, 2);
+    } else if (!on && radioNodes) { try { radioNodes.n.stop(); } catch (e) {} clearInterval(radioNodes.crackle); radioNodes = null; burst(0.15, 0.2, 'bandpass', 1200, 2); }
+  }
+
   return {
-    unlock: function () { if (ensure() && ac.state === 'suspended') ac.resume(); startAmbience(); },
+    unlock: function () { if (ensure()) { if (ac.state === 'suspended') ac.resume(); startMusic(); applyMood(); if (ambName === 'none' && pendingAmb) startAmb(pendingAmb); } },
     consume: function (events) {
       if (!ac) return;
       for (var i = 0; i < events.length; i++) { var e = events[i]; if (seen[e.eid]) continue; seen[e.eid] = true; if (SFX[e.type]) try { SFX[e.type](e); } catch (x) {} }
     },
-    ui: function () { if (ac) tone('square', 660, 660, 0.04, 0.08); },
-    setVol: function (k, v) { vol[k] = v; if (!ac) return; if (k === 'sfx') sfx.gain.value = v; else amb.gain.value = v * 0.35; },
+    setMood: function (m) { if (m === mood) return; mood = MOODS[m] ? m : 'silence'; applyMood(); },
+    setAmbience: function (a) { pendingAmb = a; if (!ac || a === ambName) return; startAmb(a); },
+    radio: radio,
+    ui: function () { if (ac) burst(0.03, 0.08, 'bandpass', 1400, 4); },
+    setVol: function (k, v) { vol[k] = v; if (!ac) return; if (k === 'sfx') sfx.gain.value = v; else { mus.gain.value = v; amb.gain.value = v * 0.9; } },
     vol: vol,
+    mood: function () { return mood; },
     suspend: function () { if (ac && ac.state === 'running') ac.suspend(); },
     resume: function () { if (ac && ac.state === 'suspended') ac.resume(); }
   };
+  var pendingAmb = 'none';
 })();

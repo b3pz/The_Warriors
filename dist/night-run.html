@@ -43,7 +43,9 @@ W.CFG = {
   CAM_MARGIN: 160, MAX_SPREAD: 850,
   MAX_ON_FIELD: [4, 6], MAX_ATTACKERS: [1, 2], ATTACK_GAP: 0.09,
   STUCK_REPATH: 3, STUCK_RESPAWN: 8,
-  MAX_WEAPON_PICKUPS: 6
+  MAX_WEAPON_PICKUPS: 6,
+  // risse brevi e violente come nel film: i colpi pesano di più per tutti
+  BRUTAL: { player: 1.3, enemy: 1.15 }
 };
 
 // Tempi in secondi: prep / attivo / recupero. Danno riferito a potenza 3.
@@ -501,9 +503,9 @@ var W = window.W;
     var a = this.mods.anim;
     if (m !== 'fury') { sp.prep *= a; sp.rec *= a; }
     var wpn = this.weapon && !W.WEAPONS[this.weapon.type].throwOnly ? W.WEAPONS[this.weapon.type] : null;
-    sp.dmg = sp.dmg * this.mods.dmg;
+    sp.dmg = sp.dmg * this.mods.dmg * C.BRUTAL.player;
     if (wpn && (m === 'l1' || m === 'l2' || m === 'l3' || m === 'heavy' || m === 'run')) {
-      sp.dmg = (m === 'heavy' ? wpn.heavy : wpn.light) * this.mods.dmg * (m === 'l3' ? 1.15 : 1);
+      sp.dmg = (m === 'heavy' ? wpn.heavy : wpn.light) * this.mods.dmg * (m === 'l3' ? 1.15 : 1) * C.BRUTAL.player;
       sp.weaponReach = wpn.reach; sp.prep *= wpn.slow; sp.rec *= wpn.slow;
     }
     this.att = new Attack(this, m, sp);
@@ -629,7 +631,7 @@ var W = window.W;
   Player.prototype.takeHit = function (from, att) {
     var w = this.world, sp = att.spec;
     if (sp.held) { var dh = sp.dmg * w.diff.edmg; this.hp = Math.max(0, this.hp - dh); w.stats.damageTaken += dh; w.emit('hit', { x: this.x, y: this.y, z: 70, target: 'player' }); if (this.hp <= 0) { this.release(true); this.knockOut(from); } return; }
-    var dmg = sp.dmg * w.diff.edmg;
+    var dmg = sp.dmg * w.diff.edmg * C.BRUTAL.enemy;
     this.hp = Math.max(0, this.hp - dmg); w.stats.damageTaken += dmg;
     w.emit('hit', { x: this.x, y: this.y, z: 70, target: 'player', heavy: !!sp.heavy, weapon: !!sp.weapon });
     if (this.grabbed) this.releaseGrab();
@@ -1620,7 +1622,44 @@ var W = window.W;
     P0: 'Prologo · Coney Island', C1: 'Capitolo 1 · Il raduno', C2: 'Capitolo 2 · Braccati', C3: 'Capitolo 3 · Territorio nemico', C4: 'Capitolo 4 · Baseball Furies',
     C5: 'Capitolo 5 · La banda divisa', C6: 'Capitolo 6 · Union Square', C7: 'Capitolo 7 · L\'ultimo treno', C8: 'Capitolo 8 · Coney Island'
   };
+  // luce e musica per area: sera al prologo, notte, alba sul treno e a Coney Island
+  A.forEach(function (a) {
+    if (a.ch === 'P0') a.light = 'dusk';
+    if (a.ch === 'C7' || a.ch === 'C8') { a.light = 'dawn'; if (a.kind !== 'arena') a.mood = 'dawn'; }
+  });
+  A.filter(function (a) { return a.id === 'C4-01'; })[0].mood = 'silence';
+
+  // ------------------------------------------------------------------ eventi in contemporanea
+  // Nel capitolo 5 la banda è divisa in tre gruppi: ogni area dice a quale gruppo appartiene.
+  // La vignetta di passaggio mostra «Intanto…», il luogo e lo stato degli altri gruppi.
+  W.THREADS = {
+    swan:   { label: 'Swan e Mercy', members: ['swan', 'mercy'],
+      status: function (f) { return f.swan_mercy_bond ? 'Verso Union Square' : (f.party_split ? 'Nei tunnel della metro' : 'Insieme agli altri'); } },
+    park:   { label: 'Ajax, Snow e Cowboy', members: ['ajax', 'snow', 'cowboy'],
+      status: function (f) { return f.regroup_target ? 'Snow e Cowboy verso Union Square' : (f.ajax_arrested ? 'Ajax arrestato · Snow e Cowboy in fuga' : 'Riverside Park'); } },
+    lizzies:{ label: 'Vermin, Cochise e Rembrandt', members: ['vermin', 'cochise', 'rembrandt'],
+      status: function (f) { return f.lizzies_trap ? 'Scappati dalle Lizzies' : (f.party_split ? 'Ospiti delle Lizzies' : 'Insieme agli altri'); } }
+  };
+  [['C5-01', 'park', 'Riverside Park'], ['C5-02', 'lizzies', 'Un appartamento sconosciuto'], ['C5-03', 'lizzies', 'La stanza delle Lizzies'],
+   ['C5-04', 'swan', 'I sotterranei della metro'], ['C5-05', 'park', 'Snow e Cowboy, verso Union Square']].forEach(function (t) {
+    var a = A.filter(function (x) { return x.id === t[0]; })[0]; a.thread = t[1]; a.where = t[2];
+  });
   W.OUT_AFTER = { C1: ['cleon'], C3: ['fox'], C4: ['ajax'] };
+
+  // ------------------------------------------------------------------ la DJ
+  // Intermezzi radio all'inizio dei capitoli: battute originali dell'adattamento, non citazioni del film.
+  W.RADIO = {
+    C1: ['Buonasera, città. Stanotte nel Bronx c\'è una riunione che non si è mai vista: tutte le bande, nello stesso posto.', 'Si dice che qualcuno voglia cambiare le regole. Restate sintonizzati.'],
+    C2: ['Notizie dal Bronx, e non sono belle. Al raduno qualcuno ha sparato a Cyrus.', 'Per le strade gira un nome solo: i Warriors. Se li vedete, lo sapete già. Questa è per loro.'],
+    C3: ['La metro va a singhiozzo, stanotte. Un incendio sui binari, treni fermi a metà strada.', 'E chi scende dove non dovrebbe, scende in casa d\'altri.'],
+    C4: ['Ancora nessuna notizia dei ragazzi con il gilet. Qualcuno dice che sono vicini al fiume.', 'Il parco di notte è un brutto posto per fermarsi. Musica.'],
+    C5: ['Aggiornamento per chi tiene il conto: i Warriors non sono più tutti insieme.', 'Divisi, stanchi, ancora lontani da casa. Questa la dedico a chi si è perso.'],
+    C6: ['Sono ancora in piedi. Non so come, ma sono ancora in piedi.', 'Prossima fermata, Union Square. E anche lì qualcuno li aspetta.'],
+    C7: ['Sta arrivando la luce. La notte più lunga della città sta finendo.', 'E un treno corre verso il mare.'],
+    C8: ['Una correzione, per chi ascolta: i Warriors con quello sparo non c\'entrano.', 'Ma la voce non è arrivata a tutti. Qualcuno li aspetta ancora, sulla spiaggia.']
+  };
+  W.NPC_NAMES.dj = 'La DJ';
+
   W.areaIndex = function (id) { for (var i = 0; i < A.length; i++) if (A[i].id === id) return i; return -1; };
 })();
 
@@ -1688,7 +1727,11 @@ var W = window.W;
     if (def.pursuers) { var pc = duo ? def.pursuers.duo : def.pursuers.solo; this.pursuerType = Object.keys(pc)[0]; this.pursuersMax = pc[this.pursuerType]; this.pursuersLeft = this.pursuersMax * 2; }
     if (def.timer) this.timer = (opts.difficulty === 'facile' && def.timerEasy) ? def.timerEasy : def.timer;
     // coda scene d'ingresso
-    if (def.chapterCard && W.CHAPTERS[def.ch]) this.sceneQueue.push({ cine: 'card_' + def.ch, steps: [['title', W.CHAPTERS[def.ch].split(' · ')[1] || W.CHAPTERS[def.ch], W.CHAPTERS[def.ch].split(' · ')[0], 2.6]], letterbox: false });
+    if (def.chapterCard && W.CHAPTERS[def.ch]) {
+      var parts = W.CHAPTERS[def.ch].split(' · '), card = ['title', parts[1] || parts[0], parts[0], 2.6];
+      if (W.RADIO[def.ch]) this.sceneQueue.push({ cine: 'radio_' + def.ch, radio: true, mood: 'radio', letterbox: false, steps: W.RADIO[def.ch].map(function (l) { return ['say', 'dj', l]; }).concat([card]) });
+      else this.sceneQueue.push({ cine: 'card_' + def.ch, steps: [card], letterbox: false });
+    }
     if (def.enter) this.sceneQueue.push(W.SCENES[def.enter]);
     if (def.kind === 'scene' || def.kind === 'epilogue') (def.scenes || []).forEach(function (s) { self.sceneQueue.push(W.SCENES[s]); });
     if (def.kind === 'traversal' && !def.needTalks && !def.midScene) world.exitOpen = !def.exitInteract;
@@ -2455,7 +2498,7 @@ W.Render = (function () {
         ctx.fillStyle = COL.ink; ctx.fillText(def.name.toUpperCase(), x + 192, y + 52);
         for (var d = 0; d < def.dur; d++) { ctx.fillStyle = d < p.weapon.dur ? def.color : '#333'; ctx.fillRect(x + 192 + d * 10, y + 58, 8, 8); }
       }
-      if (p.combo >= 3) { ctx.fillStyle = col; ctx.font = 'bold 18px "Oswald", sans-serif'; ctx.fillText(p.combo + ' COLPI', x + 100, y + 68); }
+
       var pr = !p.cpu && w.promptFor(p);
       if (pr && p.state !== 'ko') {
         var px = p.x - w.cam.x, py = p.y - (p.z || 0) - 228;
@@ -2466,15 +2509,12 @@ W.Render = (function () {
         ctx.fillText(pr, px - tw / 2 + 36, py);
       }
     }
-    // punteggio
-    ctx.textAlign = 'right'; ctx.fillStyle = COL.ink; ctx.font = '600 22px "Oswald", sans-serif';
-    ctx.fillText(String(w.score[0]).padStart(7, '0'), C.VIEW_W - 24, 40);
-    if (w.players.length > 1 && !w.players[1].cpu) { ctx.fillStyle = COL.p2; ctx.fillText(String(w.score[1]).padStart(7, '0'), C.VIEW_W - 24, 68); }
+    // niente punteggio a schermo durante il gioco: resta nel resoconto finale
     // obiettivo
     var ar = w.area;
     ctx.textAlign = 'center'; ctx.font = '600 18px "Oswald", sans-serif'; ctx.fillStyle = 'rgba(233,228,214,0.85)';
     ctx.fillText(ui.tutorialText(ar.objective || ''), C.VIEW_W / 2, 108);
-    if (ar.banner.t < 2.4) {
+    if (false && ar.banner.t < 2.4) { // sostituito dalla vignetta a fumetto
       ctx.globalAlpha = Math.min(1, (3 - ar.banner.t)); ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(0, 300, C.VIEW_W, 90);
       ctx.fillStyle = COL.ink; ctx.font = '700 46px "Oswald", sans-serif'; ctx.fillText(ar.banner.text.toUpperCase(), C.VIEW_W / 2, 362); ctx.globalAlpha = 1;
     }
@@ -2509,7 +2549,31 @@ W.Render = (function () {
     for (var i = 0; i < words.length; i++) { var t = cur ? cur + ' ' + words[i] : words[i]; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = words[i]; } else cur = t; }
     if (cur) lines.push(cur); return lines;
   }
+  // studio radio della DJ: buio, insegna IN ONDA, microfono, onda sonora
+  function drawRadio(w, sc) {
+    var t = w.time;
+    ctx.fillStyle = '#050307'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    var glow = ctx.createRadialGradient(640, 300, 10, 640, 300, 520); glow.addColorStop(0, 'rgba(120,20,30,0.55)'); glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glow; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    // insegna
+    var on = Math.floor(t * 1.3) % 6 !== 0;
+    ctx.fillStyle = on ? '#e0283a' : '#5a1018'; ctx.font = '700 30px "Oswald", sans-serif'; ctx.textAlign = 'center';
+    ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 3; ctx.strokeRect(560, 92, 160, 50); ctx.fillText('IN ONDA', 640, 128);
+    // microfono
+    ctx.fillStyle = '#1c1a20'; ctx.fillRect(632, 300, 16, 170); ctx.fillRect(560, 462, 160, 14);
+    var mg = ctx.createLinearGradient(590, 0, 690, 0); mg.addColorStop(0, '#2a2a30'); mg.addColorStop(0.5, '#8a8a96'); mg.addColorStop(1, '#2a2a30');
+    ctx.fillStyle = mg; ctx.beginPath(); ctx.ellipse(640, 250, 52, 78, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)'; ctx.lineWidth = 2; for (var gy = 190; gy < 320; gy += 10) { ctx.beginPath(); ctx.moveTo(592, gy); ctx.lineTo(688, gy); ctx.stroke(); }
+    // onda: si muove quando la DJ parla
+    var talking = sc.line && sc.lineT < 3.5;
+    ctx.strokeStyle = 'rgba(255,90,90,0.85)'; ctx.lineWidth = 3; ctx.beginPath();
+    for (var x = 340; x <= 940; x += 6) { var a = talking ? Math.sin(x * 0.07 + t * 18) * Math.sin(x * 0.013 + t * 3) * 34 : Math.sin(x * 0.05 + t * 2) * 3; if (x === 340) ctx.moveTo(x, 540 + a); else ctx.lineTo(x, 540 + a); }
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(233,228,214,0.55)'; ctx.font = '500 16px "Oswald", sans-serif'; ctx.fillText('LA RADIO DELLA NOTTE', 640, 600);
+  }
   function drawScene(w, sc, ui) {
+    if (sc.def.radio && !sc.title) drawRadio(w, sc);
+    if (sc.def.radio && sc.title) { ctx.fillStyle = '#050307'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
     if (sc.letterbox) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, 62); ctx.fillRect(0, C.VIEW_H - 62, C.VIEW_W, 62); }
     if (sc.fade > 0) { ctx.fillStyle = 'rgba(0,0,0,' + Math.min(1, sc.fade) + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
     if (sc.title) {
@@ -2530,7 +2594,14 @@ W.Render = (function () {
       lines.forEach(function (l, i) { ctx.fillText(l, 140, ty + i * 32); });
       if (sc.lineT > 0.25 && Math.floor(w.time * 3) % 2) { ctx.textAlign = 'right'; ctx.fillStyle = COL.dim; ctx.font = '500 15px "Oswald", sans-serif'; ctx.fillText('INVIO ▶', C.VIEW_W - 130, y0 + h - 12); }
     };
-    if (sc.line) box(sc.line.who, sc.line.text);
+    if (sc.line && !sc.line.who) {
+      ctx.font = '700 24px "Oswald", sans-serif';
+      var cl = wrapText(sc.line.text.toUpperCase(), 760), ch = 24 + cl.length * 32;
+      ctx.save(); ctx.translate(80, 90); ctx.rotate(-0.015);
+      ctx.fillStyle = '#111'; ctx.fillRect(6, 6, 800, ch); ctx.fillStyle = '#f2d23c'; ctx.fillRect(0, 0, 800, ch); ctx.strokeStyle = '#111'; ctx.lineWidth = 3; ctx.strokeRect(0, 0, 800, ch);
+      ctx.fillStyle = '#111'; ctx.textAlign = 'left'; cl.forEach(function (l, i) { ctx.fillText(l, 20, 36 + i * 32); });
+      ctx.restore();
+    } else if (sc.line) box(sc.line.who, sc.line.text);
     if (sc.choice) {
       ctx.font = '500 24px "Oswald", sans-serif';
       var y1 = C.VIEW_H - 80 - sc.choice.opts.length * 50;
@@ -2542,6 +2613,38 @@ W.Render = (function () {
       });
     }
     ctx.textAlign = 'right'; ctx.fillStyle = 'rgba(233,228,214,0.4)'; ctx.font = '500 13px "Oswald", sans-serif'; ctx.fillText('ESC: PAUSA E SALTA SCENA', C.VIEW_W - 20, 40);
+  }
+
+  // ---- correzione colore da film: notte desaturata e fredda, sodio delle strade, alba pallida; grana pellicola
+  var LIGHT = {
+    dusk:  { desat: 0.35, mult: 'rgba(150,120,140,0.40)', warm: 'rgba(255,140,60,0.10)', dark: 0.12, vig: 0.55 },
+    night: { desat: 0.50, mult: 'rgba(92,108,140,0.55)', warm: 'rgba(255,150,60,0.08)', dark: 0.22, vig: 0.70 },
+    dawn:  { desat: 0.55, mult: 'rgba(190,170,165,0.45)', warm: 'rgba(255,200,160,0.10)', dark: 0.05, vig: 0.45 }
+  };
+  var grainC = null, grainT = 0;
+  function grainCanvas() {
+    if (grainC) return grainC;
+    grainC = document.createElement('canvas'); grainC.width = 256; grainC.height = 256;
+    var g = grainC.getContext('2d'), id = g.createImageData(256, 256);
+    for (var i = 0; i < id.data.length; i += 4) { var v = 128 + (Math.random() - 0.5) * 140; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
+    g.putImageData(id, 0, 0); return grainC;
+  }
+  function grade(w) {
+    var L = LIGHT[(w.area && w.area.def.light) || 'night'];
+    ctx.save();
+    ctx.globalCompositeOperation = 'saturation'; ctx.fillStyle = 'rgba(128,128,128,' + L.desat + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = L.mult; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'soft-light'; ctx.fillStyle = L.warm; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = 'rgba(4,6,12,' + L.dark + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    var vg = ctx.createRadialGradient(C.VIEW_W / 2, C.VIEW_H * 0.6, 260, C.VIEW_W / 2, C.VIEW_H * 0.6, 860);
+    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,' + L.vig + ')');
+    ctx.fillStyle = vg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    if (opts.grain !== false) {
+      grainT++; var gc = grainCanvas(), ox = (grainT * 37) % 256, oy = (grainT * 91) % 256;
+      ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = 0.09;
+      ctx.translate(-ox, -oy); ctx.fillStyle = ctx.createPattern(gc, 'repeat'); ctx.fillRect(0, 0, C.VIEW_W + 256, C.VIEW_H + 256);
+    }
+    ctx.restore();
   }
 
   function drawDebug(w) {
@@ -2614,10 +2717,7 @@ W.Render = (function () {
     for (var i = 0; i < list.length; i++) list[i].d();
     drawFx(cx, dt);
     if (flash > 0) { ctx.fillStyle = 'rgba(255,230,160,' + flash + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); flash -= dt; }
-    // vignetta notturna
-    var vg = ctx.createRadialGradient(C.VIEW_W / 2, C.VIEW_H * 0.6, 300, C.VIEW_W / 2, C.VIEW_H * 0.6, 900);
-    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.55)');
-    ctx.fillStyle = vg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    grade(w);
     if (w.debug) drawDebug(w);
     ctx.restore();
     drawHud(w, ui);
@@ -2628,83 +2728,179 @@ W.Render = (function () {
 
 </script>
 <script>
-// Mixer minimo con bus separati musica/effetti. Suoni sintetizzati SEGNAPOSTO, da sostituire con i master del catalogo.
+// Mixer con bus separati (musica, ambiente, effetti, radio). Tutto sintetizzato in tempo reale,
+// da sostituire con i master del catalogo. Tono: notte sporca, synth cupi, silenzi; niente fanfare.
+//   musica:   setMood('silence' | 'tension' | 'chase' | 'fight' | 'dawn' | 'radio')
+//   ambiente: setAmbience('city' | 'subway' | 'park' | 'interior' | 'beach' | 'none')
 'use strict';
 var W = window.W;
 
 W.Audio = (function () {
-  var ac = null, master, sfx, amb, seen = {}, vol = { sfx: 0.8, music: 0.5 }, ambNode = null;
+  var ac = null, master, sfx, mus, amb, seen = {}, vol = { sfx: 0.8, music: 0.5 };
+  var mood = 'silence', ambName = 'none', layers = {}, ambNodes = null, seqT = null, step = 0, noiseBuf = null;
   function ensure() {
     if (ac) return true;
     try {
       ac = new (window.AudioContext || window.webkitAudioContext)();
-      master = ac.createGain(); master.gain.value = 0.8; master.connect(ac.destination);
-      sfx = ac.createGain(); sfx.gain.value = vol.sfx; sfx.connect(master);
-      amb = ac.createGain(); amb.gain.value = vol.music * 0.35; amb.connect(master);
+      master = ac.createGain(); master.gain.value = 0.85; master.connect(ac.destination);
+      var comp = ac.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3; comp.connect(master);
+      sfx = ac.createGain(); sfx.gain.value = vol.sfx; sfx.connect(comp);
+      mus = ac.createGain(); mus.gain.value = vol.music; mus.connect(comp);
+      amb = ac.createGain(); amb.gain.value = vol.music * 0.9; amb.connect(comp);
+      noiseBuf = ac.createBuffer(1, ac.sampleRate * 3, ac.sampleRate);
+      var d = noiseBuf.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
     } catch (e) { ac = null; }
     return !!ac;
   }
-  function noise(dur) {
-    var b = ac.createBuffer(1, Math.max(1, ac.sampleRate * dur), ac.sampleRate), d = b.getChannelData(0);
-    for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    var s = ac.createBufferSource(); s.buffer = b; return s;
-  }
-  function env(node, t, a, peak, dur) { node.gain.setValueAtTime(0.0001, t); node.gain.exponentialRampToValueAtTime(peak, t + a); node.gain.exponentialRampToValueAtTime(0.0001, t + dur); }
-  function tone(type, f0, f1, dur, peak, out) {
-    var t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain();
+  function noise(loop) { var s = ac.createBufferSource(); s.buffer = noiseBuf; s.loop = !!loop; return s; }
+  function env(g, t, a, peak, dur) { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); }
+  function tone(type, f0, f1, dur, peak, out, when) {
+    var t = (when || ac.currentTime), o = ac.createOscillator(), g = ac.createGain();
     o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(Math.max(20, f1), t + dur);
-    env(g, t, 0.005, peak, dur); o.connect(g); g.connect(out || sfx); o.start(t); o.stop(t + dur + 0.02);
+    env(g, t, 0.004, peak, dur); o.connect(g); g.connect(out || sfx); o.start(t); o.stop(t + dur + 0.05);
   }
-  function burst(dur, peak, fType, freq, q) {
-    var t = ac.currentTime, n = noise(dur), f = ac.createBiquadFilter(), g = ac.createGain();
-    f.type = fType; f.frequency.value = freq; f.Q.value = q || 1;
-    env(g, t, 0.004, peak, dur); n.connect(f); f.connect(g); g.connect(sfx); n.start(t);
+  function burst(dur, peak, fType, freq, q, out, when) {
+    var t = (when || ac.currentTime), n = noise(), f = ac.createBiquadFilter(), g = ac.createGain();
+    f.type = fType; f.frequency.value = freq; f.Q.value = q || 0.8;
+    env(g, t, 0.003, peak, dur); n.connect(f); f.connect(g); g.connect(out || sfx); n.start(t, Math.random() * 2); n.stop(t + dur + 0.05);
   }
+
+  // ------------------------------------------------------------------ effetti: secchi, bassi, sporchi
   var SFX = {
-    hit: function (e) { tone('sine', e.heavy ? 140 : 190, 50, e.heavy ? 0.18 : 0.11, e.heavy ? 0.9 : 0.6); burst(0.06, 0.4, 'lowpass', 1800); if (e.weapon) burst(0.05, 0.5, 'bandpass', 900, 6); },
-    swing: function (e) { burst(e.heavy ? 0.16 : 0.1, e.enemy ? 0.12 : 0.18, 'bandpass', e.weapon ? 700 : 1400, 1.5); },
-    disarm: function () { burst(0.08, 0.5, 'bandpass', 1200, 8); tone('triangle', 600, 300, 0.2, 0.2); },
-    'break': function () { burst(0.22, 0.6, 'highpass', 2500); },
-    pickup: function () { tone('square', 520, 780, 0.08, 0.15); },
-    heal: function () { tone('triangle', 520, 1040, 0.18, 0.2); },
-    ko: function () { tone('sawtooth', 200, 60, 0.6, 0.3); },
-    fury: function () { tone('sawtooth', 120, 480, 0.3, 0.3); },
-    wave: function () { tone('square', 98, 92, 0.5, 0.15); },
-    open: function () { burst(0.12, 0.3, 'bandpass', 400, 3); },
-    revive: function () { tone('triangle', 330, 660, 0.3, 0.2); },
-    toss: function () { burst(0.15, 0.2, 'bandpass', 1000, 2); },
-    throw: function () { tone('sine', 120, 40, 0.3, 0.6); },
-    shot: function () { burst(0.25, 0.9, 'lowpass', 2500); tone('square', 90, 30, 0.2, 0.5); },
-    siren: function () { tone('sawtooth', 700, 980, 0.6, 0.12); setTimeout(function () { ac && tone('sawtooth', 980, 700, 0.6, 0.12); }, 600); },
-    horn: function () { tone('square', 233, 233, 0.5, 0.18); tone('square', 277, 277, 0.5, 0.12); },
-    train: function () { burst(1.6, 0.35, 'lowpass', 300); tone('sine', 60, 50, 1.6, 0.25); },
-    fire: function () { burst(0.9, 0.4, 'bandpass', 600, 0.7); },
-    bottle: function () { burst(0.12, 0.4, 'highpass', 3000); tone('triangle', 1200, 900, 0.12, 0.2); },
-    ricochet: function () { tone('sine', 2200, 600, 0.18, 0.15); },
-    aim: function (e) { if (!e.bottle) tone('square', 880, 880, 0.08, 0.06); },
-    clear: function () { tone('triangle', 392, 392, 0.15, 0.2); setTimeout(function () { ac && tone('triangle', 523, 523, 0.3, 0.2); }, 140); }
+    hit: function (e) {
+      burst(e.heavy ? 0.16 : 0.09, e.heavy ? 0.9 : 0.6, 'lowpass', e.heavy ? 380 : 650, 1);
+      tone('sine', e.heavy ? 90 : 120, 40, e.heavy ? 0.2 : 0.12, e.heavy ? 0.8 : 0.5);
+      if (e.weapon) burst(0.05, 0.35, 'bandpass', 1600, 4);
+    },
+    swing: function (e) { burst(e.heavy ? 0.2 : 0.12, e.enemy ? 0.08 : 0.12, 'bandpass', e.weapon ? 500 : 900, 0.9); },
+    disarm: function () { burst(0.07, 0.4, 'bandpass', 1100, 6); tone('triangle', 300, 200, 0.25, 0.08); },
+    'break': function () { burst(0.3, 0.5, 'highpass', 2600, 0.7); },
+    pickup: function () { burst(0.04, 0.2, 'bandpass', 1800, 3); },
+    heal: function () { burst(0.06, 0.15, 'bandpass', 1200, 3); },
+    ko: function () { tone('sine', 110, 45, 0.9, 0.35); burst(0.4, 0.25, 'lowpass', 220); },
+    fury: function () { tone('sawtooth', 70, 140, 0.35, 0.2); burst(0.3, 0.25, 'lowpass', 500); },
+    wave: function () { tone('sawtooth', 55, 52, 1.2, 0.14, mus); },
+    clear: function () { tone('sine', 110, 110, 1.4, 0.08, mus); tone('sine', 164.8, 164.8, 1.4, 0.05, mus); },
+    open: function () { burst(0.14, 0.25, 'bandpass', 380, 3); },
+    revive: function () { tone('triangle', 220, 330, 0.3, 0.08); },
+    toss: function () { burst(0.15, 0.18, 'bandpass', 900, 1.5); },
+    throw: function () { tone('sine', 100, 38, 0.35, 0.6); burst(0.2, 0.3, 'lowpass', 300); },
+    shot: function () { burst(0.35, 1, 'lowpass', 3000, 0.5); tone('square', 80, 30, 0.25, 0.4); },
+    siren: function () { var t = ac.currentTime; for (var i = 0; i < 3; i++) { tone('sawtooth', 620, 880, 0.55, 0.05, amb, t + i * 1.1); tone('sawtooth', 880, 620, 0.55, 0.05, amb, t + i * 1.1 + 0.55); } },
+    horn: function () { tone('square', 196, 196, 0.7, 0.14); tone('square', 233, 233, 0.7, 0.1); },
+    train: function () { burst(2.5, 0.4, 'lowpass', 220); tone('sine', 55, 48, 2.5, 0.25); burst(0.6, 0.15, 'bandpass', 3200, 8, sfx, ac.currentTime + 1.6); },
+    fire: function () { burst(1.2, 0.4, 'bandpass', 500, 0.6); },
+    bottle: function () { burst(0.06, 0.35, 'bandpass', 2600, 6); tone('triangle', 2100, 1700, 0.08, 0.1); },
+    ricochet: function () { tone('sine', 2400, 500, 0.2, 0.1); },
+    aim: function (e) { if (!e.bottle) tone('sine', 1400, 1400, 0.05, 0.05); },
+    line: function () {},
+    flashfx: function () {}, shakefx: function () {}
   };
-  function startAmbience() {
-    if (!ensure() || ambNode) return;
-    // vento notturno: rumore filtrato lento
-    var n = noise(4); n.loop = true;
-    var f = ac.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 380;
-    var lfo = ac.createOscillator(), lg = ac.createGain(); lfo.frequency.value = 0.08; lg.gain.value = 160; lfo.connect(lg); lg.connect(f.frequency); lfo.start();
-    var g = ac.createGain(); g.gain.value = 0.5; n.connect(f); f.connect(g); g.connect(amb); n.start();
-    ambNode = n;
+
+  // ------------------------------------------------------------------ musica: bordone in minore + pulsazione
+  // Re minore: bordone su Re e La, ostinato di basso che cambia con lo stato.
+  var MOODS = {
+    silence: { drone: 0, pulse: 0, kick: 0, cut: 300 },
+    tension: { drone: 0.16, pulse: 0, kick: 0, cut: 520 },
+    chase:   { drone: 0.12, pulse: 0.16, kick: 0.12, cut: 900, bpm: 128 },
+    fight:   { drone: 0.12, pulse: 0.14, kick: 0.18, cut: 760, bpm: 112 },
+    dawn:    { drone: 0.12, pulse: 0, kick: 0, cut: 1400, bright: true },
+    radio:   { drone: 0.05, pulse: 0, kick: 0, cut: 400 }
+  };
+  function startMusic() {
+    if (layers.drone) return;
+    var f = ac.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 500; f.Q.value = 2;
+    var lfo = ac.createOscillator(), lg = ac.createGain(); lfo.frequency.value = 0.05; lg.gain.value = 180; lfo.connect(lg); lg.connect(f.frequency); lfo.start();
+    var dg = ac.createGain(); dg.gain.value = 0; f.connect(dg); dg.connect(mus);
+    var oscs = [[73.42, -7], [73.42, 6], [110, -4], [146.83, 3]].map(function (p) {
+      var o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = p[0]; o.detune.value = p[1]; o.connect(f); o.start(); return o;
+    });
+    layers.drone = { gain: dg, filter: f, oscs: oscs };
+    layers.pulse = ac.createGain(); layers.pulse.gain.value = 0; layers.pulse.connect(mus);
+    layers.kick = ac.createGain(); layers.kick.gain.value = 0; layers.kick.connect(mus);
+    var BASS = [36.71, 36.71, 0, 36.71, 43.65, 0, 36.71, 32.7, 36.71, 36.71, 0, 36.71, 48.99, 0, 43.65, 41.2];
+    seqT = setInterval(function () {
+      if (!ac || ac.state !== 'running') return;
+      var M = MOODS[mood]; if (!M.bpm) return;
+      var now = ac.currentTime, n = BASS[step % 16];
+      if (n && M.pulse) {
+        var o = ac.createOscillator(), g = ac.createGain(), lf = ac.createBiquadFilter();
+        o.type = 'sawtooth'; o.frequency.value = n * 2; lf.type = 'lowpass'; lf.frequency.setValueAtTime(M.cut, now); lf.frequency.exponentialRampToValueAtTime(120, now + 0.18);
+        env(g, now, 0.005, 0.9, 0.2); o.connect(lf); lf.connect(g); g.connect(layers.pulse); o.start(now); o.stop(now + 0.25);
+      }
+      if (M.kick && step % 4 === 0) { var k = ac.createOscillator(), kg = ac.createGain(); k.frequency.setValueAtTime(110, now); k.frequency.exponentialRampToValueAtTime(40, now + 0.15); env(kg, now, 0.002, 1, 0.25); k.connect(kg); kg.connect(layers.kick); k.start(now); k.stop(now + 0.3); }
+      if (M.kick && step % 8 === 4) { var hn = noise(), hf = ac.createBiquadFilter(), hg = ac.createGain(); hf.type = 'highpass'; hf.frequency.value = 6000; env(hg, now, 0.002, 0.25, 0.06); hn.connect(hf); hf.connect(hg); hg.connect(layers.kick); hn.start(now); hn.stop(now + 0.1); }
+      step++;
+    }, 60000 / 128 / 4);
   }
+  function applyMood() {
+    if (!ac || !layers.drone) return;
+    var M = MOODS[mood] || MOODS.silence, t = ac.currentTime;
+    layers.drone.gain.gain.setTargetAtTime(M.drone, t, 1.2);
+    layers.drone.filter.frequency.setTargetAtTime(M.cut, t, 1.5);
+    layers.drone.oscs[3].frequency.setTargetAtTime(M.bright ? 174.6 : 146.83, t, 2); // all'alba la terza sale: Re maggiore → Fa
+    layers.pulse.gain.setTargetAtTime(M.pulse, t, 0.6);
+    layers.kick.gain.setTargetAtTime(M.kick, t, 0.6);
+  }
+
+  // ------------------------------------------------------------------ ambienti
+  var AMB = {
+    city:     { rumble: [140, 0.22], hiss: [2500, 0.025], sirens: 18 },
+    subway:   { rumble: [70, 0.35], hiss: [1800, 0.03], screech: 14 },
+    park:     { rumble: [260, 0.12], hiss: [900, 0.05], crickets: true },
+    interior: { rumble: [55, 0.12], hum: 60 },
+    beach:    { rumble: [400, 0.08], hiss: [600, 0.12], waves: true },
+    none:     {}
+  };
+  function stopAmb() { if (ambNodes) { ambNodes.forEach(function (n) { try { n.stop ? n.stop() : n.disconnect(); } catch (e) {} }); ambNodes = null; } }
+  function startAmb(name) {
+    stopAmb(); var A = AMB[name] || {}, nodes = [];
+    if (A.rumble) { var n = noise(true), f = ac.createBiquadFilter(), g = ac.createGain(); f.type = 'lowpass'; f.frequency.value = A.rumble[0]; g.gain.value = A.rumble[1]; n.connect(f); f.connect(g); g.connect(amb); n.start(); nodes.push(n); }
+    if (A.hiss) { var n2 = noise(true), f2 = ac.createBiquadFilter(), g2 = ac.createGain(); f2.type = 'bandpass'; f2.frequency.value = A.hiss[0]; f2.Q.value = 0.4; g2.gain.value = A.hiss[1]; n2.connect(f2); f2.connect(g2); g2.connect(amb);
+      if (A.waves) { var wl = ac.createOscillator(), wg = ac.createGain(); wl.frequency.value = 0.12; wg.gain.value = A.hiss[1] * 0.9; wl.connect(wg); wg.connect(g2.gain); wl.start(); nodes.push(wl); }
+      n2.start(); nodes.push(n2); }
+    if (A.hum) { var h = ac.createOscillator(), hg = ac.createGain(); h.frequency.value = A.hum; hg.gain.value = 0.015; h.connect(hg); hg.connect(amb); h.start(); nodes.push(h); }
+    ambNodes = nodes; ambName = name;
+    var ev = setInterval(function () {
+      if (ambName !== name) { clearInterval(ev); return; }
+      if (!ac || ac.state !== 'running') return;
+      var t = ac.currentTime;
+      if (A.sirens && Math.random() < 1 / A.sirens) { tone('sine', 700, 950, 1.2, 0.012, amb); tone('sine', 950, 700, 1.2, 0.012, amb, t + 1.2); }
+      if (A.screech && Math.random() < 1 / A.screech) burst(1.4, 0.04, 'bandpass', 3400, 14, amb);
+      if (A.crickets && Math.random() < 0.5) for (var c = 0; c < 3; c++) tone('sine', 4200, 4200, 0.03, 0.006, amb, t + c * 0.07);
+    }, 1000);
+  }
+
+  // ------------------------------------------------------------------ radio della DJ: crepitio e banda stretta
+  var radioNodes = null;
+  function radio(on) {
+    if (!ensure()) return;
+    if (on && !radioNodes) {
+      var n = noise(true), f = ac.createBiquadFilter(), g = ac.createGain(); f.type = 'bandpass'; f.frequency.value = 2200; f.Q.value = 1.2; g.gain.value = 0.03;
+      n.connect(f); f.connect(g); g.connect(sfx); n.start();
+      var crackle = setInterval(function () { if (ac && Math.random() < 0.6) burst(0.015, 0.08 + Math.random() * 0.1, 'highpass', 3000, 1); }, 90);
+      radioNodes = { n: n, crackle: crackle };
+      burst(0.3, 0.25, 'bandpass', 1500, 2);
+    } else if (!on && radioNodes) { try { radioNodes.n.stop(); } catch (e) {} clearInterval(radioNodes.crackle); radioNodes = null; burst(0.15, 0.2, 'bandpass', 1200, 2); }
+  }
+
   return {
-    unlock: function () { if (ensure() && ac.state === 'suspended') ac.resume(); startAmbience(); },
+    unlock: function () { if (ensure()) { if (ac.state === 'suspended') ac.resume(); startMusic(); applyMood(); if (ambName === 'none' && pendingAmb) startAmb(pendingAmb); } },
     consume: function (events) {
       if (!ac) return;
       for (var i = 0; i < events.length; i++) { var e = events[i]; if (seen[e.eid]) continue; seen[e.eid] = true; if (SFX[e.type]) try { SFX[e.type](e); } catch (x) {} }
     },
-    ui: function () { if (ac) tone('square', 660, 660, 0.04, 0.08); },
-    setVol: function (k, v) { vol[k] = v; if (!ac) return; if (k === 'sfx') sfx.gain.value = v; else amb.gain.value = v * 0.35; },
+    setMood: function (m) { if (m === mood) return; mood = MOODS[m] ? m : 'silence'; applyMood(); },
+    setAmbience: function (a) { pendingAmb = a; if (!ac || a === ambName) return; startAmb(a); },
+    radio: radio,
+    ui: function () { if (ac) burst(0.03, 0.08, 'bandpass', 1400, 4); },
+    setVol: function (k, v) { vol[k] = v; if (!ac) return; if (k === 'sfx') sfx.gain.value = v; else { mus.gain.value = v; amb.gain.value = v * 0.9; } },
     vol: vol,
+    mood: function () { return mood; },
     suspend: function () { if (ac && ac.state === 'running') ac.suspend(); },
     resume: function () { if (ac && ac.state === 'suspended') ac.resume(); }
   };
+  var pendingAmb = 'none';
 })();
 
 </script>
@@ -2861,7 +3057,74 @@ var W = window.W;
     }
     if (!next) { endCampaign(); return; }
     run.areaIdx++;
-    prepareArea();
+    startComic(next, function () { prepareArea(); });
+  }
+  // ------------------------------------------------------------------ transizione a fumetto
+  // L'ultimo fotogramma dell'area diventa una vignetta inchiostrata con retino; la didascalia annuncia il luogo successivo.
+  var COMIC_LEAD = { P0: 'Coney Island, quella sera.', C1: 'Nel Bronx.', C2: 'Le strade del Bronx.', C3: 'Territorio degli Orphans.', C4: 'Riverside Park.', C5: 'La banda si divide.', C6: 'Union Square.', C7: 'L\'ultimo treno.', C8: 'Coney Island, all\'alba.' };
+  function startComic(next, then) {
+    var snap = document.createElement('canvas'); snap.width = C.VIEW_W; snap.height = C.VIEW_H;
+    try { snap.getContext('2d').drawImage(cv, 0, 0); } catch (e) {}
+    var prev = W.CAMPAIGN[game.run.areaIdx - 1];
+    var cap = next.ch !== (prev && prev.ch) ? COMIC_LEAD[next.ch] : next.name + '.', sub = '';
+    if (next.thread) {
+      var th = W.THREADS[next.thread];
+      cap = (prev && prev.thread && prev.thread !== next.thread ? 'Intanto · ' : '') + (next.id === 'C5-05' ? 'Snow e Cowboy' : th.label);
+      sub = next.where;
+    }
+    game.comic = { img: snap, t: 0, cap: cap, sub: sub, then: then, tilt: (Math.random() - 0.5) * 0.05, thread: next.thread, dur: next.thread ? 3.6 : 2.1 };
+    game.state = 'comic';
+  }
+  // tavola dei tre gruppi divisi: dove sono e come stanno; evidenzia il gruppo che si gioca
+  function drawThreadBoard(c, a) {
+    var f = game.world.flags, keys = ['swan', 'park', 'lizzies'], w0 = 340, x0 = C.VIEW_W / 2 - (w0 * 3 + 40) / 2, y0 = 470;
+    ctx.save(); ctx.globalAlpha = a;
+    keys.forEach(function (k, i) {
+      var th = W.THREADS[k], x = x0 + i * (w0 + 20), cur = k === c.thread;
+      ctx.fillStyle = '#111'; ctx.fillRect(x + 6, y0 + 6, w0, 190);
+      ctx.fillStyle = cur ? '#f2d23c' : '#e8dcc0'; ctx.fillRect(x, y0, w0, 190); ctx.strokeStyle = '#111'; ctx.lineWidth = 3; ctx.strokeRect(x, y0, w0, 190);
+      th.members.forEach(function (id, j) {
+        var gone = id === 'ajax' && f.ajax_arrested;
+        ctx.globalAlpha = a * (gone ? 0.3 : 1);
+        drawPortrait(id, x + 70 + j * 100 - (th.members.length === 2 ? -50 : 0), y0 + 132, 1.15, true);
+        ctx.globalAlpha = a;
+      });
+      ctx.fillStyle = '#111'; ctx.font = '700 18px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(th.label.toUpperCase(), x + w0 / 2, y0 + 158);
+      ctx.font = '500 15px "Oswald", sans-serif'; ctx.fillText(th.status(f), x + w0 / 2, y0 + 180);
+    });
+    ctx.restore();
+  }
+  var halftone = null;
+  function drawComic(dt) {
+    var c = game.comic; c.t += dt;
+    if (!halftone) {
+      halftone = document.createElement('canvas'); halftone.width = 12; halftone.height = 12;
+      var h = halftone.getContext('2d'); h.fillStyle = 'rgba(0,0,0,0.35)'; h.beginPath(); h.arc(3, 3, 1.8, 0, Math.PI * 2); h.arc(9, 9, 1.8, 0, Math.PI * 2); h.fill();
+    }
+    ctx.fillStyle = '#e8dcc0'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);           // carta
+    var k = Math.min(1, c.t / 0.35), sc = 1 - 0.18 * k, rot = c.tilt * k;
+    ctx.save(); ctx.translate(C.VIEW_W / 2, C.VIEW_H / 2); ctx.rotate(rot); ctx.scale(sc, sc);
+    ctx.fillStyle = '#111'; ctx.fillRect(-C.VIEW_W / 2 - 14, -C.VIEW_H / 2 - 14, C.VIEW_W + 28, C.VIEW_H + 28);
+    ctx.drawImage(c.img, -C.VIEW_W / 2, -C.VIEW_H / 2);
+    // inchiostro: contrasto e colori ridotti, retino
+    ctx.globalCompositeOperation = 'saturation'; ctx.fillStyle = 'rgba(128,128,128,' + 0.55 * k + ')'; ctx.fillRect(-C.VIEW_W / 2, -C.VIEW_H / 2, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = 'rgba(232,180,120,' + 0.35 * k + ')'; ctx.fillRect(-C.VIEW_W / 2, -C.VIEW_H / 2, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = k; ctx.fillStyle = ctx.createPattern(halftone, 'repeat'); ctx.fillRect(-C.VIEW_W / 2, -C.VIEW_H / 2, C.VIEW_W, C.VIEW_H); ctx.globalAlpha = 1;
+    ctx.restore();
+    // didascalia gialla del fumetto
+    if (c.t > 0.3) {
+      var a = Math.min(1, (c.t - 0.3) / 0.2);
+      ctx.save(); ctx.globalAlpha = a; ctx.font = '700 30px "Oswald", sans-serif';
+      var tw = ctx.measureText(c.cap.toUpperCase()).width + 44;
+      ctx.translate(120, 120); ctx.rotate(-0.02);
+      ctx.fillStyle = '#111'; ctx.fillRect(6, 6, tw, 56); ctx.fillStyle = '#f2d23c'; ctx.fillRect(0, 0, tw, 56);
+      ctx.strokeStyle = '#111'; ctx.lineWidth = 3; ctx.strokeRect(0, 0, tw, 56);
+      ctx.fillStyle = '#111'; ctx.textAlign = 'left'; ctx.fillText(c.cap.toUpperCase(), 22, 39);
+      if (c.sub) { ctx.font = '500 22px "Oswald", sans-serif'; var sw = ctx.measureText(c.sub).width + 36; ctx.fillStyle = '#111'; ctx.fillRect(16, 66, sw, 40); ctx.fillStyle = '#fff6d8'; ctx.fillRect(10, 60, sw, 40); ctx.strokeRect(10, 60, sw, 40); ctx.fillStyle = '#111'; ctx.fillText(c.sub, 28, 88); }
+      ctx.restore();
+    }
+    if (c.thread && c.t > 0.5) drawThreadBoard(c, Math.min(1, (c.t - 0.5) / 0.3));
+    if (c.t > c.dur) { game.comic = null; c.then(); }
   }
   function endCampaign() {
     var w = game.world, s = w.stats;
@@ -2938,6 +3201,7 @@ var W = window.W;
       return;
     }
     if (game.state === 'howto') { if (ok || back) game.state = 'menu'; return; }
+    if (game.state === 'comic') { if (ok && game.comic && game.comic.t > 0.4) game.comic.t = 9; return; }
     if (game.state === 'credits') { if (ok || back) { game.state = 'result'; game.menuIdx = 0; } return; }
     if (game.state === 'select') { selectKey(up, down, left, right, ok, back); return; }
     if (game.state === 'party') { partyKey(up, down, left, right, ok); return; }
@@ -3115,8 +3379,22 @@ var W = window.W;
     for (var i = 0; i < w.players.length; i++) { var d = w.players[i].device; if (d) { d.poll(); if (d.edge.pause) { game.state = 'pause'; game.menuIdx = 0; return; } } }
     w.step(dt);
     W.Audio.consume(w.events);
+    mixFor(w);
     if (w.failed) { w.failReasonShown = w.failReason || null; w.failReason = null; game.fails++; game.state = 'fail'; game.menuIdx = 0; w.failed = false; return; }
     if (w.area.done) areaFinished();
+  }
+  // musica e ambiente secondo l'area: fuga = pulsazione, rissa = basso e cassa, attraversamento = bordone, alba = luce
+  var AMB_BY_BG = { park: 'park', park_b: 'park', metro: 'subway', metro_b: 'subway', interior: 'interior', alley: 'city', street: 'city', street_b: 'city', harbor: 'city', coney: 'city', coney_b: 'city', boardwalk: 'beach' };
+  function mixFor(w) {
+    var a = w.area; if (!a) return;
+    var def = a.def, m;
+    if (a.scene) m = a.scene.def.mood || def.mood || (def.kind === 'epilogue' ? 'dawn' : 'tension');
+    else if (a.fighting) m = 'fight';
+    else if (a.timer !== null || a.pursuerType) m = def.mood === 'silence' ? 'silence' : 'chase';
+    else m = def.mood || (def.kind === 'training' ? 'silence' : 'tension');
+    W.Audio.setMood(m);
+    W.Audio.setAmbience(def.amb || AMB_BY_BG[def.bg] || 'city');
+    W.Audio.radio(!!(a.scene && a.scene.def.radio));
   }
   var padPrev = {};
   function pollMenuPad() {
@@ -3129,6 +3407,8 @@ var W = window.W;
   }
   function draw(dt) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
+    if (['title', 'menu', 'select', 'chapters', 'howto', 'options'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); }
+    if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); }
     if (game.state === 'title') drawTitle();
     else if (game.state === 'menu') {
       backdrop(1);
@@ -3144,6 +3424,7 @@ var W = window.W;
     else if (game.state === 'credits') drawCredits(dt);
     else if (game.state === 'options') { backdrop(); txt('OPZIONI', C.VIEW_W / 2, 140, 44, R.COL.p1, 'center', 700); drawList(menuItems(), C.VIEW_W / 2, 260); txt('← → regola', C.VIEW_W / 2, 640, 18, R.COL.dim, 'center', 400); }
     else if (game.state === 'result') drawResult();
+    else if (game.state === 'comic') drawComic(dt);
     else if (game.world) {
       R.frame(game.world, game.state === 'play' ? dt : 0, ui);
       if (game.state === 'pause') overlay('PAUSA', menuItems());

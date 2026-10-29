@@ -559,7 +559,7 @@ W.Render = (function () {
         ctx.fillStyle = COL.ink; ctx.fillText(def.name.toUpperCase(), x + 192, y + 52);
         for (var d = 0; d < def.dur; d++) { ctx.fillStyle = d < p.weapon.dur ? def.color : '#333'; ctx.fillRect(x + 192 + d * 10, y + 58, 8, 8); }
       }
-      if (p.combo >= 3) { ctx.fillStyle = col; ctx.font = 'bold 18px "Oswald", sans-serif'; ctx.fillText(p.combo + ' COLPI', x + 100, y + 68); }
+
       var pr = !p.cpu && w.promptFor(p);
       if (pr && p.state !== 'ko') {
         var px = p.x - w.cam.x, py = p.y - (p.z || 0) - 228;
@@ -570,15 +570,12 @@ W.Render = (function () {
         ctx.fillText(pr, px - tw / 2 + 36, py);
       }
     }
-    // punteggio
-    ctx.textAlign = 'right'; ctx.fillStyle = COL.ink; ctx.font = '600 22px "Oswald", sans-serif';
-    ctx.fillText(String(w.score[0]).padStart(7, '0'), C.VIEW_W - 24, 40);
-    if (w.players.length > 1 && !w.players[1].cpu) { ctx.fillStyle = COL.p2; ctx.fillText(String(w.score[1]).padStart(7, '0'), C.VIEW_W - 24, 68); }
+    // niente punteggio a schermo durante il gioco: resta nel resoconto finale
     // obiettivo
     var ar = w.area;
     ctx.textAlign = 'center'; ctx.font = '600 18px "Oswald", sans-serif'; ctx.fillStyle = 'rgba(233,228,214,0.85)';
     ctx.fillText(ui.tutorialText(ar.objective || ''), C.VIEW_W / 2, 108);
-    if (ar.banner.t < 2.4) {
+    if (false && ar.banner.t < 2.4) { // sostituito dalla vignetta a fumetto
       ctx.globalAlpha = Math.min(1, (3 - ar.banner.t)); ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(0, 300, C.VIEW_W, 90);
       ctx.fillStyle = COL.ink; ctx.font = '700 46px "Oswald", sans-serif'; ctx.fillText(ar.banner.text.toUpperCase(), C.VIEW_W / 2, 362); ctx.globalAlpha = 1;
     }
@@ -613,7 +610,31 @@ W.Render = (function () {
     for (var i = 0; i < words.length; i++) { var t = cur ? cur + ' ' + words[i] : words[i]; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = words[i]; } else cur = t; }
     if (cur) lines.push(cur); return lines;
   }
+  // studio radio della DJ: buio, insegna IN ONDA, microfono, onda sonora
+  function drawRadio(w, sc) {
+    var t = w.time;
+    ctx.fillStyle = '#050307'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    var glow = ctx.createRadialGradient(640, 300, 10, 640, 300, 520); glow.addColorStop(0, 'rgba(120,20,30,0.55)'); glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glow; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    // insegna
+    var on = Math.floor(t * 1.3) % 6 !== 0;
+    ctx.fillStyle = on ? '#e0283a' : '#5a1018'; ctx.font = '700 30px "Oswald", sans-serif'; ctx.textAlign = 'center';
+    ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 3; ctx.strokeRect(560, 92, 160, 50); ctx.fillText('IN ONDA', 640, 128);
+    // microfono
+    ctx.fillStyle = '#1c1a20'; ctx.fillRect(632, 300, 16, 170); ctx.fillRect(560, 462, 160, 14);
+    var mg = ctx.createLinearGradient(590, 0, 690, 0); mg.addColorStop(0, '#2a2a30'); mg.addColorStop(0.5, '#8a8a96'); mg.addColorStop(1, '#2a2a30');
+    ctx.fillStyle = mg; ctx.beginPath(); ctx.ellipse(640, 250, 52, 78, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)'; ctx.lineWidth = 2; for (var gy = 190; gy < 320; gy += 10) { ctx.beginPath(); ctx.moveTo(592, gy); ctx.lineTo(688, gy); ctx.stroke(); }
+    // onda: si muove quando la DJ parla
+    var talking = sc.line && sc.lineT < 3.5;
+    ctx.strokeStyle = 'rgba(255,90,90,0.85)'; ctx.lineWidth = 3; ctx.beginPath();
+    for (var x = 340; x <= 940; x += 6) { var a = talking ? Math.sin(x * 0.07 + t * 18) * Math.sin(x * 0.013 + t * 3) * 34 : Math.sin(x * 0.05 + t * 2) * 3; if (x === 340) ctx.moveTo(x, 540 + a); else ctx.lineTo(x, 540 + a); }
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(233,228,214,0.55)'; ctx.font = '500 16px "Oswald", sans-serif'; ctx.fillText('LA RADIO DELLA NOTTE', 640, 600);
+  }
   function drawScene(w, sc, ui) {
+    if (sc.def.radio && !sc.title) drawRadio(w, sc);
+    if (sc.def.radio && sc.title) { ctx.fillStyle = '#050307'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
     if (sc.letterbox) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, 62); ctx.fillRect(0, C.VIEW_H - 62, C.VIEW_W, 62); }
     if (sc.fade > 0) { ctx.fillStyle = 'rgba(0,0,0,' + Math.min(1, sc.fade) + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
     if (sc.title) {
@@ -634,7 +655,14 @@ W.Render = (function () {
       lines.forEach(function (l, i) { ctx.fillText(l, 140, ty + i * 32); });
       if (sc.lineT > 0.25 && Math.floor(w.time * 3) % 2) { ctx.textAlign = 'right'; ctx.fillStyle = COL.dim; ctx.font = '500 15px "Oswald", sans-serif'; ctx.fillText('INVIO ▶', C.VIEW_W - 130, y0 + h - 12); }
     };
-    if (sc.line) box(sc.line.who, sc.line.text);
+    if (sc.line && !sc.line.who) {
+      ctx.font = '700 24px "Oswald", sans-serif';
+      var cl = wrapText(sc.line.text.toUpperCase(), 760), ch = 24 + cl.length * 32;
+      ctx.save(); ctx.translate(80, 90); ctx.rotate(-0.015);
+      ctx.fillStyle = '#111'; ctx.fillRect(6, 6, 800, ch); ctx.fillStyle = '#f2d23c'; ctx.fillRect(0, 0, 800, ch); ctx.strokeStyle = '#111'; ctx.lineWidth = 3; ctx.strokeRect(0, 0, 800, ch);
+      ctx.fillStyle = '#111'; ctx.textAlign = 'left'; cl.forEach(function (l, i) { ctx.fillText(l, 20, 36 + i * 32); });
+      ctx.restore();
+    } else if (sc.line) box(sc.line.who, sc.line.text);
     if (sc.choice) {
       ctx.font = '500 24px "Oswald", sans-serif';
       var y1 = C.VIEW_H - 80 - sc.choice.opts.length * 50;
@@ -646,6 +674,38 @@ W.Render = (function () {
       });
     }
     ctx.textAlign = 'right'; ctx.fillStyle = 'rgba(233,228,214,0.4)'; ctx.font = '500 13px "Oswald", sans-serif'; ctx.fillText('ESC: PAUSA E SALTA SCENA', C.VIEW_W - 20, 40);
+  }
+
+  // ---- correzione colore da film: notte desaturata e fredda, sodio delle strade, alba pallida; grana pellicola
+  var LIGHT = {
+    dusk:  { desat: 0.35, mult: 'rgba(150,120,140,0.40)', warm: 'rgba(255,140,60,0.10)', dark: 0.12, vig: 0.55 },
+    night: { desat: 0.50, mult: 'rgba(92,108,140,0.55)', warm: 'rgba(255,150,60,0.08)', dark: 0.22, vig: 0.70 },
+    dawn:  { desat: 0.55, mult: 'rgba(190,170,165,0.45)', warm: 'rgba(255,200,160,0.10)', dark: 0.05, vig: 0.45 }
+  };
+  var grainC = null, grainT = 0;
+  function grainCanvas() {
+    if (grainC) return grainC;
+    grainC = document.createElement('canvas'); grainC.width = 256; grainC.height = 256;
+    var g = grainC.getContext('2d'), id = g.createImageData(256, 256);
+    for (var i = 0; i < id.data.length; i += 4) { var v = 128 + (Math.random() - 0.5) * 140; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
+    g.putImageData(id, 0, 0); return grainC;
+  }
+  function grade(w) {
+    var L = LIGHT[(w.area && w.area.def.light) || 'night'];
+    ctx.save();
+    ctx.globalCompositeOperation = 'saturation'; ctx.fillStyle = 'rgba(128,128,128,' + L.desat + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = L.mult; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'soft-light'; ctx.fillStyle = L.warm; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = 'rgba(4,6,12,' + L.dark + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    var vg = ctx.createRadialGradient(C.VIEW_W / 2, C.VIEW_H * 0.6, 260, C.VIEW_W / 2, C.VIEW_H * 0.6, 860);
+    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,' + L.vig + ')');
+    ctx.fillStyle = vg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    if (opts.grain !== false) {
+      grainT++; var gc = grainCanvas(), ox = (grainT * 37) % 256, oy = (grainT * 91) % 256;
+      ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = 0.09;
+      ctx.translate(-ox, -oy); ctx.fillStyle = ctx.createPattern(gc, 'repeat'); ctx.fillRect(0, 0, C.VIEW_W + 256, C.VIEW_H + 256);
+    }
+    ctx.restore();
   }
 
   function drawDebug(w) {
@@ -718,10 +778,7 @@ W.Render = (function () {
     for (var i = 0; i < list.length; i++) list[i].d();
     drawFx(cx, dt);
     if (flash > 0) { ctx.fillStyle = 'rgba(255,230,160,' + flash + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); flash -= dt; }
-    // vignetta notturna
-    var vg = ctx.createRadialGradient(C.VIEW_W / 2, C.VIEW_H * 0.6, 300, C.VIEW_W / 2, C.VIEW_H * 0.6, 900);
-    vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.55)');
-    ctx.fillStyle = vg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    grade(w);
     if (w.debug) drawDebug(w);
     ctx.restore();
     drawHud(w, ui);

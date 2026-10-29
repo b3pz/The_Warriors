@@ -30,7 +30,7 @@ require('fs').mkdirSync(out, { recursive: true });
     let w = mk(); let p = w.players[0]; p.x = 400; p.y = 560; p.face = 1;
     let e = new W.Enemy(w, 'fury_flanker', 470, 560); e.setState('approach'); e.think = 99; e.update = function () {}; w.enemies.push(e);
     p.startAttack('l1'); for (let i = 0; i < 30 && p.att; i++) p.stepAttack(1 / 60, p.device);
-    r.push(['Q01 un danno per swing', e.maxhp - e.hp === Math.round(8 * p.mods.dmg * 100) / 100 || Math.abs((e.maxhp - e.hp) - 8 * p.mods.dmg) < 0.01, (e.maxhp - e.hp).toFixed(2)]);
+    r.push(['Q01 un danno per swing', e.maxhp - e.hp === Math.round(8 * p.mods.dmg * 100) / 100 || Math.abs((e.maxhp - e.hp) - 8 * p.mods.dmg * W.CFG.BRUTAL.player) < 0.01, (e.maxhp - e.hp).toFixed(2)]);
     // Q02: vicino in x ma lontano in profondità → nessun colpo
     w = mk(); p = w.players[0]; p.x = 400; p.y = 470; p.face = 1;
     e = new W.Enemy(w, 'fury_flanker', 460, 600); e.update = function () {}; e.setState('approach'); w.enemies.push(e);

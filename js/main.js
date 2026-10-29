@@ -150,7 +150,74 @@ var W = window.W;
     }
     if (!next) { endCampaign(); return; }
     run.areaIdx++;
-    prepareArea();
+    startComic(next, function () { prepareArea(); });
+  }
+  // ------------------------------------------------------------------ transizione a fumetto
+  // L'ultimo fotogramma dell'area diventa una vignetta inchiostrata con retino; la didascalia annuncia il luogo successivo.
+  var COMIC_LEAD = { P0: 'Coney Island, quella sera.', C1: 'Nel Bronx.', C2: 'Le strade del Bronx.', C3: 'Territorio degli Orphans.', C4: 'Riverside Park.', C5: 'La banda si divide.', C6: 'Union Square.', C7: 'L\'ultimo treno.', C8: 'Coney Island, all\'alba.' };
+  function startComic(next, then) {
+    var snap = document.createElement('canvas'); snap.width = C.VIEW_W; snap.height = C.VIEW_H;
+    try { snap.getContext('2d').drawImage(cv, 0, 0); } catch (e) {}
+    var prev = W.CAMPAIGN[game.run.areaIdx - 1];
+    var cap = next.ch !== (prev && prev.ch) ? COMIC_LEAD[next.ch] : next.name + '.', sub = '';
+    if (next.thread) {
+      var th = W.THREADS[next.thread];
+      cap = (prev && prev.thread && prev.thread !== next.thread ? 'Intanto · ' : '') + (next.id === 'C5-05' ? 'Snow e Cowboy' : th.label);
+      sub = next.where;
+    }
+    game.comic = { img: snap, t: 0, cap: cap, sub: sub, then: then, tilt: (Math.random() - 0.5) * 0.05, thread: next.thread, dur: next.thread ? 3.6 : 2.1 };
+    game.state = 'comic';
+  }
+  // tavola dei tre gruppi divisi: dove sono e come stanno; evidenzia il gruppo che si gioca
+  function drawThreadBoard(c, a) {
+    var f = game.world.flags, keys = ['swan', 'park', 'lizzies'], w0 = 340, x0 = C.VIEW_W / 2 - (w0 * 3 + 40) / 2, y0 = 470;
+    ctx.save(); ctx.globalAlpha = a;
+    keys.forEach(function (k, i) {
+      var th = W.THREADS[k], x = x0 + i * (w0 + 20), cur = k === c.thread;
+      ctx.fillStyle = '#111'; ctx.fillRect(x + 6, y0 + 6, w0, 190);
+      ctx.fillStyle = cur ? '#f2d23c' : '#e8dcc0'; ctx.fillRect(x, y0, w0, 190); ctx.strokeStyle = '#111'; ctx.lineWidth = 3; ctx.strokeRect(x, y0, w0, 190);
+      th.members.forEach(function (id, j) {
+        var gone = id === 'ajax' && f.ajax_arrested;
+        ctx.globalAlpha = a * (gone ? 0.3 : 1);
+        drawPortrait(id, x + 70 + j * 100 - (th.members.length === 2 ? -50 : 0), y0 + 132, 1.15, true);
+        ctx.globalAlpha = a;
+      });
+      ctx.fillStyle = '#111'; ctx.font = '700 18px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(th.label.toUpperCase(), x + w0 / 2, y0 + 158);
+      ctx.font = '500 15px "Oswald", sans-serif'; ctx.fillText(th.status(f), x + w0 / 2, y0 + 180);
+    });
+    ctx.restore();
+  }
+  var halftone = null;
+  function drawComic(dt) {
+    var c = game.comic; c.t += dt;
+    if (!halftone) {
+      halftone = document.createElement('canvas'); halftone.width = 12; halftone.height = 12;
+      var h = halftone.getContext('2d'); h.fillStyle = 'rgba(0,0,0,0.35)'; h.beginPath(); h.arc(3, 3, 1.8, 0, Math.PI * 2); h.arc(9, 9, 1.8, 0, Math.PI * 2); h.fill();
+    }
+    ctx.fillStyle = '#e8dcc0'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);           // carta
+    var k = Math.min(1, c.t / 0.35), sc = 1 - 0.18 * k, rot = c.tilt * k;
+    ctx.save(); ctx.translate(C.VIEW_W / 2, C.VIEW_H / 2); ctx.rotate(rot); ctx.scale(sc, sc);
+    ctx.fillStyle = '#111'; ctx.fillRect(-C.VIEW_W / 2 - 14, -C.VIEW_H / 2 - 14, C.VIEW_W + 28, C.VIEW_H + 28);
+    ctx.drawImage(c.img, -C.VIEW_W / 2, -C.VIEW_H / 2);
+    // inchiostro: contrasto e colori ridotti, retino
+    ctx.globalCompositeOperation = 'saturation'; ctx.fillStyle = 'rgba(128,128,128,' + 0.55 * k + ')'; ctx.fillRect(-C.VIEW_W / 2, -C.VIEW_H / 2, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = 'rgba(232,180,120,' + 0.35 * k + ')'; ctx.fillRect(-C.VIEW_W / 2, -C.VIEW_H / 2, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = k; ctx.fillStyle = ctx.createPattern(halftone, 'repeat'); ctx.fillRect(-C.VIEW_W / 2, -C.VIEW_H / 2, C.VIEW_W, C.VIEW_H); ctx.globalAlpha = 1;
+    ctx.restore();
+    // didascalia gialla del fumetto
+    if (c.t > 0.3) {
+      var a = Math.min(1, (c.t - 0.3) / 0.2);
+      ctx.save(); ctx.globalAlpha = a; ctx.font = '700 30px "Oswald", sans-serif';
+      var tw = ctx.measureText(c.cap.toUpperCase()).width + 44;
+      ctx.translate(120, 120); ctx.rotate(-0.02);
+      ctx.fillStyle = '#111'; ctx.fillRect(6, 6, tw, 56); ctx.fillStyle = '#f2d23c'; ctx.fillRect(0, 0, tw, 56);
+      ctx.strokeStyle = '#111'; ctx.lineWidth = 3; ctx.strokeRect(0, 0, tw, 56);
+      ctx.fillStyle = '#111'; ctx.textAlign = 'left'; ctx.fillText(c.cap.toUpperCase(), 22, 39);
+      if (c.sub) { ctx.font = '500 22px "Oswald", sans-serif'; var sw = ctx.measureText(c.sub).width + 36; ctx.fillStyle = '#111'; ctx.fillRect(16, 66, sw, 40); ctx.fillStyle = '#fff6d8'; ctx.fillRect(10, 60, sw, 40); ctx.strokeRect(10, 60, sw, 40); ctx.fillStyle = '#111'; ctx.fillText(c.sub, 28, 88); }
+      ctx.restore();
+    }
+    if (c.thread && c.t > 0.5) drawThreadBoard(c, Math.min(1, (c.t - 0.5) / 0.3));
+    if (c.t > c.dur) { game.comic = null; c.then(); }
   }
   function endCampaign() {
     var w = game.world, s = w.stats;
@@ -227,6 +294,7 @@ var W = window.W;
       return;
     }
     if (game.state === 'howto') { if (ok || back) game.state = 'menu'; return; }
+    if (game.state === 'comic') { if (ok && game.comic && game.comic.t > 0.4) game.comic.t = 9; return; }
     if (game.state === 'credits') { if (ok || back) { game.state = 'result'; game.menuIdx = 0; } return; }
     if (game.state === 'select') { selectKey(up, down, left, right, ok, back); return; }
     if (game.state === 'party') { partyKey(up, down, left, right, ok); return; }
@@ -404,8 +472,22 @@ var W = window.W;
     for (var i = 0; i < w.players.length; i++) { var d = w.players[i].device; if (d) { d.poll(); if (d.edge.pause) { game.state = 'pause'; game.menuIdx = 0; return; } } }
     w.step(dt);
     W.Audio.consume(w.events);
+    mixFor(w);
     if (w.failed) { w.failReasonShown = w.failReason || null; w.failReason = null; game.fails++; game.state = 'fail'; game.menuIdx = 0; w.failed = false; return; }
     if (w.area.done) areaFinished();
+  }
+  // musica e ambiente secondo l'area: fuga = pulsazione, rissa = basso e cassa, attraversamento = bordone, alba = luce
+  var AMB_BY_BG = { park: 'park', park_b: 'park', metro: 'subway', metro_b: 'subway', interior: 'interior', alley: 'city', street: 'city', street_b: 'city', harbor: 'city', coney: 'city', coney_b: 'city', boardwalk: 'beach' };
+  function mixFor(w) {
+    var a = w.area; if (!a) return;
+    var def = a.def, m;
+    if (a.scene) m = a.scene.def.mood || def.mood || (def.kind === 'epilogue' ? 'dawn' : 'tension');
+    else if (a.fighting) m = 'fight';
+    else if (a.timer !== null || a.pursuerType) m = def.mood === 'silence' ? 'silence' : 'chase';
+    else m = def.mood || (def.kind === 'training' ? 'silence' : 'tension');
+    W.Audio.setMood(m);
+    W.Audio.setAmbience(def.amb || AMB_BY_BG[def.bg] || 'city');
+    W.Audio.radio(!!(a.scene && a.scene.def.radio));
   }
   var padPrev = {};
   function pollMenuPad() {
@@ -418,6 +500,8 @@ var W = window.W;
   }
   function draw(dt) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
+    if (['title', 'menu', 'select', 'chapters', 'howto', 'options'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); }
+    if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); }
     if (game.state === 'title') drawTitle();
     else if (game.state === 'menu') {
       backdrop(1);
@@ -433,6 +517,7 @@ var W = window.W;
     else if (game.state === 'credits') drawCredits(dt);
     else if (game.state === 'options') { backdrop(); txt('OPZIONI', C.VIEW_W / 2, 140, 44, R.COL.p1, 'center', 700); drawList(menuItems(), C.VIEW_W / 2, 260); txt('← → regola', C.VIEW_W / 2, 640, 18, R.COL.dim, 'center', 400); }
     else if (game.state === 'result') drawResult();
+    else if (game.state === 'comic') drawComic(dt);
     else if (game.world) {
       R.frame(game.world, game.state === 'play' ? dt : 0, ui);
       if (game.state === 'pause') overlay('PAUSA', menuItems());

@@ -276,6 +276,43 @@ var W = window.W;
     P0: 'Prologo · Coney Island', C1: 'Capitolo 1 · Il raduno', C2: 'Capitolo 2 · Braccati', C3: 'Capitolo 3 · Territorio nemico', C4: 'Capitolo 4 · Baseball Furies',
     C5: 'Capitolo 5 · La banda divisa', C6: 'Capitolo 6 · Union Square', C7: 'Capitolo 7 · L\'ultimo treno', C8: 'Capitolo 8 · Coney Island'
   };
+  // luce e musica per area: sera al prologo, notte, alba sul treno e a Coney Island
+  A.forEach(function (a) {
+    if (a.ch === 'P0') a.light = 'dusk';
+    if (a.ch === 'C7' || a.ch === 'C8') { a.light = 'dawn'; if (a.kind !== 'arena') a.mood = 'dawn'; }
+  });
+  A.filter(function (a) { return a.id === 'C4-01'; })[0].mood = 'silence';
+
+  // ------------------------------------------------------------------ eventi in contemporanea
+  // Nel capitolo 5 la banda è divisa in tre gruppi: ogni area dice a quale gruppo appartiene.
+  // La vignetta di passaggio mostra «Intanto…», il luogo e lo stato degli altri gruppi.
+  W.THREADS = {
+    swan:   { label: 'Swan e Mercy', members: ['swan', 'mercy'],
+      status: function (f) { return f.swan_mercy_bond ? 'Verso Union Square' : (f.party_split ? 'Nei tunnel della metro' : 'Insieme agli altri'); } },
+    park:   { label: 'Ajax, Snow e Cowboy', members: ['ajax', 'snow', 'cowboy'],
+      status: function (f) { return f.regroup_target ? 'Snow e Cowboy verso Union Square' : (f.ajax_arrested ? 'Ajax arrestato · Snow e Cowboy in fuga' : 'Riverside Park'); } },
+    lizzies:{ label: 'Vermin, Cochise e Rembrandt', members: ['vermin', 'cochise', 'rembrandt'],
+      status: function (f) { return f.lizzies_trap ? 'Scappati dalle Lizzies' : (f.party_split ? 'Ospiti delle Lizzies' : 'Insieme agli altri'); } }
+  };
+  [['C5-01', 'park', 'Riverside Park'], ['C5-02', 'lizzies', 'Un appartamento sconosciuto'], ['C5-03', 'lizzies', 'La stanza delle Lizzies'],
+   ['C5-04', 'swan', 'I sotterranei della metro'], ['C5-05', 'park', 'Snow e Cowboy, verso Union Square']].forEach(function (t) {
+    var a = A.filter(function (x) { return x.id === t[0]; })[0]; a.thread = t[1]; a.where = t[2];
+  });
   W.OUT_AFTER = { C1: ['cleon'], C3: ['fox'], C4: ['ajax'] };
+
+  // ------------------------------------------------------------------ la DJ
+  // Intermezzi radio all'inizio dei capitoli: battute originali dell'adattamento, non citazioni del film.
+  W.RADIO = {
+    C1: ['Buonasera, città. Stanotte nel Bronx c\'è una riunione che non si è mai vista: tutte le bande, nello stesso posto.', 'Si dice che qualcuno voglia cambiare le regole. Restate sintonizzati.'],
+    C2: ['Notizie dal Bronx, e non sono belle. Al raduno qualcuno ha sparato a Cyrus.', 'Per le strade gira un nome solo: i Warriors. Se li vedete, lo sapete già. Questa è per loro.'],
+    C3: ['La metro va a singhiozzo, stanotte. Un incendio sui binari, treni fermi a metà strada.', 'E chi scende dove non dovrebbe, scende in casa d\'altri.'],
+    C4: ['Ancora nessuna notizia dei ragazzi con il gilet. Qualcuno dice che sono vicini al fiume.', 'Il parco di notte è un brutto posto per fermarsi. Musica.'],
+    C5: ['Aggiornamento per chi tiene il conto: i Warriors non sono più tutti insieme.', 'Divisi, stanchi, ancora lontani da casa. Questa la dedico a chi si è perso.'],
+    C6: ['Sono ancora in piedi. Non so come, ma sono ancora in piedi.', 'Prossima fermata, Union Square. E anche lì qualcuno li aspetta.'],
+    C7: ['Sta arrivando la luce. La notte più lunga della città sta finendo.', 'E un treno corre verso il mare.'],
+    C8: ['Una correzione, per chi ascolta: i Warriors con quello sparo non c\'entrano.', 'Ma la voce non è arrivata a tutti. Qualcuno li aspetta ancora, sulla spiaggia.']
+  };
+  W.NPC_NAMES.dj = 'La DJ';
+
   W.areaIndex = function (id) { for (var i = 0; i < A.length; i++) if (A[i].id === id) return i; return -1; };
 })();

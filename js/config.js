@@ -23,7 +23,9 @@ W.CFG = {
   CAM_MARGIN: 160, MAX_SPREAD: 850,
   MAX_ON_FIELD: [4, 6], MAX_ATTACKERS: [1, 2], ATTACK_GAP: 0.09,
   STUCK_REPATH: 3, STUCK_RESPAWN: 8,
-  MAX_WEAPON_PICKUPS: 6
+  MAX_WEAPON_PICKUPS: 6,
+  // risse brevi e violente come nel film: i colpi pesano di più per tutti
+  BRUTAL: { player: 1.3, enemy: 1.15 }
 };
 
 // Tempi in secondi: prep / attivo / recupero. Danno riferito a potenza 3.

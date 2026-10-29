@@ -228,9 +228,9 @@ var W = window.W;
     var a = this.mods.anim;
     if (m !== 'fury') { sp.prep *= a; sp.rec *= a; }
     var wpn = this.weapon && !W.WEAPONS[this.weapon.type].throwOnly ? W.WEAPONS[this.weapon.type] : null;
-    sp.dmg = sp.dmg * this.mods.dmg;
+    sp.dmg = sp.dmg * this.mods.dmg * C.BRUTAL.player;
     if (wpn && (m === 'l1' || m === 'l2' || m === 'l3' || m === 'heavy' || m === 'run')) {
-      sp.dmg = (m === 'heavy' ? wpn.heavy : wpn.light) * this.mods.dmg * (m === 'l3' ? 1.15 : 1);
+      sp.dmg = (m === 'heavy' ? wpn.heavy : wpn.light) * this.mods.dmg * (m === 'l3' ? 1.15 : 1) * C.BRUTAL.player;
       sp.weaponReach = wpn.reach; sp.prep *= wpn.slow; sp.rec *= wpn.slow;
     }
     this.att = new Attack(this, m, sp);
@@ -356,7 +356,7 @@ var W = window.W;
   Player.prototype.takeHit = function (from, att) {
     var w = this.world, sp = att.spec;
     if (sp.held) { var dh = sp.dmg * w.diff.edmg; this.hp = Math.max(0, this.hp - dh); w.stats.damageTaken += dh; w.emit('hit', { x: this.x, y: this.y, z: 70, target: 'player' }); if (this.hp <= 0) { this.release(true); this.knockOut(from); } return; }
-    var dmg = sp.dmg * w.diff.edmg;
+    var dmg = sp.dmg * w.diff.edmg * C.BRUTAL.enemy;
     this.hp = Math.max(0, this.hp - dmg); w.stats.damageTaken += dmg;
     w.emit('hit', { x: this.x, y: this.y, z: 70, target: 'player', heavy: !!sp.heavy, weapon: !!sp.weapon });
     if (this.grabbed) this.releaseGrab();
