@@ -1725,10 +1725,27 @@ var W = window.W;
   };
   AreaRun.prototype.nearInteraction = function (p) {
     var list = this.interactions(), best = null, bd = 1e9;
-    for (var i = 0; i < list.length; i++) { var it = list[i], dx = Math.abs(it.x - p.x), dy = Math.abs(it.y - p.y); if (dx < 80 && dy < 46 && dx < bd) { bd = dx; best = it; } }
+    for (var i = 0; i < list.length; i++) {
+      var it = list[i], dx = Math.abs(it.x - p.x), dy = Math.abs(it.y - p.y);
+      // uscite: zona larga (tutta la fascia vicina al punto, piano intero); altri oggetti: zona stretta
+      var rx = it.exit ? 190 : 90, ry = it.exit ? 999 : 50;
+      if (dx < rx && dy < ry && dx < bd) { bd = dx; best = it; }
+    }
     return best;
   };
-  AreaRun.prototype.tryInteract = function (p) { if (this.scene) return false; var it = this.nearInteraction(p); if (it) { it.fn(p); return true; } return false; };
+  AreaRun.prototype.tryInteract = function (p) {
+    if (this.scene) return false;
+    var it = this.nearInteraction(p); if (it) { it.fn(p); return true; }
+    // uscita a piedi: dentro la zona finale anche il tasto d'interazione porta avanti (stesso prompt «Uscita»)
+    var w = this.world, def = this.def;
+    if (w.exitOpen && !def.exitInteract && def.kind !== 'confront' && p.x > def.width - 260) {
+      var others = w.players.filter(function (q) { return q !== p && !q.out && q.state !== 'ko'; });
+      if (others.every(function (q) { return q.cpu || q.x > def.width - 360; })) { this.finish(); w.emit('exit', {}); return true; }
+      this.objective = 'Aspetta il compagno all\'uscita';
+      return true;
+    }
+    return false;
+  };
   AreaRun.prototype.canExit = function () {
     if (this.kind === 'arena' || this.def.waves) return this.waveIdx >= (this.def.waves || []).length;
     if (this.def.needTalks && this.talkCount < this.def.needTalks) return false;

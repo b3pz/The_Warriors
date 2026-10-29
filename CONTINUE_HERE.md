@@ -22,6 +22,8 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 
 - `node tools/qa.js`: Q01, Q02, Q05, Q06, Q09, Q18 e coordinatore, tutti PASS.
 - `node tools/qa_campaign.js`: campagna intera dal prologo ai crediti con giocatori CPU, senza errori JS e senza blocchi (circa 15 minuti di gioco simulato; il bot va KO e riprova in alcune arene di C4).
+- `node tools/qa_exits.js`: tutte le uscite delle aree senza combattimento, provate con tasti veri.
+- Correzione segnalata dall'autore (29 ottobre): in C1-04 «Sali la scala» non si attivava perché la zona era troppo stretta; ora le uscite a interazione hanno una zona larga e anche le uscite a piedi si attivano con il tasto d'interazione.
 - Correzioni emerse dai test: compagno di allenamento troppo lontano, Mercy che non raggiungeva la porta di C5-04, segnaposto dei tasti negli obiettivi.
 - Non eseguito: playtest umano, bilanciamento, controller fisici, due tastiere, browser diversi da Chromium.
 
