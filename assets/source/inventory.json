@@ -1,0 +1,46 @@
+{
+ "fury_8pose.png": {
+  "sha256": "97ce60a24bd775dc8c6ffe31b5f180cea90a67b49cd0101fe21ef48e8e2c8ab7",
+  "size": [
+   1536,
+   1024
+  ],
+  "mode": "RGBA",
+  "received": "2026-10-29",
+  "status": "source",
+  "note": "Fury con mazza, 8 pose (riposo, 2 passi, swing orizzontale, carica, swing basso, colpito, a terra)."
+ },
+ "park_night.png": {
+  "sha256": "2c3d717bfc17a2610e1efe3fae4cf2a4aea118f6c555c892388d0c15cc181140",
+  "size": [
+   1672,
+   941
+  ],
+  "mode": "RGB",
+  "received": "2026-10-29",
+  "status": "source",
+  "note": "Fondale parco notturno con lungofiume, panchine e cestini dipinti; senza alpha."
+ },
+ "pixel_sheet_c4_cast_props_bg.png": {
+  "sha256": "f70d6c169070fca545331a1931a870f7f98482474dcd97bec4b742c6d541da7a",
+  "size": [
+   1536,
+   1024
+  ],
+  "mode": "RGBA",
+  "received": "2026-10-29",
+  "status": "source",
+  "note": "Tavola pixel art etichettata: Swan, Ajax, Furies, Orphans, Turnbull AC's, Polizia, oggetti, effetti, HUD, fondali a livelli. Stile diverso dalle tavole illustrate: non ancora integrata."
+ },
+ "warrior_a_8pose.png": {
+  "sha256": "0ce0b63c56a6180c57403d62ed171a3d02469e0f57417ad0e16fcac3a76951a8",
+  "size": [
+   1536,
+   1024
+  ],
+  "mode": "RGBA",
+  "received": "2026-10-29",
+  "status": "source",
+  "note": "Warrior in gilet rosso e jeans, 8 pose (guardia, 2 passi, diretto, calcio, mazza, colpito, salto). Identità non confermata dall'autore."
+ }
+}

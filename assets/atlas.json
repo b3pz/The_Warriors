@@ -1,0 +1,209 @@
+{
+ "version": 1,
+ "standHeight": 190,
+ "sets": {
+  "warrior_a": {
+   "scale": 0.7142857142857143,
+   "frames": {
+    "guard": {
+     "file": "sprites/warrior_a_guard.png",
+     "w": 177,
+     "h": 266,
+     "px": 88,
+     "py": 265
+    },
+    "walk1": {
+     "file": "sprites/warrior_a_walk1.png",
+     "w": 184,
+     "h": 267,
+     "px": 91,
+     "py": 266
+    },
+    "walk2": {
+     "file": "sprites/warrior_a_walk2.png",
+     "w": 180,
+     "h": 265,
+     "px": 89,
+     "py": 264
+    },
+    "punch": {
+     "file": "sprites/warrior_a_punch.png",
+     "w": 236,
+     "h": 256,
+     "px": 106,
+     "py": 255
+    },
+    "kick": {
+     "file": "sprites/warrior_a_kick.png",
+     "w": 239,
+     "h": 262,
+     "px": 65,
+     "py": 261
+    },
+    "bat_windup": {
+     "file": "sprites/warrior_a_bat_windup.png",
+     "w": 209,
+     "h": 305,
+     "px": 104,
+     "py": 304
+    },
+    "hurt": {
+     "file": "sprites/warrior_a_hurt.png",
+     "w": 193,
+     "h": 241,
+     "px": 102,
+     "py": 240
+    },
+    "jump": {
+     "file": "sprites/warrior_a_jump.png",
+     "w": 185,
+     "h": 198,
+     "px": 63,
+     "py": 211
+    }
+   },
+   "source": "warrior_a_8pose.png",
+   "sourceSha256": "0ce0b63c56a6180c57403d62ed171a3d02469e0f57417ad0e16fcac3a76951a8",
+   "facing": 1
+  },
+  "fury": {
+   "scale": 0.7142857142857143,
+   "frames": {
+    "idle": {
+     "file": "sprites/fury_idle.png",
+     "w": 151,
+     "h": 266,
+     "px": 75,
+     "py": 265
+    },
+    "walk1": {
+     "file": "sprites/fury_walk1.png",
+     "w": 176,
+     "h": 252,
+     "px": 88,
+     "py": 251
+    },
+    "walk2": {
+     "file": "sprites/fury_walk2.png",
+     "w": 170,
+     "h": 260,
+     "px": 84,
+     "py": 259
+    },
+    "swing": {
+     "file": "sprites/fury_swing.png",
+     "w": 291,
+     "h": 236,
+     "px": 117,
+     "py": 235
+    },
+    "windup": {
+     "file": "sprites/fury_windup.png",
+     "w": 189,
+     "h": 299,
+     "px": 101,
+     "py": 298
+    },
+    "downswing": {
+     "file": "sprites/fury_downswing.png",
+     "w": 263,
+     "h": 228,
+     "px": 107,
+     "py": 227
+    },
+    "hurt": {
+     "file": "sprites/fury_hurt.png",
+     "w": 176,
+     "h": 234,
+     "px": 96,
+     "py": 233
+    },
+    "down": {
+     "file": "sprites/fury_down.png",
+     "w": 280,
+     "h": 101,
+     "px": 140,
+     "py": 100
+    }
+   },
+   "source": "fury_8pose.png",
+   "sourceSha256": "97ce60a24bd775dc8c6ffe31b5f180cea90a67b49cd0101fe21ef48e8e2c8ab7",
+   "facing": 1
+  },
+  "fury_nobat": {
+   "scale": 0.7142857142857143,
+   "frames": {
+    "idle": {
+     "file": "sprites/fury_nobat_idle.png",
+     "w": 151,
+     "h": 266,
+     "px": 75,
+     "py": 265
+    },
+    "walk1": {
+     "file": "sprites/fury_nobat_walk1.png",
+     "w": 176,
+     "h": 252,
+     "px": 88,
+     "py": 251
+    },
+    "walk2": {
+     "file": "sprites/fury_nobat_walk2.png",
+     "w": 170,
+     "h": 260,
+     "px": 84,
+     "py": 259
+    },
+    "swing": {
+     "file": "sprites/fury_nobat_swing.png",
+     "w": 291,
+     "h": 236,
+     "px": 117,
+     "py": 235
+    },
+    "windup": {
+     "file": "sprites/fury_nobat_windup.png",
+     "w": 189,
+     "h": 299,
+     "px": 101,
+     "py": 298
+    },
+    "downswing": {
+     "file": "sprites/fury_nobat_downswing.png",
+     "w": 263,
+     "h": 228,
+     "px": 107,
+     "py": 227
+    },
+    "hurt": {
+     "file": "sprites/fury_nobat_hurt.png",
+     "w": 176,
+     "h": 234,
+     "px": 96,
+     "py": 233
+    },
+    "down": {
+     "file": "sprites/fury_nobat_down.png",
+     "w": 280,
+     "h": 101,
+     "px": 140,
+     "py": 100
+    }
+   },
+   "source": "fury_8pose.png",
+   "sourceSha256": "97ce60a24bd775dc8c6ffe31b5f180cea90a67b49cd0101fe21ef48e8e2c8ab7",
+   "facing": 1,
+   "derived": "remove_bat automatico, da sostituire"
+  }
+ },
+ "props": {},
+ "backgrounds": {
+  "park_night": {
+   "file": "backgrounds/park_night_720.jpg",
+   "w": 1279,
+   "h": 720,
+   "floorTop": 390,
+   "source": "park_night.png"
+  }
+ }
+}

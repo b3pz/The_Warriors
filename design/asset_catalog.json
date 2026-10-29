@@ -1,3136 +1,3173 @@
 {
-  "schema_version": 1,
-  "purpose": "Production inventory. planned_files do not claim files exist.",
-  "status_values": [
-    "missing",
-    "source",
-    "processed",
-    "integrated",
-    "verified"
-  ],
-  "summary": {
-    "packages": 267,
-    "planned_files": 684,
-    "packages_by_kind": {
-      "ambience": 12,
-      "cinematic": 22,
-      "crowd": 6,
-      "dialogue": 30,
-      "enemy": 15,
-      "environment": 35,
-      "font": 2,
-      "fx": 12,
-      "hero": 9,
-      "item": 7,
-      "music": 16,
-      "npc": 8,
-      "prop": 15,
-      "sfx": 44,
-      "story_object": 4,
-      "supplied_reference": 3,
-      "ui": 15,
-      "vehicle": 3,
-      "voice_barks": 9
-    },
-    "missing_packages": 264,
-    "source_packages": 3,
-    "integrated_packages": 0,
-    "verified_packages": 0,
-    "hero_frames": 1260,
-    "enemy_base_frames": 540,
-    "enemy_extension_frames": 108
+ "schema_version": 1,
+ "purpose": "Production inventory. planned_files do not claim files exist.",
+ "status_values": [
+  "missing",
+  "source",
+  "processed",
+  "integrated",
+  "verified"
+ ],
+ "summary": {
+  "packages": 267,
+  "planned_files": 684,
+  "packages_by_kind": {
+   "ambience": 12,
+   "cinematic": 22,
+   "crowd": 6,
+   "dialogue": 30,
+   "enemy": 15,
+   "environment": 35,
+   "font": 2,
+   "fx": 12,
+   "hero": 9,
+   "item": 7,
+   "music": 16,
+   "npc": 8,
+   "prop": 15,
+   "sfx": 44,
+   "story_object": 4,
+   "supplied_reference": 3,
+   "ui": 15,
+   "vehicle": 3,
+   "voice_barks": 9
   },
-  "assets": [
-    {
-      "id": "hero_cleon",
-      "kind": "hero",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/characters/cleon/model.png",
-        "assets/characters/cleon/portrait.png",
-        "assets/characters/cleon/body.png",
-        "assets/characters/cleon/weapons.png",
-        "assets/characters/cleon/atlas.json",
-        "assets/characters/cleon/animations.json"
-      ],
-      "planned_frames": 140
-    },
-    {
-      "id": "hero_swan",
-      "kind": "hero",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/characters/swan/model.png",
-        "assets/characters/swan/portrait.png",
-        "assets/characters/swan/body.png",
-        "assets/characters/swan/weapons.png",
-        "assets/characters/swan/atlas.json",
-        "assets/characters/swan/animations.json"
-      ],
-      "planned_frames": 140
-    },
-    {
-      "id": "hero_ajax",
-      "kind": "hero",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/characters/ajax/model.png",
-        "assets/characters/ajax/portrait.png",
-        "assets/characters/ajax/body.png",
-        "assets/characters/ajax/weapons.png",
-        "assets/characters/ajax/atlas.json",
-        "assets/characters/ajax/animations.json"
-      ],
-      "planned_frames": 140
-    },
-    {
-      "id": "hero_snow",
-      "kind": "hero",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/characters/snow/model.png",
-        "assets/characters/snow/portrait.png",
-        "assets/characters/snow/body.png",
-        "assets/characters/snow/weapons.png",
-        "assets/characters/snow/atlas.json",
-        "assets/characters/snow/animations.json"
-      ],
-      "planned_frames": 140
-    },
-    {
-      "id": "hero_cowboy",
-      "kind": "hero",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/characters/cowboy/model.png",
-        "assets/characters/cowboy/portrait.png",
-        "assets/characters/cowboy/body.png",
-        "assets/characters/cowboy/weapons.png",
-        "assets/characters/cowboy/atlas.json",
-        "assets/characters/cowboy/animations.json"
-      ],
-      "planned_frames": 140
-    },
-    {
-      "id": "hero_cochise",
-      "kind": "hero",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/characters/cochise/model.png",
-        "assets/characters/cochise/portrait.png",
-        "assets/characters/cochise/body.png",
-        "assets/characters/cochise/weapons.png",
-        "assets/characters/cochise/atlas.json",
-        "assets/characters/cochise/animations.json"
-      ],
-      "planned_frames": 140
-    },
-    {
-      "id": "hero_vermin",
-      "kind": "hero",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/characters/vermin/model.png",
-        "assets/characters/vermin/portrait.png",
-        "assets/characters/vermin/body.png",
-        "assets/characters/vermin/weapons.png",
-        "assets/characters/vermin/atlas.json",
-        "assets/characters/vermin/animations.json"
-      ],
-      "planned_frames": 140
-    },
-    {
-      "id": "hero_rembrandt",
-      "kind": "hero",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/characters/rembrandt/model.png",
-        "assets/characters/rembrandt/portrait.png",
-        "assets/characters/rembrandt/body.png",
-        "assets/characters/rembrandt/weapons.png",
-        "assets/characters/rembrandt/atlas.json",
-        "assets/characters/rembrandt/animations.json"
-      ],
-      "planned_frames": 140
-    },
-    {
-      "id": "hero_fox",
-      "kind": "hero",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/characters/fox/model.png",
-        "assets/characters/fox/portrait.png",
-        "assets/characters/fox/body.png",
-        "assets/characters/fox/weapons.png",
-        "assets/characters/fox/atlas.json",
-        "assets/characters/fox/animations.json"
-      ],
-      "planned_frames": 140
-    },
-    {
-      "id": "enemy_turnbull_rusher",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/turnbull_rusher/model.png",
-        "assets/enemies/turnbull_rusher/sheet.png",
-        "assets/enemies/turnbull_rusher/atlas.json",
-        "assets/enemies/turnbull_rusher/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 0
-    },
-    {
-      "id": "enemy_turnbull_heavy",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/turnbull_heavy/model.png",
-        "assets/enemies/turnbull_heavy/sheet.png",
-        "assets/enemies/turnbull_heavy/atlas.json",
-        "assets/enemies/turnbull_heavy/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 0
-    },
-    {
-      "id": "enemy_orphan_brawler",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/orphan_brawler/model.png",
-        "assets/enemies/orphan_brawler/sheet.png",
-        "assets/enemies/orphan_brawler/atlas.json",
-        "assets/enemies/orphan_brawler/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 0
-    },
-    {
-      "id": "enemy_orphan_board",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/orphan_board/model.png",
-        "assets/enemies/orphan_board/sheet.png",
-        "assets/enemies/orphan_board/atlas.json",
-        "assets/enemies/orphan_board/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 12
-    },
-    {
-      "id": "enemy_fury_batter",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/fury_batter/model.png",
-        "assets/enemies/fury_batter/sheet.png",
-        "assets/enemies/fury_batter/atlas.json",
-        "assets/enemies/fury_batter/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 12
-    },
-    {
-      "id": "enemy_fury_flanker",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/fury_flanker/model.png",
-        "assets/enemies/fury_flanker/sheet.png",
-        "assets/enemies/fury_flanker/atlas.json",
-        "assets/enemies/fury_flanker/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 12
-    },
-    {
-      "id": "enemy_fury_veteran",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/fury_veteran/model.png",
-        "assets/enemies/fury_veteran/sheet.png",
-        "assets/enemies/fury_veteran/atlas.json",
-        "assets/enemies/fury_veteran/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 12
-    },
-    {
-      "id": "enemy_lizzie_blocker",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/lizzie_blocker/model.png",
-        "assets/enemies/lizzie_blocker/sheet.png",
-        "assets/enemies/lizzie_blocker/atlas.json",
-        "assets/enemies/lizzie_blocker/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 0
-    },
-    {
-      "id": "enemy_lizzie_shooter",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/lizzie_shooter/model.png",
-        "assets/enemies/lizzie_shooter/sheet.png",
-        "assets/enemies/lizzie_shooter/atlas.json",
-        "assets/enemies/lizzie_shooter/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 16
-    },
-    {
-      "id": "enemy_punk_grappler",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/punk_grappler/model.png",
-        "assets/enemies/punk_grappler/sheet.png",
-        "assets/enemies/punk_grappler/atlas.json",
-        "assets/enemies/punk_grappler/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 16
-    },
-    {
-      "id": "enemy_punk_brawler",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/punk_brawler/model.png",
-        "assets/enemies/punk_brawler/sheet.png",
-        "assets/enemies/punk_brawler/atlas.json",
-        "assets/enemies/punk_brawler/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 0
-    },
-    {
-      "id": "enemy_punk_leader",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/punk_leader/model.png",
-        "assets/enemies/punk_leader/sheet.png",
-        "assets/enemies/punk_leader/atlas.json",
-        "assets/enemies/punk_leader/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 16
-    },
-    {
-      "id": "enemy_rogue_brawler",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/rogue_brawler/model.png",
-        "assets/enemies/rogue_brawler/sheet.png",
-        "assets/enemies/rogue_brawler/atlas.json",
-        "assets/enemies/rogue_brawler/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 0
-    },
-    {
-      "id": "enemy_rogue_bottle",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/rogue_bottle/model.png",
-        "assets/enemies/rogue_bottle/sheet.png",
-        "assets/enemies/rogue_bottle/atlas.json",
-        "assets/enemies/rogue_bottle/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 12
-    },
-    {
-      "id": "enemy_police_pursuer",
-      "kind": "enemy",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/enemies/police_pursuer/model.png",
-        "assets/enemies/police_pursuer/sheet.png",
-        "assets/enemies/police_pursuer/atlas.json",
-        "assets/enemies/police_pursuer/animations.json"
-      ],
-      "planned_base_frames": 36,
-      "planned_extension_frames": 0
-    },
-    {
-      "id": "npc_mercy",
-      "kind": "npc",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/npc/mercy/model.png",
-        "assets/npc/mercy/portrait.png",
-        "assets/npc/mercy/sheet.png",
-        "assets/npc/mercy/animations.json"
-      ]
-    },
-    {
-      "id": "npc_cyrus",
-      "kind": "npc",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/npc/cyrus/model.png",
-        "assets/npc/cyrus/portrait.png",
-        "assets/npc/cyrus/sheet.png",
-        "assets/npc/cyrus/animations.json"
-      ]
-    },
-    {
-      "id": "npc_luther",
-      "kind": "npc",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/npc/luther/model.png",
-        "assets/npc/luther/portrait.png",
-        "assets/npc/luther/sheet.png",
-        "assets/npc/luther/animations.json"
-      ]
-    },
-    {
-      "id": "npc_masai",
-      "kind": "npc",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/npc/masai/model.png",
-        "assets/npc/masai/portrait.png",
-        "assets/npc/masai/sheet.png",
-        "assets/npc/masai/animations.json"
-      ]
-    },
-    {
-      "id": "npc_dj",
-      "kind": "npc",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/npc/dj/model.png",
-        "assets/npc/dj/portrait.png",
-        "assets/npc/dj/sheet.png",
-        "assets/npc/dj/animations.json"
-      ]
-    },
-    {
-      "id": "npc_witness",
-      "kind": "npc",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/npc/witness/model.png",
-        "assets/npc/witness/portrait.png",
-        "assets/npc/witness/sheet.png",
-        "assets/npc/witness/animations.json"
-      ]
-    },
-    {
-      "id": "npc_undercover",
-      "kind": "npc",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/npc/undercover/model.png",
-        "assets/npc/undercover/portrait.png",
-        "assets/npc/undercover/sheet.png",
-        "assets/npc/undercover/animations.json"
-      ]
-    },
-    {
-      "id": "npc_orphans_leader",
-      "kind": "npc",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/npc/orphans_leader/model.png",
-        "assets/npc/orphans_leader/portrait.png",
-        "assets/npc/orphans_leader/sheet.png",
-        "assets/npc/orphans_leader/animations.json"
-      ]
-    },
-    {
-      "id": "crowd_rally",
-      "kind": "crowd",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/crowd/rally.png",
-        "assets/crowd/rally.json"
-      ]
-    },
-    {
-      "id": "crowd_riffs",
-      "kind": "crowd",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/crowd/riffs.png",
-        "assets/crowd/riffs.json"
-      ]
-    },
-    {
-      "id": "crowd_passengers",
-      "kind": "crowd",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/crowd/passengers.png",
-        "assets/crowd/passengers.json"
-      ]
-    },
-    {
-      "id": "crowd_rogues",
-      "kind": "crowd",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/crowd/rogues.png",
-        "assets/crowd/rogues.json"
-      ]
-    },
-    {
-      "id": "crowd_police",
-      "kind": "crowd",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/crowd/police.png",
-        "assets/crowd/police.json"
-      ]
-    },
-    {
-      "id": "crowd_couple_train",
-      "kind": "crowd",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/crowd/couple_train.png",
-        "assets/crowd/couple_train.json"
-      ]
-    },
-    {
-      "id": "env_p0_01",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/p0_01/back.png",
-        "assets/environments/p0_01/ground.png",
-        "assets/environments/p0_01/front.png",
-        "assets/environments/p0_01/layout.json",
-        "assets/environments/p0_01/thumbnail.jpg"
-      ],
-      "areas": [
-        "P0-01"
-      ]
-    },
-    {
-      "id": "env_p0_02",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/p0_02/back.png",
-        "assets/environments/p0_02/ground.png",
-        "assets/environments/p0_02/front.png",
-        "assets/environments/p0_02/layout.json",
-        "assets/environments/p0_02/thumbnail.jpg"
-      ],
-      "areas": [
-        "P0-02"
-      ]
-    },
-    {
-      "id": "env_p0_03",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/p0_03/back.png",
-        "assets/environments/p0_03/ground.png",
-        "assets/environments/p0_03/front.png",
-        "assets/environments/p0_03/layout.json",
-        "assets/environments/p0_03/thumbnail.jpg"
-      ],
-      "areas": [
-        "P0-03"
-      ]
-    },
-    {
-      "id": "env_p0_04",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/p0_04/back.png",
-        "assets/environments/p0_04/ground.png",
-        "assets/environments/p0_04/front.png",
-        "assets/environments/p0_04/layout.json",
-        "assets/environments/p0_04/thumbnail.jpg"
-      ],
-      "areas": [
-        "P0-04"
-      ]
-    },
-    {
-      "id": "env_c1_01",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c1_01/back.png",
-        "assets/environments/c1_01/ground.png",
-        "assets/environments/c1_01/front.png",
-        "assets/environments/c1_01/layout.json",
-        "assets/environments/c1_01/thumbnail.jpg"
-      ],
-      "areas": [
-        "C1-01"
-      ]
-    },
-    {
-      "id": "env_c1_02",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c1_02/back.png",
-        "assets/environments/c1_02/ground.png",
-        "assets/environments/c1_02/front.png",
-        "assets/environments/c1_02/layout.json",
-        "assets/environments/c1_02/thumbnail.jpg"
-      ],
-      "areas": [
-        "C1-02"
-      ]
-    },
-    {
-      "id": "env_c1_03",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c1_03/back.png",
-        "assets/environments/c1_03/ground.png",
-        "assets/environments/c1_03/front.png",
-        "assets/environments/c1_03/layout.json",
-        "assets/environments/c1_03/thumbnail.jpg"
-      ],
-      "areas": [
-        "C1-03"
-      ]
-    },
-    {
-      "id": "env_c1_04",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c1_04/back.png",
-        "assets/environments/c1_04/ground.png",
-        "assets/environments/c1_04/front.png",
-        "assets/environments/c1_04/layout.json",
-        "assets/environments/c1_04/thumbnail.jpg"
-      ],
-      "areas": [
-        "C1-04"
-      ]
-    },
-    {
-      "id": "env_c2_01",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c2_01/back.png",
-        "assets/environments/c2_01/ground.png",
-        "assets/environments/c2_01/front.png",
-        "assets/environments/c2_01/layout.json",
-        "assets/environments/c2_01/thumbnail.jpg"
-      ],
-      "areas": [
-        "C2-01"
-      ]
-    },
-    {
-      "id": "env_c2_02",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c2_02/back.png",
-        "assets/environments/c2_02/ground.png",
-        "assets/environments/c2_02/front.png",
-        "assets/environments/c2_02/layout.json",
-        "assets/environments/c2_02/thumbnail.jpg"
-      ],
-      "areas": [
-        "C2-02"
-      ]
-    },
-    {
-      "id": "env_c2_03",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c2_03/back.png",
-        "assets/environments/c2_03/ground.png",
-        "assets/environments/c2_03/front.png",
-        "assets/environments/c2_03/layout.json",
-        "assets/environments/c2_03/thumbnail.jpg"
-      ],
-      "areas": [
-        "C2-03"
-      ]
-    },
-    {
-      "id": "env_c2_04",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c2_04/back.png",
-        "assets/environments/c2_04/ground.png",
-        "assets/environments/c2_04/front.png",
-        "assets/environments/c2_04/layout.json",
-        "assets/environments/c2_04/thumbnail.jpg"
-      ],
-      "areas": [
-        "C2-04"
-      ]
-    },
-    {
-      "id": "env_c3_01",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c3_01/back.png",
-        "assets/environments/c3_01/ground.png",
-        "assets/environments/c3_01/front.png",
-        "assets/environments/c3_01/layout.json",
-        "assets/environments/c3_01/thumbnail.jpg"
-      ],
-      "areas": [
-        "C3-01"
-      ]
-    },
-    {
-      "id": "env_c3_02",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c3_02/back.png",
-        "assets/environments/c3_02/ground.png",
-        "assets/environments/c3_02/front.png",
-        "assets/environments/c3_02/layout.json",
-        "assets/environments/c3_02/thumbnail.jpg"
-      ],
-      "areas": [
-        "C3-02"
-      ]
-    },
-    {
-      "id": "env_c3_03",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c3_03/back.png",
-        "assets/environments/c3_03/ground.png",
-        "assets/environments/c3_03/front.png",
-        "assets/environments/c3_03/layout.json",
-        "assets/environments/c3_03/thumbnail.jpg"
-      ],
-      "areas": [
-        "C3-03"
-      ]
-    },
-    {
-      "id": "env_c3_04",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c3_04/back.png",
-        "assets/environments/c3_04/ground.png",
-        "assets/environments/c3_04/front.png",
-        "assets/environments/c3_04/layout.json",
-        "assets/environments/c3_04/thumbnail.jpg"
-      ],
-      "areas": [
-        "C3-04"
-      ]
-    },
-    {
-      "id": "env_c4_01",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c4_01/back.png",
-        "assets/environments/c4_01/ground.png",
-        "assets/environments/c4_01/front.png",
-        "assets/environments/c4_01/layout.json",
-        "assets/environments/c4_01/thumbnail.jpg"
-      ],
-      "areas": [
-        "C4-01"
-      ]
-    },
-    {
-      "id": "env_c4_02",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c4_02/back.png",
-        "assets/environments/c4_02/ground.png",
-        "assets/environments/c4_02/front.png",
-        "assets/environments/c4_02/layout.json",
-        "assets/environments/c4_02/thumbnail.jpg"
-      ],
-      "areas": [
-        "C4-02"
-      ]
-    },
-    {
-      "id": "env_c4_03",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c4_03/back.png",
-        "assets/environments/c4_03/ground.png",
-        "assets/environments/c4_03/front.png",
-        "assets/environments/c4_03/layout.json",
-        "assets/environments/c4_03/thumbnail.jpg"
-      ],
-      "areas": [
-        "C4-03"
-      ]
-    },
-    {
-      "id": "env_c4_04",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c4_04/back.png",
-        "assets/environments/c4_04/ground.png",
-        "assets/environments/c4_04/front.png",
-        "assets/environments/c4_04/layout.json",
-        "assets/environments/c4_04/thumbnail.jpg"
-      ],
-      "areas": [
-        "C4-04"
-      ]
-    },
-    {
-      "id": "env_c5_01",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c5_01/back.png",
-        "assets/environments/c5_01/ground.png",
-        "assets/environments/c5_01/front.png",
-        "assets/environments/c5_01/layout.json",
-        "assets/environments/c5_01/thumbnail.jpg"
-      ],
-      "areas": [
-        "C5-01"
-      ]
-    },
-    {
-      "id": "env_c5_02",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c5_02/back.png",
-        "assets/environments/c5_02/ground.png",
-        "assets/environments/c5_02/front.png",
-        "assets/environments/c5_02/layout.json",
-        "assets/environments/c5_02/thumbnail.jpg"
-      ],
-      "areas": [
-        "C5-02"
-      ]
-    },
-    {
-      "id": "env_c5_03",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c5_03/back.png",
-        "assets/environments/c5_03/ground.png",
-        "assets/environments/c5_03/front.png",
-        "assets/environments/c5_03/layout.json",
-        "assets/environments/c5_03/thumbnail.jpg"
-      ],
-      "areas": [
-        "C5-03"
-      ]
-    },
-    {
-      "id": "env_c5_04",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c5_04/back.png",
-        "assets/environments/c5_04/ground.png",
-        "assets/environments/c5_04/front.png",
-        "assets/environments/c5_04/layout.json",
-        "assets/environments/c5_04/thumbnail.jpg"
-      ],
-      "areas": [
-        "C5-04"
-      ]
-    },
-    {
-      "id": "env_c5_05",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c5_05/back.png",
-        "assets/environments/c5_05/ground.png",
-        "assets/environments/c5_05/front.png",
-        "assets/environments/c5_05/layout.json",
-        "assets/environments/c5_05/thumbnail.jpg"
-      ],
-      "areas": [
-        "C5-05"
-      ]
-    },
-    {
-      "id": "env_c6_01",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c6_01/back.png",
-        "assets/environments/c6_01/ground.png",
-        "assets/environments/c6_01/front.png",
-        "assets/environments/c6_01/layout.json",
-        "assets/environments/c6_01/thumbnail.jpg"
-      ],
-      "areas": [
-        "C6-01"
-      ]
-    },
-    {
-      "id": "env_c6_02",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c6_02/back.png",
-        "assets/environments/c6_02/ground.png",
-        "assets/environments/c6_02/front.png",
-        "assets/environments/c6_02/layout.json",
-        "assets/environments/c6_02/thumbnail.jpg"
-      ],
-      "areas": [
-        "C6-02"
-      ]
-    },
-    {
-      "id": "env_c6_03",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c6_03/back.png",
-        "assets/environments/c6_03/ground.png",
-        "assets/environments/c6_03/front.png",
-        "assets/environments/c6_03/layout.json",
-        "assets/environments/c6_03/thumbnail.jpg"
-      ],
-      "areas": [
-        "C6-03"
-      ]
-    },
-    {
-      "id": "env_c6_04",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c6_04/back.png",
-        "assets/environments/c6_04/ground.png",
-        "assets/environments/c6_04/front.png",
-        "assets/environments/c6_04/layout.json",
-        "assets/environments/c6_04/thumbnail.jpg"
-      ],
-      "areas": [
-        "C6-04"
-      ]
-    },
-    {
-      "id": "env_c7_01",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c7_01/back.png",
-        "assets/environments/c7_01/ground.png",
-        "assets/environments/c7_01/front.png",
-        "assets/environments/c7_01/layout.json",
-        "assets/environments/c7_01/thumbnail.jpg"
-      ],
-      "areas": [
-        "C7-01"
-      ]
-    },
-    {
-      "id": "env_c7_02",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c7_02/back.png",
-        "assets/environments/c7_02/ground.png",
-        "assets/environments/c7_02/front.png",
-        "assets/environments/c7_02/layout.json",
-        "assets/environments/c7_02/thumbnail.jpg"
-      ],
-      "areas": [
-        "C7-02"
-      ]
-    },
-    {
-      "id": "env_c8_01",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c8_01/back.png",
-        "assets/environments/c8_01/ground.png",
-        "assets/environments/c8_01/front.png",
-        "assets/environments/c8_01/layout.json",
-        "assets/environments/c8_01/thumbnail.jpg"
-      ],
-      "areas": [
-        "C8-01"
-      ]
-    },
-    {
-      "id": "env_c8_02",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c8_02/back.png",
-        "assets/environments/c8_02/ground.png",
-        "assets/environments/c8_02/front.png",
-        "assets/environments/c8_02/layout.json",
-        "assets/environments/c8_02/thumbnail.jpg"
-      ],
-      "areas": [
-        "C8-02"
-      ]
-    },
-    {
-      "id": "env_c8_03",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c8_03/back.png",
-        "assets/environments/c8_03/ground.png",
-        "assets/environments/c8_03/front.png",
-        "assets/environments/c8_03/layout.json",
-        "assets/environments/c8_03/thumbnail.jpg"
-      ],
-      "areas": [
-        "C8-03"
-      ]
-    },
-    {
-      "id": "env_c8_04",
-      "kind": "environment",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/environments/c8_04/back.png",
-        "assets/environments/c8_04/ground.png",
-        "assets/environments/c8_04/front.png",
-        "assets/environments/c8_04/layout.json",
-        "assets/environments/c8_04/thumbnail.jpg"
-      ],
-      "areas": [
-        "C8-04"
-      ]
-    },
-    {
-      "id": "cine_accusation",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/accusation/storyboard.jpg",
-        "assets/cinematics/accusation/poses.png",
-        "assets/cinematics/accusation/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_ajax_arrest",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/ajax_arrest/storyboard.jpg",
-        "assets/cinematics/ajax_arrest/poses.png",
-        "assets/cinematics/ajax_arrest/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_ajax_stays",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/ajax_stays/storyboard.jpg",
-        "assets/cinematics/ajax_stays/poses.png",
-        "assets/cinematics/ajax_stays/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_bottles",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/bottles/storyboard.jpg",
-        "assets/cinematics/bottles/poses.png",
-        "assets/cinematics/bottles/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_cyrus",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/cyrus/storyboard.jpg",
-        "assets/cinematics/cyrus/poses.png",
-        "assets/cinematics/cyrus/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_departure",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/departure/storyboard.jpg",
-        "assets/cinematics/departure/poses.png",
-        "assets/cinematics/departure/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_disarm",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/disarm/storyboard.jpg",
-        "assets/cinematics/disarm/poses.png",
-        "assets/cinematics/disarm/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_epilogue",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/epilogue/storyboard.jpg",
-        "assets/cinematics/epilogue/poses.png",
-        "assets/cinematics/epilogue/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_furies_appear",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/furies_appear/storyboard.jpg",
-        "assets/cinematics/furies_appear/poses.png",
-        "assets/cinematics/furies_appear/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_home_arrival",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/home_arrival/storyboard.jpg",
-        "assets/cinematics/home_arrival/poses.png",
-        "assets/cinematics/home_arrival/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_lizzies_trap",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/lizzies_trap/storyboard.jpg",
-        "assets/cinematics/lizzies_trap/poses.png",
-        "assets/cinematics/lizzies_trap/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_mercy_joins",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/mercy_joins/storyboard.jpg",
-        "assets/cinematics/mercy_joins/poses.png",
-        "assets/cinematics/mercy_joins/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_police_split",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/police_split/storyboard.jpg",
-        "assets/cinematics/police_split/poses.png",
-        "assets/cinematics/police_split/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_punks_confrontation",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/punks_confrontation/storyboard.jpg",
-        "assets/cinematics/punks_confrontation/poses.png",
-        "assets/cinematics/punks_confrontation/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_reunion",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/reunion/storyboard.jpg",
-        "assets/cinematics/reunion/poses.png",
-        "assets/cinematics/reunion/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_reunion_approach",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/reunion_approach/storyboard.jpg",
-        "assets/cinematics/reunion_approach/poses.png",
-        "assets/cinematics/reunion_approach/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_riffs_arrival",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/riffs_arrival/storyboard.jpg",
-        "assets/cinematics/riffs_arrival/poses.png",
-        "assets/cinematics/riffs_arrival/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_swan_leads",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/swan_leads/storyboard.jpg",
-        "assets/cinematics/swan_leads/poses.png",
-        "assets/cinematics/swan_leads/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_swan_mercy",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/swan_mercy/storyboard.jpg",
-        "assets/cinematics/swan_mercy/poses.png",
-        "assets/cinematics/swan_mercy/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_train_dawn",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/train_dawn/storyboard.jpg",
-        "assets/cinematics/train_dawn/poses.png",
-        "assets/cinematics/train_dawn/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_train_escape",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/train_escape/storyboard.jpg",
-        "assets/cinematics/train_escape/poses.png",
-        "assets/cinematics/train_escape/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "cine_truth_reaches_riffs",
-      "kind": "cinematic",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/cinematics/truth_reaches_riffs/storyboard.jpg",
-        "assets/cinematics/truth_reaches_riffs/poses.png",
-        "assets/cinematics/truth_reaches_riffs/timeline.json"
-      ],
-      "shots_target": [
-        3,
-        6
-      ]
-    },
-    {
-      "id": "prop_bench",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/bench.png",
-        "assets/props/bench.json"
-      ]
-    },
-    {
-      "id": "prop_bin",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/bin.png",
-        "assets/props/bin.json"
-      ]
-    },
-    {
-      "id": "prop_crate",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/crate.png",
-        "assets/props/crate.json"
-      ]
-    },
-    {
-      "id": "prop_cardboard",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/cardboard.png",
-        "assets/props/cardboard.json"
-      ]
-    },
-    {
-      "id": "prop_door",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/door.png",
-        "assets/props/door.json"
-      ]
-    },
-    {
-      "id": "prop_stall_door",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/stall_door.png",
-        "assets/props/stall_door.json"
-      ]
-    },
-    {
-      "id": "prop_sink",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/sink.png",
-        "assets/props/sink.json"
-      ]
-    },
-    {
-      "id": "prop_low_barrier",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/low_barrier.png",
-        "assets/props/low_barrier.json"
-      ]
-    },
-    {
-      "id": "prop_gate",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/gate.png",
-        "assets/props/gate.json"
-      ]
-    },
-    {
-      "id": "prop_window",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/window.png",
-        "assets/props/window.json"
-      ]
-    },
-    {
-      "id": "prop_solid_cover",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/solid_cover.png",
-        "assets/props/solid_cover.json"
-      ]
-    },
-    {
-      "id": "prop_train_seat",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/train_seat.png",
-        "assets/props/train_seat.json"
-      ]
-    },
-    {
-      "id": "prop_open_turnstile",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/open_turnstile.png",
-        "assets/props/open_turnstile.json"
-      ]
-    },
-    {
-      "id": "prop_handrail",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/handrail.png",
-        "assets/props/handrail.json"
-      ]
-    },
-    {
-      "id": "prop_fence",
-      "kind": "prop",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/props/fence.png",
-        "assets/props/fence.json"
-      ]
-    },
-    {
-      "id": "vehicle_turnbull_bus",
-      "kind": "vehicle",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/vehicles/turnbull_bus.png",
-        "assets/vehicles/turnbull_bus.json"
-      ]
-    },
-    {
-      "id": "vehicle_subway_train",
-      "kind": "vehicle",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/vehicles/subway_train.png",
-        "assets/vehicles/subway_train.json"
-      ]
-    },
-    {
-      "id": "vehicle_rogues_vehicle",
-      "kind": "vehicle",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/vehicles/rogues_vehicle.png",
-        "assets/vehicles/rogues_vehicle.json"
-      ]
-    },
-    {
-      "id": "story_object_swan_knife",
-      "kind": "story_object",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/story_objects/swan_knife.png",
-        "assets/story_objects/swan_knife.json"
-      ]
-    },
-    {
-      "id": "story_object_luther_pistol",
-      "kind": "story_object",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/story_objects/luther_pistol.png",
-        "assets/story_objects/luther_pistol.json"
-      ]
-    },
-    {
-      "id": "story_object_handcuffs",
-      "kind": "story_object",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/story_objects/handcuffs.png",
-        "assets/story_objects/handcuffs.json"
-      ]
-    },
-    {
-      "id": "story_object_luther_bottles",
-      "kind": "story_object",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/story_objects/luther_bottles.png",
-        "assets/story_objects/luther_bottles.json"
-      ]
-    },
-    {
-      "id": "item_bat",
-      "kind": "item",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/items/bat.png",
-        "assets/items/bat.json"
-      ]
-    },
-    {
-      "id": "item_pipe",
-      "kind": "item",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/items/pipe.png",
-        "assets/items/pipe.json"
-      ]
-    },
-    {
-      "id": "item_board",
-      "kind": "item",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/items/board.png",
-        "assets/items/board.json"
-      ]
-    },
-    {
-      "id": "item_bottle",
-      "kind": "item",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/items/bottle.png",
-        "assets/items/bottle.json"
-      ]
-    },
-    {
-      "id": "item_snack",
-      "kind": "item",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/items/snack.png",
-        "assets/items/snack.json"
-      ]
-    },
-    {
-      "id": "item_drink",
-      "kind": "item",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/items/drink.png",
-        "assets/items/drink.json"
-      ]
-    },
-    {
-      "id": "item_medkit",
-      "kind": "item",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/items/medkit.png",
-        "assets/items/medkit.json"
-      ]
-    },
-    {
-      "id": "fx_hand_impact",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/hand_impact.png",
-        "assets/fx/hand_impact.json"
-      ]
-    },
-    {
-      "id": "fx_wood_impact",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/wood_impact.png",
-        "assets/fx/wood_impact.json"
-      ]
-    },
-    {
-      "id": "fx_dust",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/dust.png",
-        "assets/fx/dust.json"
-      ]
-    },
-    {
-      "id": "fx_wood_break",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/wood_break.png",
-        "assets/fx/wood_break.json"
-      ]
-    },
-    {
-      "id": "fx_glass",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/glass.png",
-        "assets/fx/glass.json"
-      ]
-    },
-    {
-      "id": "fx_porcelain",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/porcelain.png",
-        "assets/fx/porcelain.json"
-      ]
-    },
-    {
-      "id": "fx_spark",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/spark.png",
-        "assets/fx/spark.json"
-      ]
-    },
-    {
-      "id": "fx_muzzle",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/muzzle.png",
-        "assets/fx/muzzle.json"
-      ]
-    },
-    {
-      "id": "fx_fire_smoke",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/fire_smoke.png",
-        "assets/fx/fire_smoke.json"
-      ]
-    },
-    {
-      "id": "fx_disarm",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/disarm.png",
-        "assets/fx/disarm.json"
-      ]
-    },
-    {
-      "id": "fx_revive",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/revive.png",
-        "assets/fx/revive.json"
-      ]
-    },
-    {
-      "id": "fx_exit_marker",
-      "kind": "fx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fx/exit_marker.png",
-        "assets/fx/exit_marker.json"
-      ]
-    },
-    {
-      "id": "ui_logo",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/logo.png",
-        "data/ui/logo.json"
-      ]
-    },
-    {
-      "id": "ui_title",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/title.png",
-        "data/ui/title.json"
-      ]
-    },
-    {
-      "id": "ui_journey_map",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/journey_map.png",
-        "data/ui/journey_map.json"
-      ]
-    },
-    {
-      "id": "ui_character_select",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/character_select.png",
-        "data/ui/character_select.json"
-      ]
-    },
-    {
-      "id": "ui_hud",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/hud.png",
-        "data/ui/hud.json"
-      ]
-    },
-    {
-      "id": "ui_pause",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/pause.png",
-        "data/ui/pause.json"
-      ]
-    },
-    {
-      "id": "ui_options",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/options.png",
-        "data/ui/options.json"
-      ]
-    },
-    {
-      "id": "ui_tutorial",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/tutorial.png",
-        "data/ui/tutorial.json"
-      ]
-    },
-    {
-      "id": "ui_loading",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/loading.png",
-        "data/ui/loading.json"
-      ]
-    },
-    {
-      "id": "ui_group_change",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/group_change.png",
-        "data/ui/group_change.json"
-      ]
-    },
-    {
-      "id": "ui_retry",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/retry.png",
-        "data/ui/retry.json"
-      ]
-    },
-    {
-      "id": "ui_chapter_results",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/chapter_results.png",
-        "data/ui/chapter_results.json"
-      ]
-    },
-    {
-      "id": "ui_campaign_results",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/campaign_results.png",
-        "data/ui/campaign_results.json"
-      ]
-    },
-    {
-      "id": "ui_credits",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/credits.png",
-        "data/ui/credits.json"
-      ]
-    },
-    {
-      "id": "ui_input_icons",
-      "kind": "ui",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/ui/input_icons.png",
-        "data/ui/input_icons.json"
-      ]
-    },
-    {
-      "id": "font_display",
-      "kind": "font",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fonts/display.woff2",
-        "assets/fonts/display-license.txt"
-      ]
-    },
-    {
-      "id": "font_body",
-      "kind": "font",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/fonts/body.woff2",
-        "assets/fonts/body-license.txt"
-      ]
-    },
-    {
-      "id": "mus_title",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/title.mp3",
-        "assets/music/title.json"
-      ]
-    },
-    {
-      "id": "mus_p0",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/p0.mp3",
-        "assets/music/p0.json"
-      ]
-    },
-    {
-      "id": "mus_c1_discourse",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c1_discourse.mp3",
-        "assets/music/c1_discourse.json"
-      ]
-    },
-    {
-      "id": "mus_c1_escape",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c1_escape.mp3",
-        "assets/music/c1_escape.json"
-      ]
-    },
-    {
-      "id": "mus_c2",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c2.mp3",
-        "assets/music/c2.json"
-      ]
-    },
-    {
-      "id": "mus_c3",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c3.mp3",
-        "assets/music/c3.json"
-      ]
-    },
-    {
-      "id": "mus_c4_chase",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c4_chase.mp3",
-        "assets/music/c4_chase.json"
-      ]
-    },
-    {
-      "id": "mus_c4_fight",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c4_fight.mp3",
-        "assets/music/c4_fight.json"
-      ]
-    },
-    {
-      "id": "mus_c5_welcome",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c5_welcome.mp3",
-        "assets/music/c5_welcome.json"
-      ]
-    },
-    {
-      "id": "mus_c5_escape",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c5_escape.mp3",
-        "assets/music/c5_escape.json"
-      ]
-    },
-    {
-      "id": "mus_c5_quiet",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c5_quiet.mp3",
-        "assets/music/c5_quiet.json"
-      ]
-    },
-    {
-      "id": "mus_c6",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c6.mp3",
-        "assets/music/c6.json"
-      ]
-    },
-    {
-      "id": "mus_c7",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c7.mp3",
-        "assets/music/c7.json"
-      ]
-    },
-    {
-      "id": "mus_c8",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/c8.mp3",
-        "assets/music/c8.json"
-      ]
-    },
-    {
-      "id": "mus_finale",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/finale.mp3",
-        "assets/music/finale.json"
-      ]
-    },
-    {
-      "id": "mus_results",
-      "kind": "music",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/music/results.mp3",
-        "assets/music/results.json"
-      ]
-    },
-    {
-      "id": "amb_coney_evening",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/coney_evening.mp3"
-      ]
-    },
-    {
-      "id": "amb_coney_dawn",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/coney_dawn.mp3"
-      ]
-    },
-    {
-      "id": "amb_rally",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/rally.mp3"
-      ]
-    },
-    {
-      "id": "amb_street",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/street.mp3"
-      ]
-    },
-    {
-      "id": "amb_subway",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/subway.mp3"
-      ]
-    },
-    {
-      "id": "amb_park",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/park.mp3"
-      ]
-    },
-    {
-      "id": "amb_apartment",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/apartment.mp3"
-      ]
-    },
-    {
-      "id": "amb_tunnel",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/tunnel.mp3"
-      ]
-    },
-    {
-      "id": "amb_bathroom",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/bathroom.mp3"
-      ]
-    },
-    {
-      "id": "amb_train_motion",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/train_motion.mp3"
-      ]
-    },
-    {
-      "id": "amb_sea",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/sea.mp3"
-      ]
-    },
-    {
-      "id": "amb_beach_wind",
-      "kind": "ambience",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/ambience/beach_wind.mp3"
-      ]
-    },
-    {
-      "id": "sfx_punch_light",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/punch_light.wav"
-      ]
-    },
-    {
-      "id": "sfx_punch_heavy",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/punch_heavy.wav"
-      ]
-    },
-    {
-      "id": "sfx_kick",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/kick.wav"
-      ]
-    },
-    {
-      "id": "sfx_hit_wood",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/hit_wood.wav"
-      ]
-    },
-    {
-      "id": "sfx_hit_metal",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/hit_metal.wav"
-      ]
-    },
-    {
-      "id": "sfx_hit_body",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/hit_body.wav"
-      ]
-    },
-    {
-      "id": "sfx_step_asphalt",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/step_asphalt.wav"
-      ]
-    },
-    {
-      "id": "sfx_step_tile",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/step_tile.wav"
-      ]
-    },
-    {
-      "id": "sfx_step_soil",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/step_soil.wav"
-      ]
-    },
-    {
-      "id": "sfx_step_sand",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/step_sand.wav"
-      ]
-    },
-    {
-      "id": "sfx_fall",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/fall.wav"
-      ]
-    },
-    {
-      "id": "sfx_rise",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/rise.wav"
-      ]
-    },
-    {
-      "id": "sfx_breath",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/breath.wav"
-      ]
-    },
-    {
-      "id": "sfx_pickup",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/pickup.wav"
-      ]
-    },
-    {
-      "id": "sfx_weapon_break",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/weapon_break.wav"
-      ]
-    },
-    {
-      "id": "sfx_throw",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/throw.wav"
-      ]
-    },
-    {
-      "id": "sfx_disarm",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/disarm.wav"
-      ]
-    },
-    {
-      "id": "sfx_revive_start",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/revive_start.wav"
-      ]
-    },
-    {
-      "id": "sfx_revive_done",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/revive_done.wav"
-      ]
-    },
-    {
-      "id": "sfx_door_open",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/door_open.wav"
-      ]
-    },
-    {
-      "id": "sfx_door_slam",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/door_slam.wav"
-      ]
-    },
-    {
-      "id": "sfx_gate",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/gate.wav"
-      ]
-    },
-    {
-      "id": "sfx_glass_break",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/glass_break.wav"
-      ]
-    },
-    {
-      "id": "sfx_porcelain_break",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/porcelain_break.wav"
-      ]
-    },
-    {
-      "id": "sfx_barrier",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/barrier.wav"
-      ]
-    },
-    {
-      "id": "sfx_bus_engine",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/bus_engine.wav"
-      ]
-    },
-    {
-      "id": "sfx_bus_horn",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/bus_horn.wav"
-      ]
-    },
-    {
-      "id": "sfx_train_depart",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/train_depart.wav"
-      ]
-    },
-    {
-      "id": "sfx_train_doors",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/train_doors.wav"
-      ]
-    },
-    {
-      "id": "sfx_train_brake",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/train_brake.wav"
-      ]
-    },
-    {
-      "id": "sfx_siren",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/siren.wav"
-      ]
-    },
-    {
-      "id": "sfx_crowd_react",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/crowd_react.wav"
-      ]
-    },
-    {
-      "id": "sfx_gunshot",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/gunshot.wav"
-      ]
-    },
-    {
-      "id": "sfx_handcuffs",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/handcuffs.wav"
-      ]
-    },
-    {
-      "id": "sfx_bottles",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/bottles.wav"
-      ]
-    },
-    {
-      "id": "sfx_sea_transition",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/sea_transition.wav"
-      ]
-    },
-    {
-      "id": "sfx_ui_move",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/ui_move.wav"
-      ]
-    },
-    {
-      "id": "sfx_ui_confirm",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/ui_confirm.wav"
-      ]
-    },
-    {
-      "id": "sfx_ui_back",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/ui_back.wav"
-      ]
-    },
-    {
-      "id": "sfx_ui_pause",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/ui_pause.wav"
-      ]
-    },
-    {
-      "id": "sfx_ui_resume",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/ui_resume.wav"
-      ]
-    },
-    {
-      "id": "sfx_ui_error",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/ui_error.wav"
-      ]
-    },
-    {
-      "id": "sfx_ui_checkpoint",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/ui_checkpoint.wav"
-      ]
-    },
-    {
-      "id": "sfx_ui_results",
-      "kind": "sfx",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/audio/sfx/ui_results.wav"
-      ]
-    },
-    {
-      "id": "dlg_p0_welcome",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_p0_welcome.json",
-        "assets/voices/it/dlg_p0_welcome.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_p0_introductions",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_p0_introductions.json",
-        "assets/voices/it/dlg_p0_introductions.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_p0_training",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_p0_training.json",
-        "assets/voices/it/dlg_p0_training.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_p0_departure",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_p0_departure.json",
-        "assets/voices/it/dlg_p0_departure.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c1_arrival",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c1_arrival.json",
-        "assets/voices/it/dlg_c1_arrival.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c1_cyrus",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c1_cyrus.json",
-        "assets/voices/it/dlg_c1_cyrus.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c1_accusation",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c1_accusation.json",
-        "assets/voices/it/dlg_c1_accusation.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c1_leadership",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c1_leadership.json",
-        "assets/voices/it/dlg_c1_leadership.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c2_bus",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c2_bus.json",
-        "assets/voices/it/dlg_c2_bus.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c2_run",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c2_run.json",
-        "assets/voices/it/dlg_c2_run.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c3_orphans",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c3_orphans.json",
-        "assets/voices/it/dlg_c3_orphans.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c3_breakaway",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c3_breakaway.json",
-        "assets/voices/it/dlg_c3_breakaway.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c3_police",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c3_police.json",
-        "assets/voices/it/dlg_c3_police.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c4_silence",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c4_silence.json",
-        "assets/voices/it/dlg_c4_silence.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c4_stand",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c4_stand.json",
-        "assets/voices/it/dlg_c4_stand.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c4_split",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c4_split.json",
-        "assets/voices/it/dlg_c4_split.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c5_arrest",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c5_arrest.json",
-        "assets/voices/it/dlg_c5_arrest.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c5_welcome",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c5_welcome.json",
-        "assets/voices/it/dlg_c5_welcome.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c5_trap",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c5_trap.json",
-        "assets/voices/it/dlg_c5_trap.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c5_mercy",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c5_mercy.json",
-        "assets/voices/it/dlg_c5_mercy.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c5_rendezvous",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c5_rendezvous.json",
-        "assets/voices/it/dlg_c5_rendezvous.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c6_reunion",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c6_reunion.json",
-        "assets/voices/it/dlg_c6_reunion.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c6_punks",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c6_punks.json",
-        "assets/voices/it/dlg_c6_punks.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c6_truth",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c6_truth.json",
-        "assets/voices/it/dlg_c6_truth.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c7_train",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c7_train.json",
-        "assets/voices/it/dlg_c7_train.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c7_home",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c7_home.json",
-        "assets/voices/it/dlg_c7_home.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c8_bottles",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c8_bottles.json",
-        "assets/voices/it/dlg_c8_bottles.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c8_confrontation",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c8_confrontation.json",
-        "assets/voices/it/dlg_c8_confrontation.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c8_riffs",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c8_riffs.json",
-        "assets/voices/it/dlg_c8_riffs.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "dlg_c8_epilogue",
-      "kind": "dialogue",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "data/dialogue/dlg_c8_epilogue.json",
-        "assets/voices/it/dlg_c8_epilogue.mp3"
-      ],
-      "recording_unit": "edited scene cue with per-line timestamps"
-    },
-    {
-      "id": "barks_cleon",
-      "kind": "voice_barks",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/voices/it/cleon_barks.mp3",
-        "data/dialogue/cleon_barks.json"
-      ]
-    },
-    {
-      "id": "barks_swan",
-      "kind": "voice_barks",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/voices/it/swan_barks.mp3",
-        "data/dialogue/swan_barks.json"
-      ]
-    },
-    {
-      "id": "barks_ajax",
-      "kind": "voice_barks",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/voices/it/ajax_barks.mp3",
-        "data/dialogue/ajax_barks.json"
-      ]
-    },
-    {
-      "id": "barks_snow",
-      "kind": "voice_barks",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/voices/it/snow_barks.mp3",
-        "data/dialogue/snow_barks.json"
-      ]
-    },
-    {
-      "id": "barks_cowboy",
-      "kind": "voice_barks",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/voices/it/cowboy_barks.mp3",
-        "data/dialogue/cowboy_barks.json"
-      ]
-    },
-    {
-      "id": "barks_cochise",
-      "kind": "voice_barks",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/voices/it/cochise_barks.mp3",
-        "data/dialogue/cochise_barks.json"
-      ]
-    },
-    {
-      "id": "barks_vermin",
-      "kind": "voice_barks",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/voices/it/vermin_barks.mp3",
-        "data/dialogue/vermin_barks.json"
-      ]
-    },
-    {
-      "id": "barks_rembrandt",
-      "kind": "voice_barks",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/voices/it/rembrandt_barks.mp3",
-        "data/dialogue/rembrandt_barks.json"
-      ]
-    },
-    {
-      "id": "barks_fox",
-      "kind": "voice_barks",
-      "status": "missing",
-      "in_repository": false,
-      "planned_files": [
-        "assets/voices/it/fox_barks.mp3",
-        "data/dialogue/fox_barks.json"
-      ]
-    },
-    {
-      "id": "source_warrior",
-      "kind": "supplied_reference",
-      "status": "source",
-      "in_repository": false,
-      "planned_files": [
-        "assets/source/de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png"
-      ],
-      "source_filename": "de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png",
-      "description": "Warrior non identificato, 8 pose",
-      "identity_verified": false
-    },
-    {
-      "id": "source_fury",
-      "kind": "supplied_reference",
-      "status": "source",
-      "in_repository": false,
-      "planned_files": [
-        "assets/source/ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png"
-      ],
-      "source_filename": "ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png",
-      "description": "Fury, 8 pose",
-      "identity_verified": false
-    },
-    {
-      "id": "source_park",
-      "kind": "supplied_reference",
-      "status": "source",
-      "in_repository": false,
-      "planned_files": [
-        "assets/source/65bc58_MCatdEcrTfWSAvto3TAplg_image.png"
-      ],
-      "source_filename": "65bc58_MCatdEcrTfWSAvto3TAplg_image.png",
-      "description": "Parco notturno",
-      "identity_verified": false
-    }
-  ]
+  "missing_packages": 264,
+  "source_packages": 3,
+  "integrated_packages": 0,
+  "verified_packages": 0,
+  "hero_frames": 1260,
+  "enemy_base_frames": 540,
+  "enemy_extension_frames": 108,
+  "status_counts_updated_2026_10_29": {
+   "missing": 264,
+   "integrated": 3,
+   "source": 1
+  }
+ },
+ "assets": [
+  {
+   "id": "hero_cleon",
+   "kind": "hero",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/characters/cleon/model.png",
+    "assets/characters/cleon/portrait.png",
+    "assets/characters/cleon/body.png",
+    "assets/characters/cleon/weapons.png",
+    "assets/characters/cleon/atlas.json",
+    "assets/characters/cleon/animations.json"
+   ],
+   "planned_frames": 140
+  },
+  {
+   "id": "hero_swan",
+   "kind": "hero",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/characters/swan/model.png",
+    "assets/characters/swan/portrait.png",
+    "assets/characters/swan/body.png",
+    "assets/characters/swan/weapons.png",
+    "assets/characters/swan/atlas.json",
+    "assets/characters/swan/animations.json"
+   ],
+   "planned_frames": 140
+  },
+  {
+   "id": "hero_ajax",
+   "kind": "hero",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/characters/ajax/model.png",
+    "assets/characters/ajax/portrait.png",
+    "assets/characters/ajax/body.png",
+    "assets/characters/ajax/weapons.png",
+    "assets/characters/ajax/atlas.json",
+    "assets/characters/ajax/animations.json"
+   ],
+   "planned_frames": 140
+  },
+  {
+   "id": "hero_snow",
+   "kind": "hero",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/characters/snow/model.png",
+    "assets/characters/snow/portrait.png",
+    "assets/characters/snow/body.png",
+    "assets/characters/snow/weapons.png",
+    "assets/characters/snow/atlas.json",
+    "assets/characters/snow/animations.json"
+   ],
+   "planned_frames": 140
+  },
+  {
+   "id": "hero_cowboy",
+   "kind": "hero",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/characters/cowboy/model.png",
+    "assets/characters/cowboy/portrait.png",
+    "assets/characters/cowboy/body.png",
+    "assets/characters/cowboy/weapons.png",
+    "assets/characters/cowboy/atlas.json",
+    "assets/characters/cowboy/animations.json"
+   ],
+   "planned_frames": 140
+  },
+  {
+   "id": "hero_cochise",
+   "kind": "hero",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/characters/cochise/model.png",
+    "assets/characters/cochise/portrait.png",
+    "assets/characters/cochise/body.png",
+    "assets/characters/cochise/weapons.png",
+    "assets/characters/cochise/atlas.json",
+    "assets/characters/cochise/animations.json"
+   ],
+   "planned_frames": 140
+  },
+  {
+   "id": "hero_vermin",
+   "kind": "hero",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/characters/vermin/model.png",
+    "assets/characters/vermin/portrait.png",
+    "assets/characters/vermin/body.png",
+    "assets/characters/vermin/weapons.png",
+    "assets/characters/vermin/atlas.json",
+    "assets/characters/vermin/animations.json"
+   ],
+   "planned_frames": 140
+  },
+  {
+   "id": "hero_rembrandt",
+   "kind": "hero",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/characters/rembrandt/model.png",
+    "assets/characters/rembrandt/portrait.png",
+    "assets/characters/rembrandt/body.png",
+    "assets/characters/rembrandt/weapons.png",
+    "assets/characters/rembrandt/atlas.json",
+    "assets/characters/rembrandt/animations.json"
+   ],
+   "planned_frames": 140
+  },
+  {
+   "id": "hero_fox",
+   "kind": "hero",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/characters/fox/model.png",
+    "assets/characters/fox/portrait.png",
+    "assets/characters/fox/body.png",
+    "assets/characters/fox/weapons.png",
+    "assets/characters/fox/atlas.json",
+    "assets/characters/fox/animations.json"
+   ],
+   "planned_frames": 140
+  },
+  {
+   "id": "enemy_turnbull_rusher",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/turnbull_rusher/model.png",
+    "assets/enemies/turnbull_rusher/sheet.png",
+    "assets/enemies/turnbull_rusher/atlas.json",
+    "assets/enemies/turnbull_rusher/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 0
+  },
+  {
+   "id": "enemy_turnbull_heavy",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/turnbull_heavy/model.png",
+    "assets/enemies/turnbull_heavy/sheet.png",
+    "assets/enemies/turnbull_heavy/atlas.json",
+    "assets/enemies/turnbull_heavy/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 0
+  },
+  {
+   "id": "enemy_orphan_brawler",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/orphan_brawler/model.png",
+    "assets/enemies/orphan_brawler/sheet.png",
+    "assets/enemies/orphan_brawler/atlas.json",
+    "assets/enemies/orphan_brawler/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 0
+  },
+  {
+   "id": "enemy_orphan_board",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/orphan_board/model.png",
+    "assets/enemies/orphan_board/sheet.png",
+    "assets/enemies/orphan_board/atlas.json",
+    "assets/enemies/orphan_board/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 12
+  },
+  {
+   "id": "enemy_fury_batter",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/fury_batter/model.png",
+    "assets/enemies/fury_batter/sheet.png",
+    "assets/enemies/fury_batter/atlas.json",
+    "assets/enemies/fury_batter/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 12
+  },
+  {
+   "id": "enemy_fury_flanker",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/fury_flanker/model.png",
+    "assets/enemies/fury_flanker/sheet.png",
+    "assets/enemies/fury_flanker/atlas.json",
+    "assets/enemies/fury_flanker/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 12
+  },
+  {
+   "id": "enemy_fury_veteran",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/fury_veteran/model.png",
+    "assets/enemies/fury_veteran/sheet.png",
+    "assets/enemies/fury_veteran/atlas.json",
+    "assets/enemies/fury_veteran/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 12
+  },
+  {
+   "id": "enemy_lizzie_blocker",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/lizzie_blocker/model.png",
+    "assets/enemies/lizzie_blocker/sheet.png",
+    "assets/enemies/lizzie_blocker/atlas.json",
+    "assets/enemies/lizzie_blocker/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 0
+  },
+  {
+   "id": "enemy_lizzie_shooter",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/lizzie_shooter/model.png",
+    "assets/enemies/lizzie_shooter/sheet.png",
+    "assets/enemies/lizzie_shooter/atlas.json",
+    "assets/enemies/lizzie_shooter/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 16
+  },
+  {
+   "id": "enemy_punk_grappler",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/punk_grappler/model.png",
+    "assets/enemies/punk_grappler/sheet.png",
+    "assets/enemies/punk_grappler/atlas.json",
+    "assets/enemies/punk_grappler/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 16
+  },
+  {
+   "id": "enemy_punk_brawler",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/punk_brawler/model.png",
+    "assets/enemies/punk_brawler/sheet.png",
+    "assets/enemies/punk_brawler/atlas.json",
+    "assets/enemies/punk_brawler/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 0
+  },
+  {
+   "id": "enemy_punk_leader",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/punk_leader/model.png",
+    "assets/enemies/punk_leader/sheet.png",
+    "assets/enemies/punk_leader/atlas.json",
+    "assets/enemies/punk_leader/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 16
+  },
+  {
+   "id": "enemy_rogue_brawler",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/rogue_brawler/model.png",
+    "assets/enemies/rogue_brawler/sheet.png",
+    "assets/enemies/rogue_brawler/atlas.json",
+    "assets/enemies/rogue_brawler/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 0
+  },
+  {
+   "id": "enemy_rogue_bottle",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/rogue_bottle/model.png",
+    "assets/enemies/rogue_bottle/sheet.png",
+    "assets/enemies/rogue_bottle/atlas.json",
+    "assets/enemies/rogue_bottle/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 12
+  },
+  {
+   "id": "enemy_police_pursuer",
+   "kind": "enemy",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/enemies/police_pursuer/model.png",
+    "assets/enemies/police_pursuer/sheet.png",
+    "assets/enemies/police_pursuer/atlas.json",
+    "assets/enemies/police_pursuer/animations.json"
+   ],
+   "planned_base_frames": 36,
+   "planned_extension_frames": 0
+  },
+  {
+   "id": "npc_mercy",
+   "kind": "npc",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/npc/mercy/model.png",
+    "assets/npc/mercy/portrait.png",
+    "assets/npc/mercy/sheet.png",
+    "assets/npc/mercy/animations.json"
+   ]
+  },
+  {
+   "id": "npc_cyrus",
+   "kind": "npc",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/npc/cyrus/model.png",
+    "assets/npc/cyrus/portrait.png",
+    "assets/npc/cyrus/sheet.png",
+    "assets/npc/cyrus/animations.json"
+   ]
+  },
+  {
+   "id": "npc_luther",
+   "kind": "npc",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/npc/luther/model.png",
+    "assets/npc/luther/portrait.png",
+    "assets/npc/luther/sheet.png",
+    "assets/npc/luther/animations.json"
+   ]
+  },
+  {
+   "id": "npc_masai",
+   "kind": "npc",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/npc/masai/model.png",
+    "assets/npc/masai/portrait.png",
+    "assets/npc/masai/sheet.png",
+    "assets/npc/masai/animations.json"
+   ]
+  },
+  {
+   "id": "npc_dj",
+   "kind": "npc",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/npc/dj/model.png",
+    "assets/npc/dj/portrait.png",
+    "assets/npc/dj/sheet.png",
+    "assets/npc/dj/animations.json"
+   ]
+  },
+  {
+   "id": "npc_witness",
+   "kind": "npc",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/npc/witness/model.png",
+    "assets/npc/witness/portrait.png",
+    "assets/npc/witness/sheet.png",
+    "assets/npc/witness/animations.json"
+   ]
+  },
+  {
+   "id": "npc_undercover",
+   "kind": "npc",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/npc/undercover/model.png",
+    "assets/npc/undercover/portrait.png",
+    "assets/npc/undercover/sheet.png",
+    "assets/npc/undercover/animations.json"
+   ]
+  },
+  {
+   "id": "npc_orphans_leader",
+   "kind": "npc",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/npc/orphans_leader/model.png",
+    "assets/npc/orphans_leader/portrait.png",
+    "assets/npc/orphans_leader/sheet.png",
+    "assets/npc/orphans_leader/animations.json"
+   ]
+  },
+  {
+   "id": "crowd_rally",
+   "kind": "crowd",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/crowd/rally.png",
+    "assets/crowd/rally.json"
+   ]
+  },
+  {
+   "id": "crowd_riffs",
+   "kind": "crowd",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/crowd/riffs.png",
+    "assets/crowd/riffs.json"
+   ]
+  },
+  {
+   "id": "crowd_passengers",
+   "kind": "crowd",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/crowd/passengers.png",
+    "assets/crowd/passengers.json"
+   ]
+  },
+  {
+   "id": "crowd_rogues",
+   "kind": "crowd",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/crowd/rogues.png",
+    "assets/crowd/rogues.json"
+   ]
+  },
+  {
+   "id": "crowd_police",
+   "kind": "crowd",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/crowd/police.png",
+    "assets/crowd/police.json"
+   ]
+  },
+  {
+   "id": "crowd_couple_train",
+   "kind": "crowd",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/crowd/couple_train.png",
+    "assets/crowd/couple_train.json"
+   ]
+  },
+  {
+   "id": "env_p0_01",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/p0_01/back.png",
+    "assets/environments/p0_01/ground.png",
+    "assets/environments/p0_01/front.png",
+    "assets/environments/p0_01/layout.json",
+    "assets/environments/p0_01/thumbnail.jpg"
+   ],
+   "areas": [
+    "P0-01"
+   ]
+  },
+  {
+   "id": "env_p0_02",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/p0_02/back.png",
+    "assets/environments/p0_02/ground.png",
+    "assets/environments/p0_02/front.png",
+    "assets/environments/p0_02/layout.json",
+    "assets/environments/p0_02/thumbnail.jpg"
+   ],
+   "areas": [
+    "P0-02"
+   ]
+  },
+  {
+   "id": "env_p0_03",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/p0_03/back.png",
+    "assets/environments/p0_03/ground.png",
+    "assets/environments/p0_03/front.png",
+    "assets/environments/p0_03/layout.json",
+    "assets/environments/p0_03/thumbnail.jpg"
+   ],
+   "areas": [
+    "P0-03"
+   ]
+  },
+  {
+   "id": "env_p0_04",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/p0_04/back.png",
+    "assets/environments/p0_04/ground.png",
+    "assets/environments/p0_04/front.png",
+    "assets/environments/p0_04/layout.json",
+    "assets/environments/p0_04/thumbnail.jpg"
+   ],
+   "areas": [
+    "P0-04"
+   ]
+  },
+  {
+   "id": "env_c1_01",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c1_01/back.png",
+    "assets/environments/c1_01/ground.png",
+    "assets/environments/c1_01/front.png",
+    "assets/environments/c1_01/layout.json",
+    "assets/environments/c1_01/thumbnail.jpg"
+   ],
+   "areas": [
+    "C1-01"
+   ]
+  },
+  {
+   "id": "env_c1_02",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c1_02/back.png",
+    "assets/environments/c1_02/ground.png",
+    "assets/environments/c1_02/front.png",
+    "assets/environments/c1_02/layout.json",
+    "assets/environments/c1_02/thumbnail.jpg"
+   ],
+   "areas": [
+    "C1-02"
+   ]
+  },
+  {
+   "id": "env_c1_03",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c1_03/back.png",
+    "assets/environments/c1_03/ground.png",
+    "assets/environments/c1_03/front.png",
+    "assets/environments/c1_03/layout.json",
+    "assets/environments/c1_03/thumbnail.jpg"
+   ],
+   "areas": [
+    "C1-03"
+   ]
+  },
+  {
+   "id": "env_c1_04",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c1_04/back.png",
+    "assets/environments/c1_04/ground.png",
+    "assets/environments/c1_04/front.png",
+    "assets/environments/c1_04/layout.json",
+    "assets/environments/c1_04/thumbnail.jpg"
+   ],
+   "areas": [
+    "C1-04"
+   ]
+  },
+  {
+   "id": "env_c2_01",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c2_01/back.png",
+    "assets/environments/c2_01/ground.png",
+    "assets/environments/c2_01/front.png",
+    "assets/environments/c2_01/layout.json",
+    "assets/environments/c2_01/thumbnail.jpg"
+   ],
+   "areas": [
+    "C2-01"
+   ]
+  },
+  {
+   "id": "env_c2_02",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c2_02/back.png",
+    "assets/environments/c2_02/ground.png",
+    "assets/environments/c2_02/front.png",
+    "assets/environments/c2_02/layout.json",
+    "assets/environments/c2_02/thumbnail.jpg"
+   ],
+   "areas": [
+    "C2-02"
+   ]
+  },
+  {
+   "id": "env_c2_03",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c2_03/back.png",
+    "assets/environments/c2_03/ground.png",
+    "assets/environments/c2_03/front.png",
+    "assets/environments/c2_03/layout.json",
+    "assets/environments/c2_03/thumbnail.jpg"
+   ],
+   "areas": [
+    "C2-03"
+   ]
+  },
+  {
+   "id": "env_c2_04",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c2_04/back.png",
+    "assets/environments/c2_04/ground.png",
+    "assets/environments/c2_04/front.png",
+    "assets/environments/c2_04/layout.json",
+    "assets/environments/c2_04/thumbnail.jpg"
+   ],
+   "areas": [
+    "C2-04"
+   ]
+  },
+  {
+   "id": "env_c3_01",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c3_01/back.png",
+    "assets/environments/c3_01/ground.png",
+    "assets/environments/c3_01/front.png",
+    "assets/environments/c3_01/layout.json",
+    "assets/environments/c3_01/thumbnail.jpg"
+   ],
+   "areas": [
+    "C3-01"
+   ]
+  },
+  {
+   "id": "env_c3_02",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c3_02/back.png",
+    "assets/environments/c3_02/ground.png",
+    "assets/environments/c3_02/front.png",
+    "assets/environments/c3_02/layout.json",
+    "assets/environments/c3_02/thumbnail.jpg"
+   ],
+   "areas": [
+    "C3-02"
+   ]
+  },
+  {
+   "id": "env_c3_03",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c3_03/back.png",
+    "assets/environments/c3_03/ground.png",
+    "assets/environments/c3_03/front.png",
+    "assets/environments/c3_03/layout.json",
+    "assets/environments/c3_03/thumbnail.jpg"
+   ],
+   "areas": [
+    "C3-03"
+   ]
+  },
+  {
+   "id": "env_c3_04",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c3_04/back.png",
+    "assets/environments/c3_04/ground.png",
+    "assets/environments/c3_04/front.png",
+    "assets/environments/c3_04/layout.json",
+    "assets/environments/c3_04/thumbnail.jpg"
+   ],
+   "areas": [
+    "C3-04"
+   ]
+  },
+  {
+   "id": "env_c4_01",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c4_01/back.png",
+    "assets/environments/c4_01/ground.png",
+    "assets/environments/c4_01/front.png",
+    "assets/environments/c4_01/layout.json",
+    "assets/environments/c4_01/thumbnail.jpg"
+   ],
+   "areas": [
+    "C4-01"
+   ]
+  },
+  {
+   "id": "env_c4_02",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c4_02/back.png",
+    "assets/environments/c4_02/ground.png",
+    "assets/environments/c4_02/front.png",
+    "assets/environments/c4_02/layout.json",
+    "assets/environments/c4_02/thumbnail.jpg"
+   ],
+   "areas": [
+    "C4-02"
+   ]
+  },
+  {
+   "id": "env_c4_03",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c4_03/back.png",
+    "assets/environments/c4_03/ground.png",
+    "assets/environments/c4_03/front.png",
+    "assets/environments/c4_03/layout.json",
+    "assets/environments/c4_03/thumbnail.jpg"
+   ],
+   "areas": [
+    "C4-03"
+   ]
+  },
+  {
+   "id": "env_c4_04",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c4_04/back.png",
+    "assets/environments/c4_04/ground.png",
+    "assets/environments/c4_04/front.png",
+    "assets/environments/c4_04/layout.json",
+    "assets/environments/c4_04/thumbnail.jpg"
+   ],
+   "areas": [
+    "C4-04"
+   ]
+  },
+  {
+   "id": "env_c5_01",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c5_01/back.png",
+    "assets/environments/c5_01/ground.png",
+    "assets/environments/c5_01/front.png",
+    "assets/environments/c5_01/layout.json",
+    "assets/environments/c5_01/thumbnail.jpg"
+   ],
+   "areas": [
+    "C5-01"
+   ]
+  },
+  {
+   "id": "env_c5_02",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c5_02/back.png",
+    "assets/environments/c5_02/ground.png",
+    "assets/environments/c5_02/front.png",
+    "assets/environments/c5_02/layout.json",
+    "assets/environments/c5_02/thumbnail.jpg"
+   ],
+   "areas": [
+    "C5-02"
+   ]
+  },
+  {
+   "id": "env_c5_03",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c5_03/back.png",
+    "assets/environments/c5_03/ground.png",
+    "assets/environments/c5_03/front.png",
+    "assets/environments/c5_03/layout.json",
+    "assets/environments/c5_03/thumbnail.jpg"
+   ],
+   "areas": [
+    "C5-03"
+   ]
+  },
+  {
+   "id": "env_c5_04",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c5_04/back.png",
+    "assets/environments/c5_04/ground.png",
+    "assets/environments/c5_04/front.png",
+    "assets/environments/c5_04/layout.json",
+    "assets/environments/c5_04/thumbnail.jpg"
+   ],
+   "areas": [
+    "C5-04"
+   ]
+  },
+  {
+   "id": "env_c5_05",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c5_05/back.png",
+    "assets/environments/c5_05/ground.png",
+    "assets/environments/c5_05/front.png",
+    "assets/environments/c5_05/layout.json",
+    "assets/environments/c5_05/thumbnail.jpg"
+   ],
+   "areas": [
+    "C5-05"
+   ]
+  },
+  {
+   "id": "env_c6_01",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c6_01/back.png",
+    "assets/environments/c6_01/ground.png",
+    "assets/environments/c6_01/front.png",
+    "assets/environments/c6_01/layout.json",
+    "assets/environments/c6_01/thumbnail.jpg"
+   ],
+   "areas": [
+    "C6-01"
+   ]
+  },
+  {
+   "id": "env_c6_02",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c6_02/back.png",
+    "assets/environments/c6_02/ground.png",
+    "assets/environments/c6_02/front.png",
+    "assets/environments/c6_02/layout.json",
+    "assets/environments/c6_02/thumbnail.jpg"
+   ],
+   "areas": [
+    "C6-02"
+   ]
+  },
+  {
+   "id": "env_c6_03",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c6_03/back.png",
+    "assets/environments/c6_03/ground.png",
+    "assets/environments/c6_03/front.png",
+    "assets/environments/c6_03/layout.json",
+    "assets/environments/c6_03/thumbnail.jpg"
+   ],
+   "areas": [
+    "C6-03"
+   ]
+  },
+  {
+   "id": "env_c6_04",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c6_04/back.png",
+    "assets/environments/c6_04/ground.png",
+    "assets/environments/c6_04/front.png",
+    "assets/environments/c6_04/layout.json",
+    "assets/environments/c6_04/thumbnail.jpg"
+   ],
+   "areas": [
+    "C6-04"
+   ]
+  },
+  {
+   "id": "env_c7_01",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c7_01/back.png",
+    "assets/environments/c7_01/ground.png",
+    "assets/environments/c7_01/front.png",
+    "assets/environments/c7_01/layout.json",
+    "assets/environments/c7_01/thumbnail.jpg"
+   ],
+   "areas": [
+    "C7-01"
+   ]
+  },
+  {
+   "id": "env_c7_02",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c7_02/back.png",
+    "assets/environments/c7_02/ground.png",
+    "assets/environments/c7_02/front.png",
+    "assets/environments/c7_02/layout.json",
+    "assets/environments/c7_02/thumbnail.jpg"
+   ],
+   "areas": [
+    "C7-02"
+   ]
+  },
+  {
+   "id": "env_c8_01",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c8_01/back.png",
+    "assets/environments/c8_01/ground.png",
+    "assets/environments/c8_01/front.png",
+    "assets/environments/c8_01/layout.json",
+    "assets/environments/c8_01/thumbnail.jpg"
+   ],
+   "areas": [
+    "C8-01"
+   ]
+  },
+  {
+   "id": "env_c8_02",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c8_02/back.png",
+    "assets/environments/c8_02/ground.png",
+    "assets/environments/c8_02/front.png",
+    "assets/environments/c8_02/layout.json",
+    "assets/environments/c8_02/thumbnail.jpg"
+   ],
+   "areas": [
+    "C8-02"
+   ]
+  },
+  {
+   "id": "env_c8_03",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c8_03/back.png",
+    "assets/environments/c8_03/ground.png",
+    "assets/environments/c8_03/front.png",
+    "assets/environments/c8_03/layout.json",
+    "assets/environments/c8_03/thumbnail.jpg"
+   ],
+   "areas": [
+    "C8-03"
+   ]
+  },
+  {
+   "id": "env_c8_04",
+   "kind": "environment",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/environments/c8_04/back.png",
+    "assets/environments/c8_04/ground.png",
+    "assets/environments/c8_04/front.png",
+    "assets/environments/c8_04/layout.json",
+    "assets/environments/c8_04/thumbnail.jpg"
+   ],
+   "areas": [
+    "C8-04"
+   ]
+  },
+  {
+   "id": "cine_accusation",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/accusation/storyboard.jpg",
+    "assets/cinematics/accusation/poses.png",
+    "assets/cinematics/accusation/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_ajax_arrest",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/ajax_arrest/storyboard.jpg",
+    "assets/cinematics/ajax_arrest/poses.png",
+    "assets/cinematics/ajax_arrest/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_ajax_stays",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/ajax_stays/storyboard.jpg",
+    "assets/cinematics/ajax_stays/poses.png",
+    "assets/cinematics/ajax_stays/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_bottles",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/bottles/storyboard.jpg",
+    "assets/cinematics/bottles/poses.png",
+    "assets/cinematics/bottles/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_cyrus",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/cyrus/storyboard.jpg",
+    "assets/cinematics/cyrus/poses.png",
+    "assets/cinematics/cyrus/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_departure",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/departure/storyboard.jpg",
+    "assets/cinematics/departure/poses.png",
+    "assets/cinematics/departure/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_disarm",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/disarm/storyboard.jpg",
+    "assets/cinematics/disarm/poses.png",
+    "assets/cinematics/disarm/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_epilogue",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/epilogue/storyboard.jpg",
+    "assets/cinematics/epilogue/poses.png",
+    "assets/cinematics/epilogue/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_furies_appear",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/furies_appear/storyboard.jpg",
+    "assets/cinematics/furies_appear/poses.png",
+    "assets/cinematics/furies_appear/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_home_arrival",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/home_arrival/storyboard.jpg",
+    "assets/cinematics/home_arrival/poses.png",
+    "assets/cinematics/home_arrival/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_lizzies_trap",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/lizzies_trap/storyboard.jpg",
+    "assets/cinematics/lizzies_trap/poses.png",
+    "assets/cinematics/lizzies_trap/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_mercy_joins",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/mercy_joins/storyboard.jpg",
+    "assets/cinematics/mercy_joins/poses.png",
+    "assets/cinematics/mercy_joins/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_police_split",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/police_split/storyboard.jpg",
+    "assets/cinematics/police_split/poses.png",
+    "assets/cinematics/police_split/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_punks_confrontation",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/punks_confrontation/storyboard.jpg",
+    "assets/cinematics/punks_confrontation/poses.png",
+    "assets/cinematics/punks_confrontation/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_reunion",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/reunion/storyboard.jpg",
+    "assets/cinematics/reunion/poses.png",
+    "assets/cinematics/reunion/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_reunion_approach",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/reunion_approach/storyboard.jpg",
+    "assets/cinematics/reunion_approach/poses.png",
+    "assets/cinematics/reunion_approach/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_riffs_arrival",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/riffs_arrival/storyboard.jpg",
+    "assets/cinematics/riffs_arrival/poses.png",
+    "assets/cinematics/riffs_arrival/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_swan_leads",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/swan_leads/storyboard.jpg",
+    "assets/cinematics/swan_leads/poses.png",
+    "assets/cinematics/swan_leads/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_swan_mercy",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/swan_mercy/storyboard.jpg",
+    "assets/cinematics/swan_mercy/poses.png",
+    "assets/cinematics/swan_mercy/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_train_dawn",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/train_dawn/storyboard.jpg",
+    "assets/cinematics/train_dawn/poses.png",
+    "assets/cinematics/train_dawn/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_train_escape",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/train_escape/storyboard.jpg",
+    "assets/cinematics/train_escape/poses.png",
+    "assets/cinematics/train_escape/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "cine_truth_reaches_riffs",
+   "kind": "cinematic",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/cinematics/truth_reaches_riffs/storyboard.jpg",
+    "assets/cinematics/truth_reaches_riffs/poses.png",
+    "assets/cinematics/truth_reaches_riffs/timeline.json"
+   ],
+   "shots_target": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "prop_bench",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/bench.png",
+    "assets/props/bench.json"
+   ]
+  },
+  {
+   "id": "prop_bin",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/bin.png",
+    "assets/props/bin.json"
+   ]
+  },
+  {
+   "id": "prop_crate",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/crate.png",
+    "assets/props/crate.json"
+   ]
+  },
+  {
+   "id": "prop_cardboard",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/cardboard.png",
+    "assets/props/cardboard.json"
+   ]
+  },
+  {
+   "id": "prop_door",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/door.png",
+    "assets/props/door.json"
+   ]
+  },
+  {
+   "id": "prop_stall_door",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/stall_door.png",
+    "assets/props/stall_door.json"
+   ]
+  },
+  {
+   "id": "prop_sink",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/sink.png",
+    "assets/props/sink.json"
+   ]
+  },
+  {
+   "id": "prop_low_barrier",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/low_barrier.png",
+    "assets/props/low_barrier.json"
+   ]
+  },
+  {
+   "id": "prop_gate",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/gate.png",
+    "assets/props/gate.json"
+   ]
+  },
+  {
+   "id": "prop_window",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/window.png",
+    "assets/props/window.json"
+   ]
+  },
+  {
+   "id": "prop_solid_cover",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/solid_cover.png",
+    "assets/props/solid_cover.json"
+   ]
+  },
+  {
+   "id": "prop_train_seat",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/train_seat.png",
+    "assets/props/train_seat.json"
+   ]
+  },
+  {
+   "id": "prop_open_turnstile",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/open_turnstile.png",
+    "assets/props/open_turnstile.json"
+   ]
+  },
+  {
+   "id": "prop_handrail",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/handrail.png",
+    "assets/props/handrail.json"
+   ]
+  },
+  {
+   "id": "prop_fence",
+   "kind": "prop",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/props/fence.png",
+    "assets/props/fence.json"
+   ]
+  },
+  {
+   "id": "vehicle_turnbull_bus",
+   "kind": "vehicle",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/vehicles/turnbull_bus.png",
+    "assets/vehicles/turnbull_bus.json"
+   ]
+  },
+  {
+   "id": "vehicle_subway_train",
+   "kind": "vehicle",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/vehicles/subway_train.png",
+    "assets/vehicles/subway_train.json"
+   ]
+  },
+  {
+   "id": "vehicle_rogues_vehicle",
+   "kind": "vehicle",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/vehicles/rogues_vehicle.png",
+    "assets/vehicles/rogues_vehicle.json"
+   ]
+  },
+  {
+   "id": "story_object_swan_knife",
+   "kind": "story_object",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/story_objects/swan_knife.png",
+    "assets/story_objects/swan_knife.json"
+   ]
+  },
+  {
+   "id": "story_object_luther_pistol",
+   "kind": "story_object",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/story_objects/luther_pistol.png",
+    "assets/story_objects/luther_pistol.json"
+   ]
+  },
+  {
+   "id": "story_object_handcuffs",
+   "kind": "story_object",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/story_objects/handcuffs.png",
+    "assets/story_objects/handcuffs.json"
+   ]
+  },
+  {
+   "id": "story_object_luther_bottles",
+   "kind": "story_object",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/story_objects/luther_bottles.png",
+    "assets/story_objects/luther_bottles.json"
+   ]
+  },
+  {
+   "id": "item_bat",
+   "kind": "item",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/items/bat.png",
+    "assets/items/bat.json"
+   ]
+  },
+  {
+   "id": "item_pipe",
+   "kind": "item",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/items/pipe.png",
+    "assets/items/pipe.json"
+   ]
+  },
+  {
+   "id": "item_board",
+   "kind": "item",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/items/board.png",
+    "assets/items/board.json"
+   ]
+  },
+  {
+   "id": "item_bottle",
+   "kind": "item",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/items/bottle.png",
+    "assets/items/bottle.json"
+   ]
+  },
+  {
+   "id": "item_snack",
+   "kind": "item",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/items/snack.png",
+    "assets/items/snack.json"
+   ]
+  },
+  {
+   "id": "item_drink",
+   "kind": "item",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/items/drink.png",
+    "assets/items/drink.json"
+   ]
+  },
+  {
+   "id": "item_medkit",
+   "kind": "item",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/items/medkit.png",
+    "assets/items/medkit.json"
+   ]
+  },
+  {
+   "id": "fx_hand_impact",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/hand_impact.png",
+    "assets/fx/hand_impact.json"
+   ]
+  },
+  {
+   "id": "fx_wood_impact",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/wood_impact.png",
+    "assets/fx/wood_impact.json"
+   ]
+  },
+  {
+   "id": "fx_dust",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/dust.png",
+    "assets/fx/dust.json"
+   ]
+  },
+  {
+   "id": "fx_wood_break",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/wood_break.png",
+    "assets/fx/wood_break.json"
+   ]
+  },
+  {
+   "id": "fx_glass",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/glass.png",
+    "assets/fx/glass.json"
+   ]
+  },
+  {
+   "id": "fx_porcelain",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/porcelain.png",
+    "assets/fx/porcelain.json"
+   ]
+  },
+  {
+   "id": "fx_spark",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/spark.png",
+    "assets/fx/spark.json"
+   ]
+  },
+  {
+   "id": "fx_muzzle",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/muzzle.png",
+    "assets/fx/muzzle.json"
+   ]
+  },
+  {
+   "id": "fx_fire_smoke",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/fire_smoke.png",
+    "assets/fx/fire_smoke.json"
+   ]
+  },
+  {
+   "id": "fx_disarm",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/disarm.png",
+    "assets/fx/disarm.json"
+   ]
+  },
+  {
+   "id": "fx_revive",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/revive.png",
+    "assets/fx/revive.json"
+   ]
+  },
+  {
+   "id": "fx_exit_marker",
+   "kind": "fx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fx/exit_marker.png",
+    "assets/fx/exit_marker.json"
+   ]
+  },
+  {
+   "id": "ui_logo",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/logo.png",
+    "data/ui/logo.json"
+   ]
+  },
+  {
+   "id": "ui_title",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/title.png",
+    "data/ui/title.json"
+   ]
+  },
+  {
+   "id": "ui_journey_map",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/journey_map.png",
+    "data/ui/journey_map.json"
+   ]
+  },
+  {
+   "id": "ui_character_select",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/character_select.png",
+    "data/ui/character_select.json"
+   ]
+  },
+  {
+   "id": "ui_hud",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/hud.png",
+    "data/ui/hud.json"
+   ]
+  },
+  {
+   "id": "ui_pause",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/pause.png",
+    "data/ui/pause.json"
+   ]
+  },
+  {
+   "id": "ui_options",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/options.png",
+    "data/ui/options.json"
+   ]
+  },
+  {
+   "id": "ui_tutorial",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/tutorial.png",
+    "data/ui/tutorial.json"
+   ]
+  },
+  {
+   "id": "ui_loading",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/loading.png",
+    "data/ui/loading.json"
+   ]
+  },
+  {
+   "id": "ui_group_change",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/group_change.png",
+    "data/ui/group_change.json"
+   ]
+  },
+  {
+   "id": "ui_retry",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/retry.png",
+    "data/ui/retry.json"
+   ]
+  },
+  {
+   "id": "ui_chapter_results",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/chapter_results.png",
+    "data/ui/chapter_results.json"
+   ]
+  },
+  {
+   "id": "ui_campaign_results",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/campaign_results.png",
+    "data/ui/campaign_results.json"
+   ]
+  },
+  {
+   "id": "ui_credits",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/credits.png",
+    "data/ui/credits.json"
+   ]
+  },
+  {
+   "id": "ui_input_icons",
+   "kind": "ui",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/ui/input_icons.png",
+    "data/ui/input_icons.json"
+   ]
+  },
+  {
+   "id": "font_display",
+   "kind": "font",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fonts/display.woff2",
+    "assets/fonts/display-license.txt"
+   ]
+  },
+  {
+   "id": "font_body",
+   "kind": "font",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/fonts/body.woff2",
+    "assets/fonts/body-license.txt"
+   ]
+  },
+  {
+   "id": "mus_title",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/title.mp3",
+    "assets/music/title.json"
+   ]
+  },
+  {
+   "id": "mus_p0",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/p0.mp3",
+    "assets/music/p0.json"
+   ]
+  },
+  {
+   "id": "mus_c1_discourse",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c1_discourse.mp3",
+    "assets/music/c1_discourse.json"
+   ]
+  },
+  {
+   "id": "mus_c1_escape",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c1_escape.mp3",
+    "assets/music/c1_escape.json"
+   ]
+  },
+  {
+   "id": "mus_c2",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c2.mp3",
+    "assets/music/c2.json"
+   ]
+  },
+  {
+   "id": "mus_c3",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c3.mp3",
+    "assets/music/c3.json"
+   ]
+  },
+  {
+   "id": "mus_c4_chase",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c4_chase.mp3",
+    "assets/music/c4_chase.json"
+   ]
+  },
+  {
+   "id": "mus_c4_fight",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c4_fight.mp3",
+    "assets/music/c4_fight.json"
+   ]
+  },
+  {
+   "id": "mus_c5_welcome",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c5_welcome.mp3",
+    "assets/music/c5_welcome.json"
+   ]
+  },
+  {
+   "id": "mus_c5_escape",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c5_escape.mp3",
+    "assets/music/c5_escape.json"
+   ]
+  },
+  {
+   "id": "mus_c5_quiet",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c5_quiet.mp3",
+    "assets/music/c5_quiet.json"
+   ]
+  },
+  {
+   "id": "mus_c6",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c6.mp3",
+    "assets/music/c6.json"
+   ]
+  },
+  {
+   "id": "mus_c7",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c7.mp3",
+    "assets/music/c7.json"
+   ]
+  },
+  {
+   "id": "mus_c8",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/c8.mp3",
+    "assets/music/c8.json"
+   ]
+  },
+  {
+   "id": "mus_finale",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/finale.mp3",
+    "assets/music/finale.json"
+   ]
+  },
+  {
+   "id": "mus_results",
+   "kind": "music",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/music/results.mp3",
+    "assets/music/results.json"
+   ]
+  },
+  {
+   "id": "amb_coney_evening",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/coney_evening.mp3"
+   ]
+  },
+  {
+   "id": "amb_coney_dawn",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/coney_dawn.mp3"
+   ]
+  },
+  {
+   "id": "amb_rally",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/rally.mp3"
+   ]
+  },
+  {
+   "id": "amb_street",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/street.mp3"
+   ]
+  },
+  {
+   "id": "amb_subway",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/subway.mp3"
+   ]
+  },
+  {
+   "id": "amb_park",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/park.mp3"
+   ]
+  },
+  {
+   "id": "amb_apartment",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/apartment.mp3"
+   ]
+  },
+  {
+   "id": "amb_tunnel",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/tunnel.mp3"
+   ]
+  },
+  {
+   "id": "amb_bathroom",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/bathroom.mp3"
+   ]
+  },
+  {
+   "id": "amb_train_motion",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/train_motion.mp3"
+   ]
+  },
+  {
+   "id": "amb_sea",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/sea.mp3"
+   ]
+  },
+  {
+   "id": "amb_beach_wind",
+   "kind": "ambience",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/ambience/beach_wind.mp3"
+   ]
+  },
+  {
+   "id": "sfx_punch_light",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/punch_light.wav"
+   ]
+  },
+  {
+   "id": "sfx_punch_heavy",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/punch_heavy.wav"
+   ]
+  },
+  {
+   "id": "sfx_kick",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/kick.wav"
+   ]
+  },
+  {
+   "id": "sfx_hit_wood",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/hit_wood.wav"
+   ]
+  },
+  {
+   "id": "sfx_hit_metal",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/hit_metal.wav"
+   ]
+  },
+  {
+   "id": "sfx_hit_body",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/hit_body.wav"
+   ]
+  },
+  {
+   "id": "sfx_step_asphalt",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/step_asphalt.wav"
+   ]
+  },
+  {
+   "id": "sfx_step_tile",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/step_tile.wav"
+   ]
+  },
+  {
+   "id": "sfx_step_soil",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/step_soil.wav"
+   ]
+  },
+  {
+   "id": "sfx_step_sand",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/step_sand.wav"
+   ]
+  },
+  {
+   "id": "sfx_fall",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/fall.wav"
+   ]
+  },
+  {
+   "id": "sfx_rise",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/rise.wav"
+   ]
+  },
+  {
+   "id": "sfx_breath",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/breath.wav"
+   ]
+  },
+  {
+   "id": "sfx_pickup",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/pickup.wav"
+   ]
+  },
+  {
+   "id": "sfx_weapon_break",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/weapon_break.wav"
+   ]
+  },
+  {
+   "id": "sfx_throw",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/throw.wav"
+   ]
+  },
+  {
+   "id": "sfx_disarm",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/disarm.wav"
+   ]
+  },
+  {
+   "id": "sfx_revive_start",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/revive_start.wav"
+   ]
+  },
+  {
+   "id": "sfx_revive_done",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/revive_done.wav"
+   ]
+  },
+  {
+   "id": "sfx_door_open",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/door_open.wav"
+   ]
+  },
+  {
+   "id": "sfx_door_slam",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/door_slam.wav"
+   ]
+  },
+  {
+   "id": "sfx_gate",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/gate.wav"
+   ]
+  },
+  {
+   "id": "sfx_glass_break",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/glass_break.wav"
+   ]
+  },
+  {
+   "id": "sfx_porcelain_break",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/porcelain_break.wav"
+   ]
+  },
+  {
+   "id": "sfx_barrier",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/barrier.wav"
+   ]
+  },
+  {
+   "id": "sfx_bus_engine",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/bus_engine.wav"
+   ]
+  },
+  {
+   "id": "sfx_bus_horn",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/bus_horn.wav"
+   ]
+  },
+  {
+   "id": "sfx_train_depart",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/train_depart.wav"
+   ]
+  },
+  {
+   "id": "sfx_train_doors",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/train_doors.wav"
+   ]
+  },
+  {
+   "id": "sfx_train_brake",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/train_brake.wav"
+   ]
+  },
+  {
+   "id": "sfx_siren",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/siren.wav"
+   ]
+  },
+  {
+   "id": "sfx_crowd_react",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/crowd_react.wav"
+   ]
+  },
+  {
+   "id": "sfx_gunshot",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/gunshot.wav"
+   ]
+  },
+  {
+   "id": "sfx_handcuffs",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/handcuffs.wav"
+   ]
+  },
+  {
+   "id": "sfx_bottles",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/bottles.wav"
+   ]
+  },
+  {
+   "id": "sfx_sea_transition",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/sea_transition.wav"
+   ]
+  },
+  {
+   "id": "sfx_ui_move",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/ui_move.wav"
+   ]
+  },
+  {
+   "id": "sfx_ui_confirm",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/ui_confirm.wav"
+   ]
+  },
+  {
+   "id": "sfx_ui_back",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/ui_back.wav"
+   ]
+  },
+  {
+   "id": "sfx_ui_pause",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/ui_pause.wav"
+   ]
+  },
+  {
+   "id": "sfx_ui_resume",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/ui_resume.wav"
+   ]
+  },
+  {
+   "id": "sfx_ui_error",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/ui_error.wav"
+   ]
+  },
+  {
+   "id": "sfx_ui_checkpoint",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/ui_checkpoint.wav"
+   ]
+  },
+  {
+   "id": "sfx_ui_results",
+   "kind": "sfx",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/audio/sfx/ui_results.wav"
+   ]
+  },
+  {
+   "id": "dlg_p0_welcome",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_p0_welcome.json",
+    "assets/voices/it/dlg_p0_welcome.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_p0_introductions",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_p0_introductions.json",
+    "assets/voices/it/dlg_p0_introductions.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_p0_training",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_p0_training.json",
+    "assets/voices/it/dlg_p0_training.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_p0_departure",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_p0_departure.json",
+    "assets/voices/it/dlg_p0_departure.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c1_arrival",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c1_arrival.json",
+    "assets/voices/it/dlg_c1_arrival.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c1_cyrus",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c1_cyrus.json",
+    "assets/voices/it/dlg_c1_cyrus.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c1_accusation",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c1_accusation.json",
+    "assets/voices/it/dlg_c1_accusation.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c1_leadership",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c1_leadership.json",
+    "assets/voices/it/dlg_c1_leadership.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c2_bus",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c2_bus.json",
+    "assets/voices/it/dlg_c2_bus.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c2_run",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c2_run.json",
+    "assets/voices/it/dlg_c2_run.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c3_orphans",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c3_orphans.json",
+    "assets/voices/it/dlg_c3_orphans.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c3_breakaway",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c3_breakaway.json",
+    "assets/voices/it/dlg_c3_breakaway.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c3_police",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c3_police.json",
+    "assets/voices/it/dlg_c3_police.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c4_silence",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c4_silence.json",
+    "assets/voices/it/dlg_c4_silence.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c4_stand",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c4_stand.json",
+    "assets/voices/it/dlg_c4_stand.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c4_split",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c4_split.json",
+    "assets/voices/it/dlg_c4_split.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c5_arrest",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c5_arrest.json",
+    "assets/voices/it/dlg_c5_arrest.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c5_welcome",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c5_welcome.json",
+    "assets/voices/it/dlg_c5_welcome.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c5_trap",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c5_trap.json",
+    "assets/voices/it/dlg_c5_trap.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c5_mercy",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c5_mercy.json",
+    "assets/voices/it/dlg_c5_mercy.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c5_rendezvous",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c5_rendezvous.json",
+    "assets/voices/it/dlg_c5_rendezvous.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c6_reunion",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c6_reunion.json",
+    "assets/voices/it/dlg_c6_reunion.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c6_punks",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c6_punks.json",
+    "assets/voices/it/dlg_c6_punks.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c6_truth",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c6_truth.json",
+    "assets/voices/it/dlg_c6_truth.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c7_train",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c7_train.json",
+    "assets/voices/it/dlg_c7_train.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c7_home",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c7_home.json",
+    "assets/voices/it/dlg_c7_home.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c8_bottles",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c8_bottles.json",
+    "assets/voices/it/dlg_c8_bottles.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c8_confrontation",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c8_confrontation.json",
+    "assets/voices/it/dlg_c8_confrontation.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c8_riffs",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c8_riffs.json",
+    "assets/voices/it/dlg_c8_riffs.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "dlg_c8_epilogue",
+   "kind": "dialogue",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "data/dialogue/dlg_c8_epilogue.json",
+    "assets/voices/it/dlg_c8_epilogue.mp3"
+   ],
+   "recording_unit": "edited scene cue with per-line timestamps"
+  },
+  {
+   "id": "barks_cleon",
+   "kind": "voice_barks",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/voices/it/cleon_barks.mp3",
+    "data/dialogue/cleon_barks.json"
+   ]
+  },
+  {
+   "id": "barks_swan",
+   "kind": "voice_barks",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/voices/it/swan_barks.mp3",
+    "data/dialogue/swan_barks.json"
+   ]
+  },
+  {
+   "id": "barks_ajax",
+   "kind": "voice_barks",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/voices/it/ajax_barks.mp3",
+    "data/dialogue/ajax_barks.json"
+   ]
+  },
+  {
+   "id": "barks_snow",
+   "kind": "voice_barks",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/voices/it/snow_barks.mp3",
+    "data/dialogue/snow_barks.json"
+   ]
+  },
+  {
+   "id": "barks_cowboy",
+   "kind": "voice_barks",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/voices/it/cowboy_barks.mp3",
+    "data/dialogue/cowboy_barks.json"
+   ]
+  },
+  {
+   "id": "barks_cochise",
+   "kind": "voice_barks",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/voices/it/cochise_barks.mp3",
+    "data/dialogue/cochise_barks.json"
+   ]
+  },
+  {
+   "id": "barks_vermin",
+   "kind": "voice_barks",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/voices/it/vermin_barks.mp3",
+    "data/dialogue/vermin_barks.json"
+   ]
+  },
+  {
+   "id": "barks_rembrandt",
+   "kind": "voice_barks",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/voices/it/rembrandt_barks.mp3",
+    "data/dialogue/rembrandt_barks.json"
+   ]
+  },
+  {
+   "id": "barks_fox",
+   "kind": "voice_barks",
+   "status": "missing",
+   "in_repository": false,
+   "planned_files": [
+    "assets/voices/it/fox_barks.mp3",
+    "data/dialogue/fox_barks.json"
+   ]
+  },
+  {
+   "id": "source_warrior",
+   "kind": "supplied_reference",
+   "status": "integrated",
+   "in_repository": true,
+   "planned_files": [
+    "assets/source/warrior_a_8pose.png"
+   ],
+   "source_filename": "de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png",
+   "description": "Warrior non identificato, 8 pose",
+   "identity_verified": false,
+   "repository_file": "assets/source/warrior_a_8pose.png",
+   "sha256": "0ce0b63c56a6180c57403d62ed171a3d02469e0f57417ad0e16fcac3a76951a8",
+   "received_in_chat": "2026-10-29",
+   "derived_files": [
+    "assets/sprites/warrior_a_*.png"
+   ],
+   "integration_note": "Usato nella prova C4 (nucleo 0.4). Corrispondenza con il file originale de893e/ff5f23/65bc58 non verificabile: ricevuto di nuovo in chat senza nome file."
+  },
+  {
+   "id": "source_fury",
+   "kind": "supplied_reference",
+   "status": "integrated",
+   "in_repository": true,
+   "planned_files": [
+    "assets/source/fury_8pose.png"
+   ],
+   "source_filename": "ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png",
+   "description": "Fury, 8 pose",
+   "identity_verified": false,
+   "repository_file": "assets/source/fury_8pose.png",
+   "sha256": "97ce60a24bd775dc8c6ffe31b5f180cea90a67b49cd0101fe21ef48e8e2c8ab7",
+   "received_in_chat": "2026-10-29",
+   "derived_files": [
+    "assets/sprites/fury_*.png",
+    "assets/sprites/fury_nobat_*.png"
+   ],
+   "integration_note": "Usato nella prova C4 (nucleo 0.4). Corrispondenza con il file originale de893e/ff5f23/65bc58 non verificabile: ricevuto di nuovo in chat senza nome file."
+  },
+  {
+   "id": "source_park",
+   "kind": "supplied_reference",
+   "status": "integrated",
+   "in_repository": true,
+   "planned_files": [
+    "assets/source/park_night.png"
+   ],
+   "source_filename": "65bc58_MCatdEcrTfWSAvto3TAplg_image.png",
+   "description": "Parco notturno",
+   "identity_verified": false,
+   "repository_file": "assets/source/park_night.png",
+   "sha256": "2c3d717bfc17a2610e1efe3fae4cf2a4aea118f6c555c892388d0c15cc181140",
+   "received_in_chat": "2026-10-29",
+   "derived_files": [
+    "assets/backgrounds/park_night_720.jpg"
+   ],
+   "integration_note": "Usato nella prova C4 (nucleo 0.4). Corrispondenza con il file originale de893e/ff5f23/65bc58 non verificabile: ricevuto di nuovo in chat senza nome file."
+  },
+  {
+   "id": "source_pixel_sheet",
+   "kind": "supplied_reference",
+   "status": "source",
+   "in_repository": true,
+   "repository_file": "assets/source/pixel_sheet_c4_cast_props_bg.png",
+   "sha256": "f70d6c169070fca545331a1931a870f7f98482474dcd97bec4b742c6d541da7a",
+   "description": "Tavola pixel art etichettata: Swan, Ajax, Furies, Orphans, Turnbull AC's, Polizia, oggetti, effetti, HUD, fondali a livelli. Stile diverso dalle tavole illustrate: non ancora integrata.",
+   "identity_verified": false
+  }
+ ]
 }

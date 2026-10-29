@@ -1,44 +1,42 @@
 # Riprendere The Warriors · Night Run
 
-Checkpoint verificato il 29 ottobre 2026. Questo file serve a continuare da qualsiasi chat o assistente, senza ricostruire le decisioni.
+Checkpoint aggiornato il 29 ottobre 2026 (sera), dopo «puoi sviluppare questo?» e la consegna delle tavole in chat. Questo file serve a continuare da qualsiasi chat o assistente senza ricostruire le decisioni.
 
-## Mandato attuale
+## Stato verificato
 
-La progettazione è già stata scritta. L'autore ha poi richiesto: «sviluppare tutti gli sprite ed i fondali, caricali pure su github». Ha autorizzato il caricamento diretto senza dover vedere ogni immagine in chat. Procedere con il lavoro concreto, senza chiedere nuovamente queste autorizzazioni.
+- Progettazione baseline 1.0: invariata (docs/, design/campaign.json).
+- **Nucleo giocabile 0.4** (fase B del piano + inizio fase C): `index.html` + `js/`. Aree C4-02 e C4-03 complete con ondate, veterano con barra élite e fasi, uscita con conferma 0,6 s, schermata risultato. C4-01 (fuga) e C4-04 (scena di Ajax) **non implementate**; nessun altro capitolo implementato.
+- Moduli: `config.js` (valori di COMBAT_AND_SYSTEMS/CAST), `input.js`, `sim.js` (attori, colpi con ID e insieme bersagli, prese, armi, coordinatore, CPU, KO/soccorso, snapshot), `areas.js` (dati C4-02/C4-03), `render.js`, `audio.js`, `main.js` (flusso, menu, save `warriors-story-v1`, opzioni `warriors-options-v1`), `atlas_data.js` (generato).
+- Codice scritto da zero seguendo i documenti; nessuna routine copiata da Primal Sentinels II.
 
-## Fonti da leggere
+## Asset (assets/source/inventory.json con sha256)
 
-1. docs/PROJECT_MEMORY.md — decisioni e cronologia della baseline.
-2. docs/GAME_DESIGN.md — indice del progetto.
-3. docs/CAST.md, docs/LEVELS.md, docs/ART_AND_AUDIO.md — personaggi, scene e standard.
-4. design/campaign.json e design/asset_catalog.json — specifiche strutturate.
-5. docs/ASSET_PLAN.md e docs/PRODUCTION_AND_QA.md — fabbisogno e verifiche.
+| File | Stato | Uso |
+|---|---|---|
+| warrior_a_8pose.png | integrated | 8 pose ritagliate in assets/sprites/warrior_a_*.png, usate per **tutti** i Warriors della prova. Identità (Swan?) non confermata dall'autore |
+| fury_8pose.png | integrated | 8 pose in fury_*.png; varianti senza mazza fury_nobat_* ricavate in automatico (buchi sui pantaloni nel cammino, mano tagliata a terra): **ripiego da sostituire** |
+| park_night.png | integrated | fondale 720 px ripetuto a specchio per aree di due schermate |
+| pixel_sheet_c4_cast_props_bg.png | source | tavola pixel art etichettata (Swan, Ajax, Furies, Orphans, Turnbull, Polizia, oggetti, FX, HUD, fondali a livelli). Stile diverso dalle tavole illustrate: **decidere quale stile è definitivo** prima di ritagliarla |
 
-## Stato verificato prima del recupero degli asset
+Non è stato possibile verificare che questi file coincidano con gli allegati de893e/ff5f23/65bc58 citati in precedenza (ricevuti di nuovo senza nome).
 
-La scansione ricorsiva del branch main (tree b27fc7a0e990f20a6e8e3482a084fb7aec8c4aaa) contiene README, dieci documenti e due JSON. Nessun file immagine, nessun runtime. Non equivale a un gioco completo. La progettazione descrive prologo + 8 capitoli, 35 aree e 267 pacchetti di produzione; i percorsi futuri nel catalogo non sono file esistenti.
+## Pose mancanti per completare C4 (rilevate in integrazione)
 
-Un vecchio prototipo esterno 0.2 risulta descritto come demo Furies, singolo e senza salvataggio; non è incluso in questo repository. Non sovrascrivere il design con quel prototipo.
+Warrior: a terra/KO, rialzata, swing orizzontale con mazza, camminata con mazza, presa, lancio, schivata, calcio volante. Fury: pose a mani nude (idle, cammino, spinta), rialzata, lanciato. Props in primo piano nello stile del fondale: panchina e cestino separati (ora disegnati a codice). Ogni Warrior della campagna ha bisogno del proprio set.
 
-## Materiali da recuperare e conservare
+## Verifiche eseguite (`node tools/qa.js`)
 
-- Warrior non identificato: de893e_Ji78XOeZR7qVOtHvm4h-Aw_image.png. Non assegnargli arbitrariamente l'identità di Swan/Ajax.
-- Fury: ff5f23_u-HyQjCyQ2SlXXmuL7RWHw_image.png.
-- Parco: 65bc58_MCatdEcrTfWSAvto3TAplg_image.png.
-- Tavola aggiuntiva: Sprite sheet di Ajax in combattimento.png.
+PASS: Q01, Q02, Q05, Q06, Q09 (singolo, finestra soccorso, soccorso CPU), Q18, coordinatore max 1 attaccante in singolo. Percorso completo C4-02→C4-03→risultato con due CPU, senza errori JS, ripetuto su più semi. Correzioni emerse dai test: CPU incastrata dietro una panchina (aggiramento aggiunto, Q08), CPU che restava sola quando la finestra di soccorso dell'umano scadeva (ora retry).
 
-Conservare gli originali in assets/source/. Controllare dimensioni, alpha, margini e pose prima di dichiararli pronti. Le osservazioni della chat interrotta su sfondi e bordi richiedono una nuova verifica dei pixel. Non dichiarare corretti o caricati i file senza riscontro.
+Non eseguito: playtest umano reale, controller fisici, due tastiere (rollover), Safari/Firefox, bilanciamento.
 
 ## Prossime azioni
 
-1. Recuperare e caricare le quattro tavole originali con inventario e hash.
-2. Verificare trasparenza, frame e pivot; conservare separatamente originali ed esportazioni.
-3. Completare il primo lotto Swan/Ajax/Fury e parco secondo gli standard esistenti, poi procedere per lotti al resto del catalogo.
-4. Aggiornare inventario e stato dopo ogni lotto effettivamente salvato; registrare verifiche eseguite e problemi rimasti.
-5. Implementare il nucleo e la prova Furies secondo il piano produttivo, mantenendo la campagna definita.
+1. Playtest umano della prova C4; regolare tempi e danni.
+2. Decidere lo stile definitivo (illustrato vs pixel) e produrre le pose mancanti elencate sopra.
+3. C4-01 (fuga) e C4-04 (scena), poi P0 e C1 secondo LEVELS.md.
+4. Musica/voci reali al posto dei suoni sintetizzati.
 
 ## Regole di continuità
 
-Non affidare lo stato solo alla chat. Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source, processed, integrated e verified. Non ricominciare la progettazione, non chiedere di rispiegare il progetto e non spacciare placeholder per asset finali. Una generazione fallita resta da fare: non segnarla completata.
-
-Per ripartire: «Leggi CONTINUE_HERE.md nel repository b3pz/The_Warriors, verifica il branch attuale e continua dal primo punto incompleto. Le autorizzazioni al caricamento degli asset sono già riportate.»
+Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source, processed, integrated e verified. Non ricominciare la progettazione. Non spacciare ripieghi per asset finali.

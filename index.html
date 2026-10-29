@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Warriors · Night Run</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #03040a; }
+  html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { display: block; image-rendering: auto; background: #000; outline: none; }
+</style>
+</head>
+<body>
+<canvas id="game" tabindex="0" aria-label="The Warriors Night Run, gioco"></canvas>
+<!--SCRIPTS-->
+<script src="js/config.js"></script>
+<script src="js/atlas_data.js"></script>
+<script src="js/input.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/areas.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/main.js"></script>
+<!--/SCRIPTS-->
+</body>
+</html>
