@@ -168,26 +168,49 @@ var W = window.W;
 
   // ------------------------------------------------------------------ disegno schermate
   function txt(s, x, y, size, col, align, weight) { ctx.font = (weight || 600) + ' ' + size + 'px "Oswald", sans-serif'; ctx.fillStyle = col || R.COL.ink; ctx.textAlign = align || 'center'; ctx.fillText(s, x, y); }
-  function backdrop() {
-    var g = ctx.createLinearGradient(0, 0, 0, C.VIEW_H); g.addColorStop(0, '#06080f'); g.addColorStop(1, '#1b1420');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
-    ctx.strokeStyle = 'rgba(242,193,78,0.08)'; ctx.lineWidth = 1;
-    for (var i = 0; i < 14; i++) { ctx.beginPath(); ctx.moveTo(0, 520 + i * 16); ctx.lineTo(C.VIEW_W, 520 + i * 16); ctx.stroke(); }
+  // copertina del menu fornita dall'autore (assets/menu/cover.jpg)
+  var cover = new Image(); cover.ok = false;
+  cover.onload = function () { cover.ok = true; };
+  cover.src = (W.ASSET_DATA && W.ASSET_DATA['menu/cover.jpg']) || 'assets/menu/cover.jpg';
+  function drawCover(x, alpha, zoom) {
+    if (!cover.ok) return false;
+    var h = C.VIEW_H * zoom, w = cover.width * h / cover.height;
+    ctx.save(); ctx.globalAlpha = alpha;
+    ctx.drawImage(cover, x - (w - C.VIEW_H * cover.width / cover.height) / 2, (C.VIEW_H - h) / 2, w, h);
+    ctx.restore(); return true;
   }
-  function drawList(items, x, y) {
+  function backdrop(strength) {
+    ctx.fillStyle = '#07060a'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    // copertina a destra, sfumata nel nero verso i testi
+    var cw = C.VIEW_H * (cover.width || 800) / (cover.height || 803), cx = C.VIEW_W - cw;
+    if (drawCover(cx, strength === undefined ? 0.28 : strength, 1)) {
+      var g = ctx.createLinearGradient(cx, 0, cx + 260, 0); g.addColorStop(0, '#07060a'); g.addColorStop(1, 'rgba(7,6,10,0)');
+      ctx.fillStyle = g; ctx.fillRect(cx - 1, 0, 262, C.VIEW_H);
+    }
+  }
+  function drawList(items, x, y, align) {
     for (var i = 0; i < items.length; i++) {
-      var sel = i === game.menuIdx, it = items[i];
-      if (sel) { ctx.fillStyle = 'rgba(242,193,78,0.14)'; ctx.fillRect(x - 260, y + i * 52 - 32, 520, 46); }
-      txt((sel ? '▶  ' : '') + it.label + (it.val ? ':  ' + it.val() : ''), x, y + i * 52, 26, sel ? R.COL.p1 : R.COL.ink);
+      var sel = i === game.menuIdx, it = items[i], left = align === 'left';
+      if (sel) { ctx.fillStyle = 'rgba(214,40,40,0.22)'; ctx.fillRect(left ? x - 18 : x - 260, y + i * 52 - 32, left ? 470 : 520, 46); ctx.fillStyle = '#d62828'; if (left) ctx.fillRect(x - 18, y + i * 52 - 32, 5, 46); }
+      txt((sel && !left ? '▶  ' : '') + it.label + (it.val ? ':  ' + it.val() : ''), x, y + i * 52, 26, sel ? '#ffffff' : R.COL.ink, align || 'center', sel ? 600 : 500);
     }
   }
   function drawTitle() {
-    backdrop();
-    txt('THE WARRIORS', C.VIEW_W / 2, 250, 96, '#e9e4d6', 'center', 700);
-    txt('NIGHT RUN', C.VIEW_W / 2, 318, 44, R.COL.p1, 'center', 500);
-    txt('Nucleo giocabile 0.4 · prova capitolo C4', C.VIEW_W / 2, 380, 20, R.COL.dim, 'center', 400);
-    if (Math.floor(performance.now() / 600) % 2) txt('Premi Invio', C.VIEW_W / 2, 520, 26, R.COL.ink);
-    txt('Tavole di prova dell\'autore · audio segnaposto', C.VIEW_W / 2, 690, 15, R.COL.dim, 'center', 400);
+    ctx.fillStyle = '#07060a'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    var t = performance.now() / 1000, cw = C.VIEW_H * (cover.width || 800) / (cover.height || 803);
+    if (drawCover((C.VIEW_W - cw) / 2, 1, 1.02 + Math.sin(t * 0.2) * 0.01)) {
+      var x0 = (C.VIEW_W - cw) / 2;
+      var gl = ctx.createLinearGradient(x0, 0, x0 + 160, 0); gl.addColorStop(0, '#07060a'); gl.addColorStop(1, 'rgba(7,6,10,0)');
+      ctx.fillStyle = gl; ctx.fillRect(x0 - 2, 0, 162, C.VIEW_H);
+      var gr = ctx.createLinearGradient(x0 + cw, 0, x0 + cw - 160, 0); gr.addColorStop(0, '#07060a'); gr.addColorStop(1, 'rgba(7,6,10,0)');
+      ctx.fillStyle = gr; ctx.fillRect(x0 + cw - 160, 0, 162, C.VIEW_H);
+      ctx.fillStyle = '#07060a'; ctx.fillRect(0, 0, x0, C.VIEW_H); ctx.fillRect(x0 + cw, 0, C.VIEW_W, C.VIEW_H);
+      var gb = ctx.createLinearGradient(0, 520, 0, C.VIEW_H); gb.addColorStop(0, 'rgba(7,6,10,0)'); gb.addColorStop(1, 'rgba(7,6,10,0.95)');
+      ctx.fillStyle = gb; ctx.fillRect(0, 520, C.VIEW_W, 200);
+    } else txt('THE WARRIORS', C.VIEW_W / 2, 250, 96, '#d62828', 'center', 700);
+    txt('NIGHT RUN', C.VIEW_W / 2, 628, 40, '#ffffff', 'center', 700);
+    if (Math.floor(performance.now() / 600) % 2) txt('PREMI INVIO', C.VIEW_W / 2, 676, 22, '#f2c14e', 'center', 600);
+    txt('Prova capitolo C4', 24, C.VIEW_H - 16, 14, R.COL.dim, 'left', 400);
   }
   function drawSelect() {
     backdrop(); var s = game.sel;
@@ -284,7 +307,13 @@ var W = window.W;
   function draw(dt) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     if (game.state === 'title') drawTitle();
-    else if (game.state === 'menu') { backdrop(); txt('THE WARRIORS', C.VIEW_W / 2, 150, 64, R.COL.ink, 'center', 700); txt('NIGHT RUN', C.VIEW_W / 2, 196, 28, R.COL.p1, 'center', 500); drawList(menuItems(), C.VIEW_W / 2, 320); }
+    else if (game.state === 'menu') {
+      backdrop(1);
+      txt('NIGHT RUN', 80, 200, 56, '#ffffff', 'left', 700);
+      ctx.fillStyle = '#d62828'; ctx.fillRect(82, 226, 72, 5);
+      drawList(menuItems(), 82, 320, 'left');
+      txt('↑ ↓ scegli · Invio conferma', 82, C.VIEW_H - 40, 15, R.COL.dim, 'left', 400);
+    }
     else if (game.state === 'select') drawSelect();
     else if (game.state === 'howto') drawHowto();
     else if (game.state === 'options') { backdrop(); txt('OPZIONI', C.VIEW_W / 2, 140, 44, R.COL.p1, 'center', 700); drawList(menuItems(), C.VIEW_W / 2, 260); txt('← → regola', C.VIEW_W / 2, 640, 18, R.COL.dim, 'center', 400); }

@@ -2,6 +2,10 @@
 
 Beat ’em up 2D: una notte attraverso New York, dal ritrovo dei Warriors al ritorno a Coney Island all'alba.
 
+## Giocare online
+
+Con GitHub Pages attivo (Settings → Pages → Deploy from a branch → `main`, cartella `/ (root)`) il gioco è su https://b3pz.github.io/The_Warriors/
+
 ## Stato
 
 **Progettazione completa (baseline 1.0) + nucleo giocabile 0.4: prova del capitolo C4, aree C4-02 e C4-03.**

@@ -9,6 +9,10 @@ Checkpoint aggiornato il 29 ottobre 2026 (sera). **Decisione dell'autore: le tav
 - Moduli: `config.js` (valori di COMBAT_AND_SYSTEMS/CAST), `input.js`, `sim.js` (attori, colpi con ID e insieme bersagli, prese, armi, coordinatore, CPU, KO/soccorso, snapshot), `areas.js` (dati C4-02/C4-03), `render.js`, `audio.js`, `main.js` (flusso, menu, save `warriors-story-v1`, opzioni `warriors-options-v1`), `atlas_data.js` (generato).
 - Codice scritto da zero seguendo i documenti; nessuna routine copiata da Primal Sentinels II.
 
+## Menu
+
+Titolo e menu usano la copertina fornita dall'autore (`assets/menu/cover.jpg`, 29 ottobre 2026).
+
 ## Grafica approvata
 
 **Raccolta 04** (`assets/source/raccolta_04`), approvata dall'autore il 29 ottobre 2026: quattro tavole pixel art in `Sorgenti/Nuove_tavole/` (Warriors con camminata, attacchi, calci, colpiti e pose a terra; Baseball Furies anche incappucciati; Orphans, Punks, Lizzies, Rogues, polizia, civili; armi, props, effetti; fondali parco, metro, vicolo, porto, Coney Island) e 15 ritagli di fondali. Hash in `assets/source/inventory.json`.
