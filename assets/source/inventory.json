@@ -264,7 +264,7 @@
   "received": "2026-10-29",
   "file": "The_Warriors_Grafiche_Raccolta_04.zip",
   "duplicates_skipped": 54,
-  "note": "Quattro tavole pixel art nuove (atlante_03_01/02, personaggi_nemici_fondali_04, personaggi_nemici_oggetti_05) e 16 ritagli di fondali. Personaggi non attribuiti secondo STATO_LOTTO_04. atlante_03_02 e personaggi_nemici_fondali_04 senza alpha (fondo nero). Non integrato.",
+  "note": "Quattro tavole pixel art nuove (atlante_03_01/02, personaggi_nemici_fondali_04, personaggi_nemici_oggetti_05) e 15 ritagli di fondali. Personaggi non attribuiti secondo STATO_LOTTO_04. atlante_03_02 e personaggi_nemici_fondali_04 senza alpha (fondo nero). Non integrato.",
   "files": {
    "raccolta_04/Fondali/Concept_ritagliati/coney_luna_park_concept_03.png": {
     "sha256": "d638254f03aa4d09576cebe25dd0e7e51a516011f55076abd5e8832dff4185ac",
