@@ -259,5 +259,184 @@
     "status": "source"
    }
   }
+ },
+ "_raccolta_04": {
+  "received": "2026-10-29",
+  "file": "The_Warriors_Grafiche_Raccolta_04.zip",
+  "duplicates_skipped": 54,
+  "note": "Quattro tavole pixel art nuove (atlante_03_01/02, personaggi_nemici_fondali_04, personaggi_nemici_oggetti_05) e 16 ritagli di fondali. Personaggi non attribuiti secondo STATO_LOTTO_04. atlante_03_02 e personaggi_nemici_fondali_04 senza alpha (fondo nero). Non integrato.",
+  "files": {
+   "raccolta_04/Fondali/Concept_ritagliati/coney_luna_park_concept_03.png": {
+    "sha256": "d638254f03aa4d09576cebe25dd0e7e51a516011f55076abd5e8832dff4185ac",
+    "size": [
+     313,
+     107
+    ],
+    "alpha": true,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Concept_ritagliati/metro_notturna_concept_03.png": {
+    "sha256": "5ef40f805a465f00dedfa90950a8b1ae99d4e553b165b2d70b3996528c1ecfb3",
+    "size": [
+     595,
+     88
+    ],
+    "alpha": true,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Concept_ritagliati/parco_notturno_concept_03.png": {
+    "sha256": "2f7eaacf4055bab00ab0b5c1239806977833c2edc1b92007c26361e9eb2c9951",
+    "size": [
+     397,
+     88
+    ],
+    "alpha": true,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Concept_ritagliati/strada_notturna_concept_03.png": {
+    "sha256": "4df8e1ddc8e8a457158e3e57f85a14120961ef8c3ffc17a1bff19cb9e3251a95",
+    "size": [
+     325,
+     88
+    ],
+    "alpha": true,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Coney_Island/coney_04.png": {
+    "sha256": "4cbd61db42c19e4f8b9a73c56de626b2b8049ec4e99c414dcc0a515fc0ec8534",
+    "size": [
+     407,
+     155
+    ],
+    "alpha": false,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Coney_Island/coney_05.png": {
+    "sha256": "050c5b42ac125556b112ac8fc68493e2d6a3d77b161589442aba99f3b9af2ae4",
+    "size": [
+     233,
+     155
+    ],
+    "alpha": false,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Coney_Island/coney_06.png": {
+    "sha256": "1b09ac594315a819b98d1c86825d96d84d7aa3cb07256453f2406dc600f6898f",
+    "size": [
+     275,
+     196
+    ],
+    "alpha": true,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Industriale/porto_04.png": {
+    "sha256": "b67cbd7d9cb8026015acf2c5c0909cee3acf278effb808138ec19c77ccd70595",
+    "size": [
+     589,
+     155
+    ],
+    "alpha": false,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Industriale/strada_04.png": {
+    "sha256": "a8ac2e9c35e6eab8cc9631fb7cfa9a3ff8d4636c7b92ebfa6299f2624b74af57",
+    "size": [
+     232,
+     137
+    ],
+    "alpha": false,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Industriale/strada_05.png": {
+    "sha256": "756e55b3b6dff0eec5d58cf6ea9085f10a5ba8f0c280f78be08427f03423f7eb",
+    "size": [
+     222,
+     196
+    ],
+    "alpha": true,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Industriale/vicolo_04.png": {
+    "sha256": "1b0494470702e6a4fd7994f48ced58a68791290fc14aec024e4583c9082309b6",
+    "size": [
+     283,
+     155
+    ],
+    "alpha": false,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Metro/metro_04.png": {
+    "sha256": "14d69176a3dd25cc8d88ffb79cfc9b3259a5a33ec5208d98b0580faa63ecda82",
+    "size": [
+     804,
+     137
+    ],
+    "alpha": false,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Metro/metro_05.png": {
+    "sha256": "c0f60612badec82a158d9f94e047f4c493d2da348b2d5369975d6b65fca9b43c",
+    "size": [
+     584,
+     196
+    ],
+    "alpha": true,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Parco/parco_04.png": {
+    "sha256": "c56dd4c095781e22c5fe5bbbf538dcb0a0affd4dd54fe306876ee2ef896dbf53",
+    "size": [
+     479,
+     137
+    ],
+    "alpha": false,
+    "status": "source"
+   },
+   "raccolta_04/Fondali/Parco/parco_05.png": {
+    "sha256": "2cbea5c3fb6d24c9f06d0d893a195073b7ae9c607783509aedf57b36316d1594",
+    "size": [
+     415,
+     196
+    ],
+    "alpha": true,
+    "status": "source"
+   },
+   "raccolta_04/Sorgenti/Nuove_tavole/atlante_03_01.png": {
+    "sha256": "e95dbbd7e2ef020af4b58ea320becced8feffe4293d8dbcb6ed4fea0bd0b2b9e",
+    "size": [
+     1536,
+     1024
+    ],
+    "alpha": true,
+    "status": "source"
+   },
+   "raccolta_04/Sorgenti/Nuove_tavole/atlante_03_02.png": {
+    "sha256": "c3df1f487828f95070a6c8e468c0b9b1860042a797da154d996c07f959c76c30",
+    "size": [
+     1536,
+     1024
+    ],
+    "alpha": false,
+    "status": "source"
+   },
+   "raccolta_04/Sorgenti/Nuove_tavole/personaggi_nemici_fondali_04.png": {
+    "sha256": "d35b8ccc99bb81a928e132c0ca0a675ea3f7ee37cd02ce7d581afab08c22eecd",
+    "size": [
+     1536,
+     1024
+    ],
+    "alpha": false,
+    "status": "source"
+   },
+   "raccolta_04/Sorgenti/Nuove_tavole/personaggi_nemici_oggetti_05.png": {
+    "sha256": "50058633c9b56fd9565152d999e8f5e6598db283973a33f199ba1adaee806ce0",
+    "size": [
+     1536,
+     1024
+    ],
+    "alpha": true,
+    "status": "source"
+   }
+  }
  }
 }

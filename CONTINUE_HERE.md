@@ -22,6 +22,8 @@ Verificato via sha256 sul pacchetto 02: warrior_a_8pose = de893e, fury_8pose = f
 
 **Asset Pack 02** (assets/source/pack_02, stato source, non integrato): varianti delle due tavole illustrate (stesse otto pose, nessuna posa nuova), ritagli a griglia delle tavole, due atlanti in pixel art con molte gang, pose a terra, civili, oggetti, FX e fondali parco/metro/Coney Island/industriale a bassa risoluzione. Prima di ritagliarli serve la decisione sullo stile.
 
+**Raccolta 04** (assets/source/raccolta_04, stato source, non integrata): 61 file identici ai lotti precedenti non duplicati; nuove 4 tavole pixel art (Warriors con pose a terra e calci, Furies anche incappucciati, Orphans, Punks, Lizzies, Rogues, polizia, civili, oggetti, FX, fondali parco/metro/vicolo/porto/Coney Island) e 16 ritagli di fondali piccoli. Personaggi **non attribuiti** (STATO_LOTTO_04): non assegnarli ai nove Warriors senza tavole individuali. atlante_03_02 e personaggi_nemici_fondali_04 non hanno alpha (fondo nero da scontornare). Con questo lotto la pixel art copre molte più pose e ambienti delle tavole illustrate.
+
 ## Pose mancanti per completare C4 (rilevate in integrazione)
 
 Warrior: a terra/KO, rialzata, swing orizzontale con mazza, camminata con mazza, presa, lancio, schivata, calcio volante. Fury: pose a mani nude (idle, cammino, spinta), rialzata, lanciato. Props in primo piano nello stile del fondale: panchina e cestino separati (ora disegnati a codice). Ogni Warrior della campagna ha bisogno del proprio set.

@@ -3176,6 +3176,14 @@
    "in_repository": true,
    "repository_file": "assets/source/pack_02/",
    "description": "Asset Pack 02: varianti delle tavole illustrate, due atlanti pixel art (Warriors, Furies, Orphans, Turnbull, Lizzies, Punks, polizia, civili, oggetti, FX) e fondali parco/metro/Coney Island/industriale a bassa risoluzione. Da rifinire; non integrato."
+  },
+  {
+   "id": "source_raccolta_04",
+   "kind": "supplied_reference",
+   "status": "source",
+   "in_repository": true,
+   "repository_file": "assets/source/raccolta_04/",
+   "description": "Quattro tavole pixel art nuove (atlante_03_01/02, personaggi_nemici_fondali_04, personaggi_nemici_oggetti_05) e 16 ritagli di fondali. Personaggi non attribuiti secondo STATO_LOTTO_04. atlante_03_02 e personaggi_nemici_fondali_04 senza alpha (fondo nero). Non integrato."
   }
  ]
 }

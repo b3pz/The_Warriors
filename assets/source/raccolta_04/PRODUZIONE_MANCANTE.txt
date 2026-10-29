@@ -1,0 +1,1 @@
+NON COMPLETATI: tavole individuali verificate di Ajax, Snow, Cowboy, Cochise, Vermin, Rembrandt, Fox, Cleon e resto cast; cicli animazione integrali; separazione alpha/props/fondali multilayer. Vedere README.md.
