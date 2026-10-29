@@ -17,6 +17,7 @@ Il video si salta con Esc → Salta scena, come le altre scene.
 | `cine_accusation` | cine_accusation |
 | `cine_ajax_arrest` | cine_ajax_arrest |
 | `cine_ajax_stays` | cine_ajax_stays |
+| `cine_bathroom_chaos` | cine_bathroom_chaos |
 | `cine_bottles` | cine_bottles |
 | `cine_cyrus` | cine_cyrus |
 | `cine_departure` | cine_departure |
@@ -43,10 +44,11 @@ Il video si salta con Esc → Salta scena, come le altre scene.
 | `dlg_c3_orphans` | dlg_c3_orphans |
 | `dlg_c4_stand` | dlg_c4_stand |
 | `dlg_c5_welcome` | dlg_c5_welcome |
+| `dlg_c6_bathroom` | dlg_c6_bathroom |
 | `dlg_p0_introductions` |  |
 | `dlg_p0_welcome` | dlg_p0_welcome |
 
-Gli ID `card_P0`…`card_C8` sono i cartelli di inizio capitolo e non richiedono video.
+Gli intermezzi della DJ hanno ID `radio_C1`…`radio_C8`; anche questi si possono sostituire con un video.
 
 ## Aree e fondali usati
 
@@ -78,7 +80,7 @@ Gli ID `card_P0`…`card_C8` sono i cartelli di inizio capitolo e non richiedono
 | C5-04 | traversal | Sotterraneo | `metro_b` |
 | C5-05 | traversal | Verso Union Square | `street` |
 | C6-01 | traversal | Union Square | `metro_b` |
-| C6-02 | arena | Antibagno | `interior` |
+| C6-02 | stealth | I bagni | `interior` |
 | C6-03 | arena | Il bagno | `interior` |
 | C6-04 | traversal | Banchina | `metro` |
 | C7-01 | traversal | L'ultimo treno | `metro` |

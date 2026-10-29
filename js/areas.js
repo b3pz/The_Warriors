@@ -17,7 +17,7 @@ var W = window.W;
     this.pursuersLeft = 0; this.spawnT = 2; this.panelHits = 0; this.panelOpen = !def.panel; this.markReached = false;
     this.bus = def.bus ? { t: 4, phase: 'idle', x: 0 } : null;
     var duo = world.duo(), self = this;
-    world.peace = !!def.peace;
+    world.peace = !!def.peace || def.kind === 'stealth';
     world.props = (def.props || []).map(function (p) { var o = Object.assign({}, p); if (p.contents) o.contents = duo ? p.contents.duo : p.contents.solo; return o; });
     (def.barriers || []).forEach(function (bx, i) {
       var y0 = self.floor[0] + 20 + ((i % 2) ? (self.floor[1] - self.floor[0]) * 0.45 : 0);
@@ -37,7 +37,7 @@ var W = window.W;
     // compagni al seguito (solo dove il design li mostra), Mercy come PNG, comparse
     var active = world.players.map(function (p) { return p.char.id; });
     var lead = world.players[0];
-    if (def.present && (def.kind === 'traversal' || def.kind === 'training')) {
+    if (def.present && (def.kind === 'traversal' || def.kind === 'training' || def.kind === 'stealth')) {
       def.present.filter(function (id) { return active.indexOf(id) < 0 && (opts.roster || []).indexOf(id) >= 0; }).forEach(function (id, k) {
         var n = new W.Npc(world, id, id, 60 - k * 40, mid + ((k % 3) - 1) * 34, 1); n.follow = lead; n.followOff = k + 1; n.keep = true;
         if (def.talks && def.talks.some(function (t) { return t.who === id; })) { var tk = def.talks.filter(function (t) { return t.who === id; })[0]; n.follow = null; n.x = tk.x; n.y = tk.y; n.face = -1; }
@@ -54,6 +54,7 @@ var W = window.W;
     if (def.crowd) for (var c = 0; c < 14; c++) { var cn = new W.Npc(world, 'cw' + c, def.crowd[c % def.crowd.length], 500 + c * 95, f[0] + 6 + (c % 3) * 12, c % 2 ? 1 : -1); cn.name = ''; cn.crowd = true; cn.keep = true; world.npcs.push(cn); }
     if (def.watcher) { var wt = new W.Npc(world, 'watch', def.watcher, def.width - 260, f[0] + 20, -1); wt.name = 'Capo Punks'; wt.keep = true; world.npcs.push(wt); }
     if (def.kind === 'training') this.setupTraining();
+    if (def.kind === 'stealth') this.setupStealth();
     if (def.stationed) {
       (duo ? def.stationed.duo : def.stationed.solo).forEach(function (s) { var e = new W.Enemy(world, s[0], s[1], s[2]); e.setState('approach'); e.guardX = s[1]; e.face = -1; world.enemies.push(e); });
     }
@@ -91,7 +92,10 @@ var W = window.W;
       var n = w.npcs.filter(function (q) { return q.id === tk.who; })[0]; if (!n) return;
       list.push({ x: n.x, y: n.y, label: 'Parla con ' + (n.name || tk.who), fn: function () { self.talkCount += self.talked[tk.who] ? 0 : 1; self.talked[tk.who] = true; self.playScene(W.SCENES[tk.scene || ('talk_' + tk.who)] || { steps: [['caption', '…']] }); if (self.talkCount >= (def.needTalks || 0) && !def.exitInteract) w.exitOpen = true; } });
     });
-    if (def.exitInteract && this.canExit()) list.push({ x: def.exitInteract.x, y: def.exitInteract.y, label: def.exitInteract.label, exit: true, fn: function () { self.tryExitInteract(); } });
+    if (def.kind === 'stealth' && this.st && this.st.phase === 'hide') def.stalls.forEach(function (sx, i) {
+      list.push({ x: sx, y: self.floor[0] + 24, label: 'Nasconditi qui', fn: function (p) { self.hideIn(p, i); } });
+    });
+        if (def.exitInteract && this.canExit()) list.push({ x: def.exitInteract.x, y: def.exitInteract.y, label: def.exitInteract.label, exit: true, fn: function () { self.tryExitInteract(); } });
     if (def.panel && !this.panelOpen) list.push({ x: def.panel.x, y: def.panel.y, label: 'Sfonda il pannello (' + (def.panel.hits - this.panelHits) + ')', fn: function (p) {
       self.panelHits++; w.emit('hit', { x: def.panel.x, y: def.panel.y, z: 90, target: 'enemy', heavy: true }); p.startAttack('heavy');
       if (self.panelHits >= def.panel.hits) { self.panelOpen = true; w.exitOpen = true; self.objective = 'Alla finestra!'; w.emit('break', { x: def.panel.x, y: def.panel.y }); }
@@ -159,6 +163,7 @@ var W = window.W;
 
     // allenamento
     if (def.kind === 'training') this.stepTraining(w);
+    if (def.kind === 'stealth') { this.stepStealth(w, dt); return 'play'; }
     // incontri a ondate (arena e micro-arena di fuga)
     this.stepWaves(w, dt, duo);
     // fuga: timer, inseguitori, bus
@@ -192,6 +197,7 @@ var W = window.W;
       if (lead >= wave.trigger) {
         this.fighting = true; this.objective = wave.objective; this.boss = !!wave.boss;
         this.queue = (duo ? wave.duo : wave.solo).slice();
+        if (wave.dropIf && w.flags[wave.dropIf]) this.queue.shift();
         w.cam.lockMin = w.cam.x; w.cam.lockMax = w.cam.x;
         w.emit('wave', { idx: this.waveIdx });
       }
@@ -260,6 +266,79 @@ var W = window.W;
     if (!st.started) { st.started = true; this.objective = st.text; if (st.say) this.playScene({ letterbox: false, steps: [['say', st.say[0], st.say[1]]] });
       if (st.check === 'revive') { var n = new W.Npc(w, 'helpme', this.sparring ? this.sparring.sparSet : 'snow', 980, 600, -1); n.pose = 'down'; n.keep = true; w.npcs.push(n); this.reviveDummy = n; } }
     if ((tr[st.check] || 0) > 0) { this.stepIdx++; w.emit('clear', {}); }
+  };
+
+  // ------------------------------------------------------------------ minigioco del bagno (C6-02)
+  // 1 nascondersi in un gabinetto; 2 silenzio mentre il pattinatore controlla le porte una a una;
+  // 3 quando volta le spalle davanti alla tua porta, un attimo per colpire per primo (spruzzo in faccia).
+  // Riuscito: il pattinatore è a terra e nella rissa successiva c'è un Punk in meno. Fallito: si combatte subito. Nessun blocco.
+  AreaRun.prototype.setupStealth = function () {
+    var w = this.world, f = this.floor;
+    this.st = { phase: 'hide', t: 0, stall: -1, noise: 0, skX: -80, skDir: 1, target: 0, checking: 0, windowT: 0, result: null };
+    var sk = new W.Npc(w, 'skater', 'punk', -80, f[0] + 60, 1); sk.name = 'Punk sui pattini'; sk.keep = true; sk.skates = true; sk.hidden = true; w.npcs.push(sk);
+    this.skater = sk;
+    // i compagni si nascondono da soli negli altri gabinetti
+    w.npcs.forEach(function (n) { if (!n.crowd && n.id !== 'skater') { n.follow = null; } });
+  };
+  AreaRun.prototype.hideIn = function (p, i) {
+    var st = this.st, w = this.world, def = this.def; if (st.phase !== 'hide') return;
+    st.stall = i; p.hidden = true; p.x = def.stalls[i]; p.y = this.floor[0] + 24; p.setState('idle');
+    w.players.forEach(function (q) { if (q !== p) { q.hidden = true; q.x = def.stalls[(i + 2) % def.stalls.length]; q.y = p.y; } });
+    var others = def.stalls.map(function (x, k) { return k; }).filter(function (k) { return k !== i; });
+    w.npcs.filter(function (n) { return !n.crowd && n.id !== 'skater'; }).forEach(function (n, k) { n.hidden = true; n.x = def.stalls[others[k % others.length]]; });
+    st.phase = 'wait'; st.t = 0; this.objective = 'Silenzio. Non muoverti.';
+    w.emit('open', { x: p.x, y: p.y });
+  };
+  AreaRun.prototype.stepStealth = function (w, dt) {
+    var st = this.st, def = this.def, sk = this.skater, p = w.players.filter(function (q) { return !q.cpu; })[0] || w.players[0];
+    var d = p.device || p.cpuCtl; st.t += dt;
+    w.players.forEach(function (q) { if (q.hidden) { q.x = q.x; } });
+    if (st.phase === 'hide') { if (st.t > 14) this.hideIn(p, 2); return; } // se il giocatore esita, si nasconde nel gabinetto centrale
+    // rumore: muoversi o premere tasti nel gabinetto fa rumore
+    if (st.phase === 'wait' || st.phase === 'patrol') {
+      var moving = d && (d.axisX() || d.axisY());
+      var press = d && (d.peek('light') || d.peek('heavy') || d.peek('jump') || d.peek('dodge'));
+      if (press) { d.take('light'); d.take('heavy'); d.take('jump'); d.take('dodge'); }
+      st.noise = Math.max(0, st.noise + (moving ? 0.9 * dt : 0) + (press ? 0.35 : 0) - 0.25 * dt);
+      w.players.forEach(function (q) { q.x = def.stalls[st.stall]; if (q !== p) q.x = def.stalls[(st.stall + 2) % def.stalls.length]; });
+      if (st.noise >= 1) return this.stealthResult(false, 'Ti ha sentito');
+    }
+    if (st.phase === 'wait' && st.t > 1.6) { st.phase = 'patrol'; sk.hidden = false; sk.x = -60; st.target = 0; st.checking = 0; w.emit('skate', {}); }
+    if (st.phase === 'patrol') {
+      var tx = def.stalls[st.target] + 70;
+      if (st.checking > 0) {
+        st.checking -= dt;
+        sk.face = -1; // guarda la porta
+        if (st.target === st.stall) {
+          // davanti alla tua porta: si volta per controllare dietro di sé → attimo per colpire
+          if (st.checking < 1.0 && st.checking > 0.1) { sk.face = 1; st.windowT += dt; this.objective = 'ORA! Premi {interact}'; if (d && d.take('interact')) return this.stealthResult(true); }
+          if (st.checking <= 0.1) return this.stealthResult(false, 'Ha aperto la porta');
+        } else if (d && d.take('interact')) return this.stealthResult(false, 'Troppo presto');
+        if (st.checking <= 0) { w.emit('open', { x: def.stalls[st.target], y: sk.y }); st.target++; this.objective = 'Silenzio. Non muoverti.'; }
+      } else {
+        var dx = tx - sk.x; sk.face = dx > 0 ? 1 : -1;
+        sk.x += Math.max(-260 * dt, Math.min(260 * dt, dx)); // scivola sui pattini
+        if (Math.abs(dx) < 3) st.checking = st.target === st.stall ? 2.2 : 1.1;
+        if (d && d.take('interact')) return this.stealthResult(false, 'Troppo presto');
+      }
+    }
+    if (st.phase === 'done') { st.t2 = (st.t2 || 0) + dt; if (st.t2 > 1.4 && !this.finishing) this.finish(); }
+  };
+  AreaRun.prototype.stealthResult = function (ok, why) {
+    var st = this.st, w = this.world, sk = this.skater, self = this;
+    if (st.phase === 'done') return;
+    st.phase = 'done'; st.t2 = 0; st.result = ok;
+    w.players.forEach(function (q) { q.hidden = false; q.y = self.floor[0] + 60; });
+    w.npcs.forEach(function (n) { if (!n.crowd) n.hidden = false; });
+    var sprayer = w.players.concat(w.npcs).filter(function (q) { return (q.char ? q.char.id : q.id) === 'rembrandt'; })[0];
+    if (ok) {
+      w.flags.skater_down = true; sk.pose = 'down';
+      this.objective = sprayer ? 'Rembrandt gli spruzza la vernice in faccia!' : 'Colpito per primo!';
+      w.emit('hit', { x: sk.x, y: sk.y, z: 70, target: 'enemy', heavy: true }); w.emit('spray', { x: sk.x, y: sk.y });
+      this.sprayFx = { x: sk.x, y: sk.y, t: 0 };
+    } else {
+      this.objective = (why || 'Scoperti') + '! Fuori tutti!'; w.emit('shakefx', { amt: 8 }); w.emit('horn', {});
+    }
   };
 
   AreaRun.prototype.bossEnemy = function (w) {

@@ -48,3 +48,11 @@ Il lavoro successivo alla progettazione è produzione e implementazione, partend
 ## Decisione grafica (29 ottobre 2026, sera)
 
 L'autore ha approvato come grafica giusta le tavole della Raccolta 04 (`assets/source/raccolta_04`): lo stile del gioco è la loro pixel art. Le tavole illustrate integrate nella prima prova C4 sono provvisorie e vanno sostituite. Le note del lotto sono state riscritte di conseguenza.
+
+## Indicazioni dell'autore sul film (30 ottobre 2026, notte)
+
+- Il gioco aveva un'aria diversa dal film: l'autore ha approvato tutte le correzioni proposte (notte desaturata, DJ alla radio, synth cupi e silenzi, meno arcade, transizioni a fumetto).
+- Gli eventi in contemporanea vanno resi chiari: aggiunte le vignette «Intanto…» con lo stato dei gruppi nel capitolo 5.
+- La scena del bagno dei Punks diventa un minigioco: pattinatore che controlla le porte, silenzio, spruzzo in faccia, poi tutti escono nella confusione (C6-02). Lo spruzzo è affidato a Rembrandt perché è il graffitaro del gruppo; da cambiare se l'autore indica un altro Warrior.
+- Cast indicato dall'autore: Swan capo temporaneo, Cleon fondatore ucciso all'inizio, Ajax il più forte e impulsivo, Cochise grintoso, Cowboy con lo Stetson, Rembrandt graffitaro, Snow appassionato di musica, Vermin spalla comica, Fox lo scout ucciso nella fuga in metro. Riffs: Cyrus e Masai. Rogues: Luther. Turnbull: capo senza nome, bus verde. Orphans: Sully, provocato da Mercy. Furies: capo truccato sconfitto da Ajax e Swan. Lizzies: capo senza nome che attira Vermin, Cochise e Rembrandt.
+- Sostituisce la prudenza della baseline sulla sorte di Cleon e Fox: ora le scene la dichiarano.

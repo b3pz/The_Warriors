@@ -147,6 +147,7 @@ var W = window.W;
     this.st += dt; this.anim += dt; if (this.protect > 0) this.protect -= dt;
     if (this.comboT > 0) { this.comboT -= dt; if (this.comboT <= 0) this.combo = 0; }
     this.reviving = false;
+    if (this.hidden) return; // nascosto (gabinetto del bagno): fermo, l'input lo legge il minigioco
     if (this.cpu) { this.thinkCpu(dt); d = this.cpuCtl; }
     if (!d) return;
     var ax = d.axisX(), ay = d.axisY();

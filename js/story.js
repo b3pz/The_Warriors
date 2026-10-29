@@ -38,7 +38,7 @@ var W = window.W;
     this.state = moving ? 'walk' : 'idle';
   };
 
-  W.NPC_NAMES = { mercy: 'Mercy', cyrus: 'Cyrus', luther: 'Luther', masai: 'Masai', orphan: 'Capo Orphans', police: 'Agente',
+  W.NPC_NAMES = { mercy: 'Mercy', cyrus: 'Cyrus', luther: 'Luther', masai: 'Masai', orphan: 'Sully', police: 'Agente',
     lizzie: 'Lizzie', lizzie_b: 'Lizzie', punk: 'Capo Punks', civilian: 'Testimone', officer: 'Poliziotta', riff: 'Riff', rogue: 'Rogue', turnbull: 'Turnbull', fury: 'Fury', crowd: '' };
 
   // ------------------------------------------------------------------ scena

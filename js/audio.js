@@ -64,6 +64,8 @@ W.Audio = (function () {
     ricochet: function () { tone('sine', 2400, 500, 0.2, 0.1); },
     aim: function (e) { if (!e.bottle) tone('sine', 1400, 1400, 0.05, 0.05); },
     line: function () {},
+    skate: function () { burst(1.8, 0.12, 'bandpass', 900, 0.6); },
+    spray: function () { burst(0.7, 0.5, 'highpass', 4200, 0.5); },
     flashfx: function () {}, shakefx: function () {}
   };
 

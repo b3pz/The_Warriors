@@ -48,6 +48,7 @@ var W = window.W;
   S.cine_accusation = { cine: 'cine_accusation', steps: [
     ['sfx', 'shot'], ['flash'], ['shake', 10], ['pose', 'cyrus', 'down'], ['wait', 0.8],
     ['say', 'luther', 'Sono stati loro! Fermate i Warriors!'],
+    ['caption', 'Cleon prova a dire che non sono stati loro. La folla gli è addosso.'], ['flag', 'cleon_killed'],
     ['moveAll', -380, 1.6, 'crowd'], ['sfx', 'siren'],
     ['npc', 'pol1', 'police', 1300, 600, -1], ['npc', 'pol2', 'police', 1340, 650, -1], ['move', 'pol1', 1050, null, 1.2], ['move', 'pol2', 1080, null, 1.2],
     ['say', 'swan', 'Via da qui! Non fermatevi!'],
@@ -69,13 +70,15 @@ var W = window.W;
   // C3
   S.dlg_c3_orphans = { cine: 'dlg_c3_orphans', steps: seq(
     [['players', 'hide']], line(AFTER_C1, 160, 62, Y, 1, 20),
-    [['npc', 'orphan', 'orphan', 860, Y, -1], ['npc', 'or2', 'orphan', 950, 540, -1], ['npc', 'or3', 'orphan', 980, 630, -1],
+    [['npc', 'orphan', 'orphan', 860, Y, -1, 'Sully'], ['npc', 'or2', 'orphan', 950, 540, -1], ['npc', 'or3', 'orphan', 980, 630, -1],
      ['say', 'orphan', 'State attraversando il nostro territorio.'],
      ['choice', 'swan', ['Ci serve soltanto un passaggio.', 'Non siamo venuti a cercarvi. Lasciateci andare.']],
      ['sayIf', 0, 'orphan', 'Un passaggio? Nessuno passa di qui senza chiedere a noi.'],
      ['sayIf', 1, 'orphan', 'Non siete voi a decidere dove si va, qui.'],
      ['npc', 'mercy', 'mercy', 1180, 560, -1], ['move', 'mercy', 1060, null, 1],
      ['say', 'mercy', 'Sono loro quelli di cui si parla stanotte?'],
+     ['say', 'mercy', 'E tu li lasci passare così, Sully? Davanti a tutti?'],
+     ['say', 'orphan', 'Nessuno passa. Avete sentito?'],
      ['say', 'ajax', 'Se volevano discrezione, hanno scelto male la notte.'],
      ['fade', 'out', 0.6], ['clearNpcs'], ['flag', 'orphans_confrontation']]) };
   S.dlg_c3_fire = { cine: 'dlg_c3_fire', letterbox: false, steps: [
@@ -87,6 +90,7 @@ var W = window.W;
     [['npc', 'pol1', 'police', -60, 600, 1], ['npc', 'pol2', 'police', -120, 540, 1], ['move', 'pol1', 240, null, 1.2], ['move', 'pol2', 200, null, 1.4],
      ['sfx', 'siren'], ['say', 'swan', 'Al punto di ritrovo! Se ci dividiamo, andate là!'],
      ['move', 'fox', 160, 660, 1], ['move', 'mercy', 280, 650, 1], ['moveAll', 900, 1.6], ['wait', 1.2],
+     ['caption', 'Sui binari, nella corsa, Fox non ce la fa.'], ['flag', 'fox_killed'],
      ['fade', 'out', 0.8], ['clearNpcs'], ['flag', 'fox_lost'], ['flag', 'party_split']]) };
 
   // C4
@@ -135,6 +139,13 @@ var W = window.W;
     ['crowd', 'rf', ['masai', 'cyrus', 'masai'], 760, 1100, 540, 660, 6, -1], ['npc', 'masai', 'masai', 720, 580, -1], ['npc', 'witness', 'civilian', 420, 600, 1, 'Testimone'],
     ['say', 'witness', 'Ho visto chi ha sparato. Non era uno dei Warriors.'], ['say', 'masai', 'Dimmi chi era.'],
     ['fade', 'out', 1], ['clearNpcs'], ['flag', 'riffs_know_truth']] };
+
+  S.dlg_c6_bathroom = { cine: 'dlg_c6_bathroom', letterbox: false, mood: 'silence', steps: [
+    ['say', 'snow', 'Ci hanno seguiti fin qui dentro.'], ['say', 'swan', 'Nei gabinetti. Nessuno fiata.'], ['flag', 'bathroom_hide']] };
+  S.cine_bathroom_chaos = { cine: 'cine_bathroom_chaos', mood: 'fight', steps: [
+    ['caption', 'Le porte si spalancano tutte insieme. Nel bagno non c\'è più silenzio.'], ['shake', 10], ['sfx', 'hit'],
+    ['npc', 'punk', 'punk', 1000, 580, -1, 'Capo Punks'], ['npc', 'pk2', 'punk', 1080, 640, -1], ['wait', 0.6],
+    ['say', 'snow', 'Anche questi vogliono fermarci.'], ['say', 'swan', 'Allora facciamoci spazio.'], ['clearNpcs']] };
 
   // C7
   S.cine_train_dawn = { cine: 'cine_train_dawn', letterbox: false, steps: [
@@ -251,11 +262,11 @@ var W = window.W;
 
     { id: 'C6-01', ch: 'C6', kind: 'traversal', name: 'Union Square', bg: 'metro_b', width: 1920, depth: 180, party: FINAL6, present: FINAL6, mercy: 'npc', peace: true, chapterCard: true,
       enter: 'cine_reunion', objective: 'Raggiungi i bagni', watcher: 'punk' },
-    { id: 'C6-02', ch: 'C6', kind: 'arena', name: 'Antibagno', bg: 'interior', width: 1280, depth: 140, party: FINAL6, objective: 'I Punks sbarrano la strada',
-      waves: [{ trigger: 200, objective: 'Punks', solo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580]], duo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580], ['punk_brawler', 'R', 650], ['punk_grappler', 'L', 600]] }] },
-    { id: 'C6-03', ch: 'C6', kind: 'arena', name: 'Il bagno', bg: 'interior', width: 1920, depth: 170, party: FINAL6, objective: 'Il capo dei Punks', enter: 'cine_punks_confrontation',
+    { id: 'C6-02', ch: 'C6', kind: 'stealth', name: 'I bagni', bg: 'interior', width: 1280, depth: 150, party: FINAL6, present: FINAL6, amb: 'interior', mood: 'silence',
+      objective: 'Nasconditi in un gabinetto: avvicinati a una porta e premi {interact}', stalls: [300, 470, 640, 810, 980], enter: 'dlg_c6_bathroom' },
+    { id: 'C6-03', ch: 'C6', kind: 'arena', name: 'Il bagno', bg: 'interior', width: 1920, depth: 170, party: FINAL6, objective: 'Il capo dei Punks', enter: 'cine_bathroom_chaos',
       waves: [
-        { trigger: 260, objective: 'Ondata A', solo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580]], duo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580], ['punk_brawler', 'R', 650], ['punk_grappler', 'L', 600]], onClear: { solo: [['snack', 1, 600]], duo: [['snack', 1, 600], ['drink', -1, 620]] } },
+        { trigger: 260, objective: 'Escono tutti dai bagni', dropIf: 'skater_down', solo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580]], duo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580], ['punk_brawler', 'R', 650], ['punk_grappler', 'L', 600]], onClear: { solo: [['snack', 1, 600]], duo: [['snack', 1, 600], ['drink', -1, 620]] } },
         { trigger: 1000, objective: 'Capo Punks', boss: true, solo: [['punk_leader', 'R', 600], ['punk_brawler', 'L', 620]], duo: [['punk_leader', 'R', 600], ['punk_brawler', 'L', 620], ['punk_brawler', 'R', 560]] }] },
     { id: 'C6-04', ch: 'C6', kind: 'traversal', name: 'Banchina', bg: 'metro', width: 1280, depth: 180, party: FINAL6, present: FINAL6, mercy: 'npc', peace: true,
       objective: 'Sali sul treno', exitScene: 'cine_truth_reaches_riffs' },
