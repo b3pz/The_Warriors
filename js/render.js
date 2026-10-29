@@ -11,7 +11,7 @@ W.Render = (function () {
     body: '#cfc8b8', bodyShade: '#9e9788', enemy: '#59606e', bat: '#a0703c', danger: '#ff5a3c'
   };
 
-  var IMG = {}, bgImg = null;
+  var IMG = {}, bgImg = null, PX = {}, BGPX = {};
   function loadImg(file) {
     var im = new Image(); im.ok = false;
     im.onload = function () { im.ok = true; }; im.onerror = function () { console.warn('asset mancante', file); };
@@ -20,7 +20,10 @@ W.Render = (function () {
   }
   function init(canvas) {
     cv = canvas; ctx = cv.getContext('2d');
-    var A = W.ATLAS; if (!A) return;
+    var P = W.ATLAS_PX;
+    if (P) for (var ps in P.sets) PX[ps] = loadImg(P.sets[ps].file);
+    if (W.BG_PX) for (var bk in W.BG_PX) BGPX[bk] = loadImg(W.BG_PX[bk].file);
+    var A = W.USE_ILLUSTRATED ? W.ATLAS : null; if (!A) return;
     for (var sid in A.sets) for (var fn in A.sets[sid].frames) { var f = A.sets[sid].frames[fn]; if (!IMG[f.file]) IMG[f.file] = loadImg(f.file); }
     if (A.backgrounds.park_night) bgImg = loadImg(A.backgrounds.park_night.file);
   }
@@ -58,6 +61,96 @@ W.Render = (function () {
       case 'thrown': return { f: 'down', spin: true };
     }
     return { f: 'idle' };
+  }
+
+  // ---- pixel art approvata (Raccolta 04): set per personaggio, pose con ripieghi dichiarati
+  function setOf(a) {
+    if (a.npc) return a.set;
+    if (a.isEnemy) { if (a.sparSet) return a.sparSet; return (a.def.weapon && !a.weapon && a.def.unarmedSet) ? a.def.unarmedSet : a.def.set; }
+    return a.char.id;
+  }
+  function pickPose(a) {
+    var st = a.state, m = a.curMove, ph = a.att ? a.att.phase : null, wf = Math.floor(a.anim * (st === 'run' ? 9 : 6));
+    if (a.npc) return a.pose === 'down' ? { p: 'down' } : (st === 'walk' ? { p: 'walk', i: wf } : { p: 'idle' });
+    if (a.isEnemy) {
+      var moving = Math.abs(a.x - (a.lx === undefined ? a.x : a.lx)) + Math.abs(a.y - (a.ly === undefined ? a.y : a.ly)) > 0.3;
+      a.lx = a.x; a.ly = a.y;
+      switch (st) {
+        case 'enter': case 'approach': return moving ? { p: 'walk', i: wf } : { p: 'idle' };
+        case 'atk': if (ph === 'prep') return { p: a.att.spec.heavy ? 'windup' : 'idle', lean: -0.06 }; return { p: 'swing', alt: 'punch', lean: 0.08 };
+        case 'holding': return { p: 'punch' };
+        case 'hurt': case 'grabbed': case 'getup': return { p: 'hurt' };
+        case 'down': case 'dead': return { p: 'down' };
+        case 'thrown': return { p: 'down', spin: true };
+      }
+      return { p: 'idle' };
+    }
+    switch (st) {
+      case 'walk': case 'run': return { p: 'walk', i: wf };
+      case 'jump': return a.att ? { p: 'kick', lean: -0.2 } : { p: 'jump' };
+      case 'dodge': return { p: 'walk', i: 1, ghost: true };
+      case 'hurt': case 'getup': case 'held': return { p: 'hurt' };
+      case 'down': case 'ko': return { p: 'down' };
+      case 'grab': case 'throwobj': return { p: 'punch' };
+      case 'atk': case 'fury_sq': case 'grabhit':
+        if (ph === 'prep') return { p: 'idle', lean: -0.05 };
+        if (m === 'l3' || m === 'run') return { p: 'kick' };
+        if (m === 'heavy') return { p: 'heavy', alt: 'kick' };
+        if (m === 'fury') return { p: Math.floor(a.anim * 10) % 2 ? 'punch' : 'kick' };
+        return { p: 'punch', batArc: !!(a.att && a.att.weaponSwing) };
+    }
+    return { p: 'idle' };
+  }
+  function drawPixel(a, cx, w) {
+    var P = W.ATLAS_PX; if (!P || !useSprites) return false;
+    var sid = setOf(a), set = P.sets[sid], im = PX[sid];
+    if (!set || !im || !im.ok) return false;
+    var sel = pickPose(a), list = set.frames[sel.p] || (sel.alt && set.frames[sel.alt]), fake = null;
+    if (!list) {
+      // ripieghi: colpito = idle inclinato, a terra = idle sdraiato, attacco = idle in avanti
+      if (sel.p === 'down') fake = 'lie'; else if (sel.p === 'hurt') fake = 'tilt'; else if (sel.p === 'walk') fake = null;
+      list = set.frames.walk && sel.p === 'walk' ? set.frames.walk : set.frames.idle;
+    }
+    var fr = list[(sel.i || 0) % list.length];
+    var k = P.scale * ((a.isEnemy && a.def.scale) || 1);
+    var x = Math.round(a.x - cx), y = a.y, z = a.z || 0;
+    var lying = sel.p === 'down' || fake === 'lie';
+    ctx.fillStyle = 'rgba(0,0,0,' + (0.42 - Math.min(0.25, z / 400)) + ')';
+    ctx.beginPath(); ctx.ellipse(x, y, lying ? 64 : 30, 8, 0, 0, Math.PI * 2); ctx.fill();
+    var alpha = 1;
+    if (a.state === 'dead') alpha = Math.max(0, 1 - (a.fade || 0) / 1.2);
+    if (a.protect > 0 && Math.floor(w.time * 20) % 2 === 0 && a.state !== 'ko') alpha *= 0.55;
+    if (a.state === 'ko') alpha *= 0.85;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.imageSmoothingEnabled = false;
+    ctx.translate(x, Math.round(y - z));
+    if (fake === 'lie') { ctx.rotate(-a.face * Math.PI / 2); ctx.translate(0, 14); }
+    if (fake === 'tilt') ctx.rotate(-a.face * 0.22);
+    if (sel.lean) ctx.rotate(a.face * sel.lean);
+    if (sel.spin) ctx.rotate(-a.face * a.st * 9);
+    ctx.scale(a.face * k, k);
+    if (a.isEnemy && a.def.elite) { try { ctx.filter = 'drop-shadow(0 0 3px rgba(220,60,80,0.95))'; } catch (x2) {} }
+    if (sel.ghost) { ctx.globalAlpha = alpha * 0.3; ctx.drawImage(im, fr[0], fr[1], fr[2], fr[3], -fr[4] - 18, -fr[5], fr[2], fr[3]); ctx.globalAlpha = alpha * 0.75; }
+    ctx.drawImage(im, fr[0], fr[1], fr[2], fr[3], -fr[4], -fr[5], fr[2], fr[3]);
+    ctx.filter = 'none';
+    // arma impugnata disegnata sopra (le tavole non hanno pose armate per i Warriors)
+    var wpn = a.weapon && !(a.isEnemy && a.def.weapon === 'bat') ? W.WEAPONS[a.weapon.type] : null;
+    if (wpn && !lying) {
+      var L = wpn.len / k, hx = fr[2] * (sel.p === 'punch' ? 0.92 : 0.7) - fr[4], hy = -fr[5] + fr[3] * (sel.p === 'punch' ? 0.28 : 0.45);
+      ctx.save(); ctx.translate(hx, hy); ctx.rotate(sel.batArc ? -Math.PI / 2 : -0.45);
+      ctx.strokeStyle = '#2a1a0c'; ctx.lineCap = 'butt'; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -L); ctx.stroke();
+      ctx.strokeStyle = wpn.color; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -L); ctx.stroke();
+      ctx.restore();
+    }
+    ctx.restore();
+    if (sel.batArc && a.att && a.att.phase === 'act') {
+      ctx.strokeStyle = 'rgba(255,245,220,0.55)'; ctx.lineWidth = 6;
+      ctx.beginPath(); ctx.arc(x, y - z - 110, 95, a.face > 0 ? -1.3 : Math.PI - 0.6, a.face > 0 ? 0.6 : Math.PI + 1.3); ctx.stroke();
+    }
+    if (a.isEnemy && a.att && a.att.phase === 'act' && a.def.weapon === 'bat' && a.weapon) {
+      ctx.strokeStyle = 'rgba(255,240,210,0.5)'; ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.arc(x, y - z - 100, 100, a.face > 0 ? -1.2 : Math.PI - 0.5, a.face > 0 ? 0.5 : Math.PI + 1.2); ctx.stroke();
+    }
+    return true;
   }
 
   function drawSprite(a, cx, w) {
@@ -151,7 +244,21 @@ W.Render = (function () {
 
   function drawBg(w) {
     var a = w.area.def, cx = w.cam.x;
-    if (useSprites && bgImg && bgImg.ok) {
+    var bd = W.BG_PX && W.BG_PX[a.bg], bi = BGPX[a.bg];
+    if (bd && bi && bi.ok && useSprites) {
+      // parte alta scalata fino a y=430, pavimento allungato fino al fondo; tasselli alternati a specchio
+      var s2 = 430 / bd.floorTop, tw = Math.round(bd.w * s2);
+      ctx.imageSmoothingEnabled = false;
+      for (var ti = Math.floor(cx / tw); ti * tw - cx < C.VIEW_W; ti++) {
+        var x0 = Math.round(ti * tw - cx);
+        ctx.save();
+        if (ti % 2) { ctx.translate(x0 + tw, 0); ctx.scale(-1, 1); } else ctx.translate(x0, 0);
+        ctx.drawImage(bi, 0, 0, bd.w, bd.floorTop, 0, 0, tw, 430);
+        ctx.drawImage(bi, 0, bd.floorTop, bd.w, bd.h - bd.floorTop, 0, 430, tw, C.VIEW_H - 430);
+        ctx.restore();
+      }
+      ctx.imageSmoothingEnabled = true;
+    } else if (useSprites && bgImg && bgImg.ok && W.USE_ILLUSTRATED) {
       // fondale ricevuto, ripetuto a specchio per coprire aree di due schermate senza giunture
       var bw = bgImg.width * (C.VIEW_H / bgImg.height), i0 = Math.floor(cx / bw);
       for (var i = i0; i * bw - cx < C.VIEW_W; i++) {
@@ -162,17 +269,18 @@ W.Render = (function () {
         ctx.restore();
       }
     } else {
-      var bg = buildBg(a);
+      var bg = buildBg({ id: a.id, width: a.width, floor: w.area.floor });
       ctx.drawImage(bg.far, -cx * 0.2, 0);
       ctx.drawImage(bg.mid, -cx * 0.55, 0);
       for (var x = -((cx) % 256) - 256; x < C.VIEW_W + 256; x += 256) ctx.drawImage(bg.gnd, 0, 440, 256, C.VIEW_H - 440, x, 440, 256, C.VIEW_H - 440);
     }
     // zona di uscita
-    if (w.exitOpen) {
+    if (w.exitOpen && !(a.exitInteract)) {
       var ex = a.width - 200 - cx, pulse = 0.25 + 0.15 * Math.sin(w.time * 5);
-      ctx.fillStyle = 'rgba(242,193,78,' + pulse * 0.4 + ')'; ctx.fillRect(ex, a.floor[0], 200, a.floor[1] - a.floor[0]);
+      var fl = w.area.floor;
+      ctx.fillStyle = 'rgba(242,193,78,' + pulse * 0.4 + ')'; ctx.fillRect(ex, fl[0], 200, fl[1] - fl[0]);
       ctx.fillStyle = COL.p1; ctx.font = 'bold 28px "Oswald", sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText('USCITA ▶', ex + 100, a.floor[0] - 20);
+      ctx.fillText('USCITA ▶', ex + 100, fl[0] - 20);
     }
   }
 
@@ -190,6 +298,20 @@ W.Render = (function () {
 
   // ------------------------------------------------------------------ oggetti
   function drawProp(p, cx) {
+    if (p.kind === 'barrier') {
+      var bx0 = p.x0 - cx, hh = p.y1 - p.y0;
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(bx0 - 4, p.y1 - 4, 34, 8);
+      for (var bi2 = 0; bi2 < 2; bi2++) { ctx.fillStyle = '#2d2d33'; ctx.fillRect(bx0 + bi2 * 20, p.y0 - 30, 6, hh + 30); }
+      for (var st2 = 0; st2 < 4; st2++) { ctx.fillStyle = st2 % 2 ? '#f2f2f2' : '#e0522d'; ctx.fillRect(bx0 - 4, p.y0 - 30 + st2 * 9 + hh * 0.2, 34, 9); }
+      return;
+    }
+    if (p.kind === 'crate') {
+      var cx0 = p.x0 - cx, cw = p.x1 - p.x0;
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(cx0 + 4, p.y1 - 4, cw, 8);
+      ctx.fillStyle = '#7a5a34'; ctx.fillRect(cx0, p.y1 - 62, cw, 62); ctx.strokeStyle = '#4a3420'; ctx.lineWidth = 3; ctx.strokeRect(cx0 + 2, p.y1 - 60, cw - 4, 58);
+      ctx.beginPath(); ctx.moveTo(cx0 + 2, p.y1 - 60); ctx.lineTo(cx0 + cw - 2, p.y1 - 2); ctx.stroke();
+      return;
+    }
     if (p.kind === 'bench') {
       var x = p.x0 - cx, w = p.x1 - p.x0, y = p.y1;
       ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(x + 4, y - 4, w, 10);
@@ -278,6 +400,8 @@ W.Render = (function () {
   }
 
   function drawFigure(a, cx, w) {
+    if (a.hidden) return;
+    if (drawPixel(a, cx, w)) { drawTelegraph(a, cx); return; }
     if (drawSprite(a, cx, w)) { drawTelegraph(a, cx); return; }
     var x = a.x - cx, y = a.y, z = a.z || 0;
     var P = pose(a, w.time), face = a.face, scale = a.isEnemy && a.def.elite ? 1.08 : (a.char && a.char.r >= 5 ? 1.06 : 1);
@@ -329,6 +453,15 @@ W.Render = (function () {
   // telegraph nemico: segnale leggibile durante la preparazione
   function drawTelegraph(a, cx) {
     var x = a.x - cx, y = a.y, z = a.z || 0;
+    if (a.isEnemy && a.att && a.att.phase === 'prep' && a.aim && a.def.behavior === 'shoot') {
+      var pr0 = a.att.t / a.att.spec.prep;
+      ctx.strokeStyle = 'rgba(255,70,50,' + (0.25 + pr0 * 0.6) + ')'; ctx.lineWidth = 3; ctx.setLineDash([14, 10]);
+      ctx.beginPath(); ctx.moveTo(x, a.aim.y - 60); ctx.lineTo(a.face > 0 ? C.VIEW_W : 0, a.aim.y - 60); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(255,70,50,0.12)'; ctx.fillRect(a.face > 0 ? x : 0, a.aim.y - 22, a.face > 0 ? C.VIEW_W - x : x, 44);
+    }
+    if (a.isEnemy && a.att && a.att.phase === 'prep' && a.aim && a.def.behavior === 'throw') {
+      ctx.strokeStyle = 'rgba(255,170,60,0.85)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(a.aim.x - cx, a.aim.y, 46, 14, 0, 0, Math.PI * 2); ctx.stroke();
+    }
     if (a.isEnemy && a.att && a.att.phase === 'prep') {
       var hv = a.att.spec.heavy, pr = a.att.t / a.att.spec.prep;
       ctx.strokeStyle = hv ? COL.danger : '#ffd36a'; ctx.lineWidth = 3; ctx.globalAlpha = 0.5 + pr * 0.5;
@@ -368,6 +501,8 @@ W.Render = (function () {
       if (e.type === 'full') fx.push({ k: 'text', x: e.x, y: e.y - 190, t: 0, s: 'SALUTE PIENA', col: '#c9c4b8' });
       if (e.type === 'pickup') fx.push({ k: 'text', x: e.x, y: e.y - 190, t: 0, s: e.what.toUpperCase(), col: COL.p1 });
       if (e.type === 'fury') { if (opts.flash) flash = 0.25; }
+      if (e.type === 'flashfx' && opts.flash) flash = 0.5;
+      if (e.type === 'shakefx' && opts.shake) shake = e.amt || 8;
       if (e.type === 'revive') fx.push({ k: 'text', x: e.x, y: e.y - 190, t: 0, s: 'IN PIEDI', col: '#7fd18a' });
     }
     w.events.length = 0;
@@ -392,8 +527,21 @@ W.Render = (function () {
   // ------------------------------------------------------------------ HUD
   function bar(x, y, w, h, v, col, back) { ctx.fillStyle = back; ctx.fillRect(x, y, w, h); ctx.fillStyle = col; ctx.fillRect(x, y, w * Math.max(0, Math.min(1, v)), h); ctx.strokeStyle = 'rgba(0,0,0,0.6)'; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h); }
   function drawHud(w, ui) {
+    if (w.area && w.area.scene) { drawScene(w, w.area.scene, ui); return; }
+    var ar0 = w.area;
+    if (ar0.timer !== null && ar0.timer !== undefined) {
+      var tl = Math.ceil(ar0.timer), urgent = ar0.timer < 10;
+      ctx.fillStyle = 'rgba(8,10,16,0.75)'; ctx.fillRect(C.VIEW_W - 160, 80, 136, 50);
+      ctx.fillStyle = urgent && Math.floor(w.time * 4) % 2 ? '#ff5a3c' : COL.ink; ctx.font = '700 38px "Oswald", sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(Math.floor(tl / 60) + ':' + String(tl % 60).padStart(2, '0'), C.VIEW_W - 92, 120);
+    }
+    if (ar0.bus && ar0.bus.phase === 'warn' && Math.floor(w.time * 6) % 2) {
+      ctx.fillStyle = 'rgba(255,200,40,0.18)'; ctx.fillRect(0, ar0.bus.lane[0] - 30, C.VIEW_W, ar0.bus.lane[1] - ar0.bus.lane[0] + 30);
+      ctx.fillStyle = '#ffd36a'; ctx.font = '700 20px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText('◀ BUS DEI TURNBULL: SCENDI DALLA CORSIA', 20, ar0.bus.lane[0] - 36);
+    }
     for (var i = 0; i < w.players.length; i++) {
       var p = w.players[i], x = 24 + i * 330, y = 22, col = p.slot === 0 ? COL.p1 : COL.p2;
+      if (p.state === 'held' && !p.cpu) { ctx.fillStyle = '#ffd36a'; ctx.font = '700 20px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText('PREMI PIÙ VOLTE ' + ui.keyFor(p, 'light') + ' PER LIBERARTI', p.x - w.cam.x, p.y - 220); }
       ctx.fillStyle = 'rgba(8,10,16,0.72)'; ctx.fillRect(x - 8, y - 8, 312, 82);
       ctx.fillStyle = col; ctx.beginPath();
       if (p.slot === 0) { ctx.moveTo(x + 9, y); ctx.lineTo(x, y + 16); ctx.lineTo(x + 18, y + 16); } else ctx.rect(x + 1, y + 1, 16, 15);
@@ -429,8 +577,8 @@ W.Render = (function () {
     // obiettivo
     var ar = w.area;
     ctx.textAlign = 'center'; ctx.font = '600 18px "Oswald", sans-serif'; ctx.fillStyle = 'rgba(233,228,214,0.85)';
-    ctx.fillText(ar.objective, C.VIEW_W / 2, 108);
-    if (ar.banner.t < 3) {
+    ctx.fillText(ui.tutorialText(ar.objective || ''), C.VIEW_W / 2, 108);
+    if (ar.banner.t < 2.4) {
       ctx.globalAlpha = Math.min(1, (3 - ar.banner.t)); ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(0, 300, C.VIEW_W, 90);
       ctx.fillStyle = COL.ink; ctx.font = '700 46px "Oswald", sans-serif'; ctx.fillText(ar.banner.text.toUpperCase(), C.VIEW_W / 2, 362); ctx.globalAlpha = 1;
     }
@@ -453,11 +601,51 @@ W.Render = (function () {
     if (boss) {
       var bx = C.VIEW_W / 2 - 300;
       ctx.fillStyle = 'rgba(8,10,16,0.75)'; ctx.fillRect(bx - 10, 650, 620, 50);
-      ctx.fillStyle = COL.ink; ctx.font = '600 16px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText('VETERANO', bx, 668);
+      ctx.fillStyle = COL.ink; ctx.font = '600 16px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText(boss.def.label.toUpperCase(), bx, 668);
       bar(bx, 676, 600, 14, boss.hp / boss.maxhp, '#c0485e', '#2a1218');
     }
     ctx.textAlign = 'left'; ctx.font = '500 12px "Oswald", sans-serif'; ctx.fillStyle = 'rgba(233,228,214,0.45)';
-    ctx.fillText((useSprites ? 'NUCLEO 0.4 · TAVOLE DI PROVA · G GRAFICA · F3 DEBUG' : 'NUCLEO 0.4 · MANICHINI · G GRAFICA · F3 DEBUG'), 16, C.VIEW_H - 12);
+    ctx.fillText(ar0.def.id + ' · ' + ar0.def.name.toUpperCase() + ' · VERSIONE 0.5', 16, C.VIEW_H - 12);
+  }
+
+  function wrapText(text, maxW) {
+    var words = text.split(' '), lines = [], cur = '';
+    for (var i = 0; i < words.length; i++) { var t = cur ? cur + ' ' + words[i] : words[i]; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = words[i]; } else cur = t; }
+    if (cur) lines.push(cur); return lines;
+  }
+  function drawScene(w, sc, ui) {
+    if (sc.letterbox) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, 62); ctx.fillRect(0, C.VIEW_H - 62, C.VIEW_W, 62); }
+    if (sc.fade > 0) { ctx.fillStyle = 'rgba(0,0,0,' + Math.min(1, sc.fade) + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
+    if (sc.title) {
+      var a = Math.min(1, sc.title.t / 0.5, (sc.title.dur - sc.title.t) / 0.5);
+      ctx.globalAlpha = Math.max(0, a); ctx.textAlign = 'center';
+      ctx.fillStyle = '#d62828'; ctx.font = '700 72px "Oswald", sans-serif'; ctx.fillText(sc.title.text.toUpperCase(), C.VIEW_W / 2, 350);
+      if (sc.title.sub) { ctx.fillStyle = COL.ink; ctx.font = '500 26px "Oswald", sans-serif'; ctx.fillText(sc.title.sub, C.VIEW_W / 2, 398); }
+      ctx.globalAlpha = 1;
+    }
+    var box = function (who, text) {
+      ctx.font = '500 24px "Oswald", sans-serif';
+      var lines = wrapText(text, 980), h = 40 + lines.length * 32 + (who ? 26 : 0), y0 = C.VIEW_H - 74 - h;
+      ctx.fillStyle = 'rgba(6,6,10,0.88)'; ctx.fillRect(110, y0, C.VIEW_W - 220, h);
+      ctx.fillStyle = '#d62828'; ctx.fillRect(110, y0, 5, h);
+      var ty = y0 + 34;
+      if (who) { var n = sc.actor(who); ctx.fillStyle = COL.p1; ctx.font = '700 20px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText(((n && n.name) || (W.rosterById(who) || {}).name || W.NPC_NAMES[who] || who).toUpperCase(), 140, ty); ty += 30; }
+      ctx.fillStyle = COL.ink; ctx.font = '500 24px "Oswald", sans-serif'; ctx.textAlign = 'left';
+      lines.forEach(function (l, i) { ctx.fillText(l, 140, ty + i * 32); });
+      if (sc.lineT > 0.25 && Math.floor(w.time * 3) % 2) { ctx.textAlign = 'right'; ctx.fillStyle = COL.dim; ctx.font = '500 15px "Oswald", sans-serif'; ctx.fillText('INVIO ▶', C.VIEW_W - 130, y0 + h - 12); }
+    };
+    if (sc.line) box(sc.line.who, sc.line.text);
+    if (sc.choice) {
+      ctx.font = '500 24px "Oswald", sans-serif';
+      var y1 = C.VIEW_H - 80 - sc.choice.opts.length * 50;
+      ctx.fillStyle = 'rgba(6,6,10,0.9)'; ctx.fillRect(110, y1 - 50, C.VIEW_W - 220, sc.choice.opts.length * 50 + 60);
+      ctx.fillStyle = COL.p1; ctx.font = '700 20px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText('SWAN RISPONDE', 140, y1 - 16);
+      sc.choice.opts.forEach(function (o, i) {
+        var sel = i === sc.choice.sel; if (sel) { ctx.fillStyle = 'rgba(214,40,40,0.25)'; ctx.fillRect(130, y1 + i * 50 - 2, C.VIEW_W - 260, 44); }
+        ctx.fillStyle = sel ? '#fff' : COL.ink; ctx.font = '500 23px "Oswald", sans-serif'; ctx.fillText((sel ? '▶ ' : '   ') + o, 146, y1 + i * 50 + 28);
+      });
+    }
+    ctx.textAlign = 'right'; ctx.fillStyle = 'rgba(233,228,214,0.4)'; ctx.font = '500 13px "Oswald", sans-serif'; ctx.fillText('ESC: PAUSA E SALTA SCENA', C.VIEW_W - 20, 40);
   }
 
   function drawDebug(w) {
@@ -481,6 +669,7 @@ W.Render = (function () {
   // ------------------------------------------------------------------ frame
   function frame(w, dt, ui) {
     consume(w);
+    if (w.area && w.area.scene && w.area.def && (w.area.def.kind === 'scene' || w.area.def.kind === 'epilogue')) shake *= 0.9;
     ctx.save();
     if (shake > 0) { ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake); shake *= 0.85; if (shake < 0.5) shake = 0; }
     drawBg(w);
@@ -491,7 +680,33 @@ W.Render = (function () {
     w.props.forEach(function (p) { if (p.kind !== 'lamp') list.push({ y: p.y1, d: function () { drawProp(p, cx); } }); });
     w.items.forEach(function (it) { list.push({ y: it.y - 1, d: function () { drawItem(it, cx, w.time); } }); });
     w.enemies.forEach(function (e) { e.isEnemy = true; list.push({ y: e.y, d: function () { drawFigure(e, cx, w); } }); });
-    w.players.forEach(function (p) { list.push({ y: p.y + 0.5, d: function () { drawFigure(p, cx, w); drawSlotMarker(p, cx, w); } }); });
+    w.players.forEach(function (p) { if (p.hidden) return; list.push({ y: p.y + 0.5, d: function () { drawFigure(p, cx, w); if (!(w.area && w.area.scene)) drawSlotMarker(p, cx, w); } }); });
+    w.npcs.forEach(function (n) { if (n.hidden) return; list.push({ y: n.y, d: function () { drawPixel(n, cx, w); } }); });
+    w.eproj.forEach(function (pr) { list.push({ y: pr.y, d: function () {
+      if (pr.kind === 'bullet') { ctx.strokeStyle = '#fff3c4'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(pr.x - cx, pr.y - 60); ctx.lineTo(pr.x - cx - Math.sign(pr.vx) * 40, pr.y - 60); ctx.stroke(); }
+      else { ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(pr.tx - cx, pr.ty, 20, 6, 0, 0, Math.PI * 2); ctx.fill(); ctx.save(); ctx.translate(pr.x - cx, pr.y - pr.z - 20); ctx.rotate(pr.t * 14); ctx.fillStyle = '#3f8f4f'; ctx.fillRect(-4, -12, 8, 24); ctx.restore(); }
+    } }); });
+    if (w.area && w.area.bus && w.area.bus.phase === 'pass') { var bus = w.area.bus; list.push({ y: bus.lane[0], d: function () {
+      var bx = bus.x - cx, by = bus.lane[1];
+      ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.fillRect(bx, by - 6, 380, 14);
+      ctx.fillStyle = '#c9a227'; ctx.fillRect(bx, by - 150, 380, 140); ctx.fillStyle = '#2b2b33'; for (var wi = 0; wi < 6; wi++) ctx.fillRect(bx + 20 + wi * 58, by - 135, 44, 40);
+      ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(bx + 70, by - 8, 20, 0, Math.PI * 2); ctx.arc(bx + 310, by - 8, 20, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff6b0'; ctx.fillRect(bx + 368, by - 60, 12, 16);
+      ctx.fillStyle = '#7a1e1e'; ctx.font = '700 22px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText('TURNBULL A.C.', bx + 190, by - 70);
+    } }); }
+    if (w.area && !w.area.scene && w.area.interactions) w.area.interactions().forEach(function (it) {
+      list.push({ y: it.y + 1, d: function () {
+        var ix = it.x - cx, b = Math.sin(w.time * 5) * 4;
+        ctx.fillStyle = it.exit ? '#f2c14e' : '#7fd1ff'; ctx.beginPath(); ctx.moveTo(ix, it.y - 205 + b); ctx.lineTo(ix - 9, it.y - 220 + b); ctx.lineTo(ix + 9, it.y - 220 + b); ctx.fill();
+      } });
+    });
+    if (w.area && w.area.def.mark && !w.area.markReached) { var mk = w.area.def.mark; ctx.strokeStyle = 'rgba(242,193,78,' + (0.5 + 0.3 * Math.sin(w.time * 4)) + ')'; ctx.lineWidth = 4; ctx.beginPath(); ctx.ellipse(mk.x - cx, mk.y, 50, 14, 0, 0, Math.PI * 2); ctx.stroke(); }
+    if (w.area && w.area.def.panel) { var pn = w.area.def.panel, open = w.area.panelOpen; list.push({ y: pn.y - 40, d: function () {
+      var px2 = pn.x - cx; ctx.fillStyle = open ? 'rgba(160,200,255,0.5)' : '#5a4630'; ctx.fillRect(px2 - 50, pn.y - 230, 100, 150);
+      ctx.strokeStyle = '#2a2018'; ctx.lineWidth = 4; ctx.strokeRect(px2 - 50, pn.y - 230, 100, 150);
+      if (!open) for (var cr = 0; cr < w.area.panelHits; cr++) { ctx.beginPath(); ctx.moveTo(px2 - 30 + cr * 20, pn.y - 220); ctx.lineTo(px2 - 10 + cr * 20, pn.y - 100); ctx.stroke(); }
+      ctx.fillStyle = COL.ink; ctx.font = '600 16px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(open ? 'FINESTRA' : 'PANNELLO', px2, pn.y - 238);
+    } }); }
     w.projectiles.forEach(function (pr) {
       list.push({ y: pr.y, d: function () {
         var def = W.WEAPONS[pr.w.type];
@@ -512,5 +727,5 @@ W.Render = (function () {
     drawHud(w, ui);
   }
 
-  return { toggleSprites: function () { useSprites = !useSprites; }, init: init, frame: frame, opts: opts, COL: COL, ctx: function () { return ctx; }, reset: function () { fx = []; seenEvents = {}; } };
+  return { pxImage: function (id) { return PX[id]; }, toggleSprites: function () { useSprites = !useSprites; }, init: init, frame: frame, opts: opts, COL: COL, ctx: function () { return ctx; }, reset: function () { fx = []; seenEvents = {}; } };
 })();

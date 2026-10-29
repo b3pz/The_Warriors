@@ -1,40 +1,44 @@
 # Riprendere The Warriors · Night Run
 
-Checkpoint aggiornato il 29 ottobre 2026 (sera). **Decisione dell'autore: le tavole della Raccolta 04 sono la grafica giusta e approvata; lo stile del gioco è la loro pixel art.** Questo file serve a continuare da qualsiasi chat o assistente senza ricostruire le decisioni.
+Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serve a continuare da qualsiasi chat o assistente senza ricostruire le decisioni.
+
+## Decisioni dell'autore
+
+- Grafica approvata: la pixel art della Raccolta 04 (`assets/source/raccolta_04`). Il lotto **non è definitivo**: l'autore manderà circa 2.000 immagini da sostituire o aggiungere.
+- Titolo e menu usano la copertina fornita dall'autore (`assets/menu/cover.jpg`).
+- Sviluppare tutta la storia. Le transizioni video si fanno con gli sprite; l'autore potrà sostituirle con video fatti con altri strumenti, e se quelli fatti qui vengono bene restano.
 
 ## Stato verificato
 
 - Progettazione baseline 1.0: invariata (docs/, design/campaign.json).
-- **Nucleo giocabile 0.4** (fase B del piano + inizio fase C): `index.html` + `js/`. Aree C4-02 e C4-03 complete con ondate, veterano con barra élite e fasi, uscita con conferma 0,6 s, schermata risultato. C4-01 (fuga) e C4-04 (scena di Ajax) **non implementate**; nessun altro capitolo implementato.
-- Moduli: `config.js` (valori di COMBAT_AND_SYSTEMS/CAST), `input.js`, `sim.js` (attori, colpi con ID e insieme bersagli, prese, armi, coordinatore, CPU, KO/soccorso, snapshot), `areas.js` (dati C4-02/C4-03), `render.js`, `audio.js`, `main.js` (flusso, menu, save `warriors-story-v1`, opzioni `warriors-options-v1`), `atlas_data.js` (generato).
-- Codice scritto da zero seguendo i documenti; nessuna routine copiata da Primal Sentinels II.
+- **Campagna completa giocabile**: prologo e otto capitoli, tutte le 35 aree di LEVELS.md (`js/campaign.js`), dal ritrovo ai crediti. Tipi d'area: attraversamento con dialoghi, allenamento, arena a ondate, fuga a tempo con inseguitori, bus dei Turnbull come pericolo, trappola delle Lizzies (pannello e tiratrici), confronto finale ed epilogo.
+- 15 archetipi nemici di CAST.md con comportamenti distinti: carica dei Turnbull, presa dei Punks, tiro a corsie delle Lizzies con linea di mira, bottiglie dei Rogues, inseguitori, élite con fasi (veterano Fury, capo Punks).
+- Nove Warriors giocabili nelle finestre narrative; Cleon esce dopo C1, Fox dopo C3, Ajax dopo C4; selezione del Warrior a inizio capitolo e quando il personaggio esce. Mercy come PNG che segue, o secondo giocatore in C5-04 e C7-01.
+- 31 scene con le battute di NARRATIVE.md: sottotitoli, scelta di risposta in C3-01, saltabili da Esc. Ogni scena può essere sostituita da un video: `docs/SCENE_E_VIDEO.md`.
+- Menu: Continua, Nuova storia, Capitoli sbloccati, Come si gioca, Opzioni. Salvataggio `warriors-story-v1` (versione 2) all'inizio di ogni area, sblocchi `warriors-unlocks-v1`.
+- Moduli: `config.js`, `input.js`, `sim.js`, `story.js` (PNG, scene, video), `campaign.js` (aree e scene), `areas.js` (esecuzione aree), `render.js`, `audio.js`, `main.js`; dati generati `atlas_px.js`, `backgrounds_px.js`; elenco video `videos.js`.
 
-## Menu
+## Verifiche eseguite
 
-Titolo e menu usano la copertina fornita dall'autore (`assets/menu/cover.jpg`, 29 ottobre 2026).
+- `node tools/qa.js`: Q01, Q02, Q05, Q06, Q09, Q18 e coordinatore, tutti PASS.
+- `node tools/qa_campaign.js`: campagna intera dal prologo ai crediti con giocatori CPU, senza errori JS e senza blocchi (circa 15 minuti di gioco simulato; il bot va KO e riprova in alcune arene di C4).
+- Correzioni emerse dai test: compagno di allenamento troppo lontano, Mercy che non raggiungeva la porta di C5-04, segnaposto dei tasti negli obiettivi.
+- Non eseguito: playtest umano, bilanciamento, controller fisici, due tastiere, browser diversi da Chromium.
 
-## Grafica approvata
+## Grafica nel gioco
 
-**Raccolta 04** (`assets/source/raccolta_04`), approvata dall'autore il 29 ottobre 2026: quattro tavole pixel art in `Sorgenti/Nuove_tavole/` (Warriors con camminata, attacchi, calci, colpiti e pose a terra; Baseball Furies anche incappucciati; Orphans, Punks, Lizzies, Rogues, polizia, civili; armi, props, effetti; fondali parco, metro, vicolo, porto, Coney Island) e 15 ritagli di fondali. Hash in `assets/source/inventory.json`.
-
-Lavoro tecnico per l'integrazione: scontornare il fondo nero (atlante_03_02, personaggi_nemici_fondali_04 e 7 ritagli senza alpha), ritagliare i frame, pivot ai piedi, sequenze, separare props e livelli dei fondali, registrare l'associazione figura → personaggio.
-
-## Grafica provvisoria ancora nel gioco
-
-La prova C4 attuale usa ancora le tavole illustrate de893e (warrior_a_8pose), ff5f23 (fury_8pose) e il parco illustrato, ora **superate** dalla Raccolta 04. Vanno sostituite. Restano in `assets/source` come storico, insieme alla tavola pixel etichettata e all'Asset Pack 02 (`assets/source/pack_02`), che contiene atlanti precedenti dello stesso stile.
-
-## Verifiche eseguite (`node tools/qa.js`)
-
-PASS: Q01, Q02, Q05, Q06, Q09 (singolo, finestra soccorso, soccorso CPU), Q18, coordinatore max 1 attaccante in singolo. Percorso completo C4-02→C4-03→risultato con due CPU, senza errori JS, ripetuto su più semi. Correzioni emerse dai test: CPU incastrata dietro una panchina (aggiramento aggiunto, Q08), CPU che restava sola quando la finestra di soccorso dell'umano scadeva (ora retry).
-
-Non eseguito: playtest umano reale, controller fisici, due tastiere (rollover), Safari/Firefox, bilanciamento.
+- Personaggi da `personaggi_nemici_fondali_04.png` (26 set) e 12 fondali dai ritagli della Raccolta 04 e del pacchetto 02.
+- L'associazione figura → personaggio in `tools/pixel_frames.json` è **provvisoria** (dedotta da abiti e capelli). Da confermare con l'autore.
+- Ripieghi: vagone, bagno, appartamento e spiaggia usano fondali di altri ambienti; mancano pose di rialzata, presa, lancio e armi impugnate (la mazza dei Warriors è disegnata sopra lo sprite); Luther, Cyrus, Masai e il testimone usano figure generiche delle tavole.
+- Procedura e formato consigliato per le immagini in arrivo: `docs/GRAFICA_IN_ARRIVO.md`.
+- Le tavole illustrate della prima prova (de893e, ff5f23, parco illustrato) sono superate e restano in `assets/source` come storico; `js/atlas_data.js` non è più caricato.
 
 ## Prossime azioni
 
-1. Playtest umano della prova C4; regolare tempi e danni.
-2. Ritagliare le tavole approvate della Raccolta 04 e sostituire nella prova C4 Warrior, Furies, fondale, oggetti ed effetti; registrare figura → personaggio.
-3. C4-01 (fuga) e C4-04 (scena), poi P0 e C1 secondo LEVELS.md.
-4. Musica/voci reali al posto dei suoni sintetizzati.
+1. Ricevere il lotto grafico completo e integrarlo con `tools/build_pixel_sprites.py` e `tools/build_backgrounds.py`; confermare l'associazione figura → personaggio.
+2. Video delle transizioni dove l'autore li prepara: basta aggiungerli a `js/videos.js`.
+3. Playtest umano e bilanciamento; musica e voci reali al posto dei suoni sintetizzati.
+4. Estensioni dopo la campagna: Arcade fino a quattro, online, touch.
 
 ## Regole di continuità
 

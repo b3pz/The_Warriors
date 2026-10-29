@@ -7,7 +7,7 @@ html = (root / 'index.html').read_text(encoding='utf-8')
 block = re.search(r'<!--SCRIPTS-->(.*?)<!--/SCRIPTS-->', html, re.S)
 srcs = re.findall(r'src="([^"]+)"', block.group(1))
 import json, mimetypes
-atlas_files = re.findall(r'"file": "([^"]+)"', (root / 'js/atlas_data.js').read_text(encoding='utf-8'))
+atlas_files = re.findall(r'"file": "([^"]+)"', (root / 'js/atlas_px.js').read_text(encoding='utf-8') + (root / 'js/backgrounds_px.js').read_text(encoding='utf-8'))
 data = {}
 for f in sorted(set(atlas_files)) + ['menu/cover.jpg']:
     mime = mimetypes.guess_type(f)[0] or 'image/png'

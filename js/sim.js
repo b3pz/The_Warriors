@@ -21,6 +21,8 @@ var W = window.W;
     this.items = [];     // armi e recuperi a terra
     this.props = [];
     this.projectiles = [];
+    this.eproj = [];
+    this.npcs = [];
     this.events = [];
     this.attackers = 0; this.lastAttackEnd = -9;
     this.stats = { damageTaken: 0, maxCombo: 0, retries: 0, assisted: false, time: 0, kos: 0 };
@@ -90,6 +92,7 @@ var W = window.W;
     }
     if (hits > 0 && !att.contact) {
       att.contact = true;
+      if (a.isPlayer && this.stats.train) { var tk = 'hit_' + att.move; this.stats.train[tk] = (this.stats.train[tk] || 0) + 1; }
       // durabilità: una sola volta per swing con almeno un contatto valido (Q05)
       if (att.weaponSwing && a.weapon) { a.weapon.dur -= 1; if (a.weapon.dur <= 0) { this.emit('break', { x: a.x, y: a.y, w: a.weapon.type }); a.weapon = null; } }
     }
@@ -128,6 +131,7 @@ var W = window.W;
     return this.state === 'fury_sq' && this.att && this.att.phase === 'act';
   };
   Player.prototype.hittable = function () {
+    if (this.state === 'held' || this.char.noncombat) return false;
     if (this.state === 'grab' || this.state === 'grabhit') return this.protect <= 0;
     return Actor.prototype.hittable.call(this);
   };
@@ -174,6 +178,11 @@ var W = window.W;
         break;
       case 'getup': if (this.st > 0.4) { this.setState('idle'); this.protect = C.GETUP_PROTECT; } break;
       case 'ko': this.koT += dt; break;
+      case 'held':
+        if (d.take('light') || d.take('heavy') || d.take('dodge') || d.take('jump') || d.take('interact')) this.escape -= 0.26;
+        if (this.escape <= 0) this.release(false);
+        else if (!this.holder || this.holder.state !== 'holding') { this.holder = null; this.setState('idle'); }
+        break;
       case 'throwobj': if (this.st > 0.3) this.setState('idle'); break;
     }
     w.collide(this);
@@ -192,10 +201,12 @@ var W = window.W;
       }
     }
     this.reviving = false;
+    if (this.char.noncombat) { if (d.take('interact')) this.interact(ax, ay); d.take('light'); d.take('heavy'); d.take('fury'); d.take('throw'); d.take('dodge'); d.take('jump'); return; }
+    if (this.world.peace) { if (d.take('interact')) this.interact(ax, ay); d.take('light'); d.take('heavy'); d.take('fury'); d.take('throw'); return; }
     if (d.take('fury') && this.fury >= 100) { this.fury = 0; this.startAttack('fury'); w.emit('fury', { x: this.x, y: this.y }); return; }
-    if (d.take('jump')) { this.setState('jump'); this.jvx = ax * C.WALK.x * this.mods.spd * (running ? 1.3 : 1); this.jvy = ay * C.WALK.y * 0.6; this.z = 0; return; }
+    if (d.take('jump')) { if (w.stats.train) w.stats.train.jump = 1; this.setState('jump'); this.jvx = ax * C.WALK.x * this.mods.spd * (running ? 1.3 : 1); this.jvy = ay * C.WALK.y * 0.6; this.z = 0; return; }
     if (d.take('dodge') && w.time - this.dodgeStart >= C.DODGE.cd) {
-      this.dodgeStart = w.time; this.setState('dodge');
+      this.dodgeStart = w.time; this.setState('dodge'); if (w.stats.train) w.stats.train.dodge = 1;
       var dx = ax, dy = ay; if (!dx && !dy) dx = -this.face;
       var n = Math.hypot(dx, dy); this.dvx = dx / n * C.DODGE.speed; this.dvy = dy / n * C.DODGE.speed * 0.6; return;
     }
@@ -291,6 +302,7 @@ var W = window.W;
   // priorità: soccorso → uscita → arma ai piedi → oggetto → nemico vulnerabile
   Player.prototype.interact = function (ax, ay) {
     var w = this.world;
+    if (w.area && w.area.tryInteract && w.area.tryInteract(this)) return;
     var it = w.nearestItem(this);
     if (it) { if (w.pickup(this, it)) return; }
     var pr = w.nearestProp(this);
@@ -300,6 +312,7 @@ var W = window.W;
   };
 
   Player.prototype.startGrab = function (e) {
+    if (this.world.stats.train) this.world.stats.train.grab = 1;
     this.grabbed = e; this.grabHits = 0; this.grabSt = 0; e.setState('grabbed'); e.grabber = this;
     if (e.att) { e.dropToken(); e.att = null; }
     this.face = sign(e.x - this.x); e.face = -this.face;
@@ -342,6 +355,7 @@ var W = window.W;
 
   Player.prototype.takeHit = function (from, att) {
     var w = this.world, sp = att.spec;
+    if (sp.held) { var dh = sp.dmg * w.diff.edmg; this.hp = Math.max(0, this.hp - dh); w.stats.damageTaken += dh; w.emit('hit', { x: this.x, y: this.y, z: 70, target: 'player' }); if (this.hp <= 0) { this.release(true); this.knockOut(from); } return; }
     var dmg = sp.dmg * w.diff.edmg;
     this.hp = Math.max(0, this.hp - dmg); w.stats.damageTaken += dmg;
     w.emit('hit', { x: this.x, y: this.y, z: 70, target: 'player', heavy: !!sp.heavy, weapon: !!sp.weapon });
@@ -354,6 +368,13 @@ var W = window.W;
     this.face = sign(from.x - this.x);
     if (sp.kd || this.recentHits.length >= 2) { this.recentHits = []; this.setState('down'); this.vx = -this.face * 160; this.z = 0; }
     else { this.setState('hurt'); this.x -= this.face * 14; this.protect = C.HURT_PROTECT; }
+  };
+  // presa subita (Punk): ci si libera premendo ripetutamente un tasto d'azione
+  Player.prototype.hold = function (by) { if (this.grabbed) this.releaseGrab(); this.att = null; this.setState('held'); this.holder = by; this.escape = 1; };
+  Player.prototype.release = function (thrown) {
+    var h = this.holder; this.holder = null;
+    if (thrown) { this.setState('down'); this.vx = (h ? h.face : -this.face) * 180; } else { this.setState('hurt'); this.protect = 0.6; }
+    if (h) { h.holding = null; h.att = null; h.dropToken(); h.setState(thrown ? 'approach' : 'hurt'); }
   };
   Player.prototype.knockOut = function () {
     var w = this.world; this.setState('ko'); this.koT = 0; this.reviveProg = 0; this.z = 0; this.att = null;
@@ -480,7 +501,19 @@ var W = window.W;
       }
       case 'approach': this.stepApproach(dt); break;
       case 'atk': this.stepAttack(dt); break;
-      case 'hurt': if (this.st > 0.32) this.setState('approach'); break;
+      case 'holding': {
+        // presa del Punk: piccoli danni ritmati finché il giocatore non si libera (max 1,2 s)
+        var hp = this.holding;
+        if (!hp || hp.state !== 'held') { this.att = null; this.dropToken(); this.holding = null; this.setState('approach'); this.think = 0.6; break; }
+        hp.x = this.x + this.face * 44; hp.y = this.y; hp.face = -this.face;
+        this.tickT = (this.tickT || 0) + dt;
+        if (this.tickT > 0.4) { this.tickT = 0; hp.takeHit(this, { spec: { dmg: this.def.dmg, held: true } }); }
+        if (this.st > 1.2 && hp.state === 'held') hp.release(true);
+        break;
+      }
+      case 'hurt':
+        if (this.def.yield && this.st < 0.3) this.x -= this.face * 120 * dt; // cede spazio dopo il colpo
+        if (this.st > 0.32) this.setState('approach'); break;
       case 'grabbed': if (!this.grabber || this.grabber.state === 'ko') this.setState('hurt'); break;
       case 'thrown': {
         this.x += this.vx * dt; this.vz -= 900 * dt; this.z = Math.max(0, this.z + this.vz * dt);
@@ -509,7 +542,7 @@ var W = window.W;
   };
 
   Enemy.prototype.pickTarget = function () {
-    var ps = this.world.alivePlayers(), best = null, bd = 1e9;
+    var ps = this.world.alivePlayers().filter(function (p) { return !p.char.noncombat; }), best = null, bd = 1e9;
     for (var i = 0; i < ps.length; i++) { var d = Math.abs(ps[i].x - this.x) + Math.abs(ps[i].y - this.y); if (d < bd) { bd = d; best = ps[i]; } }
     return best;
   };
@@ -522,10 +555,15 @@ var W = window.W;
     var atk = this.atkSpec();
     // slot di fianco/fronte rispetto al bersaglio
     var side = this.slotSide || (this.slotSide = (this.x < t.x ? -1 : 1));
+    var bh = this.def.behavior;
+    if (bh === 'spar') { if (this.hp < this.maxhp * 0.5) this.hp = this.maxhp; this.face = sign(t.x - this.x); return; }
+    if (this.def.flank && !this.flankSet) { this.flankSet = true; this.slotSide = -t.face; side = this.slotSide; }
     var wantsToken = w.requestToken(this, false);
     var dist = wantsToken ? atk.reach * 0.75 : 190 + (this.uid % 3) * 25;
     var yOff = wantsToken ? 0 : ((this.uid % 3) - 1) * 40 + this.altSlot * 50;
+    if (this.ranged()) { dist = this.def.behavior === 'shoot' ? 420 + (this.uid % 3) * 60 : 300; yOff = ((this.uid % 3) - 1) * 60; }
     var tx = t.x + side * dist, ty = t.y + yOff;
+    if (bh === 'block' && this.guardX !== undefined && !wantsToken) { tx = this.guardX; ty = t.y; }
     var dx = tx - this.x, dy = ty - this.y;
     var sp = this.def.speed * (this.disarmed ? 1.05 : 1);
     var mvx = Math.abs(dx) > 8 ? sign(dx) * 170 * sp : 0, mvy = Math.abs(dy) > 6 ? sign(dy) * 115 * sp : 0;
@@ -546,7 +584,8 @@ var W = window.W;
     if (!this.onScreen()) this.offT += dt; else this.offT = 0;
     if (this.offT > C.STUCK_RESPAWN) { this.respawnSafe(); }
     // attacco solo se in portata, visibile e con il permesso del coordinatore
-    if (wantsToken && Math.abs(t.x - this.x) <= atk.reach * 0.9 && Math.abs(t.y - this.y) <= atk.ty * 0.8 && this.onScreen() && t.state !== 'ko') {
+    var inRange = this.ranged() ? Math.abs(t.x - this.x) <= atk.reach && Math.abs(t.x - this.x) > 120 : (Math.abs(t.x - this.x) <= atk.reach * 0.9 && Math.abs(t.y - this.y) <= atk.ty * 0.8);
+    if (wantsToken && inRange && this.onScreen() && t.state !== 'ko' && t.state !== 'held') {
       if (w.requestToken(this, true)) this.startAttack();
     }
   };
@@ -558,17 +597,27 @@ var W = window.W;
     if (w.debug) console.log('[ai] respawn', this.uid);
   };
 
+  var PUNCH = { prep: .38, act: .09, rec: .42, reach: 80, ty: 24 };
   Enemy.prototype.atkSpec = function () {
-    if (this.disarmed || !this.weapon) return W.ENEMIES.fury_flanker.atk;
+    if (this.def.weapon && !this.weapon) return PUNCH; // disarmato: a mani nude
     return this.def.atk;
   };
+  Enemy.prototype.ranged = function () { return (this.def.behavior === 'shoot' || this.def.behavior === 'throw'); };
   Enemy.prototype.startAttack = function () {
     var a = this.atkSpec(), w = this.world;
     var heavy = !!this.weapon && (this.def.elite ? (this.phase() >= 1 && w.rng() < 0.5) : w.rng() < 0.3);
-    var sp = { prep: a.prep * (heavy ? 1.2 : 1), act: a.act, rec: a.rec, reach: a.reach, ty: a.ty, dmg: heavy ? this.def.heavyDmg : (this.weapon ? this.def.dmg + 2 : (this.def.weapon ? 8 : this.def.dmg)), heavy: heavy, kd: heavy, weapon: !!this.weapon, push: heavy ? 160 : 40 };
+    var bh = this.def.behavior;
+    var sp = { prep: a.prep * (heavy ? 1.2 : 1), act: a.act, rec: a.rec, reach: a.reach, ty: a.ty, dmg: heavy ? this.def.heavyDmg : (this.weapon ? this.def.dmg + 2 : (this.def.weapon ? 8 : this.def.dmg)), heavy: heavy || !!a.kd, kd: heavy || !!a.kd, weapon: !!this.weapon, push: heavy ? 160 : 40, lunge: a.lunge || 0 };
+    if (bh === 'grab') { sp.kd = false; sp.heavy = false; sp.grab = true; }
+    if (this.def.pushCombo && this.phase() >= 1 && !heavy) { sp.dmg = 4; sp.push = 220; sp.kd = false; this.combo2 = true; }
     this.att = new Attack(this, heavy ? 'eheavy' : 'elight', sp);
     // fase combinazione dell'élite: secondo colpo legato
-    this.combo2 = this.def.elite && this.phase() >= 1 && !heavy;
+    if (!this.def.pushCombo) this.combo2 = this.def.elite && this.phase() >= 1 && !heavy;
+    if (this.ranged()) {
+      // mira: la corsia (profondità) del bersaglio viene fissata all'inizio e mostrata per tutta la preparazione
+      this.aim = { x: this.target.x, y: this.target.y };
+      w.emit('aim', { x: this.x, y: this.y, bottle: bh === 'throw' });
+    }
     this.face = sign(this.target.x - this.x);
     this.setState('atk');
   };
@@ -576,7 +625,17 @@ var W = window.W;
     var att = this.att, sp = att.spec, w = this.world;
     att.t += dt;
     if (att.phase === 'prep' && att.t >= sp.prep) { att.phase = 'act'; att.t -= sp.prep; w.emit('swing', { x: this.x, y: this.y, heavy: sp.heavy, weapon: sp.weapon, enemy: true }); }
-    if (att.phase === 'act') { w.resolveAttack(this, att, w.players); if (att.t >= sp.act) { att.phase = 'rec'; att.t -= sp.act; } }
+    if (att.phase === 'act') {
+      var bh = this.def.behavior;
+      if (sp.lunge) { this.x += this.face * sp.lunge * dt / sp.act; }
+      if (bh === 'shoot' || bh === 'throw') {
+        if (!att.fired) { att.fired = true; w.fireEnemy(this, bh); }
+      } else {
+        var hitN = w.resolveAttack(this, att, w.players);
+        if (hitN && sp.grab) { for (var g = 0; g < w.players.length; g++) { var pl = w.players[g]; if (att.hit[pl.uid] && pl.hp > 0 && pl.state !== 'ko') { pl.hold(this); this.holding = pl; this.setState('holding'); return; } } }
+      }
+      if (att.t >= sp.act) { att.phase = 'rec'; att.t -= sp.act; }
+    }
     if (att.phase === 'rec' && att.t >= sp.rec) {
       if (this.combo2) { this.combo2 = false; var s2 = Object.assign({}, sp, { prep: 0.32, dmg: sp.dmg }); this.att = new Attack(this, 'elight2', s2); return; }
       this.att = null; this.dropToken(); this.setState('approach');
@@ -589,6 +648,7 @@ var W = window.W;
   Enemy.prototype.takeHit = function (from, att, fromGrab, body) {
     var w = this.world, sp = att.spec;
     var wasRecover = this.state === 'atk' && this.att && this.att.phase === 'rec';
+    if (this.holding) { var hd = this.holding; this.holding = null; hd.holder = null; hd.setState('hurt'); hd.protect = 0.6; }
     var dmg = sp.dmg;
     // l'élite non viene presa e resta disarmabile solo nei recuperi
     this.damage(dmg, from, false);
@@ -668,6 +728,7 @@ var W = window.W;
     if (it.kind === 'weapon') {
       if (p.weapon) this.dropWeapon(p.weapon, p.x - p.face * 20, p.y);
       p.weapon = it.w; this.items.splice(this.items.indexOf(it), 1);
+      if (this.stats.train) this.stats.train.pickup = 1;
       this.emit('pickup', { x: p.x, y: p.y, what: W.WEAPONS[it.w.type].name }); return true;
     }
     var def = W.PICKUPS[it.kind];
@@ -706,7 +767,8 @@ var W = window.W;
   World.prototype.promptFor = function (p) {
     var b = p.buddy && p.buddy();
     if (b && b.state === 'ko' && Math.abs(b.x - p.x) <= C.REVIVE.x && Math.abs(b.y - p.y) <= C.REVIVE.y) return 'Tieni premuto: soccorri ' + b.char.name;
-    if (this.exitOpen && p.x > this.area.width - 260) return 'Uscita';
+    if (this.area && this.area.nearInteraction) { var ai = this.area.nearInteraction(p); if (ai) return ai.label; }
+    if (this.exitOpen && p.x > this.area.width - 260 && !(this.area.def && this.area.def.exitInteract)) return 'Uscita';
     var it = this.nearestItem(p);
     if (it) return it.kind === 'weapon' ? 'Raccogli ' + W.WEAPONS[it.w.type].name : (p.hp >= p.maxhp ? W.PICKUPS[it.kind].name + ' (salute piena)' : W.PICKUPS[it.kind].name + ' +' + W.PICKUPS[it.kind].hp);
     var pr = this.nearestProp(p); if (pr) return pr.label;
@@ -739,13 +801,57 @@ var W = window.W;
     }
   };
 
+  // ------------------------------------------------------------------ proiettili nemici (Lizzies, bottiglie Rogues)
+  World.prototype.fireEnemy = function (e, kind) {
+    var aim = e.aim || { x: e.target.x, y: e.target.y };
+    if (kind === 'shoot') {
+      this.eproj.push({ kind: 'bullet', x: e.x + e.face * 30, y: aim.y, z: 90, vx: e.face * 950, owner: e, dmg: e.def.dmg, t: 0 });
+      this.emit('shot', { x: e.x, y: e.y });
+    } else {
+      this.eproj.push({ kind: 'bottle', x0: e.x, y0: e.y, x: e.x, y: e.y, tx: aim.x, ty: aim.y, z: 100, t: 0, dur: 0.75, owner: e, dmg: e.def.dmg });
+      this.emit('toss', { x: e.x, y: e.y });
+    }
+  };
+  World.prototype.stepEnemyProjectiles = function (dt) {
+    for (var i = this.eproj.length - 1; i >= 0; i--) {
+      var p = this.eproj[i], done = false; p.t += dt;
+      if (p.kind === 'bullet') {
+        p.x += p.vx * dt;
+        // i ripari solidi fermano il colpo
+        for (var k = 0; k < this.props.length && !done; k++) { var pr = this.props[k]; if (pr.cover && p.x > pr.x0 && p.x < pr.x1 && p.y >= pr.y0 - 20 && p.y <= pr.y1 + 20) { done = true; this.emit('ricochet', { x: p.x, y: p.y }); } }
+        for (var j = 0; j < this.players.length && !done; j++) {
+          var pl = this.players[j];
+          if (pl.hittable() && Math.abs(pl.x - p.x) < 28 && Math.abs(pl.y - p.y) < 22 && (pl.z || 0) < 60) { pl.takeHit(p.owner, { spec: { dmg: p.dmg, kd: true } }); done = true; }
+        }
+        if (p.t > 1.6) done = true;
+      } else {
+        var k2 = Math.min(1, p.t / p.dur);
+        p.x = p.x0 + (p.tx - p.x0) * k2; p.y = p.y0 + (p.ty - p.y0) * k2; p.z = 100 * (1 - k2) + 160 * k2 * (1 - k2);
+        if (k2 >= 1) {
+          done = true; this.emit('break', { x: p.x, y: p.y, w: 'bottle' });
+          for (var q = 0; q < this.players.length; q++) { var pq = this.players[q]; if (pq.hittable() && Math.abs(pq.x - p.x) < 46 && Math.abs(pq.y - p.y) < 28) pq.takeHit(p.owner, { spec: { dmg: p.dmg, kd: false } }); }
+        }
+      }
+      if (done) this.eproj.splice(i, 1);
+    }
+  };
+
   // ------------------------------------------------------------------ passo
   World.prototype.step = function (dt) {
-    this.time += dt; this.stats.time += dt;
+    this.time += dt;
     var i;
+    // durante una scena si muovono solo PNG e camera di scena: nessun danno, nessun timer di gioco
+    if (this.area && (this.area.scene || (this.area.sceneQueue && this.area.sceneQueue.length))) {
+      for (i = 0; i < this.npcs.length; i++) this.npcs[i].update(dt);
+      this.area.step(this, dt);
+      return;
+    }
+    this.stats.time += dt;
     for (i = 0; i < this.players.length; i++) this.players[i].update(dt);
     for (i = 0; i < this.enemies.length; i++) this.enemies[i].update(dt);
     this.stepProjectiles(dt);
+    this.stepEnemyProjectiles(dt);
+    for (i = 0; i < this.npcs.length; i++) this.npcs[i].update(dt);
     for (i = 0; i < this.items.length; i++) this.items[i].t += dt;
     this.enemies = this.enemies.filter(function (e) { return !(e.state === 'dead' && e.fade > 1.2); });
     this.stepKO(dt);
@@ -795,6 +901,6 @@ var W = window.W;
       p.out = false; p.koT = 0; p.reviveProg = 0; p.att = null; p.grabbed = null; p.setState('idle'); p.protect = 1; p.z = 0;
     }
     this.score = s.score.slice();
-    this.enemies = []; this.items = []; this.projectiles = []; this.attackers = 0; this.failed = false;
+    this.enemies = []; this.items = []; this.projectiles = []; this.eproj = []; this.attackers = 0; this.failed = false;
   };
 })();

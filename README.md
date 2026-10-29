@@ -8,13 +8,9 @@ Con GitHub Pages attivo (Settings → Pages → Deploy from a branch → `main`,
 
 ## Stato
 
-**Progettazione completa (baseline 1.0) + nucleo giocabile 0.4: prova del capitolo C4, aree C4-02 e C4-03.**
+**Versione 0.5: tutta la storia è giocabile**, dal prologo a Coney Island ai crediti: 35 aree, 15 tipi di nemici, 31 scene con dialoghi. Grafica pixel art della Raccolta 04 approvata (lotto completo in arrivo, vedi `docs/GRAFICA_IN_ARRIVO.md`); audio sintetizzato provvisorio. Ogni scena può diventare un video: `docs/SCENE_E_VIDEO.md`.
 
-Aprire `index.html` in un browser (o `dist/night-run.html`, un unico file con le immagini incluse). Nucleo: input tastiera/controller, simulazione 60 Hz, catene di colpi, pesante, corsa, salto e calcio volante, schivata, prese e lanci, mazza con durabilità e disarmo, furia, recuperi, cestino apribile, nemici con coordinatore degli attacchi, compagno CPU, due giocatori locali, KO/soccorso/retry con assistenza, salvataggio di checkpoint, pausa, opzioni. Grafica approvata: pixel art della Raccolta 04 (`assets/source/raccolta_04`), da integrare; la prova usa ancora le prime tavole illustrate, provvisorie. Audio sintetizzato segnaposto. Dettagli in [CONTINUE_HERE.md](CONTINUE_HERE.md).
-
-Verifiche automatiche: `node tools/qa.js` (richiede Playwright). Rigenerare sprite e atlas: `python3 tools/slice_sprites.py`; file singolo: `python3 tools/build_single.py`.
-
-Prologo + otto capitoli, 35 aree, nove Warriors caratterizzati, gang e personaggi narrativi, regole del combattimento, eventi, checkpoint, dialoghi e inventario dei materiali.
+Aprire `index.html` in un browser (o `dist/night-run.html`, un unico file con le immagini incluse). Verifiche: `node tools/qa.js` e `node tools/qa_campaign.js` (Playwright). Stato dettagliato in [CONTINUE_HERE.md](CONTINUE_HERE.md).
 
 Partire da [GAME_DESIGN.md](docs/GAME_DESIGN.md), indice della baseline 1.0.
 

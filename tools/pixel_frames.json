@@ -1,0 +1,35 @@
+{
+ "_note": "Associazione figura → personaggio e pose. Numeri = figure di personaggi_nemici_fondali_04.png in tools/pixel_extract.py (vedi assets/sprites_px/_numerata.png). Un elemento {\"n\":42,\"cut\":[50],\"part\":1} divide la figura 42 al pixel 50 e prende la seconda parte. L'associazione ai nove Warriors e ai personaggi è PROVVISORIA: correggerla qui e rigenerare.",
+ "sheet": "assets/source/raccolta_04/Sorgenti/Nuove_tavole/personaggi_nemici_fondali_04.png",
+ "y_max": 600,
+ "scale": 2.2,
+ "sets": {
+  "swan":      {"idle": [0], "walk": [1, 2, 3, 4], "punch": [7], "kick": [6], "heavy": [9], "jump": [13], "hurt": [14], "down": [15]},
+  "snow":      {"idle": [16], "walk": [17, 18, 19, 20], "punch": [24], "kick": [22], "heavy": [23], "jump": [27], "hurt": [28], "down": [29]},
+  "ajax":      {"idle": [30], "walk": [31, 32, 33, 34], "punch": [36], "kick": [41], "heavy": [38], "jump": [37], "hurt": [{"n": 42, "cut": [50], "part": 0}], "down": [{"n": 42, "cut": [50], "part": 1}]},
+  "cochise":   {"idle": [43], "walk": [44, 45, 46, 47], "punch": [49], "kick": [{"n": 54, "cut": [54], "part": 0}], "heavy": [50], "jump": [48], "hurt": [{"n": 54, "cut": [54], "part": 1}], "down": [55]},
+  "vermin":    {"idle": [56], "walk": [{"n": 57, "cut": [45], "part": 0}, {"n": 57, "cut": [45], "part": 1}, 58, 59], "punch": [61], "kick": [64], "heavy": [62], "jump": [65], "hurt": [66], "down": [68]},
+  "rembrandt": {"idle": [69], "walk": [70, 71, 72, 73], "punch": [76], "kick": [75], "heavy": [77], "jump": [74], "hurt": [{"n": 79, "cut": [49], "part": 1}], "down": [80]},
+  "cowboy":    {"idle": [81], "walk": [82, 83, 84], "punch": [85], "kick": [89], "heavy": [90], "jump": [86], "hurt": [{"n": 91, "cut": [50], "part": 0}], "down": [{"n": 91, "cut": [50], "part": 1}]},
+  "fox":       {"idle": [92], "walk": [93, 94, 95, 96], "punch": [{"n": 101, "cut": [56], "part": 1}], "kick": [98], "heavy": [{"n": 101, "cut": [56], "part": 0}], "jump": [100], "hurt": [100], "down": [102]},
+  "cleon":     {"idle": [103], "walk": [104, {"n": 105, "cut": [45], "part": 0}, {"n": 105, "cut": [45], "part": 1}, 106], "punch": [108], "kick": [107], "heavy": [110], "jump": [109], "hurt": [111], "down": [113]},
+
+  "fury":        {"idle": [{"n": 114, "cut": [66, 110, 151, 204], "part": 0}], "walk": [{"n": 114, "cut": [66, 110, 151, 204], "part": 1}, {"n": 114, "cut": [66, 110, 151, 204], "part": 2}, {"n": 114, "cut": [66, 110, 151, 204], "part": 3}], "windup": [115], "swing": [{"n": 114, "cut": [66, 110, 151, 204], "part": 4}], "down": [117]},
+  "fury_nobat":  {"idle": [{"n": 116, "cut": [54, 99, 146, 191, 244, 299], "part": 1}], "walk": [{"n": 116, "cut": [54, 99, 146, 191, 244, 299], "part": 1}], "down": [117]},
+  "fury_hood":   {"idle": [{"n": 116, "cut": [54, 99, 146, 191, 244, 299], "part": 2}], "walk": [132, 133, 134], "swing": [{"n": 116, "cut": [54, 99, 146, 191, 244, 299], "part": 6}], "down": [{"n": 116, "cut": [54, 99, 146, 191, 244, 299], "part": 3}]},
+  "fury_hood_nobat": {"idle": [{"n": 116, "cut": [54, 99, 146, 191, 244, 299], "part": 0}], "walk": [{"n": 116, "cut": [54, 99, 146, 191, 244, 299], "part": 0}], "down": [{"n": 116, "cut": [54, 99, 146, 191, 244, 299], "part": 3}]},
+  "punk":        {"idle": [119], "walk": [120, 121, 122], "punch": [118]},
+  "turnbull":    {"idle": [124], "walk": [126, {"n": 127, "cut": [42], "part": 0}], "punch": [124]},
+  "turnbull_b":  {"idle": [125], "walk": [125, {"n": 127, "cut": [42], "part": 1}], "punch": [125]},
+  "police":      {"idle": [129], "walk": [129, 130], "punch": [{"n": 128, "cut": [35, 71], "part": 0}]},
+  "orphan":      {"idle": [135], "walk": [135, 139], "punch": [136]},
+  "rogue":       {"idle": [137], "walk": [137, 138], "punch": [137]},
+  "lizzie":      {"idle": [142], "walk": [142, 144], "punch": [145]},
+  "lizzie_b":    {"idle": [146], "walk": [146, 147], "punch": [146]},
+  "mercy":       {"idle": [141], "walk": [141, 143]},
+  "luther":      {"idle": [138], "walk": [138]},
+  "cyrus":       {"idle": [140], "walk": [140]},
+  "masai":       {"idle": [139], "walk": [139]},
+  "civilian":    {"idle": [143], "walk": [143]}
+ }
+}

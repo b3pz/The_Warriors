@@ -22,7 +22,7 @@ require('fs').mkdirSync(out, { recursive: true });
     function mk(opts) {
       const dev = new W.Input.Device('solo', null);
       const w = new W.World(Object.assign({ players: [{ id: 'swan', device: dev }], difficulty: 'normale', seed: 3 }, opts || {}));
-      w.area = new W.AreaRun(W.AREAS['C4-02'], w); w.area.step = function () {};
+      w.area = new W.AreaRun(W.CAMPAIGN[W.areaIndex('C4-02')], w, {}); w.area.sceneQueue = []; w.area.step = function () {};
       return w;
     }
     function run(w, s) { for (let i = 0; i < s * 60; i++) { W.Input.setTime(w.time); w.step(1 / 60); } }
@@ -68,50 +68,8 @@ require('fs').mkdirSync(out, { recursive: true });
   let fails = 0;
   for (const [name, ok, info] of results) { console.log((ok ? 'PASS ' : 'FAIL ') + name + '  (' + info + ')'); if (!ok) fails++; }
 
-  // partita guidata: menu → selezione → combattimento
-  const key = async (k, ms = 60) => { await page.keyboard.down(k); await page.waitForTimeout(ms); await page.keyboard.up(k); await page.waitForTimeout(80); };
-  await key('Enter'); await key('Enter'); // titolo → menu → prova C4
-  await key('ArrowDown'); await key('Enter'); // modalità: + CPU
-  await key('Enter'); // difficoltà normale
-  await key('Enter'); await key('Enter'); // swan, compagno
-  await page.waitForTimeout(500);
-  await page.screenshot({ path: path.join(out, '02-inizio-area.png') });
-  await page.keyboard.down('KeyD'); await page.waitForTimeout(2600); await page.keyboard.up('KeyD');
-  for (let i = 0; i < 40; i++) { await key('KeyJ', 40); if (i % 6 === 5) await key('KeyK', 40); if (i === 12) await page.screenshot({ path: path.join(out, '03-rissa.png') }); }
-  await page.evaluate(() => { W.Game.game.world.debug = true; });
-  await page.waitForTimeout(300);
-  await page.screenshot({ path: path.join(out, '04-debug.png') });
-  const st = await page.evaluate(() => { const g = W.Game.game, w = g.world; return { state: g.state, area: w.area.id, enemies: w.enemies.map(e => e.type + ':' + e.state + ':' + Math.ceil(e.hp)), players: w.players.map(p => p.char.id + ':' + p.state + ':' + Math.ceil(p.hp)), score: w.score }; });
-  console.log('stato partita', JSON.stringify(st));
-
-  // simulazione lunga: CPU contro CPU per completare le due aree senza input umano
-  const full = await page.evaluate(() => {
-    const W = window.W, g = W.Game.game;
-    g.world.debug = false;
-    const w = g.world, p0 = w.players[0];
-    // il giocatore 1 diventa CPU per il test di percorso completo
-    p0.cpu = true; p0.qaHuman = true;
-    const origThink = p0.thinkCpu;
-    p0.thinkCpu = function (dt) {
-      origThink.call(this, dt);
-      const c = this.cpuCtl, ws = this.world;
-      if (!ws.enemies.some(e => e.alive()) && c.ax === 0) { c.ax = 1; }
-      if (ws.exitOpen && c.ax === 0) c.ax = 1;
-      W.steerAround(this, c);
-    };
-    p0.buddy = function () { return w.players[1]; };
-    let steps = 0, areas = [], fails = 0;
-    while (steps < 60 * 600 && g.state !== 'result') {
-      if (g.state === 'fail') { fails++; W.Game.onKey('Enter'); }
-      if (g.state === 'pause') W.Game.onKey('Escape');
-      W.Game.tick(1 / 60); steps++;
-      if (g.world && g.world.area && areas[areas.length - 1] !== g.world.area.id) areas.push(g.world.area.id);
-    }
-    const ww = g.world; return { state: g.state, areas, fails, seconds: (steps / 60).toFixed(0), result: g.result, dbg: ww.area.id + ' wave' + ww.area.waveIdx + ' fight' + ww.area.fighting + ' exit' + ww.exitOpen + ' cam' + ww.cam.x.toFixed(0) + ' | ' + ww.players.map(q => q.char.id + ':' + q.state + ':' + Math.ceil(q.hp) + '@' + q.x.toFixed(0) + ',' + q.y.toFixed(0) + ' out' + q.out).join(' ') + ' | ' + ww.enemies.map(e => e.type + ':' + e.state + '@' + e.x.toFixed(0) + ',' + e.y.toFixed(0)).join(' ') };
-  });
-  console.log('percorso completo', JSON.stringify(full));
-  await page.screenshot({ path: path.join(out, '05-risultato.png') });
-  if (full.state !== 'result') fails++;
+  // il percorso completo della campagna è in tools/qa_campaign.js
+  const fails2 = 0;
   console.log(errors.length ? 'ERRORI:\n' + errors.join('\n') : 'nessun errore JS');
   await browser.close();
   process.exit(fails || errors.length ? 1 : 0);

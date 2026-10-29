@@ -40,11 +40,19 @@ W.Audio = (function () {
     ko: function () { tone('sawtooth', 200, 60, 0.6, 0.3); },
     fury: function () { tone('sawtooth', 120, 480, 0.3, 0.3); },
     wave: function () { tone('square', 98, 92, 0.5, 0.15); },
-    clear: function () { tone('triangle', 392, 392, 0.15, 0.2); setTimeout(function () { ac && tone('triangle', 523, 523, 0.3, 0.2); }, 140); },
     open: function () { burst(0.12, 0.3, 'bandpass', 400, 3); },
     revive: function () { tone('triangle', 330, 660, 0.3, 0.2); },
     toss: function () { burst(0.15, 0.2, 'bandpass', 1000, 2); },
-    throw: function () { tone('sine', 120, 40, 0.3, 0.6); }
+    throw: function () { tone('sine', 120, 40, 0.3, 0.6); },
+    shot: function () { burst(0.25, 0.9, 'lowpass', 2500); tone('square', 90, 30, 0.2, 0.5); },
+    siren: function () { tone('sawtooth', 700, 980, 0.6, 0.12); setTimeout(function () { ac && tone('sawtooth', 980, 700, 0.6, 0.12); }, 600); },
+    horn: function () { tone('square', 233, 233, 0.5, 0.18); tone('square', 277, 277, 0.5, 0.12); },
+    train: function () { burst(1.6, 0.35, 'lowpass', 300); tone('sine', 60, 50, 1.6, 0.25); },
+    fire: function () { burst(0.9, 0.4, 'bandpass', 600, 0.7); },
+    bottle: function () { burst(0.12, 0.4, 'highpass', 3000); tone('triangle', 1200, 900, 0.12, 0.2); },
+    ricochet: function () { tone('sine', 2200, 600, 0.18, 0.15); },
+    aim: function (e) { if (!e.bottle) tone('square', 880, 880, 0.08, 0.06); },
+    clear: function () { tone('triangle', 392, 392, 0.15, 0.2); setTimeout(function () { ac && tone('triangle', 523, 523, 0.3, 0.2); }, 140); }
   };
   function startAmbience() {
     if (!ensure() || ambNode) return;
