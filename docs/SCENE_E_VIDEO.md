@@ -47,8 +47,11 @@ Il video si salta con Esc → Salta scena, come le altre scene.
 | `dlg_c6_bathroom` | dlg_c6_bathroom |
 | `dlg_p0_introductions` |  |
 | `dlg_p0_welcome` | dlg_p0_welcome |
+| `radio_96th` | radio della DJ |
+| `radio_apology` | radio della DJ |
+| `radio_hunt` | radio della DJ |
 
-Gli intermezzi della DJ hanno ID `radio_C1`…`radio_C8`; anche questi si possono sostituire con un video.
+Gli intermezzi della DJ a inizio capitolo hanno ID `radio_C1`…`radio_C8`; anche questi si possono sostituire con un video.
 
 ## Aree e fondali usati
 
@@ -69,7 +72,7 @@ Gli intermezzi della DJ hanno ID `radio_C1`…`radio_C8`; anche questi si posson
 | C3-01 | scene | Strada degli Orphans | `street` |
 | C3-02 | arena | Cortile | `harbor` |
 | C3-03 | escape | Strada laterale | `street_b` |
-| C3-04 | escape | Accessi della metro | `metro_b` |
+| C3-04 | escape | Stazione della 96ª Strada | `metro_b` |
 | C4-01 | escape | Ingresso del parco | `park_b` |
 | C4-02 | arena | Sentiero con panchine | `park` |
 | C4-03 | arena | Radura | `park_b` |
