@@ -1,0 +1,58 @@
+{
+ "swan": [
+  "hurt"
+ ],
+ "snow": [
+  "punch",
+  "jump",
+  "hurt"
+ ],
+ "ajax": [
+  "punch",
+  "hurt",
+  "down"
+ ],
+ "cochise": [
+  "kick",
+  "hurt",
+  "down"
+ ],
+ "rembrandt": [
+  "kick",
+  "hurt",
+  "down"
+ ],
+ "cowboy": [
+  "heavy",
+  "jump",
+  "hurt",
+  "down"
+ ],
+ "fox": [
+  "punch",
+  "kick",
+  "down"
+ ],
+ "cleon": [
+  "walk",
+  "walk",
+  "heavy",
+  "jump",
+  "down"
+ ],
+ "fury": [
+  "down"
+ ],
+ "fury_nobat": [
+  "down"
+ ],
+ "fury_hood": [
+  "down"
+ ],
+ "fury_hood_nobat": [
+  "down"
+ ],
+ "mercy": [
+  "walk"
+ ]
+}
