@@ -772,7 +772,27 @@ W.Render = (function () {
     [-L / 2 + 70, L / 2 - 80].forEach(function (wx) { ctx.fillStyle = '#0a0a0c'; ctx.beginPath(); ctx.arc(wx, -22, 24, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#8d9097'; ctx.beginPath(); ctx.arc(wx, -22, 10, 0, Math.PI * 2); ctx.fill(); });
     ctx.restore();
   }
+  // apertura come nel film: la Wonder Wheel di notte, raggi al neon rosa a tratti, luci bianche che scintillano, l'insegna al centro
+  function drawWheelShot(wh) {
+    var t = wh.t, a = Math.min(1, t / 0.8, (wh.dur - t) / 0.6), cx = 600, cy = 430, R = 360;
+    var bg = ctx.createLinearGradient(0, 0, 0, C.VIEW_H); bg.addColorStop(0, '#000'); bg.addColorStop(0.65, '#12060f'); bg.addColorStop(1, '#3a1638');
+    ctx.save(); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = bg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); ctx.globalAlpha = Math.max(0, a);
+    var rot = t * 0.05, N = 10;
+    ctx.strokeStyle = '#d68ad8'; ctx.lineWidth = 5; ctx.setLineDash([26, 14]);
+    for (var i = 0; i < N; i++) { var an = rot + i / N * Math.PI * 2, bn = rot + (i + 1) / N * Math.PI * 2;
+      ctx.beginPath(); ctx.moveTo(cx + Math.cos(an) * 60, cy + Math.sin(an) * 60); ctx.lineTo(cx + Math.cos(an) * R, cy + Math.sin(an) * R); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx + Math.cos(an) * R, cy + Math.sin(an) * R); ctx.lineTo(cx + Math.cos(bn) * R, cy + Math.sin(bn) * R); ctx.stroke(); }
+    ctx.setLineDash([]);
+    for (var k = 0; k < 90; k++) { var ak = rot + k / 90 * Math.PI * 2, rr = R - 18 - (k % 3) * 40, on = Math.sin(t * 5 + k * 1.7) > -0.2;
+      if (!on) continue; ctx.fillStyle = 'rgba(255,250,240,' + (0.6 + 0.4 * Math.sin(t * 3 + k)) + ')'; ctx.beginPath(); ctx.arc(cx + Math.cos(ak) * rr, cy + Math.sin(ak) * rr, 4, 0, Math.PI * 2); ctx.fill(); }
+    ctx.fillStyle = '#e27ae0'; ctx.font = '700 40px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText('WONDER', cx, cy - 4); ctx.fillText('WHEEL', cx, cy + 40);
+    // sagome della gente in basso
+    ctx.fillStyle = '#2a1028'; for (var p2 = 0; p2 < 22; p2++) { var px = p2 * 62 + (p2 % 3) * 9, ph = 60 + (p2 % 4) * 14; ctx.fillRect(px, C.VIEW_H - ph, 34, ph); ctx.beginPath(); ctx.arc(px + 17, C.VIEW_H - ph - 12, 15, 0, Math.PI * 2); ctx.fill(); }
+    if (wh.cap && t > 1) { ctx.fillStyle = 'rgba(255,230,250,0.85)'; ctx.font = '500 24px "Oswald", sans-serif'; ctx.fillText(wh.cap, C.VIEW_W / 2, 90); }
+    ctx.restore();
+  }
   function drawScene(w, sc, ui) {
+    if (sc.wheel) { drawWheelShot(sc.wheel); return; }
     var art = sc.def.cine && ARTSC[sc.def.cine];
     if (art && art.ok) {
       // illustrazione della scena: copre il palco con gli sprite, lenta zoomata da fumetto

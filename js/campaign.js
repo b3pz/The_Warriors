@@ -22,6 +22,7 @@ var W = window.W;
 
   // P0
   S.dlg_p0_welcome = { cine: 'dlg_p0_welcome', letterbox: false, steps: [
+    ['wheel', 4.5, 'Coney Island, Brooklyn. Quella notte.'],
     ['say', 'cleon', 'Cyrus vuole nove per banda, disarmati. Siamo nove. Nessuno resta a casa.'],
     ['say', 'swan', 'Facciamo il viaggio, ascoltiamo e torniamo a casa.'],
     ['say', 'ajax', 'Disarmati nel Bronx. Bella idea.'] ] };

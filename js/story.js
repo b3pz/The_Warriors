@@ -124,6 +124,7 @@ var W = window.W;
     if (this.done) return;
     if (this.fade !== this.fadeTo) { var d = this.fadeTo - this.fade; this.fade += sign(d) * Math.min(Math.abs(d), dt * this.fadeSpeed); }
     if (this.title) { this.title.t += dt; if (this.title.t > this.title.dur) this.title = null; }
+    if (this.wheel) { this.wheel.t += dt; if (this.wheel.t > this.wheel.dur) this.wheel = null; }
     if (this.cam) { var cm = this.cam; cm.t += dt; var kk = Math.min(1, cm.t / cm.dur); this.world.cam.x = cm.x0 + (cm.x1 - cm.x0) * (kk * kk * (3 - 2 * kk)); if (kk >= 1) this.cam = null; }
     if (this.video) {
       if (!this.video.started) { this.video.started = true; this.video.el = W.VideoPlayer.play(this.video.src); }
@@ -168,6 +169,7 @@ var W = window.W;
       case 'clearNpcs': w.npcs = w.npcs.filter(function (q) { return q.keep; }); break;
       case 'cam': this.cam = { x0: w.cam.x, x1: c[1], dur: c[2] || 1, t: 0 }; break;
       case 'fade': this.fadeTo = c[1] === 'out' ? 1 : 0; this.fadeSpeed = 1 / (c[2] || 0.6); if (c[3] !== false) this.wait = c[2] || 0.6; break;
+      case 'wheel': this.wheel = { t: 0, dur: c[1] || 4, cap: c[2] || '' }; this.wait = c[1] || 4; break;   // inquadratura d'apertura: la Wonder Wheel di notte
       case 'title': this.title = { text: c[1], sub: c[2] || '', dur: c[3] || 2.5, t: 0 }; this.wait = c[3] || 2.5; break;
       case 'flash': w.emit('flashfx', {}); break;
       case 'shake': w.emit('shakefx', { amt: c[1] || 8 }); break;

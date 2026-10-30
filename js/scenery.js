@@ -322,6 +322,9 @@ W.Scenery = (function () {
     g.strokeStyle = light === 'dusk' ? '#3a2a3a' : '#1a1e2a'; g.lineWidth = 2; g.beginPath(); g.arc(wx, ft - 130, 80, 0, Math.PI * 2); g.stroke();
     for (var s = 0; s < 16; s++) { var a = s / 16 * Math.PI * 2; g.beginPath(); g.moveTo(wx, ft - 130); g.lineTo(wx + Math.cos(a) * 80, ft - 130 + Math.sin(a) * 80); g.stroke(); if (light === 'dusk') { g.fillStyle = s % 2 ? '#e8b25a' : '#e04a5a'; g.fillRect(wx + Math.cos(a) * 80 - 2, ft - 130 + Math.sin(a) * 80 - 2, 4, 4); } }
     g.beginPath(); g.moveTo(wx - 50, ft - 30); g.lineTo(wx, ft - 130); g.lineTo(wx + 50, ft - 30); g.stroke();
+    // la Wonder Wheel ha la sua insegna al centro
+    g.fillStyle = light === 'dawn' ? '#3a2a40' : '#140c18'; g.fillRect(wx - 22, ft - 140, 44, 20);
+    g.fillStyle = light === 'dawn' ? '#c88aa8' : '#e27ae0'; g.font = 'bold 7px monospace'; g.textAlign = 'center'; g.fillText('WONDER', wx, ft - 132); g.fillText('WHEEL', wx, ft - 124); g.textAlign = 'left';
     g.beginPath(); var cx0 = Math.floor(w * 0.55); g.moveTo(cx0, ft - 30); for (var k = 0; k < 12; k++) g.lineTo(cx0 + k * 30, ft - 40 - Math.abs(Math.sin(k * 0.9)) * 110); g.stroke();
     for (var lt = 0; lt < 12; lt++) { g.beginPath(); g.moveTo(cx0 + lt * 30, ft - 30); g.lineTo(cx0 + lt * 30, ft - 40 - Math.abs(Math.sin(lt * 0.9)) * 110); g.stroke(); }
     for (var x = 0; x < w; x += 110) {
