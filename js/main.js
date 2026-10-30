@@ -215,6 +215,9 @@ var W = window.W;
     { ch: 'C2', name: 'Gun Hill Road', x: 0.5, y: 0.2 }, { ch: 'C3', name: '96ª Strada', x: 0.38, y: 0.36 },
     { ch: 'C4', name: 'Riverside Park', x: 0.26, y: 0.46 }, { ch: 'C5', name: 'Divisi', x: 0.36, y: 0.56 },
     { ch: 'C6', name: 'Union Square', x: 0.44, y: 0.66 }, { ch: 'C7', name: 'Ultimo treno', x: 0.5, y: 0.78 }, { ch: 'C8', name: 'Coney Island', x: 0.42, y: 0.9 }];
+  // emblema dei Warriors fornito dall'autore (assets/menu/emblema.png)
+  var emblem = new Image(); emblem.ok = false; emblem.onload = function () { emblem.ok = true; };
+  emblem.src = (W.ASSET_DATA && W.ASSET_DATA['menu/emblema.png']) || 'assets/menu/emblema.png';
   // mappa delle bande fornita dall'autore (assets/menu/mappa_bande.jpg, 1080×1097): coordinate delle tappe sull'immagine
   var gangMap = new Image(); gangMap.ok = false; gangMap.onload = function () { gangMap.ok = true; };
   gangMap.src = (W.ASSET_DATA && W.ASSET_DATA['menu/mappa_bande.jpg']) || 'assets/menu/mappa_bande.jpg';
@@ -802,6 +805,7 @@ var W = window.W;
     if (game.state === 'title') drawTitle();
     else if (game.state === 'menu') {
       backdrop(1);
+      if (emblem.ok) { var eh = 118, ew = emblem.width * eh / emblem.height; ctx.drawImage(emblem, 82, 30, ew, eh); }
       txt('NIGHT RUN', 80, 200, 56, '#ffffff', 'left', 700);
       ctx.fillStyle = '#d62828'; ctx.fillRect(82, 226, 72, 5);
       drawList(menuItems(), 82, 320, 'left');

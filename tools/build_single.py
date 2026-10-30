@@ -10,7 +10,7 @@ import json, mimetypes
 atlas_files = re.findall(r'"file": "([^"]+)"', ''.join((root / 'js' / n).read_text(encoding='utf-8') for n in ['atlas_px.js', 'backgrounds_px.js', 'atlas_ai.js', 'art_ai.js']))
 atlas_files += re.findall(r'"((?:scenes|portraits|objects)_ai/[^"]+)"', (root / 'js/art_ai.js').read_text(encoding='utf-8'))
 data = {}
-for f in sorted(set(atlas_files)) + ['menu/cover.jpg', 'menu/mappa_bande.jpg']:
+for f in sorted(set(atlas_files)) + ['menu/cover.jpg', 'menu/mappa_bande.jpg', 'menu/emblema.png']:
     mime = mimetypes.guess_type(f)[0] or 'image/png'
     data[f] = 'data:' + mime + ';base64,' + base64.b64encode((root / 'assets' / f).read_bytes()).decode()
 assets_js = '<script>window.W = window.W || {}; W.ASSET_DATA = ' + json.dumps(data) + ';</script>\n'

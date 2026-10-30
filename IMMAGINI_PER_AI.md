@@ -50,7 +50,7 @@ Aprilo prima di disegnare: è il modo per restare fedeli al film.
 
 ## Personaggi
 
-Tutti i Warriors portano un gilet di pelle marrone-rossiccio senza maniche, con il bordo scuro. Sulla schiena del gilet c'è l'emblema della banda: un teschio con il copricapo di piume e le ali (vedi il logo dei Warriors in `assets/menu/mappa_bande.jpg`, in basso); si vede solo nelle pose di spalle e nei fogli modello.
+Tutti i Warriors portano un gilet di pelle marrone-rossiccio senza maniche, con il bordo scuro. Sulla schiena del gilet c'è l'emblema della banda (`assets/incoming/riferimenti/emblema_warriors.png`): la scritta WARRIORS ad arco in rosso, sotto due grandi ali di piume rosse e bianche rivolte in alto, due corna gialle e un teschio bianco con i capelli a fiamma; si vede nelle pose di spalle e nei fogli modello, semplificato nei pochi pixel disponibili.
 
 | Set | Descrizione |
 |---|---|
