@@ -25,7 +25,7 @@ Stile, per TUTTE le immagini che ti chiederò:
 - atmosfera da film di strada anni '70: sporco, graffiti, vapore dai tombini, metropolitana;
 - vista laterale, come in un picchiaduro a scorrimento;
 - niente testo, niente scritte leggibili, niente loghi, niente cornici, niente firme;
-- i personaggi sono originali e descritti da me: non devono somigliare ad attori reali.
+- i personaggi devono essere fedeli ai personaggi del film (costume, capelli, corporatura, colori): ti darò le immagini di riferimento e le descrizioni.
 
 Regole tecniche:
 - personaggi e oggetti: UN solo soggetto per immagine, figura intera dalla testa ai piedi, su SFONDO PIATTO MAGENTA PURO #FF00FF (nessuna ombra sul fondo, nessun pavimento disegnato), rivolto verso DESTRA, centrato, i piedi appoggiati a circa il 90% dell'altezza dell'immagine, formato quadrato 1024×1024;

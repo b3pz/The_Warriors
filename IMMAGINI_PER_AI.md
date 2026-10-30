@@ -17,7 +17,7 @@ The Warriors · Night Run è un beat 'em up a scorrimento laterale nel browser. 
 Divieti:
 - NON modificare, spostare o cancellare nessun file fuori da `assets/incoming/` (codice, documenti, grafica già in uso). Un altro assistente (Claude) integra le immagini nel gioco e lavora su quei file.
 - Niente testo, scritte, loghi, marchi, firme o filigrane nelle immagini.
-- I personaggi non devono somigliare ad attori reali: seguono solo le descrizioni qui sotto.
+- I personaggi devono essere **fedeli ai personaggi del film**: costume, capelli, corporatura, colori, oggetti e atteggiamento. La fedeltà si ottiene partendo dalle **immagini di riferimento** e dal **modello approvato** di ciascuno (fase 0), non inventando.
 
 ## Stile (vale per tutte le immagini)
 
@@ -29,7 +29,7 @@ Divieti:
 ## Regole tecniche
 
 - **Personaggi, oggetti, ritratti**: un solo soggetto per immagine, figura intera dalla testa ai piedi, **sfondo piatto magenta puro #FF00FF** (niente ombre a terra, niente pavimento), rivolto verso **destra**, centrato, piedi a circa il 90% dell'altezza, **1024×1024**. Un uomo adulto alto circa l'80% dell'immagine, sempre la stessa scala.
-- **Coerenza**: lo stesso personaggio deve essere identico in tutte le pose (capelli, vestiti, colori, corporatura). Prima di generare una posa nuova, riguarda le immagini già caricate di quel personaggio e usale come riferimento.
+- **Coerenza**: lo stesso personaggio deve essere identico in tutte le pose (capelli, vestiti, colori, corporatura). Ogni posa si genera allegando il modello approvato `assets/incoming/modelli/<set>.png` e chiedendo «lo stesso personaggio di questa immagine, nella posa: …». Se una posa non somiglia al modello, rigenerala prima di caricarla.
 - **Fondali e scene**: orizzontali **1536×1024**, nessun personaggio nei fondali. Nei fondali il pavimento calpestabile (marciapiede, banchina, sentiero) occupa la fascia bassa, dal 65% dell'altezza fino al fondo, piatto e libero. I pezzi `_b`, `_c` di un fondale continuano verso destra il pezzo precedente: stessa luce, stessa linea del pavimento.
 - Formato PNG. Nome del file esattamente come nell'elenco.
 
@@ -81,6 +81,17 @@ Tutti i Warriors portano un gilet di pelle marrone senza maniche, senza scritte.
 | `cyrus` | carismatico capo della banda più grande della città, in piedi su un palco, braccia aperte mentre parla |
 | `riff` | membro di una banda disciplinata in tenuta da arti marziali |
 | `masai` | luogotenente dei Riffs, tenuta da arti marziali scura, sguardo duro |
+
+## Fase 0: il modello di ogni personaggio (prima di tutto il resto)
+
+Nessuna posa si genera prima che l'autore abbia approvato il modello del personaggio.
+
+1. Per ogni set dell'elenco di lavoro, crea **un foglio modello**: lo stesso personaggio tre volte affiancato (di fronte, di profilo verso destra, di spalle), figura intera, sfondo magenta #FF00FF, 1536×1024, pixel art 16-bit. Salvalo in `assets/incoming/modelli/<set>.png`.
+2. Se esiste `assets/incoming/riferimenti/<set>.png`, aprilo e **usalo come base**: sono le figure già approvate dall'autore nel gioco. Il modello deve essere lo stesso personaggio (stessi capelli, vestiti, colori, proporzioni), solo più pulito e completo. Se l'autore ha caricato altro materiale di riferimento in `assets/incoming/riferimenti/` (es. `<set>_1.jpg`), usalo insieme alla descrizione.
+3. Dopo i modelli fermati e scrivi all'utente: «Modelli pronti per: …». L'autore li guarda e scrive i set approvati in `assets/incoming/modelli/APPROVATI.md`.
+4. Genera le pose di un set **solo se compare in `APPROVATI.md`**, e allega sempre il suo modello come riferimento a ogni immagine di quel set. Se un modello viene rifiutato o modificato dall'autore, rifallo prima di andare avanti.
+
+Lo stesso vale per i fondali: prima un'immagine `assets/incoming/modelli/fondale_<area>.png` per tre aree campione (C2-01 strada, C4-02 parco, C6-01 banchina), poi gli altri solo quando `APPROVATI.md` contiene la riga `fondali`.
 
 ## Elenco di lavoro (in ordine di priorità)
 
