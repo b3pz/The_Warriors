@@ -63,6 +63,13 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 - Immagini fatte da un'AI: `IMMAGINI_PER_AI.md` (392 file in ordine di priorità, solo in `assets/incoming/`).
 - `W.QA_NODRAW = true` salta il disegno nei test (il canvas senza GPU costa ~40 ms a fotogramma).
 
+## Integrazione automatica delle immagini (30 ottobre)
+
+- Un'AI legge `IMMAGINI_PER_AI.md`, genera le immagini e le carica in `assets/incoming/` con i nomi dell'elenco.
+- A ogni caricamento l'azione `.github/workflows/integra_immagini.yml` lancia `tools/import_incoming.py`: toglie il magenta, ritaglia, scala ogni set sulla sua `idle_1`, allinea i piedi, affianca i pezzi dei fondali (pavimento al 65% → riga del pavimento dell'area) e scrive `assets/sprites_ai/`, `assets/backgrounds_ai/`, `assets/scenes_ai/`, `js/atlas_ai.js`, `js/art_ai.js` e `assets/incoming/RAPPORTO.md`.
+- Il gioco usa da solo i set nuovi (sostituiscono interi quelli della Raccolta 04), i fondali nuovi area per area e le illustrazioni delle scene come sfondo della scena. Pose nuove già riconosciute: run, getup, grab, throw, dodge, jumpkick, bat_walk, bat_swing, pipe_swing, revive, pinned_spray, skate, charge, gun_aim, gun_shoot, bottle_throw, baton_swing, swing, windup.
+- Niente approvazioni obbligatorie: l'autore scrive in `assets/incoming/modelli/RIFARE.md` ciò che va rifatto.
+
 ## Grafica nel gioco
 
 - Personaggi da `personaggi_nemici_fondali_04.png` (26 set) e 12 fondali dai ritagli della Raccolta 04 e del pacchetto 02.

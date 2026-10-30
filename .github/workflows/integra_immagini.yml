@@ -1,0 +1,32 @@
+# Integra nel gioco le immagini caricate in assets/incoming/ (da un'AI o a mano), senza interventi.
+name: Integra le immagini
+on:
+  push:
+    branches: [main]
+    paths: ['assets/incoming/**', 'tools/import_incoming.py']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: integra-immagini
+  cancel-in-progress: false
+jobs:
+  integra:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pillow
+      - name: Ritaglia, scala e collega le immagini al gioco
+        run: python tools/import_incoming.py
+      - name: Salva nel repository
+        run: |
+          git config user.name "integrazione-immagini"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/sprites_ai assets/backgrounds_ai assets/scenes_ai assets/portraits_ai assets/objects_ai js/atlas_ai.js js/art_ai.js assets/incoming/RAPPORTO.md || true
+          if git diff --cached --quiet; then echo "niente di nuovo"; exit 0; fi
+          git commit -m "Immagini integrate nel gioco (automatico)"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && exit 0; sleep 5; done
+          exit 1

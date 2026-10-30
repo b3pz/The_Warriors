@@ -18,10 +18,15 @@ W.Render = (function () {
     im.src = (W.ASSET_DATA && W.ASSET_DATA[file]) || ('assets/' + file);
     return im;
   }
+  var BGAI = {}, ARTSC = {};
   function init(canvas) {
     cv = canvas; ctx = cv.getContext('2d');
     var P = W.ATLAS_PX;
+    // immagini nuove integrate da tools/import_incoming.py: sostituiscono il set intero
+    if (P && W.ATLAS_AI) for (var ai in W.ATLAS_AI.sets) P.sets[ai] = W.ATLAS_AI.sets[ai];
     if (P) for (var ps in P.sets) PX[ps] = loadImg(P.sets[ps].file);
+    if (W.BG_AI) for (var ba in W.BG_AI) BGAI[ba] = loadImg(W.BG_AI[ba].file);
+    if (W.ART_AI && W.ART_AI.scene) for (var sa in W.ART_AI.scene) ARTSC[sa] = loadImg(W.ART_AI.scene[sa]);
     if (W.BG_PX) for (var bk in W.BG_PX) BGPX[bk] = loadImg(W.BG_PX[bk].file);
     var A = W.USE_ILLUSTRATED ? W.ATLAS : null; if (!A) return;
     for (var sid in A.sets) for (var fn in A.sets[sid].frames) { var f = A.sets[sid].frames[fn]; if (!IMG[f.file]) IMG[f.file] = loadImg(f.file); }
@@ -33,6 +38,7 @@ W.Render = (function () {
   function playerFrame(a) {
     var st = a.state, m = a.curMove, ph = a.att ? a.att.phase : null;
     var walkF = Math.floor(a.anim * (st === 'run' ? 9 : 5.5)) % 2 ? 'walk2' : 'walk1';
+    if (a.reviving) return { p: 'revive', alt: 'idle' };
     switch (st) {
       case 'walk': case 'run': return { f: walkF };
       case 'jump': return { f: 'jump' };
@@ -82,27 +88,37 @@ W.Render = (function () {
       var moving = Math.abs(a.x - (a.lx === undefined ? a.x : a.lx)) + Math.abs(a.y - (a.ly === undefined ? a.y : a.ly)) > 0.3;
       a.lx = a.x; a.ly = a.y;
       switch (st) {
-        case 'enter': case 'approach': return moving ? { p: 'walk', i: wf } : { p: 'idle' };
-        case 'atk': if (ph === 'prep') return { p: a.att.spec.heavy ? 'windup' : 'idle', lean: -0.06 }; return { p: 'swing', alt: 'punch', lean: 0.08 };
+        case 'enter': case 'approach': return moving ? (a.def.set === 'punk' ? { p: 'skate', alt: 'walk', i: wf } : a.def.behavior === 'charge' && a.charging ? { p: 'charge', alt: 'walk', i: wf } : { p: 'walk', i: wf }) : { p: 'idle' };
+        case 'atk':
+          var bh = a.def.behavior, ws = bh === 'shoot' ? 'gun_shoot' : bh === 'throw' ? 'bottle_throw' : a.def.weapon === 'baton' ? 'baton_swing' : bh === 'charge' ? 'charge' : 'swing';
+          if (ph === 'prep') return { p: bh === 'shoot' ? 'gun_aim' : a.att.spec.heavy ? 'windup' : 'idle', alt: 'idle', lean: -0.06 };
+          return { p: ws, alt: ws === 'swing' ? 'punch' : 'punch', lean: 0.08 };
         case 'holding': return { p: 'punch' };
-        case 'hurt': case 'grabbed': case 'getup': return { p: 'hurt' };
+        case 'getup': return { p: 'getup', alt: 'hurt' };
+        case 'hurt': case 'grabbed': return { p: 'hurt' };
         case 'down': case 'dead': return { p: 'down' };
         case 'thrown': return { p: 'down', spin: true };
       }
       return { p: 'idle' };
     }
     switch (st) {
-      case 'walk': case 'run': return { p: 'walk', i: wf };
-      case 'jump': return a.att ? { p: 'kick', lean: -0.2 } : { p: 'jump' };
-      case 'dodge': return { p: 'walk', i: 1, ghost: true };
-      case 'hurt': case 'getup': case 'held': return { p: 'hurt' };
+      case 'walk': case 'run':
+        if (a.weapon && (a.weapon.type === 'bat' || a.weapon.type === 'pipe')) return { p: 'bat_walk', alt: 'walk', i: wf, armed: true };
+        return st === 'run' ? { p: 'run', alt: 'walk', i: wf } : { p: 'walk', i: wf };
+      case 'jump': return a.att ? { p: 'jumpkick', alt: 'kick', lean: -0.2 } : { p: 'jump' };
+      case 'dodge': return { p: 'dodge', alt: 'walk', i: 1, ghost: true };
+      case 'getup': return { p: 'getup', alt: 'hurt' };
+      case 'held': return a.char.id === 'rembrandt' ? { p: 'pinned_spray', alt: 'hurt' } : { p: 'hurt' };
+      case 'hurt': return { p: 'hurt' };
       case 'down': case 'ko': return { p: 'down' };
-      case 'grab': case 'throwobj': return { p: 'punch' };
+      case 'grab': return { p: 'grab', alt: 'punch' };
+      case 'throwobj': return { p: 'throw', alt: 'punch' };
       case 'atk': case 'fury_sq': case 'grabhit':
         if (ph === 'prep') return { p: 'idle', lean: -0.05 };
         if (m === 'l3' || m === 'run') return { p: 'kick' };
         if (m === 'heavy') return { p: 'heavy', alt: 'kick' };
         if (m === 'fury') return { p: Math.floor(a.anim * 10) % 2 ? 'punch' : 'kick' };
+        if (a.att && a.att.weaponSwing && a.weapon) return { p: a.weapon.type === 'pipe' ? 'pipe_swing' : 'bat_swing', alt: 'punch', batArc: true, armed: true };
         return { p: 'punch', batArc: !!(a.att && a.att.weaponSwing) };
     }
     return { p: 'idle' };
@@ -112,13 +128,14 @@ W.Render = (function () {
     var sid = setOf(a), set = P.sets[sid], im = PX[sid];
     if (!set || !im || !im.ok) return false;
     var sel = pickPose(a), list = set.frames[sel.p] || (sel.alt && set.frames[sel.alt]), fake = null;
+    if (sel.armed && set.frames[sel.p]) sel.batArc = false;   // posa con l'arma vera: niente mazza disegnata sopra
     if (!list) {
       // ripieghi: colpito = idle inclinato, a terra = idle sdraiato, attacco = idle in avanti
       if (sel.p === 'down') fake = 'lie'; else if (sel.p === 'hurt') fake = 'tilt'; else if (sel.p === 'walk') fake = null;
       list = set.frames.walk && sel.p === 'walk' ? set.frames.walk : set.frames.idle;
     }
     var fr = list[(sel.i || 0) % list.length];
-    var k = P.scale * ((a.isEnemy && a.def.scale) || 1);
+    var k = (set.scale || P.scale) * ((a.isEnemy && a.def.scale) || 1);
     var x = Math.round(a.x - cx), y = a.y, z = a.z || 0;
     var lying = sel.p === 'down' || fake === 'lie';
     ctx.fillStyle = 'rgba(0,0,0,' + (0.42 - Math.min(0.25, z / 400)) + ')';
@@ -139,7 +156,7 @@ W.Render = (function () {
     ctx.drawImage(im, fr[0], fr[1], fr[2], fr[3], -fr[4], -fr[5], fr[2], fr[3]);
     ctx.filter = 'none';
     // arma impugnata disegnata sopra (le tavole non hanno pose armate per i Warriors)
-    var wpn = a.weapon && !(a.isEnemy && a.def.weapon === 'bat') ? W.WEAPONS[a.weapon.type] : null;
+    var wpn = a.weapon && !(a.isEnemy && a.def.weapon === 'bat') && !(sel.armed && set.frames[sel.p]) ? W.WEAPONS[a.weapon.type] : null;
     if (wpn && !lying) {
       var L = wpn.len / k, hx = fr[2] * (sel.p === 'punch' ? 0.92 : 0.7) - fr[4], hy = -fr[5] + fr[3] * (sel.p === 'punch' ? 0.28 : 0.45);
       ctx.save(); ctx.translate(hx, hy); ctx.rotate(sel.batArc ? -Math.PI / 2 : -0.45);
@@ -251,7 +268,11 @@ W.Render = (function () {
   function drawBg(w) {
     var a = w.area.def, cx = w.cam.x;
     var bd = W.BG_PX && W.BG_PX[a.bg], bi = BGPX[a.bg];
-    if (W.Scenery && opts.scenery !== false) {
+    var ba = W.BG_AI && W.BG_AI[a.id], bai = BGAI[a.id];
+    if (ba && bai && bai.ok) {
+      // fondale integrato dalle immagini nuove: già in scala e allineato al pavimento dell'area
+      ctx.drawImage(bai, Math.max(0, Math.min(ba.w - C.VIEW_W, cx)), 0, C.VIEW_W, C.VIEW_H, 0, 0, C.VIEW_W, C.VIEW_H);
+    } else if (W.Scenery && opts.scenery !== false) {
       W.Scenery.draw(ctx, w.area, cx);
     } else if (bd && bi && bi.ok && useSprites) {
       // parte alta scalata fino a y=430, pavimento allungato fino al fondo; tasselli alternati a specchio
@@ -678,6 +699,14 @@ W.Render = (function () {
     ctx.fillStyle = 'rgba(233,228,214,0.55)'; ctx.font = '500 16px "Oswald", sans-serif'; ctx.fillText('LA RADIO DELLA NOTTE', 640, 600);
   }
   function drawScene(w, sc, ui) {
+    var art = sc.def.cine && ARTSC[sc.def.cine];
+    if (art && art.ok) {
+      // illustrazione della scena: copre il palco con gli sprite, lenta zoomata da fumetto
+      if (!sc.__artT) sc.__artT = performance.now();
+      var at = (performance.now() - sc.__artT) / 1000, zs = 1.04 + Math.min(0.08, at * 0.006), aw = C.VIEW_W * zs, ah = aw * art.height / art.width;
+      if (ah < C.VIEW_H * zs) { ah = C.VIEW_H * zs; aw = ah * art.width / art.height; }
+      ctx.save(); ctx.globalAlpha = Math.min(1, at / 0.6); ctx.drawImage(art, (C.VIEW_W - aw) / 2, (C.VIEW_H - ah) / 2, aw, ah); ctx.restore();
+    }
     if (sc.def.radio && !sc.title) drawRadio(w, sc);
     if (sc.def.radio && sc.title) { ctx.fillStyle = '#050307'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
     if (sc.letterbox) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, 62); ctx.fillRect(0, C.VIEW_H - 62, C.VIEW_W, 62); }

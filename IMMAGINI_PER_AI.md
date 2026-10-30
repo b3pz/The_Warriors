@@ -15,10 +15,10 @@ The Warriors · Night Run è un beat 'em up a scorrimento laterale nel browser. 
 2. **Salta** ogni file che esiste già nel repository (controlla il percorso prima di generare).
 3. Genera ogni immagine rispettando lo **stile** e le **regole tecniche**.
 4. Carica i file nel percorso indicato, **solo dentro `assets/incoming/`**. Raggruppa 5–20 immagini per commit, messaggio `Immagini in arrivo: <cosa>`. Se non puoi scrivere su `main`, apri una pull request con lo stesso titolo.
-5. Quando finisci la sessione, scrivi all'utente l'elenco dei file caricati e il punto dell'elenco a cui sei arrivato.
+5. Quando finisci la sessione, scrivi all'utente l'elenco dei file caricati e il punto dell'elenco a cui sei arrivato. Alla sessione successiva riparti dal primo file che non esiste ancora, senza chiedere.
 
 Divieti:
-- NON modificare, spostare o cancellare nessun file fuori da `assets/incoming/` (codice, documenti, grafica già in uso). Un altro assistente (Claude) integra le immagini nel gioco e lavora su quei file.
+- NON modificare, spostare o cancellare nessun file fuori da `assets/incoming/` (codice, documenti, grafica già in uso): l'integrazione nel gioco è automatica.
 - Niente testo, scritte, loghi, marchi, firme o filigrane nelle immagini.
 - I personaggi devono essere **fedeli ai personaggi del film**: costume, capelli, corporatura, colori, oggetti e atteggiamento. La fedeltà si ottiene partendo dalle **immagini di riferimento** e dal **modello approvato** di ciascuno (fase 0), non inventando.
 
@@ -97,16 +97,19 @@ Tutti i Warriors portano un gilet di pelle marrone senza maniche, senza scritte.
 | `riff` | membro di una banda disciplinata in tenuta da arti marziali |
 | `masai` | luogotenente dei Riffs, tenuta da arti marziali scura, sguardo duro |
 
-## Fase 0: il modello di ogni personaggio (prima di tutto il resto)
+## Fase 0: il modello di ogni personaggio (prima delle sue pose)
 
-Nessuna posa si genera prima che l'autore abbia approvato il modello del personaggio.
+Prima di disegnare le pose di un personaggio, crea il suo **foglio modello**: lo stesso personaggio tre volte affiancato (di fronte, di profilo verso destra, di spalle), figura intera, fedele alle foto di riferimento, sfondo magenta #FF00FF, 1536×1024, pixel art 16-bit. Salvalo in `assets/incoming/modelli/<set>.png`. Per i fondali, prima un'immagine campione `assets/incoming/modelli/fondale_<area>.png`.
 
-1. Per ogni set dell'elenco di lavoro, crea **un foglio modello**: lo stesso personaggio tre volte affiancato (di fronte, di profilo verso destra, di spalle), figura intera, fedele alle foto di riferimento, sfondo magenta #FF00FF, 1536×1024, pixel art 16-bit. Salvalo in `assets/incoming/modelli/<set>.png`.
-2. Apri tutte le foto del personaggio in `assets/incoming/riferimenti/` (`<set>_1.png`, `_2`, `_3` e la foto di gruppo) e la sua descrizione: il modello deve essere quel personaggio del film, con quel costume, quei capelli, quei colori e quella corporatura.
-3. Dopo i modelli fermati e scrivi all'utente: «Modelli pronti per: …». L'autore li guarda e scrive i set approvati in `assets/incoming/modelli/APPROVATI.md`.
-4. Genera le pose di un set **solo se compare in `APPROVATI.md`**, e allega sempre il suo modello come riferimento a ogni immagine di quel set. Se un modello viene rifiutato o modificato dall'autore, rifallo prima di andare avanti.
+1. Apri tutte le foto del personaggio in `assets/incoming/riferimenti/` (`<set>_1.png`, `_2`, `_3` e la foto di gruppo) e la sua descrizione: il modello deve essere quel personaggio del film, con quel costume, quei capelli, quei colori e quella corporatura.
+2. Poi **continua da solo** con le pose di quel personaggio, allegando ogni volta il modello come riferimento. Non serve aspettare conferme.
+3. Se l'autore scrive un set in `assets/incoming/modelli/RIFARE.md` (una riga per set, con il motivo), rifai il suo modello e tutte le sue pose, sovrascrivendo i file con gli stessi nomi; poi cancella la riga.
 
-Lo stesso vale per i fondali: prima un'immagine `assets/incoming/modelli/fondale_<area>.png` per tre aree campione (C2-01 strada, C4-02 parco, C6-01 banchina), poi gli altri solo quando `APPROVATI.md` contiene la riga `fondali`.
+## Cosa succede dopo il caricamento
+
+Non devi fare altro: a ogni caricamento in `assets/incoming/` un'automazione del repository (`.github/workflows/integra_immagini.yml`) toglie lo sfondo magenta, ritaglia, porta ogni personaggio alla sua scala, allinea i piedi, affianca i pezzi dei fondali e mette tutto nel gioco. I nomi dei file dell'elenco sono esattamente quelli che il gioco usa: non cambiarli. Il risultato e gli eventuali errori (nome sbagliato, sfondo non riconosciuto, scala diversa) sono in `assets/incoming/RAPPORTO.md`: leggilo all'inizio di ogni sessione e correggi i file segnalati.
+
+Un personaggio entra nel gioco quando esiste il suo `idle_1.png`: crealo sempre per primo.
 
 ## Elenco di lavoro (in ordine di priorità)
 
@@ -642,5 +645,5 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 
 ## Fine
 
-In tutto 500 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. Claude integra nel gioco quello che trova in `assets/incoming/` (ritaglio, scala, allineamento, palette) e aggiorna le cartelle definitive.
+In tutto 500 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
 
