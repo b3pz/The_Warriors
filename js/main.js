@@ -192,7 +192,7 @@ var W = window.W;
   }
   // ------------------------------------------------------------------ transizione a fumetto
   // L'ultimo fotogramma dell'area diventa una vignetta inchiostrata con retino; la didascalia annuncia il luogo successivo.
-  var COMIC_LEAD = { P0: 'Coney Island, quella sera.', C1: 'Nord del Bronx, il raduno.', C2: 'Le strade del Bronx.', C3: 'Territorio degli Orphans.', C4: 'Riverside Park, Manhattan.', C5: 'La banda si divide.', C6: 'Union Square.', C7: 'L\'ultimo treno.', C8: 'Coney Island, all\'alba.' };
+  var COMIC_LEAD = { P0: 'Coney Island, quella sera.', C1: 'Van Cortlandt Park, Bronx.', C2: 'Le strade del Bronx.', C3: 'Territorio degli Orphans.', C4: 'Riverside Park, Manhattan.', C5: 'La banda si divide.', C6: 'Union Square.', C7: 'L\'ultimo treno.', C8: 'Coney Island, all\'alba.' };
   // vignetta del luogo successivo: il fondale disegnato con il gruppo in posa
   function nextPanel(next) {
     var c = document.createElement('canvas'); c.width = C.VIEW_W; c.height = C.VIEW_H;
@@ -222,7 +222,7 @@ var W = window.W;
   var gangMap = new Image(); gangMap.ok = false; gangMap.onload = function () { gangMap.ok = true; };
   gangMap.src = (W.ASSET_DATA && W.ASSET_DATA['menu/mappa_bande.jpg']) || 'assets/menu/mappa_bande.jpg';
   var MAP_PT = { P0: [700, 1035], C1: [190, 48], C2: [432, 52], C3: [412, 196], C4: [96, 362], C5: [250, 548], C6: [268, 600], C7: [455, 820], C8: [700, 1035] };
-  var MAP_NAME = { P0: 'Coney Island', C1: 'Bronx · il raduno', C2: 'Gun Hill Road', C3: 'Gli Orphans', C4: 'Riverside Park', C5: 'Divisi', C6: 'Union Square', C7: 'L\'ultimo treno', C8: 'Coney Island' };
+  var MAP_NAME = { P0: 'Coney Island', C1: 'Van Cortlandt Park', C2: 'Gun Hill Road', C3: 'Gli Orphans', C4: 'Riverside Park', C5: 'Divisi', C6: 'Union Square', C7: 'L\'ultimo treno', C8: 'Coney Island' };
   function drawGangMap(x, y, w, h, ch, k) {
     var order = ['P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'], idx = Math.max(0, order.indexOf(ch));
     var sc = 1.15, vw = w / sc, vh = h / sc, from = MAP_PT[order[Math.max(0, idx - 1)]], to = MAP_PT[order[idx]];

@@ -62,3 +62,5 @@ L'autore ha approvato come grafica giusta le tavole della Raccolta 04 (`assets/s
 
 - Costume di Mercy (verificato 30 ottobre 2026): l'attrice si fratturò il polso durante le riprese e rimase ingessata quasi un mese; Walter Hill le fece indossare una giacca di jeans per coprire il gesso, giustificata nel film con la battuta sulla maglietta rosa ricercata dalla polizia. Nel gioco: flag `mercy_jacket` dalla scena dei tunnel (C5-04), set `mercy_giacca` quando arrivano le immagini.
 - Cappello di Cowboy: scuro, come nella foto di gruppo (confermato dall'autore).
+
+- Trama verificata su Wikipedia (30 ottobre 2026) e allineata nel gioco: raduno a Van Cortlandt Park; Fox testimone dello sparo, Luther prova a colpirlo; fuga al cimitero di Woodlawn dove Swan prende il comando; taglia di Masai attraverso la DJ; Orphans esclusi dal raduno; Swan torna da solo alla 96ª, trova Mercy e la respinge, poi i binari fino a Union Square; Mercy combatte con i Punks; Luther: «nessun motivo». Da decidere con l'autore: nel film Luther spara, Swan schiva e poi lancia il coltello; l'autore aveva indicato il coltello prima dello sparo.
