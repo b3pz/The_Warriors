@@ -712,7 +712,7 @@ W.Render = (function () {
   // carro funebre dei Rogues: Cadillac nera anni '50 coperta di graffiti (immagine nuova se c'è, altrimenti disegnato)
   var OBJ = {};
   function drawHearse(n, cx) {
-    var x = Math.round(n.x - cx), y = n.y, f = n.face || 1, L = 420, H = 150;
+    var x = Math.round(n.x - cx), y = n.y, f = n.face || 1, L = 560, H = 160;
     var oi = W.ART_AI && W.ART_AI.object && W.ART_AI.object.auto_rogues;
     if (oi) { if (!OBJ.hearse) OBJ.hearse = loadImg(oi); var im = OBJ.hearse; if (im.ok) {
       var hh = H * 1.05, ww = im.width * hh / im.height; ctx.save(); ctx.translate(x, y); ctx.scale(-f, 1); ctx.drawImage(im, -ww / 2, -hh, ww, hh); ctx.restore(); return; } }
@@ -914,10 +914,11 @@ W.Render = (function () {
       } });
     }
     if (w.area && w.area.bus && w.area.bus.kind === 'bus' && w.area.bus.phase === 'pass') { var bus = w.area.bus; list.push({ y: bus.lane[0], d: function () {
-      var bx = bus.x - cx, by = bus.lane[1];
+      var bx = bus.x - cx, by = bus.lane[1], BS = 2;   // in scala con le persone: alto ~1,7 volte un uomo, lungo ~4
       // il bus dei Turnbull: scuolabus vecchio coperto di graffiti, fari accecanti, skinhead sul tetto e aggrappati fuori
       var bo = W.ART_AI && W.ART_AI.object && W.ART_AI.object.bus_turnbull;
-      if (bo) { if (!OBJ.bus) OBJ.bus = loadImg(bo); if (OBJ.bus.ok) { var bh2 = 190, bw2 = OBJ.bus.width * bh2 / OBJ.bus.height; ctx.drawImage(OBJ.bus, bx, by - bh2, bw2, bh2); return; } }
+      if (bo) { if (!OBJ.bus) OBJ.bus = loadImg(bo); if (OBJ.bus.ok) { var bh2 = 330, bw2 = OBJ.bus.width * bh2 / OBJ.bus.height; ctx.drawImage(OBJ.bus, bx, by - bh2, bw2, bh2); return; } }
+      ctx.save(); ctx.translate(bx, by); ctx.scale(BS, BS); ctx.translate(-bx, -by);
       ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(bx - 10, by - 6, 410, 14);
       ctx.fillStyle = '#3d4038'; ctx.fillRect(bx, by - 150, 380, 128); ctx.fillStyle = '#2c2e29'; ctx.fillRect(bx + 330, by - 100, 60, 78);
       ctx.fillStyle = '#4b4e45'; ctx.fillRect(bx, by - 156, 380, 10);
@@ -929,9 +930,10 @@ W.Render = (function () {
       // fari blu-bianchi
       var hg = ctx.createRadialGradient(bx + 392, by - 58, 2, bx + 392, by - 58, 60); hg.addColorStop(0, 'rgba(220,235,255,0.95)'); hg.addColorStop(1, 'rgba(120,150,255,0)');
       ctx.fillStyle = hg; ctx.fillRect(bx + 330, by - 120, 130, 120);
+      ctx.restore();
       // Turnbull in piedi sul tetto e aggrappati alla porta: i loro sprite (pose roof/hang se ci sono, altrimenti riposo)
-      [[50, -150, 'turnbull'], [150, -150, 'turnbull_b'], [250, -150, 'turnbull']].forEach(function (q, i) { drawSetFrame(q[2], ['roof', 'idle'], bx + q[0], by + q[1], 1, 0.72, i); });
-      drawSetFrame('turnbull_b', ['hang', 'idle'], bx + 372, by - 40, 1, 0.72, 3);
+      [[110, 'turnbull'], [330, 'turnbull_b'], [540, 'turnbull']].forEach(function (q, i) { drawSetFrame(q[1], ['roof', 'idle'], bx + q[0], by - 156 * BS, 1, 1, i); });
+      drawSetFrame('turnbull_b', ['hang', 'idle'], bx + 720, by - 40, 1, 1, 3);
     } }); }
     if (w.area && !w.area.scene && w.area.interactions) w.area.interactions().forEach(function (it) {
       list.push({ y: it.y + 1, d: function () {

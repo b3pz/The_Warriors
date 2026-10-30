@@ -262,11 +262,11 @@ var W = window.W;
     var b = this.bus, lane = b.kind === 'train' ? [this.floor[1] - 46, this.floor[1]] : [this.floor[0], this.floor[0] + 60];
     b.lane = lane; b.t -= dt;
     if (b.phase === 'idle' && b.t <= 0) { b.phase = 'warn'; b.t = b.kind === 'train' ? 1.8 : 1.4; w.emit(b.kind === 'train' ? 'trainwarn' : 'horn', {}); }
-    else if (b.phase === 'warn' && b.t <= 0) { b.phase = 'pass'; b.t = 1.3; b.x = w.cam.x - (b.kind === 'train' ? 900 : 420); b.hit = {}; if (b.kind === 'train') w.emit('train', {}); }
+    else if (b.phase === 'warn' && b.t <= 0) { b.phase = 'pass'; b.t = 1.3; b.x = w.cam.x - (b.kind === 'train' ? 900 : 800); b.hit = {}; if (b.kind === 'train') w.emit('train', {}); }
     else if (b.phase === 'pass') {
-      b.x += (C.VIEW_W + (b.kind === 'train' ? 1800 : 900)) / 1.3 * dt;
+      b.x += (C.VIEW_W + (b.kind === 'train' ? 1800 : 1500)) / 1.3 * dt;
       w.players.forEach(function (p) {
-        var len = b.kind === 'train' ? 900 : 380;
+        var len = b.kind === 'train' ? 900 : 780;
         if (!b.hit[p.uid] && p.hittable() && p.y >= lane[0] - 4 && p.y <= lane[1] && p.x > b.x && p.x < b.x + len) { b.hit[p.uid] = true; p.takeHit({ x: b.x, face: 1 }, { spec: { dmg: b.kind === 'train' ? 18 : 14, kd: true } }); }
       });
       if (b.t <= 0) { b.phase = 'idle'; b.t = (b.kind === 'train' ? 7 : 6) + w.rng() * 3; }
