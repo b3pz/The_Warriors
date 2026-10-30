@@ -98,3 +98,10 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 ## Regole di continuità
 
 Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source, processed, integrated e verified. Non ricominciare la progettazione. Non spacciare ripieghi per asset finali.
+
+## Video e sfondi animati (30 ottobre)
+
+- 18 inserti video previsti, prompt in `VIDEO_PER_AI.md`; supporto nel gioco (`['clip', id]`, `W.ClipPlayer`, DJ in ciclo), importazione automatica da `assets/incoming/video/`. Dettagli in `docs/SCENE_E_VIDEO.md`.
+- Discorso di Cyrus rifatto fedele al film: niente polizia tra la folla, volanti ai bordi del parco durante il discorso (`lights`), 60.000 contro 20.000, «Can you dig it?».
+- Ajax: la poliziotta in borghese lo ammanetta alla panchina (come nel film).
+- Dettagli animati sopra qualunque fondale (`drawAmbient`, `drawAmbientOver` in render.js): vapore dai tombini, nebbia nei parchi, neon, tubi al neon che sfarfallano, luce del treno in metro, fumo dalle Lizzies, gabbiani all'alba, lampeggianti quando c'è la polizia in campo.

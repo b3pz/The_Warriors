@@ -2,7 +2,7 @@
 
 Beat ’em up 2D: una notte attraverso New York, dal ritrovo dei Warriors al ritorno a Coney Island all'alba.
 
-> **Sei un assistente AI incaricato di creare le immagini del gioco?** Leggi [`IMMAGINI_PER_AI.md`](IMMAGINI_PER_AI.md): stile, elenco completo dei file da creare in ordine di priorità e dove caricarli (solo in `assets/incoming/`).
+> **Sei un assistente AI incaricato di creare le immagini del gioco?** Leggi [`IMMAGINI_PER_AI.md`](IMMAGINI_PER_AI.md): stile, elenco completo dei file da creare in ordine di priorità e dove caricarli (solo in `assets/incoming/`). Per i **video** (inserti nelle scene): [`VIDEO_PER_AI.md`](VIDEO_PER_AI.md).
 
 ## Giocare online
 

@@ -209,6 +209,35 @@ def do_music():
     return out
 
 
+VIDEO_IDS = ['v_radio_dj', 'v_wonder_wheel', 'v_beach_dawn', 'v_cyrus_shot', 'v_luther_bottles', 'v_furies_bats', 'v_conclave', 'v_train_night', 'v_duel',
+             'v_riffs_order', 'v_turnbull_bus', 'v_car_fire', 'v_ajax_cuffs', 'v_lizzies_lock', 'v_punks_skates', 'v_rembrandt_tag', 'v_train_dawn', 'v_riffs_beach']
+
+
+def do_video():
+    """Video in assets/incoming/video/ (elenco in VIDEO_PER_AI.md): compressi in H.264 720p senza audio in assets/video/."""
+    import shutil, subprocess
+    base = INC / 'video'; out = {}
+    if not base.exists(): return out
+    od = ROOT / 'assets' / 'video'; od.mkdir(parents=True, exist_ok=True)
+    ff = shutil.which('ffmpeg')
+    for f in sorted(base.iterdir()):
+        if f.suffix.lower() not in ('.mp4', '.mov', '.webm', '.m4v'): continue
+        stem = f.stem.lower().replace('-', '_').replace(' ', '_')
+        vid = stem if stem in VIDEO_IDS else ('v_' + stem if 'v_' + stem in VIDEO_IDS else None)
+        if not vid: report.append(f'- video: `{f.name}` non riconosciuto (il nome deve essere uno di quelli in VIDEO_PER_AI.md)'); continue
+        dst = od / (vid + '.mp4')
+        if dst.exists() and dst.stat().st_mtime >= f.stat().st_mtime: out[vid] = f'assets/video/{dst.name}'; continue
+        if ff:
+            r = subprocess.run([ff, '-y', '-loglevel', 'error', '-i', str(f), '-vf', "scale='min(1280,iw)':-2,fps=30", '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '24',
+                                '-pix_fmt', 'yuv420p', '-an', '-movflags', '+faststart', str(dst)])
+            if r.returncode != 0: report.append(f'- **video rotto** `{f.name}`: non si riesce a leggerlo, rigeneralo e ricaricalo'); continue
+        elif f.suffix.lower() == '.mp4': dst.write_bytes(f.read_bytes())
+        else: report.append(f'- video: `{f.name}` va convertito in mp4 (ffmpeg non disponibile)'); continue
+        out[vid] = f'assets/video/{dst.name}'
+    if out: report.append('- **video**: ' + ', '.join(sorted(out)))
+    return out
+
+
 def check_files():
     """Segnala i file che non sono immagini valide (caricamenti rotti): vanno ricaricati."""
     for f in sorted(INC.rglob('*')):
@@ -227,8 +256,10 @@ def main():
            'portrait': do_simple('ritratti', 'portraits_ai', 'png', key=True, max_side=320),
            'object': do_simple('oggetti', 'objects_ai', 'png', key=True, max_side=900)}
     tracks = do_music()
+    videos = do_video()
     head = "'use strict';\n// Generato da tools/import_incoming.py dalle immagini in assets/incoming/: non modificare a mano.\nwindow.W = window.W || {};\n"
     (ROOT / 'js' / 'atlas_ai.js').write_text(head + 'W.ATLAS_AI = ' + json.dumps({'sets': sets}) + ';\n', encoding='utf-8')
+    (ROOT / 'js' / 'videos_auto.js').write_text(head.replace('dalle immagini', 'dai video') + 'W.VIDEOS_AUTO = ' + json.dumps(videos) + ';\n', encoding='utf-8')
     (ROOT / 'js' / 'musiche_auto.js').write_text(head + 'W.MUSIC_AUTO = ' + json.dumps(tracks) + ';\n', encoding='utf-8')
     (ROOT / 'js' / 'art_ai.js').write_text(head + 'W.BG_AI = ' + json.dumps(bg) + ';\nW.ART_AI = ' + json.dumps(art) + ';\n', encoding='utf-8')
     (INC / 'RAPPORTO.md').write_text('# Rapporto dell\'integrazione automatica\n\nAggiornato a ogni caricamento in `assets/incoming/`.\n\n' + ('\n'.join(report) if report else 'Nessuna immagine da integrare.') + '\n', encoding='utf-8')

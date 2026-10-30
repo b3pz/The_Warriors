@@ -10,6 +10,38 @@ Ogni transizione del gioco è una scena con un ID. Oggi tutte sono fatte con gli
 
 Il video si salta con Esc → Salta scena, come le altre scene.
 
+## Inserti video (clip brevi dentro le scene)
+
+Oltre a sostituire una scena intera, una scena può contenere un **inserto**: il passo `['clip', 'v_nome']` ferma la scena, mostra la clip a tutto schermo (disegnata nel canvas, senza audio, sotto didascalie e bande nere) e poi la scena riprende. Si salta con Invio. Se il file manca, il passo non fa niente.
+
+- Elenco, prompt e priorità per l'AI: [`VIDEO_PER_AI.md`](../VIDEO_PER_AI.md) (18 clip).
+- Caricamento: `assets/incoming/video/v_nome.mp4` → l'Action li comprime (H.264 720p, senza audio) in `assets/video/` e li scrive in `js/videos_auto.js`.
+- `v_radio_dj` è speciale: video in ciclo usato come sfondo di tutte le scene della radio, con le frasi della DJ scritte sopra.
+- `v_wonder_wheel` sostituisce l'inquadratura disegnata della ruota all'inizio di `dlg_p0_welcome`.
+
+| Video | Scena |
+|---|---|
+| `v_radio_dj` | tutte le scene radio (sfondo in ciclo) |
+| `v_wonder_wheel` | dlg_p0_welcome (apertura) |
+| `v_train_night` | cine_departure |
+| `v_conclave` | cine_cyrus (inizio) |
+| `v_cyrus_shot` | cine_accusation (inizio) |
+| `v_riffs_order` | radio_hunt (prima della radio) |
+| `v_rembrandt_tag` | cine_cemetery_tag |
+| `v_turnbull_bus` | dlg_c2_bus |
+| `v_car_fire` | dlg_c3_fire |
+| `v_furies_bats` | cine_furies_appear |
+| `v_ajax_cuffs` | cine_ajax_arrest |
+| `v_lizzies_lock` | cine_lizzies_trap |
+| `v_punks_skates` | dlg_c6_bathroom |
+| `v_train_dawn` | cine_train_dawn |
+| `v_luther_bottles` | cine_bottles |
+| `v_duel` | cine_disarm |
+| `v_riffs_beach` | cine_riffs_arrival |
+| `v_beach_dawn` | cine_epilogue |
+
+Altri passi di scena: `['lights', true]` accende i lampeggianti della polizia ai bordi; `['pose', id, 'speech']` dà una posa a un personaggio di scena (`null` la toglie).
+
 ## Elenco degli ID
 
 | ID | Dove |

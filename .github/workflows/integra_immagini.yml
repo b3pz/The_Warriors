@@ -19,13 +19,15 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install pillow
+      - name: ffmpeg per i video
+        run: which ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
       - name: Ritaglia, scala e collega le immagini al gioco
         run: python tools/import_incoming.py
       - name: Salva nel repository
         run: |
           git config user.name "integrazione-immagini"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A assets/sprites_ai assets/backgrounds_ai assets/scenes_ai assets/portraits_ai assets/objects_ai js/atlas_ai.js js/art_ai.js js/musiche_auto.js assets/music assets/incoming/RAPPORTO.md || true
+          git add -A assets/sprites_ai assets/backgrounds_ai assets/scenes_ai assets/portraits_ai assets/objects_ai js/atlas_ai.js js/art_ai.js js/musiche_auto.js js/videos_auto.js assets/music assets/video assets/incoming/RAPPORTO.md || true
           if git diff --cached --quiet; then echo "niente di nuovo"; exit 0; fi
           git commit -m "Immagini integrate nel gioco (automatico)"
           for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && exit 0; sleep 5; done

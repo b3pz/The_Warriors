@@ -80,7 +80,7 @@ var W = window.W;
   function Scene(world, def, opts) {
     this.world = world; this.def = def; this.i = 0; this.wait = 0; this.line = null; this.done = false; this.vars = opts && opts.vars || {};
     this.fade = (opts && opts.fadeIn) ? 1 : 0; this.fadeTo = this.fade; this.fadeSpeed = 1; this.title = null; this.letterbox = def.letterbox !== false;
-    this.choice = null; this.cam = null; this.video = null; this.skipped = false;
+    this.choice = null; this.cam = null; this.video = null; this.skipped = false; this.clip = null; this.lights = false;
     var vid = W.VIDEOS && def.cine && W.VIDEOS[def.cine];
     if (vid) this.video = { src: vid, started: false };
   }
@@ -102,8 +102,16 @@ var W = window.W;
       if (k === 'confirm') { this.vars.choice = this.choice.sel; this.line = { who: this.choice.who, text: this.choice.opts[this.choice.sel] }; this.choice = null; this.lineT = 0; }
       return;
     }
+    if (k === 'confirm' && this.clip && this.clip.t > 0.4) { this.endClip(); return; }
     if (k === 'confirm' && this.line && this.lineT > 0.25) { this.line = null; }
   };
+  // inserto video dentro la scena (W.VIDEOS[id]): la scena si ferma finché la clip finisce, poi riprende. Senza file non succede niente.
+  Scene.prototype.startClip = function (id, cap) {
+    var src = W.VIDEOS && W.VIDEOS[id]; if (!src) return false;
+    if (typeof src === 'object') src = src.src;
+    this.clip = { id: id, cap: cap || '', t: 0, el: W.ClipPlayer.open(src) }; return true;
+  };
+  Scene.prototype.endClip = function () { if (this.clip) { this.clip.el.close(); this.clip = null; } };
 
   Scene.prototype.skip = function () {
     // applica gli stessi effetti del termine naturale una volta sola
@@ -117,6 +125,7 @@ var W = window.W;
     this.npcEndPositions();
     this.line = null; this.choice = null; this.done = true; this.skipped = true; this.fade = 0;
     if (this.video && this.video.el) this.video.el.stop();
+    this.endClip(); this.lights = false;
   };
   Scene.prototype.npcEndPositions = function () { this.world.npcs.forEach(function (n) { if (n.move) { n.x = n.move.x1; n.y = n.move.y1; n.move = null; } }); };
 
@@ -131,6 +140,7 @@ var W = window.W;
       if (this.video.el.ended()) { this.skip(); }
       return;
     }
+    if (this.clip) { var cp = this.clip; cp.t += dt; if (cp.el.ended() || (cp.t > 6 && !cp.el.ready()) || cp.t > 40) this.endClip(); return; }
     if (this.line) { this.lineT += dt; return; }
     if (this.choice) return;
     if (this.wait > 0) { this.wait -= dt; return; }
@@ -169,7 +179,9 @@ var W = window.W;
       case 'clearNpcs': w.npcs = w.npcs.filter(function (q) { return q.keep; }); break;
       case 'cam': this.cam = { x0: w.cam.x, x1: c[1], dur: c[2] || 1, t: 0 }; break;
       case 'fade': this.fadeTo = c[1] === 'out' ? 1 : 0; this.fadeSpeed = 1 / (c[2] || 0.6); if (c[3] !== false) this.wait = c[2] || 0.6; break;
-      case 'wheel': this.wheel = { t: 0, dur: c[1] || 4, cap: c[2] || '' }; this.wait = c[1] || 4; break;   // inquadratura d'apertura: la Wonder Wheel di notte
+      case 'clip': this.startClip(c[1], c[2]); break;   // [clip, id video, didascalia facoltativa]
+      case 'lights': this.lights = !!c[1]; break;          // lampeggianti della polizia ai bordi dell'inquadratura
+      case 'wheel': if (this.startClip('v_wonder_wheel', c[2])) break; this.wheel = { t: 0, dur: c[1] || 4, cap: c[2] || '' }; this.wait = c[1] || 4; break;   // inquadratura d'apertura: la Wonder Wheel di notte
       case 'title': this.title = { text: c[1], sub: c[2] || '', dur: c[3] || 2.5, t: 0 }; this.wait = c[3] || 2.5; break;
       case 'flash': w.emit('flashfx', {}); break;
       case 'shake': w.emit('shakefx', { amt: c[1] || 8 }); break;
@@ -182,6 +194,25 @@ var W = window.W;
 
   // ------------------------------------------------------------------ video sostituibili
   // Elenco dei video disponibili: js/videos.js (W.VIDEOS = { cine_cyrus: 'assets/video/cine_cyrus.mp4', ... }).
+  // clip disegnate dentro il canvas (sopra la scena, sotto didascalie e bande nere), senza audio: la musica del gioco continua
+  W.ClipPlayer = {
+    open: function (src, loop) {
+      var v = document.createElement('video'), ended = false;
+      v.muted = true; v.playsInline = true; v.loop = !!loop; v.preload = 'auto'; v.src = src;
+      v.onended = function () { ended = true; }; v.onerror = function () { ended = true; };
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+      return { v: v, ended: function () { return ended; }, ready: function () { return v.readyState >= 2; }, close: function () { ended = true; try { v.pause(); v.removeAttribute('src'); v.load(); } catch (e) {} } };
+    },
+    // video in ciclo riusato (es. la DJ alla radio): uno per ID, si mette in pausa quando non serve
+    loops: {},
+    loop: function (id) {
+      var src = W.VIDEOS && W.VIDEOS[id]; if (!src) return null; if (typeof src === 'object') src = src.src;
+      var L = this.loops[id] || (this.loops[id] = this.open(src, true));
+      if (L.v.paused && !L.ended()) { var p = L.v.play(); if (p && p.catch) p.catch(function () {}); }
+      L.seen = performance.now(); return L.ended() ? null : L;
+    },
+    idle: function () { for (var k in this.loops) { var L = this.loops[k]; if (performance.now() - (L.seen || 0) > 500 && !L.v.paused) L.v.pause(); } }
+  };
   W.VideoPlayer = {
     play: function (src) {
       var v = document.createElement('video'), ended = false;

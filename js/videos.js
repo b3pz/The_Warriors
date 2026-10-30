@@ -7,3 +7,5 @@
 window.W = window.W || {};
 W.VIDEOS = {
 };
+// video generati e caricati in assets/incoming/video/ (tools/import_incoming.py → js/videos_auto.js); le righe scritte qui sopra hanno la precedenza
+(function () { var A = W.VIDEOS_AUTO || {}; for (var k in A) if (!W.VIDEOS[k]) W.VIDEOS[k] = A[k]; })();

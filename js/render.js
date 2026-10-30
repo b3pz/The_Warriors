@@ -83,7 +83,7 @@ W.Render = (function () {
   }
   function pickPose(a) {
     var st = a.state, m = a.curMove, ph = a.att ? a.att.phase : null, wf = Math.floor(a.anim * (st === 'run' ? 9 : 6));
-    if (a.npc) return a.pose === 'down' ? { p: 'down' } : (st === 'walk' ? { p: 'walk', i: wf } : { p: 'idle' });
+    if (a.npc) return a.pose === 'down' ? { p: 'down' } : a.pose ? { p: a.pose, alt: 'idle' } : (st === 'walk' ? { p: 'walk', i: wf } : { p: 'idle' });
     if (a.isEnemy) {
       var moving = Math.abs(a.x - (a.lx === undefined ? a.x : a.lx)) + Math.abs(a.y - (a.ly === undefined ? a.y : a.ly)) > 0.3;
       a.lx = a.x; a.ly = a.y;
@@ -685,7 +685,8 @@ W.Render = (function () {
   // studio radio della DJ: buio, insegna IN ONDA, microfono, onda sonora
   // la DJ come nel film: solo la bocca al microfono, in controluce su un fondo rosso
   function drawRadio(w, sc) {
-    var t = w.time, art = ARTSC.radio_dj;
+    var t = w.time, art = ARTSC.radio_dj, lv = W.ClipPlayer && W.ClipPlayer.loop('v_radio_dj');
+    if (lv && lv.ready()) { drawVideoCover(lv.v, 1); return; }
     if (art && art.ok) { var sc2 = Math.max(C.VIEW_W / art.width, C.VIEW_H / art.height); ctx.drawImage(art, (C.VIEW_W - art.width * sc2) / 2, (C.VIEW_H - art.height * sc2) / 2, art.width * sc2, art.height * sc2); return; }
     var bg = ctx.createRadialGradient(820, 330, 40, 760, 360, 760); bg.addColorStop(0, '#e0402a'); bg.addColorStop(0.55, '#a81e16'); bg.addColorStop(1, '#2a0606');
     ctx.fillStyle = bg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
@@ -791,6 +792,23 @@ W.Render = (function () {
     if (wh.cap && t > 1) { ctx.fillStyle = 'rgba(255,230,250,0.85)'; ctx.font = '500 24px "Oswald", sans-serif'; ctx.fillText(wh.cap, C.VIEW_W / 2, 90); }
     ctx.restore();
   }
+  function drawVideoCover(v, alpha) {
+    var vw = v.videoWidth || 1280, vh = v.videoHeight || 720, k = Math.max(C.VIEW_W / vw, C.VIEW_H / vh);
+    ctx.save(); ctx.globalAlpha = alpha; ctx.drawImage(v, (C.VIEW_W - vw * k) / 2, (C.VIEW_H - vh * k) / 2, vw * k, vh * k); ctx.restore();
+  }
+  // inserto video: nero mentre carica, poi la clip a tutto schermo con dissolvenza
+  function drawClip(cp) {
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    if (cp.el.ready()) drawVideoCover(cp.el.v, Math.min(1, cp.t / 0.4));
+    if (cp.cap && cp.t > 0.8) { ctx.save(); ctx.globalAlpha = Math.min(1, (cp.t - 0.8) / 0.5); ctx.fillStyle = 'rgba(255,240,230,0.9)'; ctx.font = '500 24px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.shadowColor = '#000'; ctx.shadowBlur = 8; ctx.fillText(cp.cap, C.VIEW_W / 2, 100); ctx.restore(); }
+  }
+  // lampeggianti blu e rossi che arrivano dai bordi, nel buio
+  function drawLights(t) {
+    var on = Math.floor(t * 4) % 2, gl = ctx.createLinearGradient(0, 0, 260, 0), gr = ctx.createLinearGradient(C.VIEW_W, 0, C.VIEW_W - 260, 0);
+    var a = 0.22 + 0.12 * Math.abs(Math.sin(t * 7)), c1 = on ? 'rgba(40,90,255,' + a + ')' : 'rgba(230,30,40,' + (a * 0.8) + ')', c2 = on ? 'rgba(230,30,40,' + (a * 0.8) + ')' : 'rgba(40,90,255,' + a + ')';
+    gl.addColorStop(0, c1); gl.addColorStop(1, 'rgba(0,0,0,0)'); gr.addColorStop(0, c2); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = gl; ctx.fillRect(0, 0, 260, C.VIEW_H); ctx.fillStyle = gr; ctx.fillRect(C.VIEW_W - 260, 0, 260, C.VIEW_H); ctx.restore();
+  }
   function drawScene(w, sc, ui) {
     if (sc.wheel) { drawWheelShot(sc.wheel); return; }
     var art = sc.def.cine && ARTSC[sc.def.cine];
@@ -801,7 +819,10 @@ W.Render = (function () {
       if (ah < C.VIEW_H * zs) { ah = C.VIEW_H * zs; aw = ah * art.width / art.height; }
       ctx.save(); ctx.globalAlpha = Math.min(1, at / 0.6); ctx.drawImage(art, (C.VIEW_W - aw) / 2, (C.VIEW_H - ah) / 2, aw, ah); ctx.restore();
     }
+    if (sc.lights) drawLights(w.time);
     if (sc.def.radio && !sc.title) drawRadio(w, sc);
+    if (sc.clip) drawClip(sc.clip);
+    if (W.ClipPlayer) W.ClipPlayer.idle();
     if (sc.def.radio && sc.title) { ctx.fillStyle = '#050307'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
     if (sc.letterbox) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, 62); ctx.fillRect(0, C.VIEW_H - 62, C.VIEW_W, 62); }
     if (sc.fade > 0) { ctx.fillStyle = 'rgba(0,0,0,' + Math.min(1, sc.fade) + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
@@ -919,6 +940,77 @@ W.Render = (function () {
     ctx.fillText('attaccanti ' + w.attackers + ' · nemici ' + w.enemies.length + ' · oggetti ' + w.items.length + ' · cam ' + w.cam.x.toFixed(0), 16, 170);
   }
 
+
+  // ------------------------------------------------------------------ dettagli animati sopra i fondali
+  // Senza stato: tutto dipende dal tempo e dalla posizione nel mondo, quindi funziona sopra qualunque fondale (disegnato o fatto dall'AI).
+  function hsh(n) { var x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+  function ambKind(w) {
+    var a = w.area.def, bg = a.bg || '', K = {};
+    var night = a.light !== 'dawn';
+    if (/street|alley|harbor/.test(bg)) { K.steam = true; K.neon = true; }
+    if (/metro/.test(bg)) { K.trainGlow = true; K.tube = true; }
+    if (/park/.test(bg)) { K.mist = true; }
+    if (/coney|boardwalk/.test(bg)) { if (night) K.neon = true; }
+    if (bg === 'interior') { K.tube = a.ch === 'C6'; K.haze = a.ch === 'C5'; }
+    if (!night && /coney|boardwalk|metro/.test(bg)) K.gulls = true;
+    return K;
+  }
+  // dietro ai personaggi: vapore dai tombini, nebbia nel parco, gabbiani all'alba
+  function drawAmbient(w) {
+    if (!w.area || !w.area.def) return;
+    var K = ambKind(w), t = w.time, cx = w.cam.x, fl = w.area.floor || [470, 680], i, k;
+    if (K.steam) {
+      for (var gx = 380; gx < (w.area.def.width || 2000); gx += 760) {
+        var sx = gx + hsh(gx) * 200 - cx; if (sx < -120 || sx > C.VIEW_W + 120) continue;
+        for (k = 0; k < 7; k++) {
+          var ph = ((t * 0.32 + k / 7 + hsh(gx + k)) % 1), r = 14 + ph * 46;
+          ctx.fillStyle = 'rgba(220,226,235,' + (0.22 * (1 - ph)) + ')';
+          ctx.beginPath(); ctx.arc(sx + Math.sin(t * 0.8 + k) * 10 + ph * 26, fl[0] + 10 - ph * 170, r, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+    if (K.mist) {
+      for (i = 0; i < 6; i++) {
+        var mx = ((i * 420 + t * (14 + i * 3) - cx * 0.6) % 2520 + 2520) % 2520 - 620, my = fl[0] - 20 + (i % 3) * 60;
+        var mg = ctx.createRadialGradient(mx, my, 10, mx, my, 300); mg.addColorStop(0, 'rgba(170,190,210,0.10)'); mg.addColorStop(1, 'rgba(170,190,210,0)');
+        ctx.save(); ctx.scale(1, 0.32); ctx.fillStyle = mg; ctx.fillRect(mx - 300, my / 0.32 - 300, 600, 600); ctx.restore();
+      }
+    }
+    if (K.gulls) {
+      ctx.strokeStyle = 'rgba(40,30,40,0.7)'; ctx.lineWidth = 2;
+      for (i = 0; i < 4; i++) {
+        var per = 18 + i * 5, gp = ((t + i * 7) % per) / per, bx = -60 + gp * (C.VIEW_W + 120), by = 90 + i * 34 + Math.sin(t * 0.7 + i) * 14, wf = Math.sin(t * 7 + i * 2) * 6;
+        ctx.beginPath(); ctx.moveTo(bx - 12, by - wf); ctx.quadraticCurveTo(bx - 5, by - 4, bx, by); ctx.quadraticCurveTo(bx + 5, by - 4, bx + 12, by - wf); ctx.stroke();
+      }
+    }
+  }
+  // sopra la scena: neon che respirano, tubi al neon che sfarfallano, luce di un treno che passa, fumo nell'appartamento, lampeggianti della polizia
+  function drawAmbientOver(w) {
+    if (!w.area || !w.area.def) return;
+    var K = ambKind(w), t = w.time, a = w.area.def;
+    if (K.neon) {
+      var np = 0.035 + 0.025 * Math.sin(t * 2.1) + (hsh(Math.floor(t * 9)) > 0.96 ? -0.03 : 0);
+      var ng = ctx.createLinearGradient(0, 0, 0, 380); ng.addColorStop(0, 'rgba(255,60,140,' + np + ')'); ng.addColorStop(1, 'rgba(255,60,140,0)');
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = ng; ctx.fillRect(0, 0, C.VIEW_W, 380); ctx.restore();
+    }
+    if (K.tube && hsh(Math.floor(t * 12) + a.id.length) > 0.965) { ctx.fillStyle = 'rgba(0,0,0,0.22)'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
+    if (K.trainGlow) {
+      var per = 14, tp = (t % per) / per;
+      if (tp < 0.22) {
+        var gx2 = -400 + (tp / 0.22) * (C.VIEW_W + 800), tg = ctx.createLinearGradient(gx2 - 380, 0, gx2 + 380, 0);
+        tg.addColorStop(0, 'rgba(255,240,200,0)'); tg.addColorStop(0.5, 'rgba(255,240,200,0.13)'); tg.addColorStop(1, 'rgba(255,240,200,0)');
+        ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = tg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H * 0.62); ctx.restore();
+      }
+    }
+    if (K.haze) {
+      var hz = ctx.createRadialGradient(640 + Math.sin(t * 0.3) * 200, 220, 40, 640, 260, 700); hz.addColorStop(0, 'rgba(230,120,200,' + (0.07 + 0.03 * Math.sin(t)) + ')'); hz.addColorStop(1, 'rgba(120,60,160,0)');
+      ctx.fillStyle = hz; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    }
+    // la polizia in campo si annuncia con i lampeggianti
+    if (!(w.area.scene) && w.enemies.some(function (e) { return e.def && e.def.set === 'police' && (!e.alive || e.alive()) && Math.abs(e.x - w.cam.x - 640) < 900; })) {
+      ctx.save(); ctx.globalAlpha = 0.6; drawLights(t); ctx.restore();
+    }
+  }
   // ------------------------------------------------------------------ frame
   function frame(w, dt, ui) {
     consume(w);
@@ -926,6 +1018,7 @@ W.Render = (function () {
     ctx.save();
     if (shake > 0) { ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake); shake *= 0.85; if (shake < 0.5) shake = 0; }
     drawBg(w);
+    drawAmbient(w);
     var cx = w.cam.x;
     if (!(useSprites && bgImg && bgImg.ok)) w.props.forEach(function (p) { if (p.kind === 'lamp') drawLamp(p, cx, w.time); }); // i lampioni sono già dipinti nel fondale
     // ordinamento per profondità
@@ -1016,6 +1109,7 @@ W.Render = (function () {
     });
     list.sort(function (a, b) { return a.y - b.y; });
     for (var i = 0; i < list.length; i++) list[i].d();
+    drawAmbientOver(w);
     drawFx(cx, dt);
     if (flash > 0) { ctx.fillStyle = 'rgba(255,230,160,' + flash + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); flash -= dt; }
     grade(w);

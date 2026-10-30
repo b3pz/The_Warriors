@@ -33,26 +33,33 @@ var W = window.W;
   Object.keys(intro).forEach(function (k) { S['talk_' + k] = { cine: 'dlg_p0_introductions', letterbox: false, steps: [['say', k, intro[k]]] }; });
   S.cine_departure = { cine: 'cine_departure', steps: seq(
     [['players', 'hide']], line(ALL9, 260, 90, Y, 1, 22),
-    [['wait', 0.6], ['moveAll', 900, 4.2], ['wait', 2.4], ['fade', 'out', 1.2], ['clearNpcs'], ['sfx', 'train'], ['title', 'THE WARRIORS', 'Night Run', 3.2], ['flag', 'departed_coney']]) };
+    [['wait', 0.6], ['moveAll', 900, 4.2], ['wait', 2.4], ['fade', 'out', 1.2], ['clearNpcs'], ['sfx', 'train'], ['clip', 'v_train_night'], ['title', 'THE WARRIORS', 'Night Run', 3.2], ['flag', 'departed_coney']]) };
 
   // C1
   S.dlg_c1_arrival = { cine: 'dlg_c1_arrival', letterbox: false, steps: [
     ['say', 'rembrandt', 'Non pensavo ci fosse tutta questa gente.'],
     ['say', 'cleon', 'Osservate. E ricordatevi perché siamo qui.'] ] };
+  // Come nel film: la polizia non è tra la folla; durante il discorso le volanti arrivano e si fermano ai bordi del parco, al buio.
   S.cine_cyrus = { cine: 'cine_cyrus', steps: seq(
-    [['players', 'hide'], ['crowd', 'cr', ['orphan', 'punk', 'turnbull', 'rogue', 'lizzie', 'police', 'masai', 'fury_hood', 'turnbull_b', 'lizzie_b'], 120, 1160, 600, 690, 22, 1]],
+    [['players', 'hide'], ['clip', 'v_conclave'], ['crowd', 'cr', ['orphan', 'punk', 'turnbull', 'rogue', 'lizzie', 'masai', 'fury_hood', 'turnbull_b', 'lizzie_b', 'rogue'], 120, 1160, 600, 690, 22, 1]],
     line(ALL9, 140, 46, 640, 1),
     [['npc', 'cyrus', 'cyrus', 760, 470, -1], ['npc', 'luther', 'luther', 1010, 540, -1], ['npc', 'masai', 'masai', 860, 492, -1],
      ['caption', 'Van Cortlandt Park, nel Bronx. Cento bande, nove delegati disarmati per ognuna, ascoltano Cyrus dei Gramercy Riffs. Per una notte, nessuno combatte.'],
-     ['say', 'cyrus', 'Ci dividono poche strade. Se smettiamo di consumarci gli uni contro gli altri, questa città dovrà ascoltarci.'],
-     ['say', 'cyrus', 'Siamo più di loro. Ci state?'], ['shake', 4], ['caption', 'La folla risponde con un boato.'],
+     ['pose', 'cyrus', 'speech'], ['caption', 'Cyrus alza le braccia. La folla tace.'], ['pose', 'cyrus', null],
+     ['say', 'cyrus', 'Guardatevi intorno. Stanotte nessuno ha colpito nessuno. Questo è già un miracolo.'],
+     ['say', 'cyrus', 'Ci hanno messi gli uni contro gli altri per un pezzo di marciapiede. Così non abbiamo mai visto la verità.'],
+     ['say', 'cyrus', 'Sessantamila soldati, contando tutti. E i poliziotti, in tutta la città, sono ventimila. Contate!'],
+     ['say', 'cyrus', 'Una banda sola potrebbe comandare questa città. Un quartiere alla volta.'],
+     ['lights', true], ['npc', 'cop1', 'police', 1250, 520, -1], ['npc', 'cop2', 'police', 30, 540, 1],
+     ['caption', 'Ai bordi del parco, nel buio, arrivano le volanti. Nessuno se ne accorge.'],
+     ['pose', 'cyrus', 'speech'], ['say', 'cyrus', 'Can you dig it?'], ['shake', 4], ['caption', 'La folla risponde con un boato.'],
      ['wait', 0.6]]) };
   S.cine_accusation = { cine: 'cine_accusation', steps: [
-    ['sfx', 'shot'], ['flash'], ['shake', 10], ['pose', 'cyrus', 'down'], ['wait', 0.8],
+    ['clip', 'v_cyrus_shot'], ['pose', 'luther', 'gun_aim'], ['sfx', 'shot'], ['flash'], ['shake', 10], ['pose', 'cyrus', 'down'], ['pose', 'luther', null], ['wait', 0.8],
     ['caption', 'Fox ha visto chi ha sparato: Luther dei Rogues. Luther se ne accorge, prova a colpire anche lui e lo manca.'], ['sfx', 'shot'],
     ['say', 'luther', 'Sono stati loro! Fermate i Warriors!'],
     ['caption', 'Cleon prova a dire che non sono stati loro. I Riffs lo circondano: non ne esce vivo.'], ['flag', 'cleon_killed'],
-    ['moveAll', -380, 1.6, 'crowd'], ['sfx', 'siren'],
+    ['moveAll', -380, 1.6, 'crowd'], ['sfx', 'siren'], ['lights', true],
     ['npc', 'pol1', 'police', 1300, 600, -1], ['npc', 'pol2', 'police', 1340, 650, -1], ['move', 'pol1', 1050, null, 1.2], ['move', 'pol2', 1080, null, 1.2],
     ['say', 'swan', 'Via da qui! Non fermatevi!'],
     ['fade', 'out', 0.8], ['clearNpcs'], ['flag', 'cyrus_shot'], ['flag', 'warriors_accused']] };
@@ -66,11 +73,12 @@ var W = window.W;
   S.cine_cemetery_tag = { cine: 'cine_cemetery_tag', steps: seq(
     [['players', 'hide']], line(['swan', 'ajax', 'snow', 'cowboy', 'cochise', 'vermin', 'fox'], 380, 64, Y, 1, 18),
     [['npc', 'rembrandt', 'rembrandt', 900, 560, 1], ['caption', 'Prima di andarsene, Rembrandt tira fuori la bomboletta.'], ['move', 'rembrandt', 1020, 556, 0.9], ['wait', 0.9],
-     ['npc', 'tag', 'tagstone', 1160, 540, -1], ['sfx', 'spray'], ['wait', 0.6], ['sfx', 'spray'], ['wait', 0.5],
+     ['npc', 'tag', 'tagstone', 1160, 540, -1], ['sfx', 'spray'], ['clip', 'v_rembrandt_tag'], ['wait', 0.6], ['sfx', 'spray'], ['wait', 0.5],
      ['wait', 1.4], ['caption', 'Sopra le scritte delle altre bande, una grande W rossa che cola: i Warriors sono passati di qui.'], ['flag', 'cemetery_tag'], ['wait', 0.6], ['fade', 'out', 0.8], ['clearNpcs']]) };
 
   // C2
   S.dlg_c2_bus = { cine: 'dlg_c2_bus', letterbox: false, steps: [
+    ['clip', 'v_turnbull_bus'],
     ['say', 'fox', 'Turnbull AC\'s. Sul bus. Ci hanno visti.'], ['say', 'snow', 'La scala è dall\'altra parte. Muoviamoci.']] };
   S.dlg_c2_alley = { cine: 'dlg_c2_alley', letterbox: false, steps: [
     ['caption', 'Il bus dei Turnbull gira l\'isolato a passo d\'uomo, carico di skinhead. Nessuno scende: aspettano che i Warriors escano allo scoperto.'],
@@ -102,7 +110,7 @@ var W = window.W;
      ['fade', 'out', 0.6], ['clearNpcs'], ['flag', 'orphans_confrontation']]) };
   S.dlg_c3_fire = { cine: 'dlg_c3_fire', letterbox: false, steps: [
     ['caption', 'Gli Orphans tornano, armati. Snow passa a Swan una bottiglia incendiaria.'],
-    ['caption', 'Swan la lancia sull\'auto degli Orphans. L\'auto prende fuoco: gli Orphans arretrano, nessuno li insegue.'], ['flash'], ['sfx', 'fire'], ['shake', 8],
+    ['caption', 'Swan la lancia sull\'auto degli Orphans. L\'auto prende fuoco: gli Orphans arretrano, nessuno li insegue.'], ['flash'], ['sfx', 'fire'], ['shake', 8], ['clip', 'v_car_fire'],
     ['say', 'swan', 'Attraverso il fuoco. Adesso!']] };
   S.cine_mercy_joins = { cine: 'cine_mercy_joins', letterbox: false, steps: [
     ['caption', 'Ajax si accorge che qualcuno li segue: è Mercy.'], ['say', 'mercy', 'Aspettate. Vengo con voi. Qui non mi tiene niente.'], ['say', 'swan', 'Non ti aspettiamo.'], ['flag', 'mercy_joined']] };
@@ -118,7 +126,7 @@ var W = window.W;
   S.cine_furies_appear = { cine: 'cine_furies_appear', steps: seq(
     [['players', 'hide']], line(C4G, 240, 80, Y, 1, 22),
     [['npc', 'f1', 'fury', 980, 520, -1], ['npc', 'f2', 'fury', 1060, 590, -1], ['npc', 'f3', 'fury_hood', 1120, 650, -1], ['npc', 'f4', 'fury', 900, 640, -1],
-     ['wait', 1.4], ['say', 'cowboy', 'Guardate quelli. Truccati come per una partita.'], ['say', 'swan', 'Correte. Nel parco li perdiamo.'], ['clearNpcs'], ['flag', 'furies_seen']]) };
+     ['clip', 'v_furies_bats'], ['wait', 1.4], ['say', 'cowboy', 'Guardate quelli. Truccati come per una partita.'], ['say', 'swan', 'Correte. Nel parco li perdiamo.'], ['clearNpcs'], ['flag', 'furies_seen']]) };
   S.dlg_c4_stand = { cine: 'dlg_c4_stand', letterbox: false, steps: [['say', 'ajax', 'Io non corro più. Non da quattro pagliacci con le mazze.'], ['say', 'snow', 'Tieni d\'occhio le mazze.']] };
   S.dlg_c4_ajax = { cine: 'dlg_c4_ajax', letterbox: false, mood: 'fight', steps: [
     ['caption', 'Il capo dei Furies si fa avanti, la mazza sulla spalla. Ajax scoppia a ridere.'],
@@ -133,9 +141,9 @@ var W = window.W;
   S.cine_ajax_arrest = { cine: 'cine_ajax_arrest', steps: [
     ['players', 'hide'], ['npc', 'officer', 'civilian', 620, 560, -1, 'Poliziotta'], ['npc', 'ajax', 'ajax', 360, 580, 1],
     ['caption', 'Ajax resta nel parco. Su una panchina, una donna sola.'], ['move', 'ajax', 540, null, 2.4], ['wait', 1.2],
-    ['say', 'officer', 'Fermo. Sei in arresto.'], ['sfx', 'siren'],
+    ['say', 'officer', 'Fermo. Sei in arresto.'], ['sfx', 'siren'], ['lights', true],
     ['npc', 'pol1', 'police', 1340, 560, -1], ['npc', 'pol2', 'police', 1380, 620, -1], ['move', 'pol1', 640, null, 1.6], ['move', 'pol2', 600, null, 1.8], ['wait', 1.4],
-    ['caption', 'Ajax viene messo a terra e ammanettato. Resta indietro.'], ['fade', 'out', 1], ['clearNpcs'], ['caption', 'Snow e Cowboy, poco lontano, vedono le luci delle volanti.'], ['say', 'snow', 'Per lui non possiamo fare niente. Union Square.'], ['flag', 'ajax_arrested']] };
+    ['clip', 'v_ajax_cuffs'], ['caption', 'Era una poliziotta in borghese: una manetta al polso di Ajax, l\'altra alla panchina. Arrivano le volanti. Ajax resta indietro.'], ['fade', 'out', 1], ['clearNpcs'], ['caption', 'Snow e Cowboy, poco lontano, vedono le luci delle volanti.'], ['say', 'snow', 'Per lui non possiamo fare niente. Union Square.'], ['flag', 'ajax_arrested']] };
   S.dlg_c5_welcome = { cine: 'dlg_c5_welcome', steps: seq(
     [['players', 'hide']], line(['vermin', 'cochise', 'rembrandt'], 260, 80, Y, 1, 18),
     [['npc', 'lz1', 'lizzie', 760, 560, -1], ['npc', 'lz2', 'lizzie_b', 860, 620, -1], ['npc', 'lz3', 'lizzie', 960, 540, -1],
@@ -143,7 +151,7 @@ var W = window.W;
      ['face', 'rembrandt', -1], ['say', 'rembrandt', 'Cochise… hanno chiuso la porta.'], ['clearNpcs']]) };
   S.cine_lizzies_trap = { cine: 'cine_lizzies_trap', letterbox: false, steps: [
     ['say', 'lizzie', 'Sappiamo chi siete. Lo sa tutta la città, ormai.'], ['say', 'cochise', 'Ci cercano tutti. Tutti quanti.'],
-    ['caption', 'Una delle Lizzies chiude la porta a chiave. Spunta un coltello, poi una pistola: spara male, ma spara.'], ['caption', 'Una delle Lizzies ferisce Rembrandt al braccio con il coltello.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'],
+    ['clip', 'v_lizzies_lock'], ['caption', 'Una delle Lizzies chiude la porta a chiave. Spunta un coltello, poi una pistola: spara male, ma spara.'], ['caption', 'Una delle Lizzies ferisce Rembrandt al braccio con il coltello.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'],
     ['caption', 'L\'unica via è la porta: sfondala.'], ['flag', 'lizzies_trap']] };
   S.cine_swan_mercy = { cine: 'cine_swan_mercy', letterbox: false, steps: [
     ['caption', 'Swan torna da solo alla 96ª Strada a cercare gli altri. Sulla banchina c\'è Mercy.'],
@@ -170,6 +178,7 @@ var W = window.W;
     ['fade', 'out', 1], ['clearNpcs'], ['flag', 'riffs_know_truth']] };
 
   S.dlg_c6_bathroom = { cine: 'dlg_c6_bathroom', letterbox: false, mood: 'silence', steps: [
+    ['clip', 'v_punks_skates'],
     ['say', 'snow', 'Quelli sui pattini. Ci stanno seguendo.'], ['say', 'swan', 'Nei gabinetti. Nessuno fiata.'], ['flag', 'bathroom_hide']] };
   S.cine_bathroom_chaos = { cine: 'cine_bathroom_chaos', mood: 'fight', steps: [
     ['caption', 'Le porte si spalancano tutte insieme. Nel bagno non c\'è più silenzio.'], ['shake', 10], ['sfx', 'hit'],
@@ -178,6 +187,7 @@ var W = window.W;
 
   // C7
   S.cine_train_dawn = { cine: 'cine_train_dawn', letterbox: false, steps: [
+    ['clip', 'v_train_dawn'],
     ['say', 'mercy', 'È quasi giorno.'], ['say', 'swan', 'Sì.'], ['say', 'mercy', 'Non sembra la stessa città.']] };
   S.talk_c7_couple = { cine: 'cine_train_dawn', letterbox: false, steps: [
     ['caption', 'Alla fermata sale una coppia di ragazzi ben vestiti, di ritorno da una festa. Si siedono di fronte.'], ['wait', 0.4],
@@ -193,7 +203,7 @@ var W = window.W;
     ['npc', 'hearse', 'hearse', 1600, 600, -1], ['move', 'hearse', 1080, null, 1.6], ['wait', 1.7],
     ['npc', 'luther', 'luther', 960, 598, -1], ['raise', 'luther', 30], ['npc', 'rg1', 'rogue', 1250, 640, -1],
     ['caption', 'Il carro funebre dei Rogues, coperto di graffiti, si ferma. Luther si sporge dal finestrino, tre bottiglie vuote infilate tra le dita.'],
-    ['say', 'luther', 'Warriors... venite fuori a giocare!'], ['sfx', 'bottle'], ['wait', 0.4], ['sfx', 'bottle'], ['say', 'swan', 'Finisce sulla spiaggia.'],
+    ['clip', 'v_luther_bottles'], ['say', 'luther', 'Warriors... venite fuori a giocare!'], ['sfx', 'bottle'], ['wait', 0.4], ['sfx', 'bottle'], ['say', 'swan', 'Finisce sulla spiaggia.'],
     ['clearNpcs'], ['npc', 'hearse', 'hearse', 1080, 600, -1], ['move', 'hearse', 1700, null, 1.4], ['wait', 1.3], ['clearNpcs'], ['flag', 'rogues_arrived']] };
   S.cine_pier = { cine: 'cine_pier', letterbox: false, steps: [
     ['caption', 'Il carro dei Rogues li segue a passo d\'uomo. Luther vuole vederli in spiaggia.'],
@@ -204,10 +214,11 @@ var W = window.W;
     [['npc', 'mercy', 'mercy', 120, 650, 1], ['npc', 'swan', 'swan', 560, Y, 1], ['npc', 'luther', 'luther', 900, Y, -1], ['npc', 'rg1', 'rogue', 1000, 540, -1], ['npc', 'rg2', 'rogue', 1040, 640, -1],
      ['say', 'swan', 'Sappiamo chi ha sparato. Perché l\'hai fatto?'], ['say', 'luther', 'Nessun motivo. Mi piacciono queste cose.'],
      ['say', 'swan', 'Niente pistole. Tu e io, con i coltelli.'],
-     ['caption', 'Luther accetta. Poi, all\'ultimo, tira fuori la pistola e la punta.'], ['wait', 0.5],
+     ['caption', 'Luther accetta. Poi, all\'ultimo, tira fuori la pistola e la punta.'], ['pose', 'luther', 'gun_aim'], ['clip', 'v_duel'], ['wait', 0.5],
      ['caption', 'Swan è più veloce: il coltello gli si pianta nel polso.'], ['sfx', 'swing'], ['sfx', 'hit'], ['shake', 8],
      ['caption', 'Il colpo parte a vuoto, nella sabbia. La pistola cade: Luther è disarmato.'], ['sfx', 'shot'], ['flash'], ['pose', 'luther', 'down'], ['flag', 'luther_disarmed']]) };
   S.cine_riffs_arrival = { cine: 'cine_riffs_arrival', steps: [
+    ['clip', 'v_riffs_beach'],
     ['crowd', 'rf', ['masai', 'cyrus', 'masai', 'cyrus'], 1150, 1260, 520, 660, 8, -1], ['npc', 'masai', 'masai', 1300, 580, -1], ['move', 'masai', 1000, null, 2],
     ['moveAll', -180, 2, 'crowd'], ['wait', 1.8],
     ['say', 'masai', 'Sappiamo cos\'è successo. Avete attraversato tutta la città stanotte.'], ['say', 'masai', 'Non è da tutti. Andate: di loro ci occupiamo noi.'],
@@ -215,13 +226,14 @@ var W = window.W;
     ['move', 'swan', 300, null, 2.4], ['wait', 2], ['fade', 'out', 1.2], ['clearNpcs'], ['flag', 'innocence_recognized']] };
   S.cine_epilogue = { cine: 'cine_epilogue', steps: seq(
     [['players', 'hide']], line(FINAL6, 120, 90, Y, 1, 22), [['npc', 'mercy', 'mercy', 210, 640, 1]],
-    [['moveAll', 1100, 12], ['wait', 1.5], ['caption', 'Trenta miglia di città nemica. Ora, davanti a loro, c\'è il mare.'], ['wait', 2],
+    [['clip', 'v_beach_dawn'], ['moveAll', 1100, 12], ['wait', 1.5], ['caption', 'Trenta miglia di città nemica. Ora, davanti a loro, c\'è il mare.'], ['wait', 2],
      ['caption', 'Swan e Mercy camminano mano nella mano. Gli altri, poco dietro. Sono a casa.'], ['wait', 4], ['fade', 'out', 2], ['clearNpcs'], ['flag', 'campaign_complete']]) };
 
   // ------------------------------------------------------------------ la radio durante la notte
   // Tono della DJ: calmo, caldo, quasi ironico; non prende posizione. Dediche in codice che dicono alle bande dove sono i Warriors.
   function radioScene(id, lines) { S[id] = { cine: id, radio: true, mood: 'radio', letterbox: false, steps: lines.map(function (l) { return ['say', 'dj', l]; }) }; }
   radioScene('radio_hunt', ['Interrompiamo la musica per una notizia dal Bronx. Cyrus è morto.', 'Masai dei Riffs fa sapere a tutte le bande che vuole i Warriors. Vivi o morti.', 'A tutte le bande in ascolto: si dice che siano stati i Warriors. Il gilet, li conoscete.', 'Occhi aperti, ragazzi. La caccia è aperta. E questa notte la vince chi arriva primo.']);
+  S.radio_hunt.steps.unshift(['clip', 'v_riffs_order']);   // prima la sala dei Riffs, poi la radio
   radioScene('radio_96th', ['Una dedica speciale per chi aspetta alla 96ª Strada: arriva gente dal Bronx.', 'Non fateli aspettare.']);
   radioScene('radio_apology', ['Una correzione per tutti quelli che ci ascoltano: con la morte di Cyrus i Warriors non c\'entrano.', 'A quanto pare abbiamo dato la notizia sbagliata. Ai ragazzi di Coney Island, le nostre scuse.', 'E l\'ultima canzone di stanotte la dedichiamo a loro.']);
 
