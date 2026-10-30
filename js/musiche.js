@@ -23,14 +23,17 @@
 window.W = window.W || {};
 // I brani dell'album caricati in assets/incoming/musica/ vengono riconosciuti da tools/import_incoming.py
 // e scritti in js/musiche_auto.js (W.MUSIC_AUTO). Qui sotto: quale brano suona in quale momento (provvisorio, da rivedere con l'autore).
+// Dove è certo dal film: «Love Is a Fire» è la musica su cui ballano le Lizzies; la DJ alla radio manda «Nowhere to Run» come minaccia ai Warriors;
+// «In the City» chiude il film; i primi secondi di «Last of an Ancient Breed» accompagnano la sfida dei Rogues. Il resto è scelto per carattere.
 W.MUSIC_MOMENTS = {
   menu: 'theme', cine_opening: 'theme', credits: 'in_the_city',
   chase: 'youre_movin_too_slow', fight: 'the_fight',
+  radio: 'nowhere_to_run', radio_hunt: 'nowhere_to_run', radio_96th: 'nowhere_to_run', radio_apology: 'nowhere_to_run',
   'C3:explore': 'in_havana',
   'C4-01': 'baseball_furies_chase', 'C4:fight': 'baseball_furies_chase', 'C4:chase': 'baseball_furies_chase',
-  dlg_c5_welcome: 'nowhere_to_run', 'C5-02': 'nowhere_to_run', 'C5-03': 'nowhere_to_run', cine_lizzies_trap: 'nowhere_to_run',
+  dlg_c5_welcome: 'love_is_a_fire', 'C5-02': 'love_is_a_fire', 'C5-03': 'love_is_a_fire', cine_lizzies_trap: 'love_is_a_fire',
   'C6:explore': 'echoes_in_my_mind', 'C6-02': 'silence',
-  'C7': 'love_is_a_fire', 'C8-01': 'last_of_an_ancient_breed', 'C8-02': 'last_of_an_ancient_breed',
+  'C7': 'echoes_in_my_mind', 'C8-01': 'last_of_an_ancient_breed', cine_bottles: 'last_of_an_ancient_breed', 'C8-02': 'last_of_an_ancient_breed',
   'C8-04': 'in_the_city', cine_epilogue: 'in_the_city'
 };
 W.MUSIC = {

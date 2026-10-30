@@ -195,17 +195,32 @@ TRACKS = [
 
 
 def do_music():
-    base = INC / 'musica'; out = {}
-    if not base.exists(): return out
+    """Brani dell'album in assets/incoming/musica/ (qualsiasi nome che contenga il titolo): convertiti in mp3 in assets/music/.
+    I brani già in assets/music/ restano collegati anche se l'originale in incoming viene tolto."""
+    import shutil, subprocess
     od = ROOT / 'assets' / 'music'; od.mkdir(parents=True, exist_ok=True)
-    for f in sorted(base.iterdir()):
-        if f.suffix.lower() not in ('.mp3', '.m4a', '.ogg', '.wav', '.aac'): continue
-        name = re.sub(r'[^a-z]', ' ', f.stem.lower())
-        key = next((k for k, words in TRACKS if any(wd in name.split() or wd in name for wd in words) and k not in out), None)
-        if key == 'the_fight' and 'furies' in name: key = 'baseball_furies_chase'
-        if not key: report.append(f'- musica: `{f.name}` non riconosciuto (rinominalo con il titolo del brano)'); continue
-        dst = od / (key + f.suffix.lower()); dst.write_bytes(f.read_bytes()); out[key] = f'assets/music/{dst.name}'
-    if out: report.append('- **musica**: ' + ', '.join(sorted(out)))
+    keys = [k for k, _ in TRACKS]
+    out = {f.stem: f'assets/music/{f.name}' for f in sorted(od.iterdir()) if f.stem in keys and f.suffix.lower() in ('.mp3', '.m4a', '.ogg')}
+    base = INC / 'musica'; new = []
+    if base.exists():
+        ff = shutil.which('ffmpeg')
+        for f in sorted(base.iterdir()):
+            if f.suffix.lower() not in ('.mp3', '.m4a', '.ogg', '.wav', '.aac', '.flac', '.aif', '.aiff'): continue
+            name = re.sub(r'[^a-z]', ' ', f.stem.lower())
+            key = next((k for k, words in TRACKS if any(wd in name.split() or wd in name for wd in words) and k not in new), None)
+            if key == 'the_fight' and 'furies' in name: key = 'baseball_furies_chase'
+            if not key: report.append(f'- musica: `{f.name}` non riconosciuto (rinominalo con il titolo del brano)'); continue
+            if f.suffix.lower() in ('.mp3', '.m4a', '.ogg'):
+                dst = od / (key + f.suffix.lower()); dst.write_bytes(f.read_bytes())
+            elif ff:
+                dst = od / (key + '.mp3')
+                r = subprocess.run([ff, '-y', '-loglevel', 'error', '-i', str(f), '-vn', '-c:a', 'libmp3lame', '-b:a', '128k', '-ar', '44100', str(dst)])
+                if r.returncode != 0: report.append(f'- **musica rotta** `{f.name}`: non si riesce a leggerla'); continue
+            else: report.append(f'- musica: `{f.name}` va convertita in mp3 (ffmpeg non disponibile)'); continue
+            for o in od.glob(key + '.*'):
+                if o != dst: o.unlink()
+            out[key] = f'assets/music/{dst.name}'; new.append(key)
+    if new: report.append('- **musica**: ' + ', '.join(sorted(new)))
     return out
 
 

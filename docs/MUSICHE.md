@@ -114,3 +114,9 @@ Gli ID sono gli stessi dei video (`docs/SCENE_E_VIDEO.md`); quelli che iniziano 
 - `gameover` — breve, si sente sotto la voce della DJ.
 
 Le canzoni del film sono protette da diritti separati da quelli del film: usale solo se la licenza le copre.
+
+## Brani integrati (30 ottobre)
+
+I dieci brani dell'album sono arrivati dal committente (wav), convertiti in mp3 128 kbps in `assets/music/` (35 MB in tutto). I brani già in `assets/music/` restano collegati anche senza l'originale in `assets/incoming/musica/`.
+
+Dal film, con fonte: «Love Is a Fire» è la musica su cui ballano le Lizzies; la DJ manda «Nowhere to Run» alla radio come minaccia ai Warriors; «In the City» è il finale; i primi secondi di «Last of an Ancient Breed» accompagnano la sfida dei Rogues. Le altre posizioni sono scelte per carattere (vedi `W.MUSIC_MOMENTS` in `js/musiche.js`). «Wonder Wheel» (titoli di testa del film) non è nell'album: l'apertura usa il Theme.
