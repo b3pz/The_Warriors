@@ -15,10 +15,18 @@ var W = window.W;
     this.objective = def.objective || ''; this.banner = { text: '', t: 99 };
     this.sceneQueue = []; this.scene = null; this.talked = {}; this.talkCount = 0; this.stepIdx = 0; this.timer = null;
     this.pursuersLeft = 0; this.spawnT = 2; this.panelHits = 0; this.panelOpen = !def.panel; this.markReached = false;
-    this.bus = def.bus ? { t: 4, phase: 'idle', x: 0 } : null;
+    this.bus = def.bus ? { t: 4, phase: 'idle', x: 0, kind: 'bus' } : (def.train ? { t: 3, phase: 'idle', x: 0, kind: 'train' } : null);
     var duo = world.duo(), self = this;
     world.peace = !!def.peace || def.kind === 'stealth';
     world.props = (def.props || []).map(function (p) { var o = Object.assign({}, p); if (p.contents) o.contents = duo ? p.contents.duo : p.contents.solo; return o; });
+    // ostacoli dei corridoi: [tipo, x, inizio, fine] con inizio/fine in frazione della profondità
+    var fdepth = this.floor[1] - this.floor[0], f0 = this.floor[0];
+    (def.obstacles || []).forEach(function (o) {
+      var y0 = f0 + fdepth * (o[2] === undefined ? 0 : o[2]) - 6, y1 = f0 + fdepth * (o[3] === undefined ? 1 : o[3]) + 6;
+      if (o[0] === 'low') world.props.push({ kind: 'low', style: def.lowStyle || 'barrier', x0: o[1], x1: o[1] + 24, y0: y0, y1: y1, solid: true, low: true });
+      if (o[0] === 'crate') world.props.push({ kind: 'crate', x0: o[1], x1: o[1] + 62, y0: y0, y1: Math.min(y1, y0 + 34), solid: true, breakable: 3, drop: o[4] || null });
+      if (o[0] === 'fire') world.props.push({ kind: 'fire', x0: o[1], x1: o[1] + 90, y0: y0, y1: y1, hazard: true, low: true });
+    });
     (def.barriers || []).forEach(function (bx, i) {
       var y0 = self.floor[0] + 20 + ((i % 2) ? (self.floor[1] - self.floor[0]) * 0.45 : 0);
       world.props.push({ kind: 'barrier', x0: bx, x1: bx + 26, y0: y0, y1: y0 + (self.floor[1] - self.floor[0]) * 0.42, solid: true, low: true });
@@ -39,7 +47,7 @@ var W = window.W;
     var lead = world.players[0];
     if (def.present && (def.kind === 'traversal' || def.kind === 'training' || def.kind === 'stealth')) {
       def.present.filter(function (id) { return active.indexOf(id) < 0 && (opts.roster || []).indexOf(id) >= 0; }).forEach(function (id, k) {
-        var n = new W.Npc(world, id, id, 60 - k * 40, mid + ((k % 3) - 1) * 34, 1); n.follow = lead; n.followOff = k + 1; n.keep = true;
+        var n = new W.Npc(world, id, id, Math.max(40, 60 + (k % 4) * 70 - Math.floor(k / 4) * 50), self.floor[0] + 20 + ((k * 37) % 100) / 100 * (self.floor[1] - self.floor[0] - 30), 1); n.follow = lead; n.followOff = k + 1; n.keep = true;
         if (def.talks && def.talks.some(function (t) { return t.who === id; })) { var tk = def.talks.filter(function (t) { return t.who === id; })[0]; n.follow = null; n.x = tk.x; n.y = tk.y; n.face = -1; }
         if (def.seated) { n.follow = null; n.x = 300 + k * 260; n.y = f[0] + 10; }
         world.npcs.push(n);
@@ -244,16 +252,17 @@ var W = window.W;
 
   AreaRun.prototype.stepBus = function (w, dt) {
     // pericolo di percorso: corsia superiore, lampeggi e clacson prima del passaggio
-    var b = this.bus, lane = [this.floor[0], this.floor[0] + 60];
+    var b = this.bus, lane = b.kind === 'train' ? [this.floor[1] - 46, this.floor[1]] : [this.floor[0], this.floor[0] + 60];
     b.lane = lane; b.t -= dt;
-    if (b.phase === 'idle' && b.t <= 0) { b.phase = 'warn'; b.t = 1.4; w.emit('horn', {}); }
-    else if (b.phase === 'warn' && b.t <= 0) { b.phase = 'pass'; b.t = 1.3; b.x = w.cam.x - 420; b.hit = {}; }
+    if (b.phase === 'idle' && b.t <= 0) { b.phase = 'warn'; b.t = b.kind === 'train' ? 1.8 : 1.4; w.emit(b.kind === 'train' ? 'trainwarn' : 'horn', {}); }
+    else if (b.phase === 'warn' && b.t <= 0) { b.phase = 'pass'; b.t = 1.3; b.x = w.cam.x - (b.kind === 'train' ? 900 : 420); b.hit = {}; if (b.kind === 'train') w.emit('train', {}); }
     else if (b.phase === 'pass') {
-      b.x += (C.VIEW_W + 900) / 1.3 * dt;
+      b.x += (C.VIEW_W + (b.kind === 'train' ? 1800 : 900)) / 1.3 * dt;
       w.players.forEach(function (p) {
-        if (!b.hit[p.uid] && p.hittable() && p.y >= lane[0] - 4 && p.y <= lane[1] && p.x > b.x && p.x < b.x + 380) { b.hit[p.uid] = true; p.takeHit({ x: b.x, face: 1 }, { spec: { dmg: 14, kd: true } }); }
+        var len = b.kind === 'train' ? 900 : 380;
+        if (!b.hit[p.uid] && p.hittable() && p.y >= lane[0] - 4 && p.y <= lane[1] && p.x > b.x && p.x < b.x + len) { b.hit[p.uid] = true; p.takeHit({ x: b.x, face: 1 }, { spec: { dmg: b.kind === 'train' ? 18 : 14, kd: true } }); }
       });
-      if (b.t <= 0) { b.phase = 'idle'; b.t = 6 + w.rng() * 3; }
+      if (b.t <= 0) { b.phase = 'idle'; b.t = (b.kind === 'train' ? 7 : 6) + w.rng() * 3; }
     }
   };
 

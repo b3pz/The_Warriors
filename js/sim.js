@@ -90,6 +90,21 @@ var W = window.W;
       att.hit[t.uid] = true; hits++;
       t.takeHit(a, att);
     }
+    if (a.isPlayer && att.phase === 'act') {
+      att.hitProps = att.hitProps || {};
+      for (var pi = this.props.length - 1; pi >= 0; pi--) {
+        var pr = this.props[pi]; if (!pr.breakable || att.hitProps[pi]) continue;
+        var pcx = (pr.x0 + pr.x1) / 2, pdx = (pcx - a.x) * a.face;
+        if (pdx < -10 || pdx > sp.reach + 40 || a.y < pr.y0 - 30 || a.y > pr.y1 + 40) continue;
+        att.hitProps[pi] = true; pr.breakable -= sp.heavy ? 2 : 1;
+        this.emit('hit', { x: pcx, y: pr.y1, z: 30, target: 'enemy', heavy: !!sp.heavy });
+        if (pr.breakable <= 0) {
+          this.emit('break', { x: pcx, y: pr.y1 });
+          if (pr.drop) this.items.push({ uid: uid(), kind: pr.drop, x: pcx, y: pr.y1 + 6, t: 0 });
+          this.props.splice(pi, 1);
+        }
+      }
+    }
     if (hits > 0 && !att.contact) {
       att.contact = true;
       if (a.isPlayer && this.stats.train) { var tk = 'hit_' + att.move; this.stats.train[tk] = (this.stats.train[tk] || 0) + 1; }
@@ -202,8 +217,8 @@ var W = window.W;
       }
     }
     this.reviving = false;
-    if (this.char.noncombat) { if (d.take('interact')) this.interact(ax, ay); d.take('light'); d.take('heavy'); d.take('fury'); d.take('throw'); d.take('dodge'); d.take('jump'); return; }
-    if (this.world.peace) { if (d.take('interact')) this.interact(ax, ay); d.take('light'); d.take('heavy'); d.take('fury'); d.take('throw'); return; }
+    if (this.char.noncombat) { if (d.take('interact')) this.interact(ax, ay); d.take('light'); d.take('heavy'); d.take('fury'); d.take('throw'); d.take('dodge'); if (d.take('jump')) { this.setState('jump'); this.jvx = ax * C.WALK.x * this.mods.spd; this.jvy = ay * C.WALK.y * 0.6; this.z = 0; } return; }
+    if (this.world.peace) { if (d.take('interact')) this.interact(ax, ay); d.take('light'); d.take('heavy'); d.take('fury'); d.take('throw'); if (!d.peek('jump')) return; }
     if (d.take('fury') && this.fury >= 100) { this.fury = 0; this.startAttack('fury'); w.emit('fury', { x: this.x, y: this.y }); return; }
     if (d.take('jump')) { if (w.stats.train) w.stats.train.jump = 1; this.setState('jump'); this.jvx = ax * C.WALK.x * this.mods.spd * (running ? 1.3 : 1); this.jvy = ay * C.WALK.y * 0.6; this.z = 0; return; }
     if (d.take('dodge') && w.time - this.dodgeStart >= C.DODGE.cd) {
@@ -456,7 +471,14 @@ var W = window.W;
   // aggira un oggetto solido sulla traiettoria scegliendo il lato libero più vicino (Q08)
   function steerAround(a, c) {
     if (!c.ax) return;
-    var ps = a.world.props;
+    var ps = a.world.props, fl = a.world.floor();
+    // ostacoli bassi che coprono tutta la profondità, o fuoco: la CPU salta
+    for (var j = 0; j < ps.length; j++) {
+      var q = ps[j]; if (!q.low) continue;
+      var ah = c.ax > 0 ? q.x0 - a.x : a.x - q.x1;
+      var full = q.y0 <= fl[0] + 14 && q.y1 >= fl[1] - 14;
+      if ((full || q.hazard) && ah > 8 && ah < 70 && a.y >= q.y0 - 10 && a.y <= q.y1 + 10 && a.state !== 'jump' && c.press) { c.press('jump'); return; }
+    }
     for (var i = 0; i < ps.length; i++) {
       var p = ps[i]; if (!p.solid) continue;
       var ahead = c.ax > 0 ? p.x0 - a.x : a.x - p.x1;
@@ -851,6 +873,15 @@ var W = window.W;
     for (i = 0; i < this.players.length; i++) this.players[i].update(dt);
     for (i = 0; i < this.enemies.length; i++) this.enemies[i].update(dt);
     this.stepProjectiles(dt);
+    // fuoco: brucia chi ci cammina dentro; si supera saltando
+    for (i = 0; i < this.props.length; i++) {
+      var hz = this.props[i]; if (!hz.hazard) continue;
+      for (var hp2 = 0; hp2 < this.players.length; hp2++) {
+        var pl2 = this.players[hp2];
+        if (pl2.char.noncombat || (pl2.z || 0) > 26 || !pl2.hittable()) continue;
+        if (pl2.x > hz.x0 && pl2.x < hz.x1 && pl2.y > hz.y0 && pl2.y < hz.y1) pl2.takeHit({ x: pl2.x - pl2.face, face: pl2.face }, { spec: { dmg: 6, kd: false } });
+      }
+    }
     this.stepEnemyProjectiles(dt);
     for (i = 0; i < this.npcs.length; i++) this.npcs[i].update(dt);
     for (i = 0; i < this.items.length; i++) this.items[i].t += dt;

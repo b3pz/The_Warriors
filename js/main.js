@@ -6,7 +6,7 @@ var W = window.W;
 (function () {
   var C = W.CFG, cv, ctx, R = W.Render;
   var game = { state: 'title', world: null, sel: null, menuIdx: 0, fails: 0, snap: null, result: null, msg: null, run: null, party: null, credits: 0 };
-  var options = { shake: true, flash: true, sfx: 0.8, music: 0.5 };
+  var options = { shake: true, flash: true, sfx: 0.8, music: 0.5, scenery: true };
   var SAVE_KEY = 'warriors-story-v1', OPT_KEY = 'warriors-options-v1', UNLOCK_KEY = 'warriors-unlocks-v1';
   var ALL9 = W.ROSTER.map(function (c) { return c.id; });
 
@@ -31,9 +31,25 @@ var W = window.W;
   }
   function unlocks() { var s = storage(); try { return (s && JSON.parse(s.getItem(UNLOCK_KEY))) || ['P0']; } catch (e) { return ['P0']; } }
   function unlock(ch) { var u = unlocks(); if (u.indexOf(ch) < 0) { u.push(ch); var s = storage(); if (s) try { s.setItem(UNLOCK_KEY, JSON.stringify(u)); } catch (e) {} } }
+  // ------------------------------------------------------------------ comandi rimappabili (warriors-keys-v1)
+  var KEYS_KEY = 'warriors-keys-v1', DEFAULT_KEYS = JSON.parse(JSON.stringify(W.Input.LAYOUTS));
+  var ACTION_NAMES = { up: 'Su', down: 'Giù', left: 'Sinistra', right: 'Destra', light: 'Colpo leggero', heavy: 'Colpo pesante', jump: 'Salto', dodge: 'Schivata', interact: 'Interazione · presa · parla', fury: 'Furia', throw: 'Lancia arma' };
+  var ACTION_ORDER = ['up', 'down', 'left', 'right', 'light', 'heavy', 'jump', 'dodge', 'interact', 'fury', 'throw'];
+  var LAYOUT_NAMES = { solo: 'Un giocatore', p1: 'Due giocatori · G1', p2: 'Due giocatori · G2' };
+  function loadKeys() {
+    var s = storage(); if (!s) return;
+    try { var k = JSON.parse(s.getItem(KEYS_KEY)); if (k) for (var lay in k) for (var a in k[lay]) if (W.Input.LAYOUTS[lay] && W.Input.LAYOUTS[lay][a]) W.Input.LAYOUTS[lay][a] = k[lay][a]; } catch (e) {}
+  }
+  function saveKeys() { var s = storage(); if (s) try { s.setItem(KEYS_KEY, JSON.stringify(W.Input.LAYOUTS)); } catch (e) {} }
+  function bindKey(lay, action, code) {
+    var L = W.Input.LAYOUTS[lay], old = L[action].slice();
+    // se il tasto era già usato da un'altra azione dello stesso schema, le due azioni si scambiano i tasti
+    for (var a in L) if (a !== action && L[a].indexOf(code) >= 0) L[a] = old;
+    L[action] = [code]; saveKeys();
+  }
   function loadOptions() { var s = storage(); if (!s) return; try { var o = JSON.parse(s.getItem(OPT_KEY)); if (o) for (var k in options) if (k in o) options[k] = o[k]; } catch (e) {} applyOptions(); }
   function saveOptions() { var s = storage(); if (s) try { s.setItem(OPT_KEY, JSON.stringify(options)); } catch (e) {} applyOptions(); }
-  function applyOptions() { R.opts.shake = options.shake; R.opts.flash = options.flash; W.Audio.setVol('sfx', options.sfx); W.Audio.setVol('music', options.music); }
+  function applyOptions() { R.opts.scenery = options.scenery; R.opts.shake = options.shake; R.opts.flash = options.flash; W.Audio.setVol('sfx', options.sfx); W.Audio.setVol('music', options.music); }
 
   // ------------------------------------------------------------------ etichette tasti
   var KEYNAME = { Space: 'Spazio', ShiftLeft: 'Shift', ShiftRight: 'Shift', ControlRight: 'Ctrl dx', ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→' };
@@ -266,8 +282,19 @@ var W = window.W;
       { label: 'Ambiente', val: function () { return Math.round(options.music * 10); }, adj: function (d) { options.music = Math.max(0, Math.min(1, options.music + d * 0.1)); saveOptions(); } },
       { label: 'Scossa schermo', val: function () { return options.shake ? 'sì' : 'no'; }, adj: function () { options.shake = !options.shake; saveOptions(); } },
       { label: 'Lampi', val: function () { return options.flash ? 'sì' : 'no'; }, adj: function () { options.flash = !options.flash; saveOptions(); } },
+      { label: 'Fondali', val: function () { return options.scenery ? 'disegnati' : 'ritagli delle tavole'; }, adj: function () { options.scenery = !options.scenery; saveOptions(); } },
+      { label: 'Comandi · un giocatore', act: function () { game.keyLayout = 'solo'; game.state = 'keys'; game.menuIdx = 0; } },
+      { label: 'Comandi · due giocatori G1', act: function () { game.keyLayout = 'p1'; game.state = 'keys'; game.menuIdx = 0; } },
+      { label: 'Comandi · due giocatori G2', act: function () { game.keyLayout = 'p2'; game.state = 'keys'; game.menuIdx = 0; } },
       { label: 'Indietro', act: function () { game.state = 'menu'; game.menuIdx = 0; } }
     ];
+    if (game.state === 'keys') {
+      var lay = game.keyLayout, L = W.Input.LAYOUTS[lay];
+      var ks = ACTION_ORDER.map(function (a) { return { label: ACTION_NAMES[a], val: function () { return game.binding === a ? '…premi un tasto' : L[a].map(keyLabel).filter(function (v, i, arr) { return arr.indexOf(v) === i; }).join(' / '); }, act: function () { game.binding = a; } }; });
+      ks.push({ label: 'Ripristina predefiniti', act: function () { W.Input.LAYOUTS[lay] = JSON.parse(JSON.stringify(DEFAULT_KEYS[lay])); saveKeys(); game.msg = { text: 'Comandi ripristinati', t: 2 }; } });
+      ks.push({ label: 'Indietro', act: function () { game.state = 'options'; game.menuIdx = 0; } });
+      return ks;
+    }
     if (game.state === 'result') return [{ label: 'Menu principale', act: function () { game.state = 'menu'; game.menuIdx = 0; } }];
     return [];
   }
@@ -277,6 +304,11 @@ var W = window.W;
 
   function onKey(code) {
     W.Audio.unlock();
+    // assegnazione di un tasto: il prossimo tasto premuto (tranne Esc) diventa quello dell'azione
+    if (game.state === 'keys' && game.binding) {
+      if (code !== 'Escape') { bindKey(game.keyLayout, game.binding, code); game.msg = { text: ACTION_NAMES[game.binding] + ': ' + keyLabel(code), t: 1.6 }; }
+      game.binding = null; W.Audio.ui(); return;
+    }
     var up = code === 'ArrowUp' || code === 'KeyW', down = code === 'ArrowDown' || code === 'KeyS';
     var left = code === 'ArrowLeft' || code === 'KeyA', right = code === 'ArrowRight' || code === 'KeyD';
     var ok = code === 'Enter' || code === 'NumpadEnter' || code === 'KeyJ' || code === 'Space' || code === 'KeyF';
@@ -304,7 +336,7 @@ var W = window.W;
     var cur = items[Math.min(game.menuIdx, items.length - 1)];
     if ((left || right) && cur.adj) { cur.adj(left ? -1 : 1); W.Audio.ui(); }
     if (ok) { if (cur.act) { var prev = game.state; cur.act(); if (game.state !== prev) game.menuIdx = 0; } else if (cur.adj) cur.adj(1); W.Audio.ui(); }
-    if (back) { if (game.state === 'pause') game.state = 'play'; else if (game.state === 'options' || game.state === 'chapters') { game.state = 'menu'; game.menuIdx = 0; } }
+    if (back) { if (game.state === 'pause') game.state = 'play'; else if (game.state === 'keys') { game.state = 'options'; game.menuIdx = 0; } else if (game.state === 'options' || game.state === 'chapters') { game.state = 'menu'; game.menuIdx = 0; } }
   }
 
   function selectKey(up, down, left, right, ok, back) {
@@ -423,7 +455,8 @@ var W = window.W;
   }
   function drawHowto() {
     backdrop(); txt('COME SI GIOCA', C.VIEW_W / 2, 90, 40, R.COL.p1, 'center', 700);
-    var rows = [['Movimento', 'WASD / frecce · doppio tocco = corsa'], ['Leggero (3 colpi in catena se vanno a segno)', 'J'], ['Pesante · apre la guardia, disarma sulla ripresa', 'K'], ['Salto · leggero in discesa = calcio volante', 'Spazio'], ['Schivata · invulnerabile a metà', 'Shift'], ['Interazione · parla, raccogli, apri, presa, soccorso', 'E'], ['In presa: leggero colpisce (max 2) · direzione+E lancia', 'E / J'], ['Furia a barra piena', 'L'], ['Lancia l\'arma impugnata', 'Q'], ['Dialoghi: avanti', 'Invio / J / E'], ['Pausa · salta scena', 'Esc']];
+    var L = W.Input.LAYOUTS.solo, k = function (x) { return keyLabel(L[x][0]); };
+    var rows = [['Movimento · doppio tocco = corsa', k('up') + k('left') + k('down') + k('right')], ['Leggero (3 colpi in catena se vanno a segno)', k('light')], ['Pesante · apre la guardia, disarma sulla ripresa', k('heavy')], ['Salto · supera le transenne basse · leggero in discesa = calcio volante', k('jump')], ['Schivata · invulnerabile a metà', k('dodge')], ['Interazione · parla, raccogli, apri, presa, soccorso', k('interact')], ['In presa: leggero colpisce (max 2) · direzione+interazione lancia', k('interact') + ' / ' + k('light')], ['Furia a barra piena', k('fury')], ['Lancia l\'arma impugnata', k('throw')], ['Dialoghi: avanti', 'Invio'], ['Pausa · salta scena · comandi in Opzioni', 'Esc']];
     rows.forEach(function (r, i) { txt(r[0], 250, 160 + i * 42, 21, R.COL.ink, 'left', 400); txt(r[1], 1030, 160 + i * 42, 21, R.COL.p1, 'right', 600); });
     txt('Controller: X leggero · Y pesante · A salto · RB schivata · B interazione · LB furia · RT lancio · Start pausa', C.VIEW_W / 2, 650, 17, R.COL.dim, 'center', 400);
     txt('Invio per tornare', C.VIEW_W / 2, 690, 17, R.COL.dim, 'center', 400);
@@ -500,7 +533,7 @@ var W = window.W;
   }
   function draw(dt) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    if (['title', 'menu', 'select', 'chapters', 'howto', 'options'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); }
+    if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); }
     if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); }
     if (game.state === 'title') drawTitle();
     else if (game.state === 'menu') {
@@ -515,7 +548,18 @@ var W = window.W;
     else if (game.state === 'party') drawParty();
     else if (game.state === 'howto') drawHowto();
     else if (game.state === 'credits') drawCredits(dt);
-    else if (game.state === 'options') { backdrop(); txt('OPZIONI', C.VIEW_W / 2, 140, 44, R.COL.p1, 'center', 700); drawList(menuItems(), C.VIEW_W / 2, 260); txt('← → regola', C.VIEW_W / 2, 640, 18, R.COL.dim, 'center', 400); }
+    else if (game.state === 'keys') {
+      backdrop(0.3); txt('COMANDI · ' + LAYOUT_NAMES[game.keyLayout].toUpperCase(), 82, 90, 36, '#fff', 'left', 700);
+      var its = menuItems();
+      for (var ki = 0; ki < its.length; ki++) {
+        var sel = ki === game.menuIdx, y = 140 + ki * 40;
+        if (sel) { ctx.fillStyle = 'rgba(214,40,40,0.22)'; ctx.fillRect(64, y - 28, 760, 38); ctx.fillStyle = '#d62828'; ctx.fillRect(64, y - 28, 5, 38); }
+        txt(its[ki].label, 82, y, 21, sel ? '#fff' : R.COL.ink, 'left', sel ? 600 : 500);
+        if (its[ki].val) txt(its[ki].val(), 800, y, 21, game.binding && sel ? '#f2d23c' : R.COL.p1, 'right', 600);
+      }
+      txt('Invio: cambia il tasto · Esc: indietro · se il tasto è già usato, le due azioni si scambiano', 82, C.VIEW_H - 24, 15, R.COL.dim, 'left', 400);
+    }
+    else if (game.state === 'options') { backdrop(); txt('OPZIONI', C.VIEW_W / 2, 140, 44, R.COL.p1, 'center', 700); drawList(menuItems(), C.VIEW_W / 2, 220); txt('← → regola · Invio apre', C.VIEW_W / 2, 696, 16, R.COL.dim, 'center', 400); }
     else if (game.state === 'result') drawResult();
     else if (game.state === 'comic') drawComic(dt);
     else if (game.world) {
@@ -533,7 +577,7 @@ var W = window.W;
 
   function boot() {
     cv = document.getElementById('game'); cv.width = C.VIEW_W; cv.height = C.VIEW_H; ctx = cv.getContext('2d');
-    R.init(cv); loadOptions(); fit();
+    R.init(cv); loadKeys(); loadOptions(); fit();
     window.addEventListener('resize', fit);
     W.Input.onKey(onKey);
     cv.addEventListener('pointerdown', function () { W.Audio.unlock(); if (game.state === 'title') onKey('Enter'); });

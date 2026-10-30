@@ -245,7 +245,9 @@ W.Render = (function () {
   function drawBg(w) {
     var a = w.area.def, cx = w.cam.x;
     var bd = W.BG_PX && W.BG_PX[a.bg], bi = BGPX[a.bg];
-    if (bd && bi && bi.ok && useSprites) {
+    if (W.Scenery && opts.scenery !== false) {
+      W.Scenery.draw(ctx, w.area, cx);
+    } else if (bd && bi && bi.ok && useSprites) {
       // parte alta scalata fino a y=430, pavimento allungato fino al fondo; tasselli alternati a specchio
       var s2 = 430 / bd.floorTop, tw = Math.round(bd.w * s2);
       ctx.imageSmoothingEnabled = false;
@@ -297,6 +299,31 @@ W.Render = (function () {
   }
 
   // ------------------------------------------------------------------ oggetti
+  // ostacoli bassi: transenne (strada), tornelli (metro), siepi (parco), fuoco
+  function drawLowSeg(p, cx, y, t) {
+    var x = p.x0 - cx + (y - p.y0) * 0.12;
+    if (p.kind === 'fire') {
+      for (var k = 0; k < 4; k++) {
+        var fx = x + 10 + k * 20 + Math.sin(t * 9 + k + y) * 4, fh = 30 + Math.sin(t * 13 + k * 2 + y) * 10;
+        var g = ctx.createLinearGradient(0, y - fh, 0, y); g.addColorStop(0, 'rgba(255,230,120,0)'); g.addColorStop(0.4, 'rgba(255,150,40,0.9)'); g.addColorStop(1, 'rgba(200,40,10,0.95)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(fx - 10, y); ctx.quadraticCurveTo(fx - 6, y - fh * 0.6, fx, y - fh); ctx.quadraticCurveTo(fx + 6, y - fh * 0.6, fx + 10, y); ctx.fill();
+      }
+      ctx.fillStyle = 'rgba(255,140,40,0.12)'; ctx.beginPath(); ctx.ellipse(x + 45, y - 10, 70, 30, 0, 0, Math.PI * 2); ctx.fill();
+      return;
+    }
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(x - 4, y - 3, 34, 7);
+    if (p.style === 'turnstile') {
+      ctx.fillStyle = '#3c4146'; ctx.fillRect(x, y - 44, 26, 44); ctx.fillStyle = '#9aa3a8'; ctx.fillRect(x + 2, y - 46, 22, 5);
+      ctx.strokeStyle = '#b8bfc4'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x + 13, y - 30); ctx.lineTo(x + 40, y - 34); ctx.stroke();
+    } else if (p.style === 'hedge') {
+      ctx.fillStyle = '#16261c'; ctx.beginPath(); ctx.arc(x + 12, y - 16, 18, Math.PI, 0); ctx.fill(); ctx.fillRect(x - 6, y - 16, 36, 16);
+      ctx.fillStyle = '#20392a'; ctx.beginPath(); ctx.arc(x + 6, y - 20, 9, 0, Math.PI * 2); ctx.fill();
+    } else {
+      ctx.fillStyle = '#2d2d33'; ctx.fillRect(x + 2, y - 40, 5, 40); ctx.fillRect(x + 19, y - 40, 5, 40);
+      ctx.fillStyle = Math.floor(y / 26) % 2 ? '#e0522d' : '#f2f2f2'; ctx.fillRect(x - 3, y - 38, 32, 10);
+      ctx.fillStyle = Math.floor(y / 26) % 2 ? '#f2f2f2' : '#e0522d'; ctx.fillRect(x - 3, y - 26, 32, 8);
+    }
+  }
   function drawProp(p, cx) {
     if (p.kind === 'barrier') {
       var bx0 = p.x0 - cx, hh = p.y1 - p.y0;
@@ -544,7 +571,8 @@ W.Render = (function () {
     }
     if (ar0.bus && ar0.bus.phase === 'warn' && Math.floor(w.time * 6) % 2) {
       ctx.fillStyle = 'rgba(255,200,40,0.18)'; ctx.fillRect(0, ar0.bus.lane[0] - 30, C.VIEW_W, ar0.bus.lane[1] - ar0.bus.lane[0] + 30);
-      ctx.fillStyle = '#ffd36a'; ctx.font = '700 20px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText('◀ BUS DEI TURNBULL: SCENDI DALLA CORSIA', 20, ar0.bus.lane[0] - 36);
+      ctx.fillStyle = '#ffd36a'; ctx.font = '700 20px "Oswald", sans-serif'; ctx.textAlign = 'left';
+      ctx.fillText(ar0.bus.kind === 'train' ? '◀ ARRIVA UN TRENO: VIA DAI BINARI' : '◀ BUS DEI TURNBULL: SCENDI DALLA CORSIA', 20, ar0.bus.kind === 'train' ? ar0.bus.lane[0] - 12 : ar0.bus.lane[0] - 36);
     }
     for (var i = 0; i < w.players.length; i++) {
       var p = w.players[i], x = 24 + i * 330, y = 22, col = p.slot === 0 ? COL.p1 : COL.p2;
@@ -685,8 +713,8 @@ W.Render = (function () {
 
   // ---- correzione colore da film: notte desaturata e fredda, sodio delle strade, alba pallida; grana pellicola
   var LIGHT = {
-    dusk:  { desat: 0.35, mult: 'rgba(150,120,140,0.40)', warm: 'rgba(255,140,60,0.10)', dark: 0.12, vig: 0.55 },
-    night: { desat: 0.50, mult: 'rgba(92,108,140,0.55)', warm: 'rgba(255,150,60,0.08)', dark: 0.22, vig: 0.70 },
+    dusk:  { desat: 0.25, mult: 'rgba(170,140,160,0.30)', warm: 'rgba(255,140,60,0.10)', dark: 0.04, vig: 0.45 },
+    night: { desat: 0.35, mult: 'rgba(120,134,166,0.38)', warm: 'rgba(255,150,60,0.10)', dark: 0.06, vig: 0.55 },
     dawn:  { desat: 0.55, mult: 'rgba(190,170,165,0.45)', warm: 'rgba(255,200,160,0.10)', dark: 0.05, vig: 0.45 }
   };
   var grainC = null, grainT = 0;
@@ -769,7 +797,11 @@ W.Render = (function () {
     if (!(useSprites && bgImg && bgImg.ok)) w.props.forEach(function (p) { if (p.kind === 'lamp') drawLamp(p, cx, w.time); }); // i lampioni sono già dipinti nel fondale
     // ordinamento per profondità
     var list = [];
-    w.props.forEach(function (p) { if (p.kind !== 'lamp') list.push({ y: p.y1, d: function () { drawProp(p, cx); } }); });
+    w.props.forEach(function (p) {
+      if (p.kind === 'lamp') return;
+      if (p.kind === 'low' || p.kind === 'fire') { for (var yy = p.y0 + 10; yy <= p.y1; yy += 26) (function (y) { list.push({ y: y, d: function () { drawLowSeg(p, cx, y, w.time); } }); })(yy); return; }
+      list.push({ y: p.y1, d: function () { drawProp(p, cx); } });
+    });
     w.items.forEach(function (it) { list.push({ y: it.y - 1, d: function () { drawItem(it, cx, w.time); } }); });
     w.enemies.forEach(function (e) { e.isEnemy = true; list.push({ y: e.y, d: function () { drawFigure(e, cx, w); } }); });
     w.players.forEach(function (p) { if (p.hidden) return; list.push({ y: p.y + 0.5, d: function () { drawFigure(p, cx, w); if (!(w.area && w.area.scene)) drawSlotMarker(p, cx, w); } }); });
@@ -779,7 +811,25 @@ W.Render = (function () {
       if (pr.kind === 'bullet') { ctx.strokeStyle = '#fff3c4'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(pr.x - cx, pr.y - 60); ctx.lineTo(pr.x - cx - Math.sign(pr.vx) * 40, pr.y - 60); ctx.stroke(); }
       else { ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(pr.tx - cx, pr.ty, 20, 6, 0, 0, Math.PI * 2); ctx.fill(); ctx.save(); ctx.translate(pr.x - cx, pr.y - pr.z - 20); ctx.rotate(pr.t * 14); ctx.fillStyle = '#3f8f4f'; ctx.fillRect(-4, -12, 8, 24); ctx.restore(); }
     } }); });
-    if (w.area && w.area.bus && w.area.bus.phase === 'pass') { var bus = w.area.bus; list.push({ y: bus.lane[0], d: function () {
+    if (w.area && w.area.bus && w.area.bus.kind === 'train' && w.area.bus.lane) {
+      var tr = w.area.bus; list.push({ y: tr.lane[1] + 2, d: function () {
+        var ty = tr.lane[1];
+        // binari sempre visibili, con bordo giallo di sicurezza
+        ctx.fillStyle = 'rgba(10,10,12,0.75)'; ctx.fillRect(0, tr.lane[0], C.VIEW_W, ty - tr.lane[0] + 6);
+        ctx.fillStyle = '#c9a227'; ctx.fillRect(0, tr.lane[0] - 4, C.VIEW_W, 4);
+        ctx.fillStyle = '#5a5f66'; ctx.fillRect(0, ty - 18, C.VIEW_W, 3); ctx.fillRect(0, ty - 6, C.VIEW_W, 3);
+        if (tr.phase === 'warn') { var bl = Math.floor(w.time * 6) % 2; ctx.fillStyle = bl ? '#fff3c4' : '#6a5a2a'; ctx.beginPath(); ctx.arc(30, tr.lane[0] - 20, 8, 0, Math.PI * 2); ctx.fill(); }
+        if (tr.phase === 'pass') {
+          var bx2 = tr.x - cx;
+          ctx.fillStyle = '#8b9399'; ctx.fillRect(bx2, ty - 190, 900, 186);
+          ctx.fillStyle = '#5c646a'; for (var c2 = 0; c2 < 4; c2++) ctx.fillRect(bx2 + c2 * 225, ty - 190, 6, 186);
+          ctx.fillStyle = '#1d2226'; for (var wi = 0; wi < 12; wi++) ctx.fillRect(bx2 + 20 + wi * 74, ty - 165, 52, 46);
+          ctx.fillStyle = 'rgba(230,60,90,0.55)'; for (var g2 = 0; g2 < 6; g2++) { ctx.beginPath(); ctx.ellipse(bx2 + 70 + g2 * 150, ty - 70, 46, 18, 0.2, 0, Math.PI * 2); ctx.fill(); }
+          ctx.fillStyle = '#fff6b0'; ctx.fillRect(bx2 + 890, ty - 80, 10, 18);
+        }
+      } });
+    }
+    if (w.area && w.area.bus && w.area.bus.kind === 'bus' && w.area.bus.phase === 'pass') { var bus = w.area.bus; list.push({ y: bus.lane[0], d: function () {
       var bx = bus.x - cx, by = bus.lane[1];
       ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.fillRect(bx, by - 6, 380, 14);
       ctx.fillStyle = '#2f6b3a'; ctx.fillRect(bx, by - 150, 380, 140); ctx.fillStyle = '#2b2b33'; for (var wi = 0; wi < 6; wi++) ctx.fillRect(bx + 20 + wi * 58, by - 135, 44, 40);

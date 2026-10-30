@@ -305,6 +305,24 @@ var W = window.W;
     P0: 'Prologo · Coney Island', C1: 'Capitolo 1 · Il raduno', C2: 'Capitolo 2 · Braccati', C3: 'Capitolo 3 · Territorio nemico', C4: 'Capitolo 4 · Baseball Furies',
     C5: 'Capitolo 5 · La banda divisa', C6: 'Capitolo 6 · Union Square', C7: 'Capitolo 7 · L\'ultimo treno', C8: 'Capitolo 8 · Coney Island'
   };
+  // ostacoli dei corridoi: pochi, credibili per il luogo; si saltano, si aggirano o si sfondano
+  var OBST = {
+    'C1-03': { lowStyle: 'hedge', obstacles: [['low', 620, 0, 0.55], ['low', 1150, 0.45, 1], ['low', 2150, 0, 1]] },
+    'C1-04': { lowStyle: 'turnstile', obstacles: [['low', 640, 0, 1]] },
+    'C2-01': { lowStyle: 'barrier', obstacles: [['crate', 760, 0.05, 0.4], ['low', 1300, 0, 0.6], ['crate', 1850, 0.6, 1, 'snack'], ['low', 2200, 0.35, 1]] },
+    'C2-03': { lowStyle: 'barrier', obstacles: [['low', 2100, 0, 1], ['crate', 2850, 0.3, 0.7, 'drink']] },
+    'C2-04': { lowStyle: 'turnstile', train: true, obstacles: [['low', 560, 0, 0.75]] },
+    'C3-03': { lowStyle: 'barrier', obstacles: [['fire', 880, 0.25, 1], ['low', 1650, 0, 0.75], ['crate', 2100, 0, 0.35, 'snack']] },
+    'C3-04': { lowStyle: 'turnstile', train: true, obstacles: [['low', 520, 0, 0.75], ['fire', 1200, 0, 0.45]] },
+    'C4-01': { lowStyle: 'hedge', obstacles: [['low', 600, 0, 0.55], ['low', 1080, 0.45, 1], ['low', 1500, 0, 1]] },
+    'C5-04': { lowStyle: 'barrier', train: true, obstacles: [['low', 560, 0, 0.75], ['crate', 1300, 0, 0.4], ['low', 1500, 0.3, 0.75]] },
+    'C5-05': { lowStyle: 'barrier', obstacles: [['crate', 700, 0.55, 1, 'drink'], ['low', 1250, 0, 0.6]] },
+    'C6-01': { lowStyle: 'turnstile', obstacles: [['low', 820, 0, 1]] },
+    'C6-04': { lowStyle: 'turnstile', train: true, obstacles: [] },
+    'C8-01': { lowStyle: 'barrier', obstacles: [['low', 900, 0, 1], ['crate', 1400, 0.5, 0.9, 'snack']] }
+  };
+  A.forEach(function (a) { var o = OBST[a.id]; if (o) for (var k in o) a[k] = o[k]; });
+
   // luce e musica per area: sera al prologo, notte, alba sul treno e a Coney Island
   A.forEach(function (a) {
     if (a.ch === 'P0') a.light = 'dusk';

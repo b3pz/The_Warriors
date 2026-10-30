@@ -27,17 +27,50 @@ var W = window.W;
       moving = k < 1;
       if (k >= 1) this.move = null;
     } else if (this.follow) {
-      var f = this.follow, tx = f.x - f.face * (90 + this.followOff * 55), ty = f.y + ((this.followOff % 3) - 1) * 34;
+      // compagni liberi: ognuno ha un posto suo intorno al gruppo, lo cambia ogni tanto, si ferma e si guarda intorno
+      var f = this.follow, w = this.world, fl = (w.area && w.area.floor) || [470, 680], P = FOLLOW_STYLE[this.id] || FOLLOW_STYLE._;
+      this.spotT = (this.spotT || 0) - dt;
+      var far = this.spot && Math.abs(f.x - this.spotRefX) > 240;
+      if (!this.spot || this.spotT <= 0 || far) {
+        var r = Math.random();
+        this.spot = { dx: P.ahead[0] + r * (P.ahead[1] - P.ahead[0]), y: fl[0] + 14 + Math.random() * (fl[1] - fl[0] - 24) };
+        this.spotRefX = f.x; this.spotT = 2.5 + Math.random() * 4; this.lookT = Math.random() * 2;
+      }
+      var tx = f.x + this.spot.dx * (f.face || 1), ty = this.spot.y;
+      if (w.area) tx = Math.max(40, Math.min(w.area.width - 40, tx));
+      // si tengono a distanza fra loro
+      for (var i = 0; i < w.npcs.length; i++) { var o = w.npcs[i]; if (o === this || !o.follow) continue; if (Math.abs(o.x - this.x) < 46 && Math.abs(o.y - this.y) < 22) { this.x += (this.x < o.x ? -1 : 1) * 40 * dt; this.y += (this.y < o.y ? -1 : 1) * 30 * dt; } }
       var dx = tx - this.x, dy = ty - this.y;
-      if (Math.abs(dx) > 40 || Math.abs(dy) > 20) {
-        var sp = Math.abs(dx) > 260 ? 340 : 215;
-        this.x += Math.max(-sp * dt, Math.min(sp * dt, dx)); this.y += Math.max(-140 * dt, Math.min(140 * dt, dy));
+      if (Math.abs(dx) > 50 || Math.abs(dy) > 26) {
+        var sp = (Math.abs(dx) > 420 ? 360 : P.speed) * (this.st < 0.2 ? 0.5 : 1);
+        this.x += Math.max(-sp * dt, Math.min(sp * dt, dx)); this.y += Math.max(-120 * dt, Math.min(120 * dt, dy));
         this.face = sign(dx); moving = true;
-      } else this.face = f.face;
+      } else {
+        this.lookT -= dt;
+        if (this.lookT <= 0) { this.face = Math.random() < 0.6 ? sign(f.x - this.x || 1) : -sign(f.x - this.x || 1); this.lookT = 1.5 + Math.random() * 3; }
+      }
+      this.y = Math.max(fl[0], Math.min(fl[1], this.y));
     }
+    var hop = 0, ps = this.world.props || [];
+    for (var hi = 0; hi < ps.length; hi++) { var q = ps[hi]; if (!q.low) continue; var mx = (q.x0 + q.x1) / 2, half = (q.x1 - q.x0) / 2 + 40; if (Math.abs(this.x - mx) < half && this.y > q.y0 - 10 && this.y < q.y1 + 10) hop = Math.max(hop, Math.cos((this.x - mx) / half * Math.PI / 2) * 46); }
+    this.z = hop;
     this.state = moving ? 'walk' : 'idle';
   };
 
+  // carattere di ognuno nel gruppo: dove sta rispetto a chi guidi (pixel, positivo = davanti) e passo
+  var FOLLOW_STYLE = {
+    fox:       { ahead: [120, 320], speed: 250 },   // lo scout va avanti
+    cowboy:    { ahead: [-320, -140], speed: 205 },  // resta un po' indietro
+    vermin:    { ahead: [-260, -80], speed: 185 },   // si trascina
+    snow:      { ahead: [-160, 120], speed: 225 },
+    cochise:   { ahead: [-120, 200], speed: 235 },
+    ajax:      { ahead: [-60, 220], speed: 225 },
+    rembrandt: { ahead: [-220, -40], speed: 215 },
+    cleon:     { ahead: [40, 220], speed: 220 },
+    swan:      { ahead: [-80, 160], speed: 225 },
+    mercy:     { ahead: [-110, -50], speed: 220 },   // vicino a chi guida
+    _:         { ahead: [-220, 160], speed: 215 }
+  };
   W.NPC_NAMES = { mercy: 'Mercy', cyrus: 'Cyrus', luther: 'Luther', masai: 'Masai', orphan: 'Sully', police: 'Agente',
     lizzie: 'Lizzie', lizzie_b: 'Lizzie', punk: 'Capo Punks', civilian: 'Testimone', officer: 'Poliziotta', riff: 'Riff', rogue: 'Rogue', turnbull: 'Turnbull', fury: 'Fury', crowd: '' };
 
