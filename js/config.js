@@ -99,7 +99,7 @@ W.ENEMIES = {
 
 
 W.DIFFICULTY = {
-  facile:    { name: 'Facile',    edmg: 0.65, ehp: 0.85, revive: 14 },
-  normale:   { name: 'Normale',   edmg: 1.0,  ehp: 1.0,  revive: 10 },
-  difficile: { name: 'Difficile', edmg: 1.2,  ehp: 1.1,  revive: 10 }
+  facile:    { name: 'Facile',    edmg: 0.65, ehp: 0.85, revive: 14, recover: 0.75 },
+  normale:   { name: 'Normale',   edmg: 1.0,  ehp: 1.0,  revive: 10, recover: 0.55 },
+  difficile: { name: 'Difficile', edmg: 1.2,  ehp: 1.1,  revive: 10, recover: 0.4 }
 };

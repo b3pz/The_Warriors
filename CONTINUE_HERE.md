@@ -21,7 +21,7 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 ## Verifiche eseguite
 
 - `node tools/qa.js`: Q01, Q02, Q05, Q06, Q09, Q18 e coordinatore, tutti PASS.
-- `node tools/qa_campaign.js`: campagna intera dal prologo ai crediti con giocatori CPU, senza errori JS e senza blocchi (circa 15 minuti di gioco simulato; il bot va KO e riprova in alcune arene di C4).
+- `node tools/qa_campaign.js`: campagna intera dal prologo ai crediti con giocatori CPU, senza errori JS e senza blocchi (circa 15 minuti di gioco simulato, nessun KO dopo il recupero di salute tra le aree).
 - `node tools/qa_exits.js`: tutte le uscite delle aree senza combattimento, provate con tasti veri.
 - Correzione segnalata dall'autore (29 ottobre): in C1-04 «Sali la scala» non si attivava perché la zona era troppo stretta; ora le uscite a interazione hanno una zona larga e anche le uscite a piedi si attivano con il tasto d'interazione.
 - Correzioni emerse dai test: compagno di allenamento troppo lontano, Mercy che non raggiungeva la porta di C5-04, segnaposto dei tasti negli obiettivi.
@@ -50,7 +50,9 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 
 - Pronto per le tracce originali: `js/musiche.js` (elenco) e `js/music.js` (lettore con dissolvenza). Chiavi per scena, area, situazione, capitolo e schermata; senza tracce resta il synth. Guida e tabella dei momenti: `docs/MUSICHE.md`. File in `assets/music/`.
 - Il file unico include le tracce solo con `python3 tools/build_single.py --musica`.
-- Test della campagna: il bot ora guida solo il giocatore 1 come umano (prima un KO del giocatore 1 con il compagno in piedi lasciava il test fermo in C4-02; nel gioco vero quel caso porta al riprova).
+- Favicon pixel art in tutti i formati (svg, png 16/32, ico, apple-touch 180) e `manifest.webmanifest` per aggiungere il gioco alla schermata del telefono.
+- Bilanciamento: la salute non si ricaricava mai tra un'area e l'altra, così si arrivava ai Furies (C4) quasi a zero e si finiva in game over a ripetizione. Ora a inizio capitolo la salute è piena e tra un'area e l'altra risale almeno al 75 / 55 / 40 % (Facile / Normale / Difficile).
+- Test della campagna: il bot guida solo il giocatore 1 come umano; `START=C4-01` e `STOP=C5-01` fanno partire o fermare il giro da un'area.
 
 ## Grafica nel gioco
 

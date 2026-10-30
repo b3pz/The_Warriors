@@ -123,9 +123,9 @@ W.ENEMIES = {
 
 
 W.DIFFICULTY = {
-  facile:    { name: 'Facile',    edmg: 0.65, ehp: 0.85, revive: 14 },
-  normale:   { name: 'Normale',   edmg: 1.0,  ehp: 1.0,  revive: 10 },
-  difficile: { name: 'Difficile', edmg: 1.2,  ehp: 1.1,  revive: 10 }
+  facile:    { name: 'Facile',    edmg: 0.65, ehp: 0.85, revive: 14, recover: 0.75 },
+  normale:   { name: 'Normale',   edmg: 1.0,  ehp: 1.0,  revive: 10, recover: 0.55 },
+  difficile: { name: 'Difficile', edmg: 1.2,  ehp: 1.1,  revive: 10, recover: 0.4 }
 };
 
 </script>
@@ -3936,6 +3936,9 @@ var W = window.W;
     w.players.forEach(function (p) {
       var rec = run.records[p.char.id];
       if (rec) { p.hp = Math.max(1, Math.min(p.maxhp, rec.hp)); p.fury = rec.fury || 0; p.weapon = rec.weapon ? { type: rec.weapon.type, dur: rec.weapon.dur } : null; }
+      // fiato tra un'area e l'altra: inizio capitolo a salute piena, altrimenti almeno una quota per difficoltà
+      var dz = W.DIFFICULTY[run.difficulty] || W.DIFFICULTY.normale;
+      p.hp = def.chapterCard ? p.maxhp : Math.max(p.hp, Math.round(p.maxhp * (dz.recover || 0.5)));
     });
   }
   function startArea() {

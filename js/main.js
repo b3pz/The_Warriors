@@ -151,6 +151,9 @@ var W = window.W;
     w.players.forEach(function (p) {
       var rec = run.records[p.char.id];
       if (rec) { p.hp = Math.max(1, Math.min(p.maxhp, rec.hp)); p.fury = rec.fury || 0; p.weapon = rec.weapon ? { type: rec.weapon.type, dur: rec.weapon.dur } : null; }
+      // fiato tra un'area e l'altra: inizio capitolo a salute piena, altrimenti almeno una quota per difficoltà
+      var dz = W.DIFFICULTY[run.difficulty] || W.DIFFICULTY.normale;
+      p.hp = def.chapterCard ? p.maxhp : Math.max(p.hp, Math.round(p.maxhp * (dz.recover || 0.5)));
     });
   }
   function startArea() {

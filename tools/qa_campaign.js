@@ -17,10 +17,11 @@ fs.mkdirSync(out, { recursive: true });
   await page.goto('file://' + path.join(__dirname, '..', 'index.html'));
   await page.waitForTimeout(800);
 
+  if (process.env.START) await page.evaluate(s => { window.__START = s; }, process.env.START);
   await page.evaluate((mode) => {
     const W = window.W, G = W.Game, g = G.game;
     window.__qa = { log: [], areas: {}, shots: [] };
-    G.startAt(0, mode);
+    G.startAt(window.__START ? W.areaIndex(window.__START) : 0, mode);
     // bot: guida il giocatore 1 come CPU con obiettivi d'area
     window.__bot = function () {
       const w = g.world; if (!w || !w.area || g.state !== 'play') return;
@@ -80,9 +81,9 @@ fs.mkdirSync(out, { recursive: true });
     if (st.id && !seen.has(st.id) && !st.scene && st.t > 1.5) { seen.add(st.id); await page.screenshot({ path: path.join(out, st.id + '.png') }); }
     if (st.id && !seen.has(st.id + '_sc') && st.scene) { seen.add(st.id + '_sc'); await page.waitForTimeout(50); await page.screenshot({ path: path.join(out, st.id + '_scena.png') }); }
     const key = st.id + ':' + st.x + ':' + st.en + ':' + st.scene;
-    if (st.id !== lastId) { console.log('→', st.id, st.kind); lastId = st.id; stuck = 0; }
+    if (st.id !== lastId) { console.log('→', st.id, st.kind, await page.evaluate(() => W.Game.game.world.players.map(p => p.char.id + ':' + Math.round(p.hp) + '/' + p.maxhp).join(' '))); lastId = st.id; stuck = 0; if (process.env.STOP && st.id === process.env.STOP) break; }
     if (key === last) stuck++; else stuck = 0; last = key;
-    if (stuck > 60) { console.log('BLOCCO in', JSON.stringify(st)); break; }
+    if (stuck > 60) { console.log('BLOCCO in', JSON.stringify(st)); console.log(await page.evaluate(() => { const w = W.Game.game.world, a = w.area; return JSON.stringify({ players: w.players.map(p => [p.char.id, Math.round(p.x), Math.round(p.y), p.state, p.hp, p.out, p.cpu, !!p.qaHuman, p.hidden]), cam: [Math.round(w.cam.x), w.cam.lockMin, w.cam.lockMax], wave: a.waveIdx, fighting: a.fighting, done: a.done, npcs: w.npcs.map(n => [n.id, Math.round(n.x)]), sceneQ: (a.sceneQueue || []).length, ints: a.interactions ? a.interactions().map(i => i.label) : [] }); })); break; }
   }
   const log = await page.evaluate(() => window.__qa.log);
   console.log('eventi:', log.join(' | ') || 'nessun KO');
