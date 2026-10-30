@@ -28,6 +28,9 @@ inline = assets_js + '\n'.join('<script>\n' + script_text(s) + '\n</script>' for
 html = html[:block.start()] + inline + html[block.end():]
 fav = base64.b64encode((root / 'assets/favicon.svg').read_bytes()).decode()
 html = html.replace('href="assets/favicon.svg"', 'href="data:image/svg+xml;base64,' + fav + '"')
+for f in ['favicon-32.png', 'favicon-16.png', 'apple-touch-icon.png']:
+    html = html.replace('href="assets/' + f + '"', 'href="data:image/png;base64,' + base64.b64encode((root / 'assets' / f).read_bytes()).decode() + '"')
+html = re.sub(r'<link rel="manifest"[^>]*>\n?', '', html)
 out = root / 'dist' / 'night-run.html'
 out.parent.mkdir(exist_ok=True)
 out.write_text(html, encoding='utf-8')
