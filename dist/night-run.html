@@ -1983,7 +1983,7 @@ var W = window.W;
      ['face', 'rembrandt', -1], ['say', 'rembrandt', 'Perché l\'hanno chiusa?'], ['clearNpcs']]) };
   S.cine_lizzies_trap = { cine: 'cine_lizzies_trap', letterbox: false, steps: [
     ['say', 'lizzie', 'Sappiamo chi siete. Lo sa tutta la città, ormai.'], ['caption', 'La porta è chiusa a chiave. Escono le pistole.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'], ['say', 'cochise', 'Ci cercano tutti. Tutti quanti.'],
-    ['caption', 'La radio suona ancora. Spaccala per fare confusione, poi sfonda il pannello verso la finestra.'], ['flag', 'lizzies_trap']] };
+    ['caption', 'Una delle Lizzies chiude la porta a chiave. Spunta un coltello, poi una pistola: spara male, ma spara.'], ['caption', 'L\'unica via è la porta: sfondala.'], ['flag', 'lizzies_trap']] };
   S.cine_swan_mercy = { cine: 'cine_swan_mercy', letterbox: false, steps: [
     ['say', 'mercy', 'Quando arrivi a casa, finisce davvero?'], ['say', 'swan', 'Prima ci dobbiamo arrivare.'],
     ['say', 'mercy', 'Non hai risposto.'], ['wait', 1.2], ['say', 'swan', 'Lo so.'], ['flag', 'swan_mercy_bond']] };
@@ -2133,7 +2133,7 @@ var W = window.W;
     { id: 'C5-01', ch: 'C5', kind: 'scene', name: 'La panchina', bg: 'park_b', width: 1280, depth: 200, party: ['snow', 'cowboy'], chapterCard: true, scenes: ['cine_ajax_arrest'] },
     { id: 'C5-02', ch: 'C5', kind: 'traversal', name: 'L\'appartamento', bg: 'interior', width: 1280, depth: 170, party: ['vermin', 'cochise', 'rembrandt'], present: ['vermin', 'cochise', 'rembrandt'], peace: true,
       enter: 'dlg_c5_welcome', objective: 'Entra nella stanza', exitInteract: { x: 1100, y: 560, label: 'Entra nella stanza' } },
-    { id: 'C5-03', ch: 'C5', kind: 'escape', name: 'La trappola', bg: 'interior', width: 1920, depth: 170, party: ['vermin', 'cochise', 'rembrandt'], objective: 'Apri il pannello e raggiungi la finestra',
+    { id: 'C5-03', ch: 'C5', kind: 'escape', name: 'La trappola', bg: 'interior', width: 1920, depth: 170, party: ['vermin', 'cochise', 'rembrandt'], objective: 'Sfonda la porta chiusa a chiave',
       enter: 'cine_lizzies_trap', timer: 55, timerEasy: 70, panel: { x: 1700, y: 560, hits: 3 }, radioProp: { x: 420, y: 520 },
       props: [{ kind: 'crate', x0: 700, x1: 760, y0: 540, y1: 566, solid: true, cover: true }, { kind: 'crate', x0: 1180, x1: 1240, y0: 610, y1: 636, solid: true, cover: true }],
       stationed: { solo: [['lizzie_blocker', 1500, 600], ['lizzie_shooter', 1300, 530]], duo: [['lizzie_blocker', 1500, 600], ['lizzie_blocker', 1600, 540], ['lizzie_shooter', 1300, 530], ['lizzie_shooter', 1100, 650]] } },
@@ -2340,11 +2340,11 @@ var W = window.W;
       self.radioSmashed = true; w.emit('break', { x: def.radioProp.x, y: def.radioProp.y }); w.emit('shakefx', { amt: 6 }); p.startAttack('heavy');
       // la musica si spegne, nella stanza è il caos: le tiratrici perdono la mira per qualche secondo
       w.enemies.forEach(function (e) { if (e.alive()) { if (e.att) { e.att = null; e.dropToken(); } e.setState('hurt'); e.st = -2.5; } });
-      self.objective = 'Caos! Sfonda il pannello e via dalla finestra';
+      self.objective = 'Caos! Sfonda la porta e via';
     } });
-    if (def.panel && !this.panelOpen) list.push({ x: def.panel.x, y: def.panel.y, label: 'Sfonda il pannello (' + (def.panel.hits - this.panelHits) + ')', fn: function (p) {
+    if (def.panel && !this.panelOpen) list.push({ x: def.panel.x, y: def.panel.y, label: 'Sfonda la porta (' + (def.panel.hits - this.panelHits) + ')', fn: function (p) {
       self.panelHits++; w.emit('hit', { x: def.panel.x, y: def.panel.y, z: 90, target: 'enemy', heavy: true }); p.startAttack('heavy');
-      if (self.panelHits >= def.panel.hits) { self.panelOpen = true; w.exitOpen = true; self.objective = 'Alla finestra!'; w.emit('break', { x: def.panel.x, y: def.panel.y }); }
+      if (self.panelHits >= def.panel.hits) { self.panelOpen = true; w.exitOpen = true; self.objective = 'Porta aperta: fuori!'; w.emit('break', { x: def.panel.x, y: def.panel.y }); }
     } });
     if (this.reviveDummy && !this.reviveDummy.helped) list.push({ x: this.reviveDummy.x, y: this.reviveDummy.y, label: 'Aiuta ' + this.reviveDummy.name, fn: function () { self.reviveDummy.helped = true; self.reviveDummy.pose = null; w.stats.train.revive = 1; w.emit('revive', { x: self.reviveDummy.x, y: self.reviveDummy.y }); } });
     return list;
@@ -3470,7 +3470,7 @@ W.Render = (function () {
       var px2 = pn.x - cx; ctx.fillStyle = open ? 'rgba(160,200,255,0.5)' : '#5a4630'; ctx.fillRect(px2 - 50, pn.y - 230, 100, 150);
       ctx.strokeStyle = '#2a2018'; ctx.lineWidth = 4; ctx.strokeRect(px2 - 50, pn.y - 230, 100, 150);
       if (!open) for (var cr = 0; cr < w.area.panelHits; cr++) { ctx.beginPath(); ctx.moveTo(px2 - 30 + cr * 20, pn.y - 220); ctx.lineTo(px2 - 10 + cr * 20, pn.y - 100); ctx.stroke(); }
-      ctx.fillStyle = COL.ink; ctx.font = '600 16px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(open ? 'FINESTRA' : 'PANNELLO', px2, pn.y - 238);
+      ctx.fillStyle = COL.ink; ctx.font = '600 16px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(open ? 'USCITA' : 'PORTA CHIUSA', px2, pn.y - 238);
     } }); }
     w.projectiles.forEach(function (pr) {
       list.push({ y: pr.y, d: function () {

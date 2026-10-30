@@ -125,7 +125,7 @@ var W = window.W;
      ['face', 'rembrandt', -1], ['say', 'rembrandt', 'Perché l\'hanno chiusa?'], ['clearNpcs']]) };
   S.cine_lizzies_trap = { cine: 'cine_lizzies_trap', letterbox: false, steps: [
     ['say', 'lizzie', 'Sappiamo chi siete. Lo sa tutta la città, ormai.'], ['caption', 'La porta è chiusa a chiave. Escono le pistole.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'], ['say', 'cochise', 'Ci cercano tutti. Tutti quanti.'],
-    ['caption', 'La radio suona ancora. Spaccala per fare confusione, poi sfonda il pannello verso la finestra.'], ['flag', 'lizzies_trap']] };
+    ['caption', 'Una delle Lizzies chiude la porta a chiave. Spunta un coltello, poi una pistola: spara male, ma spara.'], ['caption', 'L\'unica via è la porta: sfondala.'], ['flag', 'lizzies_trap']] };
   S.cine_swan_mercy = { cine: 'cine_swan_mercy', letterbox: false, steps: [
     ['say', 'mercy', 'Quando arrivi a casa, finisce davvero?'], ['say', 'swan', 'Prima ci dobbiamo arrivare.'],
     ['say', 'mercy', 'Non hai risposto.'], ['wait', 1.2], ['say', 'swan', 'Lo so.'], ['flag', 'swan_mercy_bond']] };
@@ -275,7 +275,7 @@ var W = window.W;
     { id: 'C5-01', ch: 'C5', kind: 'scene', name: 'La panchina', bg: 'park_b', width: 1280, depth: 200, party: ['snow', 'cowboy'], chapterCard: true, scenes: ['cine_ajax_arrest'] },
     { id: 'C5-02', ch: 'C5', kind: 'traversal', name: 'L\'appartamento', bg: 'interior', width: 1280, depth: 170, party: ['vermin', 'cochise', 'rembrandt'], present: ['vermin', 'cochise', 'rembrandt'], peace: true,
       enter: 'dlg_c5_welcome', objective: 'Entra nella stanza', exitInteract: { x: 1100, y: 560, label: 'Entra nella stanza' } },
-    { id: 'C5-03', ch: 'C5', kind: 'escape', name: 'La trappola', bg: 'interior', width: 1920, depth: 170, party: ['vermin', 'cochise', 'rembrandt'], objective: 'Apri il pannello e raggiungi la finestra',
+    { id: 'C5-03', ch: 'C5', kind: 'escape', name: 'La trappola', bg: 'interior', width: 1920, depth: 170, party: ['vermin', 'cochise', 'rembrandt'], objective: 'Sfonda la porta chiusa a chiave',
       enter: 'cine_lizzies_trap', timer: 55, timerEasy: 70, panel: { x: 1700, y: 560, hits: 3 }, radioProp: { x: 420, y: 520 },
       props: [{ kind: 'crate', x0: 700, x1: 760, y0: 540, y1: 566, solid: true, cover: true }, { kind: 'crate', x0: 1180, x1: 1240, y0: 610, y1: 636, solid: true, cover: true }],
       stationed: { solo: [['lizzie_blocker', 1500, 600], ['lizzie_shooter', 1300, 530]], duo: [['lizzie_blocker', 1500, 600], ['lizzie_blocker', 1600, 540], ['lizzie_shooter', 1300, 530], ['lizzie_shooter', 1100, 650]] } },

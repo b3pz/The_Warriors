@@ -108,11 +108,11 @@ var W = window.W;
       self.radioSmashed = true; w.emit('break', { x: def.radioProp.x, y: def.radioProp.y }); w.emit('shakefx', { amt: 6 }); p.startAttack('heavy');
       // la musica si spegne, nella stanza è il caos: le tiratrici perdono la mira per qualche secondo
       w.enemies.forEach(function (e) { if (e.alive()) { if (e.att) { e.att = null; e.dropToken(); } e.setState('hurt'); e.st = -2.5; } });
-      self.objective = 'Caos! Sfonda il pannello e via dalla finestra';
+      self.objective = 'Caos! Sfonda la porta e via';
     } });
-    if (def.panel && !this.panelOpen) list.push({ x: def.panel.x, y: def.panel.y, label: 'Sfonda il pannello (' + (def.panel.hits - this.panelHits) + ')', fn: function (p) {
+    if (def.panel && !this.panelOpen) list.push({ x: def.panel.x, y: def.panel.y, label: 'Sfonda la porta (' + (def.panel.hits - this.panelHits) + ')', fn: function (p) {
       self.panelHits++; w.emit('hit', { x: def.panel.x, y: def.panel.y, z: 90, target: 'enemy', heavy: true }); p.startAttack('heavy');
-      if (self.panelHits >= def.panel.hits) { self.panelOpen = true; w.exitOpen = true; self.objective = 'Alla finestra!'; w.emit('break', { x: def.panel.x, y: def.panel.y }); }
+      if (self.panelHits >= def.panel.hits) { self.panelOpen = true; w.exitOpen = true; self.objective = 'Porta aperta: fuori!'; w.emit('break', { x: def.panel.x, y: def.panel.y }); }
     } });
     if (this.reviveDummy && !this.reviveDummy.helped) list.push({ x: this.reviveDummy.x, y: this.reviveDummy.y, label: 'Aiuta ' + this.reviveDummy.name, fn: function () { self.reviveDummy.helped = true; self.reviveDummy.pose = null; w.stats.train.revive = 1; w.emit('revive', { x: self.reviveDummy.x, y: self.reviveDummy.y }); } });
     return list;
