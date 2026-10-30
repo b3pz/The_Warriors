@@ -14,6 +14,7 @@ var W = window.W;
     this.state = 'idle'; this.st = 0; this.anim = Math.random() * 3; this.uid = 'npc_' + id;
     this.move = null; this.follow = null; this.followOff = 0; this.hidden = false; this.npc = true; this.pose = null;
     var ch = W.rosterById(id); this.name = ch ? ch.name : (W.NPC_NAMES[id] || id);
+    if (this.set === 'hearse') { this.vehicle = true; this.name = ''; }   // il carro funebre dei Rogues
   }
   W.Npc = Npc;
   Npc.prototype.update = function (dt) {
@@ -162,6 +163,7 @@ var W = window.W;
       case 'face': n = this.actor(c[1]); if (n) n.face = c[2]; break;
       case 'pose': n = this.npc(c[1]); if (n) n.pose = c[2]; break;
       case 'remove': w.npcs = w.npcs.filter(function (q) { return q.id !== c[1] && !(c[1] === 'crowd' && q.crowd); }); break;
+      case 'raise': n = this.actor(c[1]); if (n) n.z = c[2]; break;   // es. chi si sporge da un finestrino
       case 'clearNpcs': w.npcs = w.npcs.filter(function (q) { return q.keep; }); break;
       case 'cam': this.cam = { x0: w.cam.x, x1: c[1], dur: c[2] || 1, t: 0 }; break;
       case 'fade': this.fadeTo = c[1] === 'out' ? 1 : 0; this.fadeSpeed = 1 / (c[2] || 0.6); if (c[3] !== false) this.wait = c[2] || 0.6; break;

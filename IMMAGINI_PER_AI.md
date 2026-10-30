@@ -49,7 +49,7 @@ Aprilo prima di disegnare: è il modo per restare fedeli al film.
 
 ## Personaggi
 
-Tutti i Warriors portano un gilet di pelle marrone senza maniche, senza scritte.
+Tutti i Warriors portano un gilet di pelle marrone-rossiccio senza maniche, con il bordo scuro. Sulla schiena del gilet c'è l'emblema della banda: un teschio con il copricapo di piume e le ali (vedi il logo dei Warriors in `assets/menu/mappa_bande.jpg`, in basso); si vede solo nelle pose di spalle e nei fogli modello.
 
 | Set | Descrizione |
 |---|---|
@@ -217,14 +217,14 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 91. `assets/incoming/fondali/C3-02_a.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
 92. `assets/incoming/fondali/C3-02_b.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
 93. `assets/incoming/fondali/C3-02_c.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
-94. `assets/incoming/fondali/C4-01_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-95. `assets/incoming/fondali/C4-01_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-96. `assets/incoming/fondali/C4-02_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
-97. `assets/incoming/fondali/C4-02_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
-98. `assets/incoming/fondali/C4-02_c.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
-99. `assets/incoming/fondali/C4-03_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
-100. `assets/incoming/fondali/C4-03_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
-101. `assets/incoming/fondali/C4-03_c.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
+94. `assets/incoming/fondali/C4-01_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; nel parco c'è anche il grande monumento ai pompieri di Riverside Drive (Firemen's Memorial), con la scalinata; pezzo 1 di 2, il lato sinistro del luogo
+95. `assets/incoming/fondali/C4-01_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; nel parco c'è anche il grande monumento ai pompieri di Riverside Drive (Firemen's Memorial), con la scalinata; pezzo 2 di 2, continua verso destra il pezzo a
+96. `assets/incoming/fondali/C4-02_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; nel parco c'è anche il grande monumento ai pompieri di Riverside Drive (Firemen's Memorial), con la scalinata; pezzo 1 di 3, il lato sinistro del luogo
+97. `assets/incoming/fondali/C4-02_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; nel parco c'è anche il grande monumento ai pompieri di Riverside Drive (Firemen's Memorial), con la scalinata; pezzo 2 di 3, continua verso destra il pezzo a
+98. `assets/incoming/fondali/C4-02_c.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; nel parco c'è anche il grande monumento ai pompieri di Riverside Drive (Firemen's Memorial), con la scalinata; pezzo 3 di 3, continua verso destra il pezzo b
+99. `assets/incoming/fondali/C4-03_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; nel parco c'è anche il grande monumento ai pompieri di Riverside Drive (Firemen's Memorial), con la scalinata; pezzo 1 di 3, il lato sinistro del luogo
+100. `assets/incoming/fondali/C4-03_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; nel parco c'è anche il grande monumento ai pompieri di Riverside Drive (Firemen's Memorial), con la scalinata; pezzo 2 di 3, continua verso destra il pezzo a
+101. `assets/incoming/fondali/C4-03_c.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; nel parco c'è anche il grande monumento ai pompieri di Riverside Drive (Firemen's Memorial), con la scalinata; pezzo 3 di 3, continua verso destra il pezzo b
 102. `assets/incoming/fondali/C4-04_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte
 103. `assets/incoming/fondali/C5-01_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte
 104. `assets/incoming/fondali/C5-02_a.png` → appartamento anni '70: divani, tende, luci soffuse viola, giradischi, porta d'ingresso; luce: notte

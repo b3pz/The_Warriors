@@ -698,6 +698,40 @@ W.Render = (function () {
     ctx.stroke();
     ctx.fillStyle = 'rgba(233,228,214,0.55)'; ctx.font = '500 16px "Oswald", sans-serif'; ctx.fillText('LA RADIO DELLA NOTTE', 640, 600);
   }
+  // carro funebre dei Rogues: Cadillac nera anni '50 coperta di graffiti (immagine nuova se c'è, altrimenti disegnato)
+  var OBJ = {};
+  function drawHearse(n, cx) {
+    var x = Math.round(n.x - cx), y = n.y, f = n.face || 1, L = 420, H = 150;
+    var oi = W.ART_AI && W.ART_AI.object && W.ART_AI.object.auto_rogues;
+    if (oi) { if (!OBJ.hearse) OBJ.hearse = loadImg(oi); var im = OBJ.hearse; if (im.ok) {
+      var hh = H * 1.05, ww = im.width * hh / im.height; ctx.save(); ctx.translate(x, y); ctx.scale(-f, 1); ctx.drawImage(im, -ww / 2, -hh, ww, hh); ctx.restore(); return; } }
+    ctx.save(); ctx.translate(x, y); ctx.scale(f, 1);
+    ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.beginPath(); ctx.ellipse(0, 0, L * 0.55, 14, 0, 0, Math.PI * 2); ctx.fill();
+    // carrozzeria
+    ctx.fillStyle = '#16151b'; ctx.beginPath();
+    ctx.moveTo(-L / 2, -30); ctx.lineTo(-L / 2 + 10, -70); ctx.lineTo(-L / 2 + 40, -78); ctx.lineTo(-L / 2 + 50, -128); ctx.lineTo(L / 2 - 120, -132);
+    ctx.lineTo(L / 2 - 70, -82); ctx.lineTo(L / 2 - 10, -76); ctx.lineTo(L / 2, -40); ctx.lineTo(L / 2, -22); ctx.lineTo(-L / 2, -22); ctx.closePath(); ctx.fill();
+    // finestrini (vetro scuro, semitrasparente: chi si sporge si vede)
+    ctx.fillStyle = 'rgba(70,90,110,0.35)';
+    ctx.fillRect(-L / 2 + 62, -122, 120, 40); ctx.fillRect(-L / 2 + 190, -122, 70, 40);
+    ctx.beginPath(); ctx.moveTo(L / 2 - 112, -124); ctx.lineTo(L / 2 - 80, -84); ctx.lineTo(L / 2 - 112, -84); ctx.closePath(); ctx.fill();
+    // cromature, fari, pinne
+    ctx.fillStyle = '#c9ccd3'; ctx.fillRect(-L / 2, -36, L, 7); ctx.fillRect(L / 2 - 14, -62, 14, 30); ctx.fillRect(-L / 2 - 4, -46, 10, 22);
+    ctx.fillStyle = '#ffe9a8'; ctx.fillRect(L / 2 - 6, -66, 8, 10);
+    ctx.fillStyle = '#d23a2a'; ctx.fillRect(-L / 2 + 4, -84, 8, 14);
+    // graffiti
+    var cols = ['#e8e4dc', '#5ec4e6', '#e2463a', '#f2c14e', '#7ddc6a', '#e57ad8'], r = 7;
+    ctx.lineWidth = 3; ctx.lineCap = 'round';
+    for (var i = 0; i < 22; i++) {
+      r = (r * 9301 + 49297) % 233280; var gx = -L / 2 + 20 + (r % (L - 60)); r = (r * 9301 + 49297) % 233280; var gy = -40 - (r % 40);
+      ctx.strokeStyle = cols[i % cols.length]; ctx.beginPath(); ctx.moveTo(gx, gy);
+      for (var k = 0; k < 4; k++) { r = (r * 9301 + 49297) % 233280; ctx.lineTo(gx + k * 9 + 6, gy - 10 + (r % 20)); }
+      ctx.stroke();
+    }
+    // ruote
+    [-L / 2 + 70, L / 2 - 80].forEach(function (wx) { ctx.fillStyle = '#0a0a0c'; ctx.beginPath(); ctx.arc(wx, -22, 24, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = '#8d9097'; ctx.beginPath(); ctx.arc(wx, -22, 10, 0, Math.PI * 2); ctx.fill(); });
+    ctx.restore();
+  }
   function drawScene(w, sc, ui) {
     var art = sc.def.cine && ARTSC[sc.def.cine];
     if (art && art.ok) {
@@ -844,7 +878,7 @@ W.Render = (function () {
     w.items.forEach(function (it) { list.push({ y: it.y - 1, d: function () { drawItem(it, cx, w.time); } }); });
     w.enemies.forEach(function (e) { e.isEnemy = true; list.push({ y: e.y, d: function () { drawFigure(e, cx, w); } }); });
     w.players.forEach(function (p) { if (p.hidden) return; list.push({ y: p.y + 0.5, d: function () { drawFigure(p, cx, w); if (!(w.area && w.area.scene)) drawSlotMarker(p, cx, w); } }); });
-    w.npcs.forEach(function (n) { if (n.hidden) return; list.push({ y: n.y, d: function () { drawPixel(n, cx, w); if (n.skates) drawSkates(n, cx); } }); });
+    w.npcs.forEach(function (n) { if (n.hidden) return; list.push({ y: n.y, d: function () { if (n.vehicle) { drawHearse(n, cx); return; } drawPixel(n, cx, w); if (n.skates) drawSkates(n, cx); } }); });
     if (w.area && w.area.def.kind === 'stealth') drawStalls(w, cx, list);
     w.eproj.forEach(function (pr) { list.push({ y: pr.y, d: function () {
       if (pr.kind === 'bullet') { ctx.strokeStyle = '#fff3c4'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(pr.x - cx, pr.y - 60); ctx.lineTo(pr.x - cx - Math.sign(pr.vx) * 40, pr.y - 60); ctx.stroke(); }

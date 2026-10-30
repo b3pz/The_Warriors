@@ -172,10 +172,11 @@ var W = window.W;
   // C8
   S.cine_bottles = { cine: 'cine_bottles', steps: [
     ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'],
-    ['npc', 'luther', 'luther', 1150, 560, -1], ['npc', 'rg1', 'rogue', 1220, 620, -1],
+    ['npc', 'hearse', 'hearse', 1600, 600, -1], ['move', 'hearse', 1080, null, 1.6], ['wait', 1.7],
+    ['npc', 'luther', 'luther', 960, 598, -1], ['raise', 'luther', 30], ['npc', 'rg1', 'rogue', 1250, 640, -1],
     ['caption', 'Il carro funebre dei Rogues, coperto di graffiti, si ferma. Luther si sporge dal finestrino, tre bottiglie vuote infilate tra le dita.'],
     ['say', 'luther', 'Warriors... venite fuori a giocare!'], ['sfx', 'bottle'], ['wait', 0.4], ['sfx', 'bottle'], ['say', 'swan', 'Finisce sulla spiaggia.'],
-    ['move', 'luther', 1500, null, 1.4], ['move', 'rg1', 1560, null, 1.4], ['wait', 1.2], ['clearNpcs'], ['flag', 'rogues_arrived']] };
+    ['clearNpcs'], ['npc', 'hearse', 'hearse', 1080, 600, -1], ['move', 'hearse', 1700, null, 1.4], ['wait', 1.3], ['clearNpcs'], ['flag', 'rogues_arrived']] };
   S.cine_disarm = { cine: 'cine_disarm', steps: seq(
     [['players', 'hide']], line(['snow', 'cowboy', 'cochise', 'vermin', 'rembrandt'], 160, 60, Y, 1, 20),
     [['npc', 'mercy', 'mercy', 120, 650, 1], ['npc', 'swan', 'swan', 560, Y, 1], ['npc', 'luther', 'luther', 900, Y, -1], ['npc', 'rg1', 'rogue', 1000, 540, -1], ['npc', 'rg2', 'rogue', 1040, 640, -1],
