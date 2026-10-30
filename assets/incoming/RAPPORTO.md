@@ -10,7 +10,7 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **mercy**: nel gioco con 11 immagini (cover, hair, hand, idle, jump, run, sit, walk)
 - **mercy_giacca**: nel gioco con 9 immagini (hair, hand, idle, run, sit, walk)
 - **rembrandt**: nel gioco con 14 immagini (down, getup, heavy, hurt, idle, jump, kick, pinned_spray, punch, spray, walk)
-- **snow**: nel gioco con 12 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, walk)
+- **snow**: nel gioco con 23 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pipe_swing, punch, revive, run, sit, throw, walk)
 - **swan**: nel gioco con 26 immagini (bat_swing, bat_walk, dodge, down, getup, grab, hand, heavy, hurt, idle, jump, jumpkick, kick, knife, knifethrow, pipe_swing, punch, revive, run, sit, throw, walk)
 - **vermin**: nel gioco con 13 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, turnstile, walk)
 - **fondale C1-01**: nel gioco (2 pezzi, 1920×720)
