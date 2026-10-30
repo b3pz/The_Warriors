@@ -54,7 +54,7 @@ var W = window.W;
   // ------------------------------------------------------------------ etichette tasti
   var KEYNAME = { Space: 'Spazio', ShiftLeft: 'Shift', ShiftRight: 'Shift', ControlRight: 'Ctrl dx', ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→' };
   function keyLabel(code) { if (KEYNAME[code]) return KEYNAME[code]; if (code.indexOf('Key') === 0) return code.slice(3); if (code.indexOf('Numpad') === 0) return 'Num' + code.slice(6); return code; }
-  var TOUCH_NAMES = { light: 'COLPO', heavy: 'FORTE', jump: 'SALTO', dodge: 'SCHIVA', interact: 'AZIONE', fury: 'FURIA', throw: 'LANCIA' };
+  var TOUCH_NAMES = { light: 'COLPO', heavy: 'COLPO tenuto premuto', jump: 'SALTO', dodge: 'SCHIVA', interact: 'AZIONE', fury: 'FURIA', throw: 'LANCIA' };
   var ui = {
     keyFor: function (p, a) { var d = p.device; if (W.Touch && W.Touch.active()) return TOUCH_NAMES[a] ? TOUCH_NAMES[a].slice(0, 2) : '•'; if (!d || !d.layout) return 'B'; return keyLabel(W.Input.LAYOUTS[d.layout][a][0]); },
     tutorialText: function (t) {
@@ -683,6 +683,7 @@ var W = window.W;
     var rows = [['Movimento · doppio tocco = corsa', k('up') + k('left') + k('down') + k('right')], ['Leggero (3 colpi in catena se vanno a segno)', k('light')], ['Pesante · apre la guardia, disarma sulla ripresa', k('heavy')], ['Salto · supera le transenne basse · leggero in discesa = calcio volante', k('jump')], ['Schivata · invulnerabile a metà', k('dodge')], ['Interazione · parla, raccogli, apri, presa, soccorso', k('interact')], ['In presa: leggero colpisce (max 2) · direzione+interazione lancia', k('interact') + ' / ' + k('light')], ['Furia a barra piena', k('fury')], ['Lancia l\'arma impugnata', k('throw')], ['Dialoghi: avanti', 'Invio'], ['Pausa · salta scena · comandi in Opzioni', 'Esc']];
     rows.forEach(function (r, i) { txt(r[0], 250, 160 + i * 42, 21, R.COL.ink, 'left', 400); txt(r[1], 1030, 160 + i * 42, 21, R.COL.p1, 'right', 600); });
     txt('Controller: X leggero · Y pesante · A salto · RB schivata · B interazione · LB furia · RT lancio · Start pausa', C.VIEW_W / 2, 650, 17, R.COL.dim, 'center', 400);
+    txt('Telefono: joystick dove appoggi il pollice · COLPO (tienilo premuto = forte) · SALTO · SCHIVA · i tasti AZIONE, FURIA e LANCIA compaiono quando servono', C.VIEW_W / 2, 625, 16, R.COL.dim, 'center', 400);
     txt('Invio per tornare', C.VIEW_W / 2, 690, 17, R.COL.dim, 'center', 400);
   }
   var CREDITS = ['THE WARRIORS · NIGHT RUN', '', 'Progetto e storia', 'Giuseppe (b3pz)', '', 'Grafica approvata', 'Raccolta grafica 04', '', 'Motore, livelli e scene', 'Claude', '', 'Dal ritrovo di Coney Island', 'al ritorno all\'alba', '', 'Grazie per aver giocato'];
@@ -748,6 +749,7 @@ var W = window.W;
   function tick(dt) {
     pollMenuPad();
     if (game.state !== 'play' || (game.world && game.world.area && game.world.area.scene && game.world.area.scene.choice)) W.Touch.navTick(simTime, onKey);
+    W.Touch.update(simTime);
     if (game.state === 'play') {
       acc += dt;
       while (acc >= C.STEP) { simTime += C.STEP; W.Input.setTime(simTime); stepPlay(C.STEP); acc -= C.STEP; if (game.state !== 'play') { acc = 0; break; } }
@@ -842,7 +844,16 @@ var W = window.W;
       }
       if (game.state === 'gameover') drawGameOver(dt);
     }
-    W.Touch.draw(ctx, game.state === 'play' && !(game.world && game.world.area && game.world.area.scene), window.innerHeight > window.innerWidth);
+    var tPlay = game.state === 'play' && !(game.world && game.world.area && game.world.area.scene);
+    if (tPlay && W.Touch.active()) {
+      // tasti che compaiono solo quando servono: azione con il suo nome, furia piena, arma in mano
+      var tp = game.world.players.filter(function (q) { return !q.cpu; })[0] || game.world.players[0], pr = game.world.promptFor(tp) || '', act = null;
+      if (/^Parla/.test(pr)) act = 'PARLA'; else if (/^Raccogli/.test(pr)) act = 'PRENDI'; else if (/soccorri/.test(pr)) act = 'AIUTA'; else if (/^Presa|^Leggero/.test(pr)) act = 'PRESA';
+      else if (/Nasconditi/.test(pr)) act = 'NASCONDITI'; else if (pr && pr !== 'Uscita' && !/salute piena/.test(pr)) act = pr.split(' ')[0].toUpperCase().slice(0, 9);
+      if (/^\+|\+\d/.test(pr)) act = 'PRENDI';
+      W.Touch.setInfo({ action: act, fury: tp.fury >= 100, weapon: !!tp.weapon });
+    }
+    W.Touch.draw(ctx, tPlay, window.innerHeight > window.innerWidth);
     if (game.msg) { ctx.fillStyle = 'rgba(8,10,16,0.88)'; ctx.fillRect(C.VIEW_W / 2 - 330, 640, 660, 40); txt(game.msg.text, C.VIEW_W / 2, 667, 18, R.COL.ink, 'center', 400); }
   }
 

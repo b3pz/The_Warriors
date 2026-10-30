@@ -43,7 +43,7 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 - Ostacoli nei corridoi (transenne, tornelli, siepi da saltare, casse da sfondare, fuoco, treni con avviso) in 13 aree di attraversamento e fuga.
 - Comandi rimappabili (Opzioni → Comandi, `warriors-keys-v1`). Compagni liberi, non più in fila.
 - Game over: tentativi per capitolo (Facile 5, Normale 3, Difficile 2), poi si ricomincia dall'inizio del capitolo; il salvataggio torna all'inizio del capitolo.
-- Mobile: joystick e tasti touch, pausa, menu con il joystick, richiesta di ruotare il telefono (`tools/qa_mobile.js`).
+- Mobile: joystick mobile (centro dove appoggi il pollice), tre tasti fissi COLPO (tenuto = forte), SALTO, SCHIVA; AZIONE (con il nome: PARLA, PRENDI, PRESA, AIUTA…), FURIA e LANCIA compaiono solo quando servono; pausa, menu con il joystick, richiesta di ruotare il telefono (`tools/qa_mobile.js`).
 - Film: Rembrandt bloccato a terra dal Punk spruzza la vernice; Ajax senza gilet contro le mazze e la mazza strappata al capo dei Furies; radio delle Lizzies da spaccare (chi lo fa nel film è da confermare: l'autore ha indicato Snow, che però non è nel gruppo delle Lizzies).
 - Duello: come nel film, Luther spara, Swan schiva e poi lancia il coltello. Rembrandt, se lo giochi e un Punk ti blocca, si libera con la bomboletta (tasto d'interazione).
 - Elenco completo di sprite e fondali mancanti con le misure: `docs/SPRITE_MANCANTI.md`.
