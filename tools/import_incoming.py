@@ -186,6 +186,29 @@ def do_simple(sub, out_sub, fmt, key=False, max_side=None):
     return out
 
 
+
+# brani dell'album «The Warriors – Original Motion Picture Soundtrack» (1979): nome libero, riconosciuti dal titolo
+TRACKS = [
+    ('theme', ['theme']), ('nowhere_to_run', ['nowhere']), ('in_havana', ['havana']), ('echoes_in_my_mind', ['echoes']),
+    ('baseball_furies_chase', ['furies', 'baseball']), ('the_fight', ['fight']), ('in_the_city', ['city']),
+    ('love_is_a_fire', ['love', 'fire']), ('youre_movin_too_slow', ['movin', 'moving', 'slow']), ('last_of_an_ancient_breed', ['ancient', 'breed'])]
+
+
+def do_music():
+    base = INC / 'musica'; out = {}
+    if not base.exists(): return out
+    od = ROOT / 'assets' / 'music'; od.mkdir(parents=True, exist_ok=True)
+    for f in sorted(base.iterdir()):
+        if f.suffix.lower() not in ('.mp3', '.m4a', '.ogg', '.wav', '.aac'): continue
+        name = re.sub(r'[^a-z]', ' ', f.stem.lower())
+        key = next((k for k, words in TRACKS if any(wd in name.split() or wd in name for wd in words) and k not in out), None)
+        if key == 'the_fight' and 'furies' in name: key = 'baseball_furies_chase'
+        if not key: report.append(f'- musica: `{f.name}` non riconosciuto (rinominalo con il titolo del brano)'); continue
+        dst = od / (key + f.suffix.lower()); dst.write_bytes(f.read_bytes()); out[key] = f'assets/music/{dst.name}'
+    if out: report.append('- **musica**: ' + ', '.join(sorted(out)))
+    return out
+
+
 def check_files():
     """Segnala i file che non sono immagini valide (caricamenti rotti): vanno ricaricati."""
     for f in sorted(INC.rglob('*')):
@@ -203,8 +226,10 @@ def main():
     art = {'scene': do_simple('scene', 'scenes_ai', 'jpg', max_side=1600),
            'portrait': do_simple('ritratti', 'portraits_ai', 'png', key=True, max_side=320),
            'object': do_simple('oggetti', 'objects_ai', 'png', key=True, max_side=900)}
+    tracks = do_music()
     head = "'use strict';\n// Generato da tools/import_incoming.py dalle immagini in assets/incoming/: non modificare a mano.\nwindow.W = window.W || {};\n"
     (ROOT / 'js' / 'atlas_ai.js').write_text(head + 'W.ATLAS_AI = ' + json.dumps({'sets': sets}) + ';\n', encoding='utf-8')
+    (ROOT / 'js' / 'musiche_auto.js').write_text(head + 'W.MUSIC_AUTO = ' + json.dumps(tracks) + ';\n', encoding='utf-8')
     (ROOT / 'js' / 'art_ai.js').write_text(head + 'W.BG_AI = ' + json.dumps(bg) + ';\nW.ART_AI = ' + json.dumps(art) + ';\n', encoding='utf-8')
     (INC / 'RAPPORTO.md').write_text('# Rapporto dell\'integrazione automatica\n\nAggiornato a ogni caricamento in `assets/incoming/`.\n\n' + ('\n'.join(report) if report else 'Nessuna immagine da integrare.') + '\n', encoding='utf-8')
     print('\n'.join(report) or 'nessuna immagine')

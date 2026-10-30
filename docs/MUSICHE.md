@@ -2,6 +2,25 @@
 
 Il gioco è pronto per le tracce vere. Finché non ce ne sono suona la musica sintetizzata; appena una traccia è assegnata a un momento, il synth tace lì e restano ambienti, effetti e la radio.
 
+## Il modo più semplice: l'album del film
+
+Carica i file dell'album «The Warriors – Original Motion Picture Soundtrack» (1979) in `assets/incoming/musica/`, con qualsiasi nome purché contenga il titolo del brano (es. `02 Nowhere to Run.mp3`). L'automazione del repository li riconosce, li copia in `assets/music/` e il gioco li usa nei momenti scritti in `W.MUSIC_MOMENTS` (`js/musiche.js`):
+
+| Brano | Dove suona (provvisorio) |
+|---|---|
+| Theme from «The Warriors» | menu, apertura sulla Wonder Wheel |
+| You're Movin' Too Slow | tutte le fughe |
+| The Fight | tutte le risse |
+| In Havana | territorio degli Orphans |
+| Baseball Furies Chase | Riverside Park, i Furies |
+| Nowhere to Run | le Lizzies |
+| Echoes in My Mind | Union Square |
+| Love Is a Fire | l'ultimo treno all'alba |
+| Last of an Ancient Breed | l'arrivo a Coney Island, sotto il molo |
+| In the City | la spiaggia all'alba e i titoli di coda |
+
+Il bagno dei Punks resta in silenzio. I brani mancanti non danno errori: in quei momenti resta la musica sintetizzata.
+
 ## Come si aggiunge una traccia
 
 1. Metti il file in `assets/music/` (mp3 consigliato, 192–320 kbps; vanno anche ogg e m4a).

@@ -21,5 +21,19 @@
 // La stessa traccia usata da due momenti di fila continua senza ripartire.
 // 'silence' come valore (es. 'C6-02': 'silence') spegne la musica in quel momento.
 window.W = window.W || {};
+// I brani dell'album caricati in assets/incoming/musica/ vengono riconosciuti da tools/import_incoming.py
+// e scritti in js/musiche_auto.js (W.MUSIC_AUTO). Qui sotto: quale brano suona in quale momento (provvisorio, da rivedere con l'autore).
+W.MUSIC_MOMENTS = {
+  menu: 'theme', cine_opening: 'theme', credits: 'in_the_city',
+  chase: 'youre_movin_too_slow', fight: 'the_fight',
+  'C3:explore': 'in_havana',
+  'C4-01': 'baseball_furies_chase', 'C4:fight': 'baseball_furies_chase', 'C4:chase': 'baseball_furies_chase',
+  dlg_c5_welcome: 'nowhere_to_run', 'C5-02': 'nowhere_to_run', 'C5-03': 'nowhere_to_run', cine_lizzies_trap: 'nowhere_to_run',
+  'C6:explore': 'echoes_in_my_mind', 'C6-02': 'silence',
+  'C7': 'love_is_a_fire', 'C8-01': 'last_of_an_ancient_breed', 'C8-02': 'last_of_an_ancient_breed',
+  'C8-04': 'in_the_city', cine_epilogue: 'in_the_city'
+};
 W.MUSIC = {
 };
+// solo i momenti il cui brano c'è davvero (niente file mancanti)
+(function () { var A = W.MUSIC_AUTO || {}, M = W.MUSIC_MOMENTS; for (var k in M) { if (M[k] === 'silence') W.MUSIC[k] = 'silence'; else if (A[M[k]] && !W.MUSIC[k]) W.MUSIC[k] = A[M[k]]; } })();
