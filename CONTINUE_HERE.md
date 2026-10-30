@@ -27,6 +27,14 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 - Correzioni emerse dai test: compagno di allenamento troppo lontano, Mercy che non raggiungeva la porta di C5-04, segnaposto dei tasti negli obiettivi.
 - Non eseguito: playtest umano, bilanciamento, controller fisici, due tastiere, browser diversi da Chromium.
 
+## Aggiornamento 30 ottobre (notte)
+
+- Atmosfera da film approvata dall'autore: correzione colore notturna, grana, DJ alla radio che racconta tutta la notte, synth cupi e silenzi, niente punteggio a schermo, risse brevi, transizioni a fumetto, vignette «Intanto…» con lo stato dei gruppi divisi.
+- Minigioco del bagno dei Punks in C6-02 (`tools/qa_stealth.js`).
+- Cronologia e cast del film forniti dall'autore integrati nelle scene (vedi `docs/PROJECT_MEMORY.md`).
+- Sprite: filtro automatico contro pose di altri personaggi e figure doppie; associazioni corrette sulle descrizioni dell'autore; Ajax, Vermin e Cleon senza figura adatta.
+- Prossimo passo concordato: i fondali definitivi e le ~2.000 immagini in arrivo («quando tutti gli sfondi sono fatti per bene c'è più pathos»).
+
 ## Grafica nel gioco
 
 - Personaggi da `personaggi_nemici_fondali_04.png` (26 set) e 12 fondali dai ritagli della Raccolta 04 e del pacchetto 02.
