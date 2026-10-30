@@ -72,6 +72,14 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 - Il gioco usa da solo i set nuovi (sostituiscono interi quelli della Raccolta 04), i fondali nuovi area per area e le illustrazioni delle scene come sfondo della scena. Pose nuove già riconosciute: run, getup, grab, throw, dodge, jumpkick, bat_walk, bat_swing, pipe_swing, revive, pinned_spray, skate, charge, gun_aim, gun_shoot, bottle_throw, baton_swing, swing, windup.
 - Niente approvazioni obbligatorie: l'autore scrive in `assets/incoming/modelli/RIFARE.md` ciò che va rifatto.
 
+## Correzioni sul film (30 ottobre, pomeriggio)
+
+- C1-04 è il cimitero di Woodlawn; raduno a Van Cortlandt Park; Fox testimone; taglia di Masai; Orphans esclusi dal raduno; Swan torna alla 96ª e trova Mercy (poliziotto, tunnel); Rembrandt ferito dalle Lizzies e medicato; Mercy combatte con i Punks; la frase di Swan all'arrivo a Stillwell Avenue.
+- Niente risse che il film non ha: C2-02 «La strada del bus» (fuga dal bus, nessun Turnbull a piedi neanche in C2-03), C3-02 «Tra le fiamme» (bottiglia di Snow, auto in fiamme, fuga), C8-02 «Sotto il molo» (si raccolgono le armi, il carro dei Rogues li segue). Le tre risse tolte restano solo nell'Arcade come «Extra» (`W.ARCADE_EXTRA`).
+- Duello: Luther punta la pistola, il coltello di Swan gli si pianta nel polso, il colpo parte a vuoto (versione di due fonti su tre).
+- C2-04 «Stazione sopraelevata del Bronx» (Gun Hill Road non è confermato dalle fonti).
+- L'uscita di un'area non aspetta più i compagni CPU rimasti indietro (2,5 s con i giocatori nella zona).
+
 ## Grafica nel gioco
 
 - Personaggi da `personaggi_nemici_fondali_04.png` (26 set) e 12 fondali dai ritagli della Raccolta 04 e del pacchetto 02.

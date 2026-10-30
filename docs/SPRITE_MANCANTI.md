@@ -79,11 +79,11 @@ Il gioco è a 1280 × 720. Il pavimento comincia alla riga indicata e arriva in 
 | C1-03 | Fuga dal parco | parco | notte | 2560 × 720 | 490 |
 | C1-04 | Il cimitero di Woodlawn | cimitero | notte | 1280 × 720 | 500 |
 | C2-01 | Isolato del Bronx | strada | notte | 2560 × 720 | 460 |
-| C2-02 | Vicolo con cancello | vicolo | notte | 1920 × 720 | 490 |
+| C2-02 | La strada del bus | vicolo | notte | 1920 × 720 | 490 |
 | C2-03 | Corsa alle scale | strada | notte | 3840 × 720 | 450 |
-| C2-04 | Stazione di Gun Hill Road | banchina | notte | 1920 × 720 | 480 |
+| C2-04 | Stazione sopraelevata del Bronx | banchina | notte | 1920 × 720 | 480 |
 | C3-01 | Strada degli Orphans | strada | notte | 1280 × 720 | 480 |
-| C3-02 | Cortile | cortile | notte | 2560 × 720 | 490 |
+| C3-02 | Tra le fiamme | strada | notte | 2560 × 720 | 490 |
 | C3-03 | Strada laterale | strada | notte | 2560 × 720 | 460 |
 | C3-04 | Stazione della 96ª Strada | banchina | notte | 1920 × 720 | 510 |
 | C4-01 | Ingresso del parco | parco | notte | 1920 × 720 | 480 |
@@ -102,7 +102,7 @@ Il gioco è a 1280 × 720. Il pavimento comincia alla riga indicata e arriva in 
 | C7-01 | L'ultimo treno | vagone | alba | 1920 × 720 | 570 |
 | C7-02 | Casa | banchina | alba | 1280 × 720 | 480 |
 | C8-01 | Strada di casa | Coney Island | alba | 1920 × 720 | 480 |
-| C8-02 | Il varco | Coney Island | alba | 1920 × 720 | 460 |
+| C8-02 | Sotto il molo | molo | alba | 1920 × 720 | 460 |
 | C8-03 | La spiaggia | spiaggia | alba | 1280 × 720 | 450 |
 | C8-04 | Alba | spiaggia | alba | 1280 × 720 | 450 |
 

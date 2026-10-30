@@ -9,7 +9,7 @@ W.Scenery = (function () {
   var cache = {};
   var ENV_BY_BG = { park: 'park', park_b: 'park', metro: 'platform', metro_b: 'platform', alley: 'alley', street: 'street', street_b: 'street',
     harbor: 'courtyard', interior: 'bathroom', coney: 'coney', coney_b: 'coney', boardwalk: 'beach' };
-  var SIGNS = { 'P0-04': 'CONEY ISLAND', 'C2-04': 'GUN HILL RD', 'C3-04': '96 ST', 'C6-01': 'UNION SQ', 'C6-04': 'UNION SQ', 'C7-02': 'CONEY ISLAND' };
+  var SIGNS = { 'P0-04': 'CONEY ISLAND', 'C3-04': '96 ST', 'C6-01': 'UNION SQ', 'C6-04': 'UNION SQ', 'C7-02': 'CONEY ISLAND' };
 
   function rng(seed) { var s = 0; for (var i = 0; i < seed.length; i++) s = (s * 31 + seed.charCodeAt(i)) | 0; s = Math.abs(s) || 7; return function () { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
   function shade(hex, k) { var n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255; r = Math.min(255, Math.max(0, Math.round(r * k))); g = Math.min(255, Math.max(0, Math.round(g * k))); b = Math.min(255, Math.max(0, Math.round(b * k))); return 'rgb(' + r + ',' + g + ',' + b + ')'; }
@@ -75,6 +75,10 @@ W.Scenery = (function () {
   var ENV = {};
 
   ENV.street = function (g, w, ft, light, r, opt) {
+    if (opt && opt.carFire) { var self = ENV.street; opt.carFire = false; self(g, w, ft, light, r, opt);
+      var cx0 = Math.floor(w * 0.08); g.fillStyle = '#141416'; g.fillRect(cx0, ft - 22, 90, 18); g.fillRect(cx0 + 16, ft - 34, 52, 14); g.fillStyle = '#0a0a0a'; g.beginPath(); g.arc(cx0 + 18, ft - 4, 7, 0, Math.PI * 2); g.arc(cx0 + 72, ft - 4, 7, 0, Math.PI * 2); g.fill();
+      for (var f = 0; f < 9; f++) { var fx2 = cx0 + 6 + f * 10, fh2 = 18 + r() * 26, fg2 = g.createLinearGradient(0, ft - 34 - fh2, 0, ft - 20); fg2.addColorStop(0, 'rgba(255,220,120,0)'); fg2.addColorStop(0.5, 'rgba(255,140,40,0.9)'); fg2.addColorStop(1, 'rgba(200,40,10,0.9)'); g.fillStyle = fg2; g.beginPath(); g.moveTo(fx2 - 6, ft - 22); g.quadraticCurveTo(fx2, ft - 34 - fh2, fx2 + 6, ft - 22); g.fill(); }
+      var glow = g.createRadialGradient(cx0 + 45, ft - 30, 4, cx0 + 45, ft - 30, 140); glow.addColorStop(0, 'rgba(255,140,50,0.35)'); glow.addColorStop(1, 'rgba(255,140,50,0)'); g.fillStyle = glow; g.fillRect(cx0 - 100, ft - 170, 300, 260); return; }
     sky(g, w, ft, light, r, 0); skyline(g, w, 70, light, r, 50);
     var x = 0, wallTop = 30;
     while (x < w) {
@@ -335,6 +339,24 @@ W.Scenery = (function () {
     lamps.forEach(function (lx) { lampPool(g, lx + 10, ft + 30, 60, light); });
   };
 
+
+  // sotto il molo di Coney Island all'alba: il tavolato sopra la testa, piloni, luce a strisce, il mare tra i pali
+  ENV.pier = function (g, w, ft, light, r) {
+    ENV.beach(g, w, ft, 'dawn', r);
+    var deck = Math.floor(ft * 0.42);
+    g.fillStyle = '#2a1f18'; g.fillRect(0, 0, w, deck);
+    for (var y = 4; y < deck; y += 7) { g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillRect(0, y, w, 1); }
+    for (var i = 0; i < w / 9; i++) { g.fillStyle = 'rgba(255,220,170,' + (0.08 + r() * 0.18) + ')'; g.fillRect(Math.floor(r() * w), Math.floor(r() * deck), 1 + Math.floor(r() * 3), 1); }
+    g.fillStyle = '#1c1510'; g.fillRect(0, deck, w, 6); for (var bx = 0; bx < w; bx += 46) g.fillRect(bx, deck, 8, 18);
+    // piloni su più file
+    for (var row = 0; row < 3; row++) for (var px = (row * 23) % 60; px < w; px += 60 + row * 10) {
+      var pw = 6 + row * 3, top = deck + 4, bot = ft + 8 + row * 20; g.fillStyle = shade('#3a2c22', 0.55 + row * 0.25); g.fillRect(px, top, pw, bot - top);
+      g.fillStyle = 'rgba(0,0,0,0.25)'; g.fillRect(px + pw - 2, top, 2, bot - top);
+    }
+    // raggi di luce tra le assi
+    for (var k = 0; k < w / 70; k++) { var lx = r() * w, gl = g.createLinearGradient(lx, deck, lx + 30, ft + 40); gl.addColorStop(0, 'rgba(255,215,160,0.18)'); gl.addColorStop(1, 'rgba(255,215,160,0)'); g.fillStyle = gl; g.beginPath(); g.moveTo(lx, deck); g.lineTo(lx + 6, deck); g.lineTo(lx + 46, ft + 40); g.lineTo(lx + 30, ft + 40); g.fill(); }
+  };
+
   ENV.beach = function (g, w, ft, light, r) {
     sky(g, w, ft, 'dawn', r, 0);
     var sun = g.createRadialGradient(w * 0.6, ft - 40, 2, w * 0.6, ft - 40, 120); sun.addColorStop(0, 'rgba(255,220,160,0.8)'); sun.addColorStop(1, 'rgba(255,200,140,0)'); g.fillStyle = sun; g.fillRect(0, 0, w, ft);
@@ -360,6 +382,7 @@ W.Scenery = (function () {
     if (id === 'C5-04') return 'tunnel';
     if (id === 'C6-02' || id === 'C6-03') return 'bathroom';
     if (id === 'C7-01') return 'traincar';
+    if (id === 'C8-02') return 'pier';
     if (id === 'C8-03' || id === 'C8-04') return 'beach';
     if (id === 'P0-04' || id === 'C7-02') return 'platform';
     return ENV_BY_BG[def.bg] || 'street';
@@ -371,7 +394,7 @@ W.Scenery = (function () {
     var w = Math.ceil(Math.max(area.width, 1280) / 2) + 2, c = document.createElement('canvas');
     c.width = w; c.height = 360;
     var g = c.getContext('2d'), r = rng(key);
-    var opt = { sign: SIGNS[def.id] || (env === 'platform' ? '' : ''), river: /^C4|^C5-01/.test(def.id), moon: true, gate: def.id === 'C2-02', stairs: def.bg === 'metro_b' };
+    var opt = { sign: SIGNS[def.id] || (env === 'platform' ? '' : ''), river: /^C4|^C5-01/.test(def.id), moon: true, gate: def.id === 'C2-02', carFire: def.id === 'C3-02', stairs: def.bg === 'metro_b' };
     (ENV[env] || ENV.street)(g, w, ft, light, r, opt);
     // ambienti molto bui: una luce d'ambiente leggera perché si leggano forme e profondità
     if (['alley', 'courtyard', 'park', 'rally', 'apartment', 'tunnel'].indexOf(env) >= 0) { g.globalCompositeOperation = 'screen'; g.fillStyle = 'rgba(60,66,84,0.55)'; g.fillRect(0, 0, w, 360); g.globalCompositeOperation = 'source-over'; }

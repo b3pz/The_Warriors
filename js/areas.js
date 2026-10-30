@@ -196,8 +196,12 @@ var W = window.W;
     // uscita: tutto il gruppo nella zona e 0,6 s di conferma
     if (w.exitOpen && !def.exitInteract && !this.finishing && def.kind !== 'confront') {
       var all = w.players.filter(function (p) { return !p.out && p.state !== 'ko'; });
-      var inZone = all.length && all.every(function (p) { return p.x > def.width - 200; });
-      if (inZone) { this.exitT += dt; if (this.exitT >= C.EXIT_CONFIRM) { this.finish(); w.emit('exit', {}); } } else this.exitT = 0;
+      var humans = all.filter(function (p) { return !p.cpu || p.qaHuman; });
+      var zone = function (p) { return p.x > def.width - 200; };
+      var inZone = all.length && all.every(zone);
+      // i compagni CPU rimasti indietro non bloccano l'uscita: dopo 2,5 s con i giocatori nella zona si prosegue
+      var humansIn = humans.length && humans.every(zone);
+      if (inZone || humansIn) { this.exitT += dt; if (this.exitT >= (inZone ? C.EXIT_CONFIRM : 2.5)) { this.finish(); w.emit('exit', {}); } } else this.exitT = 0;
     }
     if (def.exitInteract && this.canExit() && !w.exitOpen && this.kind !== 'traversal') { w.exitOpen = true; this.objective = def.exitInteract.label; }
     if (def.exitInteract && this.canExit() && this.kind === 'traversal') w.exitOpen = true;

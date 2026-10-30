@@ -65,6 +65,9 @@ var W = window.W;
   // C2
   S.dlg_c2_bus = { cine: 'dlg_c2_bus', letterbox: false, steps: [
     ['say', 'fox', 'Turnbull AC\'s. Sul bus. Ci hanno visti.'], ['say', 'snow', 'La scala è dall\'altra parte. Muoviamoci.']] };
+  S.dlg_c2_alley = { cine: 'dlg_c2_alley', letterbox: false, steps: [
+    ['caption', 'Il bus dei Turnbull gira l\'isolato a passo d\'uomo, carico di skinhead. Nessuno scende: aspettano che i Warriors escano allo scoperto.'],
+    ['say', 'swan', 'Quando passa, correte. Al cancello e poi al treno.']] };
   S.dlg_c2_run = { cine: 'dlg_c2_run', letterbox: false, steps: [['say', 'swan', 'Lasciateli indietro. Alla metro!']] };
   S.cine_train_escape = { cine: 'cine_train_escape', steps: seq(
     [['players', 'hide']], line(AFTER_C1, 380, 70, Y, 1, 18),
@@ -91,9 +94,11 @@ var W = window.W;
      ['say', 'ajax', 'Questi non sono una banda. Sono un circolo di quartiere.'],
      ['fade', 'out', 0.6], ['clearNpcs'], ['flag', 'orphans_confrontation']]) };
   S.dlg_c3_fire = { cine: 'dlg_c3_fire', letterbox: false, steps: [
-    ['caption', 'Swan accende la bottiglia e la lancia nell\'auto degli Orphans: il fuoco apre un varco.'], ['flash'], ['sfx', 'fire']] };
+    ['caption', 'Gli Orphans tornano, armati. Snow passa a Swan una bottiglia incendiaria.'],
+    ['caption', 'Swan la lancia sull\'auto degli Orphans. L\'auto prende fuoco: gli Orphans arretrano, nessuno li insegue.'], ['flash'], ['sfx', 'fire'], ['shake', 8],
+    ['say', 'swan', 'Attraverso il fuoco. Adesso!']] };
   S.cine_mercy_joins = { cine: 'cine_mercy_joins', letterbox: false, steps: [
-    ['say', 'swan', 'Abbiamo il varco. Via!'], ['say', 'mercy', 'Aspettate. Vengo con voi. Qui non mi tiene niente.'], ['say', 'swan', 'Non ti aspettiamo.'], ['flag', 'mercy_joined']] };
+    ['caption', 'Ajax si accorge che qualcuno li segue: è Mercy.'], ['say', 'mercy', 'Aspettate. Vengo con voi. Qui non mi tiene niente.'], ['say', 'swan', 'Non ti aspettiamo.'], ['flag', 'mercy_joined']] };
   S.cine_police_split = { cine: 'cine_police_split', steps: seq(
     [['players', 'hide']], line(['swan', 'mercy', 'ajax', 'snow', 'cowboy', 'fox', 'cochise', 'vermin', 'rembrandt'], 300, 70, Y, 1, 20),
     [['npc', 'pol1', 'police', -60, 600, 1], ['npc', 'pol2', 'police', -120, 540, 1], ['move', 'pol1', 240, null, 1.2], ['move', 'pol2', 200, null, 1.4],
@@ -131,12 +136,12 @@ var W = window.W;
      ['face', 'rembrandt', -1], ['say', 'rembrandt', 'Cochise… hanno chiuso la porta.'], ['clearNpcs']]) };
   S.cine_lizzies_trap = { cine: 'cine_lizzies_trap', letterbox: false, steps: [
     ['say', 'lizzie', 'Sappiamo chi siete. Lo sa tutta la città, ormai.'], ['say', 'cochise', 'Ci cercano tutti. Tutti quanti.'],
-    ['caption', 'Una delle Lizzies chiude la porta a chiave. Spunta un coltello, poi una pistola: spara male, ma spara.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'],
+    ['caption', 'Una delle Lizzies chiude la porta a chiave. Spunta un coltello, poi una pistola: spara male, ma spara.'], ['caption', 'Una delle Lizzies ferisce Rembrandt al braccio con il coltello.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'],
     ['caption', 'L\'unica via è la porta: sfondala.'], ['flag', 'lizzies_trap']] };
   S.cine_swan_mercy = { cine: 'cine_swan_mercy', letterbox: false, steps: [
     ['caption', 'Swan torna da solo alla 96ª Strada a cercare gli altri. Sulla banchina c\'è Mercy.'],
     ['caption', 'Mercy ora porta una giacca di jeans scura, troppo grande per lei.'], ['flag', 'mercy_jacket'],
-    ['say', 'swan', 'E quella?'], ['say', 'mercy', 'L\'ho rubata. La polizia cerca una con la maglietta rosa.'],
+    ['say', 'swan', 'E quella?'], ['say', 'mercy', 'L\'ho rubata. La polizia cerca una con la maglietta rosa.'], ['caption', 'Un poliziotto li vede dalla banchina. Swan e Mercy scappano nel tunnel.'], ['sfx', 'siren'],
     ['caption', 'Mercy gli si avvicina. Swan si scosta.'],
     ['say', 'mercy', 'Quando arrivi a casa, finisce davvero?'], ['say', 'swan', 'Prima ci dobbiamo arrivare.'],
     ['say', 'mercy', 'Non hai risposto.'], ['wait', 1.2], ['say', 'swan', 'Lo so.'], ['flag', 'swan_mercy_bond']] };
@@ -148,6 +153,7 @@ var W = window.W;
 
   // C6
   S.cine_reunion = { cine: 'cine_reunion', letterbox: false, steps: [
+    ['caption', 'Cochise fascia il braccio di Rembrandt.'], ['say', 'rembrandt', 'Ci credono tutti, sapete? Che Cyrus l\'abbiamo ammazzato noi.'],
     ['say', 'vermin', 'La prossima volta scegliete voi dove fermarci.'], ['say', 'rembrandt', 'Ne siamo usciti per un pelo. Le Lizzies.'],
     ['say', 'swan', 'Siete qui. Ora troviamo l\'ultimo treno.'], ['flag', 'reunited']] };
   S.cine_truth_reaches_riffs = { cine: 'cine_truth_reaches_riffs', steps: [
@@ -172,7 +178,7 @@ var W = window.W;
     ['caption', 'Swan le prende la mano e la ferma. Piano. Non c\'è niente da sistemare.'], ['flag', 'mercy_dignity']] };
   S.cine_home_arrival = { cine: 'cine_home_arrival', steps: seq(
     [['players', 'hide']], line(FINAL6.concat(['mercy']), 300, 70, Y, 1, 18),
-    [['sfx', 'train'], ['say', 'cowboy', 'Stillwell Avenue. Coney Island.'], ['say', 'vermin', 'Era ora.'], ['moveAll', 600, 2.4], ['wait', 1.8], ['fade', 'out', 1], ['clearNpcs'], ['flag', 'home_reached']]) };
+    [['sfx', 'train'], ['say', 'cowboy', 'Stillwell Avenue. Coney Island.'], ['say', 'vermin', 'Era ora.'], ['say', 'swan', 'Tutta la notte per tornare qui. A questo.'], ['moveAll', 600, 2.4], ['wait', 1.8], ['fade', 'out', 1], ['clearNpcs'], ['flag', 'home_reached']]) };
 
   // C8
   S.cine_bottles = { cine: 'cine_bottles', steps: [
@@ -182,15 +188,18 @@ var W = window.W;
     ['caption', 'Il carro funebre dei Rogues, coperto di graffiti, si ferma. Luther si sporge dal finestrino, tre bottiglie vuote infilate tra le dita.'],
     ['say', 'luther', 'Warriors... venite fuori a giocare!'], ['sfx', 'bottle'], ['wait', 0.4], ['sfx', 'bottle'], ['say', 'swan', 'Finisce sulla spiaggia.'],
     ['clearNpcs'], ['npc', 'hearse', 'hearse', 1080, 600, -1], ['move', 'hearse', 1700, null, 1.4], ['wait', 1.3], ['clearNpcs'], ['flag', 'rogues_arrived']] };
+  S.cine_pier = { cine: 'cine_pier', letterbox: false, steps: [
+    ['caption', 'Il carro dei Rogues li segue a passo d\'uomo. Luther vuole vederli in spiaggia.'],
+    ['caption', 'Sotto il molo i Warriors raccolgono quello che trovano: assi, bastoni, mazze, tubi. Swan infila il coltello nella cintura.'],
+    ['say', 'swan', 'Prendete qualcosa. E restate insieme.']] };
   S.cine_disarm = { cine: 'cine_disarm', steps: seq(
     [['players', 'hide']], line(['snow', 'cowboy', 'cochise', 'vermin', 'rembrandt'], 160, 60, Y, 1, 20),
     [['npc', 'mercy', 'mercy', 120, 650, 1], ['npc', 'swan', 'swan', 560, Y, 1], ['npc', 'luther', 'luther', 900, Y, -1], ['npc', 'rg1', 'rogue', 1000, 540, -1], ['npc', 'rg2', 'rogue', 1040, 640, -1],
      ['say', 'swan', 'Sappiamo chi ha sparato. Perché l\'hai fatto?'], ['say', 'luther', 'Nessun motivo. Mi piacciono queste cose.'],
      ['say', 'swan', 'Niente pistole. Tu e io, con i coltelli.'],
      ['caption', 'Luther accetta. Poi, all\'ultimo, tira fuori la pistola e la punta.'], ['wait', 0.5],
-     ['caption', 'Luther spara. Swan si butta di lato: il colpo lo manca.'], ['sfx', 'shot'], ['flash'], ['move', 'swan', 520, 640, 0.25], ['shake', 6], ['wait', 0.4],
-     ['caption', 'Swan fa scattare il coltello e lo lancia.'], ['sfx', 'swing'], ['sfx', 'hit'], ['shake', 8],
-     ['caption', 'La lama si pianta nell\'avambraccio di Luther. La pistola cade nella sabbia: è disarmato.'], ['pose', 'luther', 'down'], ['flag', 'luther_disarmed']]) };
+     ['caption', 'Swan è più veloce: il coltello gli si pianta nel polso.'], ['sfx', 'swing'], ['sfx', 'hit'], ['shake', 8],
+     ['caption', 'Il colpo parte a vuoto, nella sabbia. La pistola cade: Luther è disarmato.'], ['sfx', 'shot'], ['flash'], ['pose', 'luther', 'down'], ['flag', 'luther_disarmed']]) };
   S.cine_riffs_arrival = { cine: 'cine_riffs_arrival', steps: [
     ['crowd', 'rf', ['masai', 'cyrus', 'masai', 'cyrus'], 1150, 1260, 520, 660, 8, -1], ['npc', 'masai', 'masai', 1300, 580, -1], ['move', 'masai', 1000, null, 2],
     ['moveAll', -180, 2, 'crowd'], ['wait', 1.8],
@@ -199,7 +208,7 @@ var W = window.W;
     ['move', 'swan', 300, null, 2.4], ['wait', 2], ['fade', 'out', 1.2], ['clearNpcs'], ['flag', 'innocence_recognized']] };
   S.cine_epilogue = { cine: 'cine_epilogue', steps: seq(
     [['players', 'hide']], line(FINAL6, 120, 90, Y, 1, 22), [['npc', 'mercy', 'mercy', 210, 640, 1]],
-    [['moveAll', 1100, 12], ['wait', 1.5], ['caption', 'Trenta miglia di città nemica. Ora, davanti a loro, c\'è il mare.'], ['wait', 1.2], ['say', 'swan', 'Tutta la notte per tornare qui. A questo.'], ['wait', 0.8],
+    [['moveAll', 1100, 12], ['wait', 1.5], ['caption', 'Trenta miglia di città nemica. Ora, davanti a loro, c\'è il mare.'], ['wait', 2],
      ['caption', 'Swan e Mercy camminano mano nella mano. Gli altri, poco dietro. Sono a casa.'], ['wait', 4], ['fade', 'out', 2], ['clearNpcs'], ['flag', 'campaign_complete']]) };
 
   // ------------------------------------------------------------------ la radio durante la notte
@@ -246,20 +255,15 @@ var W = window.W;
 
     { id: 'C2-01', ch: 'C2', kind: 'traversal', name: 'Isolato del Bronx', bg: 'street', width: 2560, depth: 220, party: AFTER_C1, present: AFTER_C1, chapterCard: true,
       enter: 'dlg_c2_bus', objective: 'Trova l\'accesso alla metro', busBg: true },
-    { id: 'C2-02', ch: 'C2', kind: 'arena', name: 'Vicolo con cancello', bg: 'alley', width: 1920, depth: 190, party: AFTER_C1, objective: 'I Turnbull bloccano il vicolo',
-      waves: [{ trigger: 300, objective: 'Respingi i Turnbull', solo: [['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 620], ['turnbull_heavy', 'R', 590], ['turnbull_rusher', 'L', 600]],
-        duo: [['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 620], ['turnbull_heavy', 'R', 590], ['turnbull_rusher', 'L', 600], ['turnbull_rusher', 'L', 650], ['turnbull_heavy', 'R', 540]] }],
-      exitLabel: 'Apri il cancello', exitInteract: { x: 1820, y: 580, label: 'Apri il cancello' } },
+    { id: 'C2-02', ch: 'C2', kind: 'escape', name: 'La strada del bus', bg: 'alley', width: 1920, depth: 190, party: AFTER_C1, objective: 'Il bus dei Turnbull pattuglia la strada: passagli davanti e arriva al cancello',
+      enter: 'dlg_c2_alley', timer: 45, timerEasy: 60, bus: true, exitLabel: 'Apri il cancello', exitInteract: { x: 1820, y: 580, label: 'Apri il cancello' } },
     { id: 'C2-03', ch: 'C2', kind: 'escape', name: 'Corsa alle scale', bg: 'street_b', width: 3840, depth: 230, party: AFTER_C1, objective: 'Raggiungi le scale della metro',
-      enter: 'dlg_c2_run', timer: 70, timerEasy: 85, pursuers: { solo: { turnbull_rusher: 2 }, duo: { turnbull_rusher: 3 } }, bus: true, barriers: [900, 1700, 2500, 3200] },
-    { id: 'C2-04', ch: 'C2', kind: 'escape', name: 'Stazione di Gun Hill Road', bg: 'metro', width: 1920, depth: 200, party: AFTER_C1, objective: 'Sali sul treno', timer: 25, exitScene: 'cine_train_escape' },
+      enter: 'dlg_c2_run', timer: 70, timerEasy: 85, bus: true, barriers: [900, 1700, 2500, 3200] },
+    { id: 'C2-04', ch: 'C2', kind: 'escape', name: 'Stazione sopraelevata del Bronx', bg: 'metro', width: 1920, depth: 200, party: AFTER_C1, objective: 'Sali sul treno', timer: 25, exitScene: 'cine_train_escape' },
 
     { id: 'C3-01', ch: 'C3', kind: 'scene', name: 'Strada degli Orphans', bg: 'street', width: 1280, depth: 200, party: AFTER_C1, chapterCard: true, scenes: ['dlg_c3_orphans'] },
-    { id: 'C3-02', ch: 'C3', kind: 'arena', name: 'Cortile', bg: 'harbor', width: 2560, depth: 190, party: AFTER_C1, objective: 'Gli Orphans attaccano',
-      waves: [
-        { trigger: 300, objective: 'Prima ondata', solo: [['orphan_brawler', 'R', 560], ['orphan_brawler', 'R', 620], ['orphan_board', 'L', 600]], duo: [['orphan_brawler', 'R', 560], ['orphan_brawler', 'R', 620], ['orphan_board', 'L', 600], ['orphan_brawler', 'L', 640]], afterScene: 'dlg_c3_fire' },
-        { trigger: 1400, objective: 'Seconda ondata', solo: [['orphan_brawler', 'R', 600]], duo: [['orphan_brawler', 'R', 600], ['orphan_brawler', 'R', 540], ['orphan_board', 'L', 620]] }],
-      items: [{ kind: 'weapon', w: 'board', x: 820, y: 640 }, { kind: 'snack', x: 1260, y: 520 }] },
+    { id: 'C3-02', ch: 'C3', kind: 'escape', name: 'Tra le fiamme', bg: 'street', width: 2560, depth: 190, party: AFTER_C1, objective: 'Passa tra le fiamme prima che gli Orphans si riprendano',
+      enter: 'dlg_c3_fire', timer: 40, timerEasy: 55, items: [{ kind: 'snack', x: 1260, y: 520 }] },
     { id: 'C3-03', ch: 'C3', kind: 'escape', name: 'Strada laterale', bg: 'street_b', width: 2560, depth: 220, party: AFTER_C1, objective: 'Verso la metro', mercy: 'npc',
       enter: 'cine_mercy_joins', items: [{ kind: 'drink', x: 1300, y: 640 }] },
     { id: 'C3-04', ch: 'C3', kind: 'escape', name: 'Stazione della 96ª Strada', bg: 'metro_b', width: 1920, depth: 170, party: AFTER_C1, objective: 'Sfuggi alla polizia', mercy: 'npc', enter: 'radio_96th',
@@ -310,8 +314,9 @@ var W = window.W;
 
     { id: 'C8-01', ch: 'C8', kind: 'traversal', name: 'Strada di casa', bg: 'coney_b', width: 1920, depth: 200, party: FINAL6, present: FINAL6, mercy: 'npc', chapterCard: true, peace: true,
       enter: 'cine_bottles', objective: 'Verso il lungomare' },
-    { id: 'C8-02', ch: 'C8', kind: 'arena', name: 'Il varco', bg: 'coney', width: 1920, depth: 220, party: FINAL6, objective: 'I Rogues coprono il passaggio',
-      waves: [{ trigger: 300, objective: 'Apri il varco', solo: [['rogue_brawler', 'R', 560], ['rogue_brawler', 'L', 620], ['rogue_bottle', 'R', 600]], duo: [['rogue_brawler', 'R', 560], ['rogue_brawler', 'L', 620], ['rogue_bottle', 'R', 600], ['rogue_brawler', 'R', 650], ['rogue_bottle', 'L', 540]] }] },
+    { id: 'C8-02', ch: 'C8', kind: 'traversal', name: 'Sotto il molo', bg: 'boardwalk', width: 1920, depth: 220, party: FINAL6, present: FINAL6, mercy: 'npc', peace: true,
+      enter: 'cine_pier', objective: 'Sotto il molo: prendi un\'arma e scendi in spiaggia',
+      items: [{ kind: 'weapon', w: 'bat', x: 520, y: 600 }, { kind: 'weapon', w: 'pipe', x: 860, y: 560 }, { kind: 'weapon', w: 'board', x: 1180, y: 640 }, { kind: 'weapon', w: 'bat', x: 1460, y: 580 }] },
     { id: 'C8-03', ch: 'C8', kind: 'confront', name: 'La spiaggia', bg: 'boardwalk', width: 1280, depth: 230, party: FINAL6, objective: 'Avanza verso Luther', mark: { x: 760, y: 580 }, scenes: ['cine_disarm', 'cine_riffs_arrival'] },
     { id: 'C8-04', ch: 'C8', kind: 'epilogue', name: 'Alba', bg: 'boardwalk', width: 1280, depth: 230, party: FINAL6, scenes: ['radio_apology', 'cine_epilogue'] }
   ];
@@ -325,6 +330,7 @@ var W = window.W;
     'C1-03': { lowStyle: 'hedge', obstacles: [['low', 620, 0, 0.55], ['low', 1150, 0.45, 1], ['low', 2150, 0, 1]] },
     'C1-04': { lowStyle: 'grave', obstacles: [['low', 520, 0, 0.45], ['low', 820, 0.5, 1]] },
     'C2-01': { lowStyle: 'barrier', obstacles: [['crate', 760, 0.05, 0.4], ['low', 1300, 0, 0.6], ['crate', 1850, 0.6, 1, 'snack'], ['low', 2200, 0.35, 1]] },
+    'C3-02': { lowStyle: 'barrier', obstacles: [['fire', 700, 0, 0.45], ['fire', 1150, 0.5, 1], ['fire', 1700, 0, 0.6], ['low', 2100, 0.2, 1]] },
     'C2-03': { lowStyle: 'barrier', obstacles: [['low', 2100, 0, 1], ['crate', 2850, 0.3, 0.7, 'drink']] },
     'C2-04': { lowStyle: 'turnstile', train: true, obstacles: [['low', 560, 0, 0.75]] },
     'C3-03': { lowStyle: 'barrier', obstacles: [['fire', 880, 0.25, 1], ['low', 1650, 0, 0.75], ['crate', 2100, 0, 0.35, 'snack']] },
@@ -376,5 +382,19 @@ var W = window.W;
   };
   W.NPC_NAMES.dj = 'La DJ';
 
+  // risse non presenti nel film: restano solo nell'Arcade
+  W.ARCADE_EXTRA = [
+    { id: 'X-TURNBULL', ch: 'C2', kind: 'arena', name: 'Extra · Vicolo dei Turnbull', bg: 'alley', width: 1920, depth: 190, party: AFTER_C1, objective: 'I Turnbull bloccano il vicolo',
+      waves: [{ trigger: 300, objective: 'Respingi i Turnbull', solo: [['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 620], ['turnbull_heavy', 'R', 590], ['turnbull_rusher', 'L', 600]],
+        duo: [['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 620], ['turnbull_heavy', 'R', 590], ['turnbull_rusher', 'L', 600], ['turnbull_rusher', 'L', 650], ['turnbull_heavy', 'R', 540]] }],
+      exitLabel: 'Apri il cancello', exitInteract: { x: 1820, y: 580, label: 'Apri il cancello' } },
+    { id: 'X-ORPHANS', ch: 'C3', kind: 'arena', name: 'Extra · Cortile degli Orphans', bg: 'harbor', width: 2560, depth: 190, party: AFTER_C1, objective: 'Gli Orphans attaccano',
+      waves: [
+        { trigger: 300, objective: 'Prima ondata', solo: [['orphan_brawler', 'R', 560], ['orphan_brawler', 'R', 620], ['orphan_board', 'L', 600]], duo: [['orphan_brawler', 'R', 560], ['orphan_brawler', 'R', 620], ['orphan_board', 'L', 600], ['orphan_brawler', 'L', 640]] },
+        { trigger: 1400, objective: 'Seconda ondata', solo: [['orphan_brawler', 'R', 600]], duo: [['orphan_brawler', 'R', 600], ['orphan_brawler', 'R', 540], ['orphan_board', 'L', 620]] }],
+      items: [{ kind: 'weapon', w: 'board', x: 820, y: 640 }, { kind: 'snack', x: 1260, y: 520 }] },
+    { id: 'X-ROGUES', ch: 'C8', kind: 'arena', name: 'Extra · Il varco dei Rogues', bg: 'coney', width: 1920, depth: 220, party: FINAL6, objective: 'I Rogues coprono il passaggio',
+      waves: [{ trigger: 300, objective: 'Apri il varco', solo: [['rogue_brawler', 'R', 560], ['rogue_brawler', 'L', 620], ['rogue_bottle', 'R', 600]], duo: [['rogue_brawler', 'R', 560], ['rogue_brawler', 'L', 620], ['rogue_bottle', 'R', 600], ['rogue_brawler', 'R', 650], ['rogue_bottle', 'L', 540]] }] }
+  ];
   W.areaIndex = function (id) { for (var i = 0; i < A.length; i++) if (A[i].id === id) return i; return -1; };
 })();

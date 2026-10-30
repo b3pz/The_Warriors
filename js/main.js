@@ -222,7 +222,7 @@ var W = window.W;
   var gangMap = new Image(); gangMap.ok = false; gangMap.onload = function () { gangMap.ok = true; };
   gangMap.src = (W.ASSET_DATA && W.ASSET_DATA['menu/mappa_bande.jpg']) || 'assets/menu/mappa_bande.jpg';
   var MAP_PT = { P0: [700, 1035], C1: [190, 48], C2: [432, 52], C3: [412, 196], C4: [96, 362], C5: [250, 548], C6: [268, 600], C7: [455, 820], C8: [700, 1035] };
-  var MAP_NAME = { P0: 'Coney Island', C1: 'Van Cortlandt Park', C2: 'Gun Hill Road', C3: 'Gli Orphans', C4: 'Riverside Park', C5: 'Divisi', C6: 'Union Square', C7: 'L\'ultimo treno', C8: 'Coney Island' };
+  var MAP_NAME = { P0: 'Coney Island', C1: 'Van Cortlandt Park', C2: 'Territorio dei Turnbull', C3: 'Gli Orphans', C4: 'Riverside Park', C5: 'Divisi', C6: 'Union Square', C7: 'L\'ultimo treno', C8: 'Coney Island' };
   function drawGangMap(x, y, w, h, ch, k) {
     var order = ['P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'], idx = Math.max(0, order.indexOf(ch));
     var sc = 1.15, vw = w / sc, vh = h / sc, from = MAP_PT[order[Math.max(0, idx - 1)]], to = MAP_PT[order[idx]];
@@ -374,7 +374,9 @@ var W = window.W;
 
   // ------------------------------------------------------------------ arcade
   // Le risse della storia senza scene, da 1 a 4 giocatori (tastiera WASD, tastiera frecce, controller, CPU).
-  var ARC_STAGES = ['C2-02', 'C3-02', 'C4-02', 'C4-03', 'C6-03', 'C8-02'];
+  // risse del film più le tre risse extra (non nel film, solo qui)
+  var ARC_STAGES = ['C4-02', 'C4-03', 'C6-03', 'X-TURNBULL', 'X-ORPHANS', 'X-ROGUES'];
+  function defById(id) { var i = W.areaIndex(id); if (i >= 0) return W.CAMPAIGN[i]; return (W.ARCADE_EXTRA || []).filter(function (d) { return d.id === id; })[0]; }
   var ARC_DEV = [['off', '—'], ['kb1', 'Tastiera WASD'], ['kb2', 'Tastiera frecce'], ['pad0', 'Controller 1'], ['pad1', 'Controller 2'], ['pad2', 'Controller 3'], ['pad3', 'Controller 4'], ['cpu', 'CPU']];
   var ARC_KEY = 'warriors-arcade-v1';
   function arcState() {
@@ -384,7 +386,7 @@ var W = window.W;
     }
     return game.arc;
   }
-  function arcStages() { var u = unlocks(); return ARC_STAGES.filter(function (id) { return u.indexOf(W.CAMPAIGN[W.areaIndex(id)].ch) >= 0; }); }
+  function arcStages() { var u = unlocks(); return ARC_STAGES.filter(function (id) { var d = defById(id); return d && u.indexOf(d.ch) >= 0; }); }
   function arcItems() {
     var A = arcState(), avail = arcStages(), items = [];
     A.slots.forEach(function (sl, i) {
@@ -392,7 +394,7 @@ var W = window.W;
         adj: function (d) { var k = ARC_DEV.findIndex(function (x) { return x[0] === sl.dev; }); sl.dev = ARC_DEV[(k + d + ARC_DEV.length) % ARC_DEV.length][0]; arcSave(); },
         act: function () { if (sl.dev === 'off') return; var k = ALL9.indexOf(sl.ch); sl.ch = ALL9[(k + 1) % ALL9.length]; arcSave(); } });
     });
-    items.push({ label: 'Rissa', val: function () { return A.stage === 0 ? 'tutte di fila (' + avail.length + ')' : W.CAMPAIGN[W.areaIndex(avail[A.stage - 1])].name; },
+    items.push({ label: 'Rissa', val: function () { return A.stage === 0 ? 'tutte di fila (' + avail.length + ')' : defById(avail[A.stage - 1]).name; },
       adj: function (d) { A.stage = (A.stage + d + avail.length + 1) % (avail.length + 1); arcSave(); } });
     items.push({ label: 'Difficoltà', val: function () { return W.DIFFICULTY[A.difficulty].name; }, adj: function (d) { A.difficulty = DIFFS[(DIFFS.indexOf(A.difficulty) + d + 3) % 3]; arcSave(); } });
     items.push({ label: 'Inizia', act: function () { startArcade(); } });
@@ -415,7 +417,7 @@ var W = window.W;
   }
   // copia dell'arena senza scene né dialoghi; nemici in più per tre e quattro giocatori
   function arcadeDef(id, n) {
-    var d = W.CAMPAIGN[W.areaIndex(id)], c = Object.assign({}, d);
+    var d = defById(id), c = Object.assign({}, d);
     ['enter', 'exitScene', 'tutorial', 'needTalk', 'needTalks', 'midScene', 'scenes', 'mercy', 'thread', 'talks', 'present', 'seated', 'watcher', 'crowd'].forEach(function (k) { delete c[k]; });
     c.chapterCard = false;
     c.waves = (d.waves || []).map(function (wv) {
@@ -448,7 +450,7 @@ var W = window.W;
   function arcadeFinished() {
     var run = game.run, w = game.world;
     run.stageI++;
-    if (run.stageI < run.stages.length) { var nx = W.CAMPAIGN[W.areaIndex(run.stages[run.stageI])]; startComic(nx, arcadeArea); return; }
+    if (run.stageI < run.stages.length) { var nx = defById(run.stages[run.stageI]); startComic(nx, arcadeArea); return; }
     var s = w.stats;
     game.result = { title: run.stages.length > 1 ? 'TUTTE LE RISSE VINTE' : 'RISSA VINTA', time: s.time, damageTaken: s.damageTaken, maxCombo: s.maxCombo, kos: s.kos, retries: s.retries, assisted: s.assisted,
       score: w.score.slice(0, w.players.length).reduce(function (a, b) { return a + b; }, 0) };
