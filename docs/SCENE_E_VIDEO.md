@@ -28,7 +28,6 @@ Il video si salta con Esc → Salta scena, come le altre scene.
 | `cine_lizzies_trap` | cine_lizzies_trap |
 | `cine_mercy_joins` | cine_mercy_joins |
 | `cine_police_split` | cine_police_split |
-| `cine_punks_confrontation` | cine_punks_confrontation |
 | `cine_reunion` | cine_reunion |
 | `cine_reunion_approach` | cine_reunion_approach |
 | `cine_riffs_arrival` | cine_riffs_arrival |

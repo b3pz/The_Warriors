@@ -79,7 +79,7 @@ Con poche tracce basta la riga 5 (una per situazione); con la colonna sonora com
 
 Gli ID sono gli stessi dei video (`docs/SCENE_E_VIDEO.md`); quelli che iniziano con `radio_` sono la DJ.
 
-`cine_accusation`, `cine_ajax_arrest`, `cine_ajax_stays`, `cine_bathroom_chaos`, `cine_bottles`, `cine_cyrus`, `cine_departure`, `cine_disarm`, `cine_epilogue`, `cine_furies_appear`, `cine_home_arrival`, `cine_lizzies_trap`, `cine_mercy_joins`, `cine_police_split`, `cine_punks_confrontation`, `cine_reunion`, `cine_reunion_approach`, `cine_riffs_arrival`, `cine_swan_leads`, `cine_swan_mercy`, `cine_train_dawn`, `cine_train_escape`, `cine_truth_reaches_riffs`, `dlg_c1_arrival`, `dlg_c2_bus`, `dlg_c2_run`, `dlg_c3_fire`, `dlg_c3_orphans`, `dlg_c4_ajax`, `dlg_c4_stand`, `dlg_c5_welcome`, `dlg_c6_bathroom`, `dlg_p0_introductions`, `dlg_p0_welcome`, `radio_96th`, `radio_apology`, `radio_hunt`, `talk_c7_couple`
+`cine_accusation`, `cine_ajax_arrest`, `cine_ajax_stays`, `cine_bathroom_chaos`, `cine_bottles`, `cine_cyrus`, `cine_departure`, `cine_disarm`, `cine_epilogue`, `cine_furies_appear`, `cine_home_arrival`, `cine_lizzies_trap`, `cine_mercy_joins`, `cine_police_split`, `cine_reunion`, `cine_reunion_approach`, `cine_riffs_arrival`, `cine_swan_leads`, `cine_swan_mercy`, `cine_train_dawn`, `cine_train_escape`, `cine_truth_reaches_riffs`, `dlg_c1_arrival`, `dlg_c2_bus`, `dlg_c2_run`, `dlg_c3_fire`, `dlg_c3_orphans`, `dlg_c4_ajax`, `dlg_c4_stand`, `dlg_c5_welcome`, `dlg_c6_bathroom`, `dlg_p0_introductions`, `dlg_p0_welcome`, `radio_96th`, `radio_apology`, `radio_hunt`, `talk_c7_couple`
 
 ## Momenti dove una traccia vera conta di più
 

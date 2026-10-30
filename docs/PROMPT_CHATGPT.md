@@ -1,6 +1,8 @@
 # Prompt per ChatGPT: immagini del gioco
 
-ChatGPT genera le immagini; non può caricarle su GitHub. Il percorso è:
+**Modo automatico.** Se il tuo ChatGPT ha accesso in scrittura al repository, basta dirgli: «Leggi il file IMMAGINI_PER_AI.md nel repository b3pz/The_Warriors e segui le istruzioni». Il file contiene lo stile, le 392 immagini da creare in ordine e dove caricarle; ogni sessione riparte da dove si era fermato.
+
+**Modo manuale** (chat senza accesso al repository):
 
 1. Apri **una sola chat** di ChatGPT per tutto il lotto e incolla per primo il **prompt di stile** (sotto): così le immagini restano coerenti fra loro.
 2. Per ogni immagine usa il modello del tipo giusto (personaggio, fondale, scena, oggetto, ritratto), cambiando solo le parti tra `[parentesi]`.
