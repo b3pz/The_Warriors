@@ -701,6 +701,14 @@ W.Render = (function () {
     ctx.strokeStyle = 'rgba(255,120,90,0.25)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(1060, 380, 120, 150, 0, Math.PI * 0.75, Math.PI * 1.3); ctx.stroke();
     ctx.fillStyle = 'rgba(255,220,200,0.55)'; ctx.font = '500 15px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText('LA RADIO DELLA NOTTE', 40, 110);
   }
+  // un fotogramma di un set fuori dal mondo di gioco (comparse sui veicoli)
+  function drawSetFrame(sid, poses, x, y, face, scale, seed) {
+    var P = W.ATLAS_PX, set = P && P.sets[sid], im = PX[sid]; if (!set || !im || !im.ok) return;
+    var list = null; for (var i = 0; i < poses.length && !list; i++) list = set.frames[poses[i]];
+    if (!list) return; var fr = list[(seed || 0) % list.length], k = (set.scale || P.scale) * (scale || 1);
+    ctx.save(); ctx.imageSmoothingEnabled = false; ctx.translate(Math.round(x), Math.round(y)); ctx.scale(face * k, k);
+    ctx.drawImage(im, fr[0], fr[1], fr[2], fr[3], -fr[4], -fr[5], fr[2], fr[3]); ctx.restore();
+  }
   // carro funebre dei Rogues: Cadillac nera anni '50 coperta di graffiti (immagine nuova se c'è, altrimenti disegnato)
   var OBJ = {};
   function drawHearse(n, cx) {
@@ -921,10 +929,9 @@ W.Render = (function () {
       // fari blu-bianchi
       var hg = ctx.createRadialGradient(bx + 392, by - 58, 2, bx + 392, by - 58, 60); hg.addColorStop(0, 'rgba(220,235,255,0.95)'); hg.addColorStop(1, 'rgba(120,150,255,0)');
       ctx.fillStyle = hg; ctx.fillRect(bx + 330, by - 120, 130, 120);
-      // Turnbull sul tetto e aggrappati (sagome calve)
-      [[40, -156], [120, -156], [230, -156], [300, -156]].forEach(function (q, i) { var hx = bx + q[0], hy = by + q[1];
-        ctx.fillStyle = '#1b1a1d'; ctx.fillRect(hx - 9, hy - 44, 18, 44 - (i % 2) * 8); ctx.fillStyle = '#d9b9a0'; ctx.beginPath(); ctx.arc(hx, hy - 52 + (i % 2) * 8, 9, 0, Math.PI * 2); ctx.fill(); });
-      ctx.fillStyle = '#1b1a1d'; ctx.fillRect(bx + 350, by - 140, 16, 60); ctx.fillStyle = '#d9b9a0'; ctx.beginPath(); ctx.arc(bx + 358, by - 148, 9, 0, Math.PI * 2); ctx.fill();
+      // Turnbull in piedi sul tetto e aggrappati alla porta: i loro sprite (pose roof/hang se ci sono, altrimenti riposo)
+      [[50, -150, 'turnbull'], [150, -150, 'turnbull_b'], [250, -150, 'turnbull']].forEach(function (q, i) { drawSetFrame(q[2], ['roof', 'idle'], bx + q[0], by + q[1], 1, 0.72, i); });
+      drawSetFrame('turnbull_b', ['hang', 'idle'], bx + 372, by - 40, 1, 0.72, 3);
     } }); }
     if (w.area && !w.area.scene && w.area.interactions) w.area.interactions().forEach(function (it) {
       list.push({ y: it.y + 1, d: function () {

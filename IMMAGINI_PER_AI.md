@@ -463,190 +463,192 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 327. `assets/incoming/personaggi/turnbull/hurt_1.png` → turnbull, colpito, testa all'indietro, smorfia
 328. `assets/incoming/personaggi/turnbull/down_1.png` → turnbull, a terra, sdraiato sulla schiena (figura orizzontale)
 329. `assets/incoming/personaggi/turnbull/charge_1.png` → turnbull, carica a testa bassa
-330. `assets/incoming/personaggi/turnbull_fast/idle_1.png` → turnbull_fast, in guardia, fermo, pugni alzati
-331. `assets/incoming/personaggi/turnbull_fast/walk_1.png` → turnbull_fast, camminata, fotogramma 1 di 4: gamba destra avanti
-332. `assets/incoming/personaggi/turnbull_fast/walk_2.png` → turnbull_fast, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-333. `assets/incoming/personaggi/turnbull_fast/walk_3.png` → turnbull_fast, camminata, fotogramma 3 di 4: gamba sinistra avanti
-334. `assets/incoming/personaggi/turnbull_fast/walk_4.png` → turnbull_fast, camminata, fotogramma 4 di 4: passaggio
-335. `assets/incoming/personaggi/turnbull_fast/punch_1.png` → turnbull_fast, pugno diretto a braccio teso
-336. `assets/incoming/personaggi/turnbull_fast/hurt_1.png` → turnbull_fast, colpito, testa all'indietro, smorfia
-337. `assets/incoming/personaggi/turnbull_fast/down_1.png` → turnbull_fast, a terra, sdraiato sulla schiena (figura orizzontale)
-338. `assets/incoming/personaggi/turnbull_fast/charge_1.png` → turnbull_fast, charge
-339. `assets/incoming/personaggi/orphan/idle_1.png` → orphan, in guardia, fermo, pugni alzati
-340. `assets/incoming/personaggi/orphan/walk_1.png` → orphan, camminata, fotogramma 1 di 4: gamba destra avanti
-341. `assets/incoming/personaggi/orphan/walk_2.png` → orphan, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-342. `assets/incoming/personaggi/orphan/walk_3.png` → orphan, camminata, fotogramma 3 di 4: gamba sinistra avanti
-343. `assets/incoming/personaggi/orphan/walk_4.png` → orphan, camminata, fotogramma 4 di 4: passaggio
-344. `assets/incoming/personaggi/orphan/punch_1.png` → orphan, pugno diretto a braccio teso
-345. `assets/incoming/personaggi/orphan/hurt_1.png` → orphan, colpito, testa all'indietro, smorfia
-346. `assets/incoming/personaggi/orphan/down_1.png` → orphan, a terra, sdraiato sulla schiena (figura orizzontale)
-347. `assets/incoming/personaggi/orphan/board_swing_1.png` → orphan, colpo con un'asse
-348. `assets/incoming/personaggi/sully/idle_1.png` → sully, in guardia, fermo, pugni alzati
-349. `assets/incoming/personaggi/sully/walk_1.png` → sully, camminata, fotogramma 1 di 4: gamba destra avanti
-350. `assets/incoming/personaggi/sully/walk_2.png` → sully, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-351. `assets/incoming/personaggi/sully/walk_3.png` → sully, camminata, fotogramma 3 di 4: gamba sinistra avanti
-352. `assets/incoming/personaggi/sully/walk_4.png` → sully, camminata, fotogramma 4 di 4: passaggio
-353. `assets/incoming/personaggi/sully/punch_1.png` → sully, pugno diretto a braccio teso
-354. `assets/incoming/personaggi/sully/hurt_1.png` → sully, colpito, testa all'indietro, smorfia
-355. `assets/incoming/personaggi/sully/down_1.png` → sully, a terra, sdraiato sulla schiena (figura orizzontale)
-356. `assets/incoming/personaggi/lizzie/idle_1.png` → lizzie, in guardia, fermo, pugni alzati
-357. `assets/incoming/personaggi/lizzie/walk_1.png` → lizzie, camminata, fotogramma 1 di 4: gamba destra avanti
-358. `assets/incoming/personaggi/lizzie/walk_2.png` → lizzie, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-359. `assets/incoming/personaggi/lizzie/walk_3.png` → lizzie, camminata, fotogramma 3 di 4: gamba sinistra avanti
-360. `assets/incoming/personaggi/lizzie/walk_4.png` → lizzie, camminata, fotogramma 4 di 4: passaggio
-361. `assets/incoming/personaggi/lizzie/punch_1.png` → lizzie, pugno diretto a braccio teso
-362. `assets/incoming/personaggi/lizzie/hurt_1.png` → lizzie, colpito, testa all'indietro, smorfia
-363. `assets/incoming/personaggi/lizzie/down_1.png` → lizzie, a terra, sdraiato sulla schiena (figura orizzontale)
-364. `assets/incoming/personaggi/lizzie/gun_aim_1.png` → lizzie, gun_aim
-365. `assets/incoming/personaggi/lizzie/gun_shoot_1.png` → lizzie, pistola
-366. `assets/incoming/personaggi/lizzie/push_1.png` → lizzie, push
-367. `assets/incoming/personaggi/lizzie_boss/idle_1.png` → lizzie_boss, in guardia, fermo, pugni alzati
-368. `assets/incoming/personaggi/lizzie_boss/walk_1.png` → lizzie_boss, camminata, fotogramma 1 di 4: gamba destra avanti
-369. `assets/incoming/personaggi/lizzie_boss/walk_2.png` → lizzie_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-370. `assets/incoming/personaggi/lizzie_boss/walk_3.png` → lizzie_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
-371. `assets/incoming/personaggi/lizzie_boss/walk_4.png` → lizzie_boss, camminata, fotogramma 4 di 4: passaggio
-372. `assets/incoming/personaggi/lizzie_boss/punch_1.png` → lizzie_boss, pugno diretto a braccio teso
-373. `assets/incoming/personaggi/lizzie_boss/hurt_1.png` → lizzie_boss, colpito, testa all'indietro, smorfia
-374. `assets/incoming/personaggi/lizzie_boss/down_1.png` → lizzie_boss, a terra, sdraiato sulla schiena (figura orizzontale)
-375. `assets/incoming/personaggi/lizzie_boss/gun_aim_1.png` → lizzie_boss, gun_aim
-376. `assets/incoming/personaggi/punk/idle_1.png` → punk, in guardia, fermo, pugni alzati
-377. `assets/incoming/personaggi/punk/walk_1.png` → punk, camminata, fotogramma 1 di 4: gamba destra avanti
-378. `assets/incoming/personaggi/punk/walk_2.png` → punk, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-379. `assets/incoming/personaggi/punk/walk_3.png` → punk, camminata, fotogramma 3 di 4: gamba sinistra avanti
-380. `assets/incoming/personaggi/punk/walk_4.png` → punk, camminata, fotogramma 4 di 4: passaggio
-381. `assets/incoming/personaggi/punk/punch_1.png` → punk, pugno diretto a braccio teso
-382. `assets/incoming/personaggi/punk/hurt_1.png` → punk, colpito, testa all'indietro, smorfia
-383. `assets/incoming/personaggi/punk/down_1.png` → punk, a terra, sdraiato sulla schiena (figura orizzontale)
-384. `assets/incoming/personaggi/punk/skate_1.png` → punk, skate
-385. `assets/incoming/personaggi/punk/skate_2.png` → punk, pattina
-386. `assets/incoming/personaggi/punk/grab_1.png` → punk, presa
-387. `assets/incoming/personaggi/punk_boss/idle_1.png` → punk_boss, in guardia, fermo, pugni alzati
-388. `assets/incoming/personaggi/punk_boss/walk_1.png` → punk_boss, camminata, fotogramma 1 di 4: gamba destra avanti
-389. `assets/incoming/personaggi/punk_boss/walk_2.png` → punk_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-390. `assets/incoming/personaggi/punk_boss/walk_3.png` → punk_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
-391. `assets/incoming/personaggi/punk_boss/walk_4.png` → punk_boss, camminata, fotogramma 4 di 4: passaggio
-392. `assets/incoming/personaggi/punk_boss/punch_1.png` → punk_boss, pugno diretto a braccio teso
-393. `assets/incoming/personaggi/punk_boss/hurt_1.png` → punk_boss, colpito, testa all'indietro, smorfia
-394. `assets/incoming/personaggi/punk_boss/down_1.png` → punk_boss, a terra, sdraiato sulla schiena (figura orizzontale)
-395. `assets/incoming/personaggi/punk_boss/skate_1.png` → punk_boss, skate
-396. `assets/incoming/personaggi/punk_boss/grab_1.png` → punk_boss, afferra qualcuno davanti a sé per il bavero
-397. `assets/incoming/personaggi/rogue/idle_1.png` → rogue, in guardia, fermo, pugni alzati
-398. `assets/incoming/personaggi/rogue/walk_1.png` → rogue, camminata, fotogramma 1 di 4: gamba destra avanti
-399. `assets/incoming/personaggi/rogue/walk_2.png` → rogue, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-400. `assets/incoming/personaggi/rogue/walk_3.png` → rogue, camminata, fotogramma 3 di 4: gamba sinistra avanti
-401. `assets/incoming/personaggi/rogue/walk_4.png` → rogue, camminata, fotogramma 4 di 4: passaggio
-402. `assets/incoming/personaggi/rogue/punch_1.png` → rogue, pugno diretto a braccio teso
-403. `assets/incoming/personaggi/rogue/hurt_1.png` → rogue, colpito, testa all'indietro, smorfia
-404. `assets/incoming/personaggi/rogue/down_1.png` → rogue, a terra, sdraiato sulla schiena (figura orizzontale)
-405. `assets/incoming/personaggi/rogue/bottle_throw_1.png` → rogue, bottle_throw
-406. `assets/incoming/personaggi/luther/idle_1.png` → luther, in guardia, fermo, pugni alzati
-407. `assets/incoming/personaggi/luther/walk_1.png` → luther, camminata, fotogramma 1 di 4: gamba destra avanti
-408. `assets/incoming/personaggi/luther/walk_2.png` → luther, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-409. `assets/incoming/personaggi/luther/walk_3.png` → luther, camminata, fotogramma 3 di 4: gamba sinistra avanti
-410. `assets/incoming/personaggi/luther/walk_4.png` → luther, camminata, fotogramma 4 di 4: passaggio
-411. `assets/incoming/personaggi/luther/punch_1.png` → luther, pugno diretto a braccio teso
-412. `assets/incoming/personaggi/luther/hurt_1.png` → luther, colpito, testa all'indietro, smorfia
-413. `assets/incoming/personaggi/luther/down_1.png` → luther, a terra, sdraiato sulla schiena (figura orizzontale)
-414. `assets/incoming/personaggi/luther/gun_aim_1.png` → luther, gun_aim
-415. `assets/incoming/personaggi/luther/bottles_1.png` → luther, tre bottiglie vuote infilate tra le dita
-416. `assets/incoming/personaggi/luther/knifehit_1.png` → luther, coltello piantato nel braccio
-417. `assets/incoming/personaggi/luther/down_1.png` → luther, a terra, sdraiato sulla schiena (figura orizzontale)
-418. `assets/incoming/personaggi/police/idle_1.png` → police, in guardia, fermo, pugni alzati
-419. `assets/incoming/personaggi/police/walk_1.png` → police, camminata, fotogramma 1 di 4: gamba destra avanti
-420. `assets/incoming/personaggi/police/walk_2.png` → police, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-421. `assets/incoming/personaggi/police/walk_3.png` → police, camminata, fotogramma 3 di 4: gamba sinistra avanti
-422. `assets/incoming/personaggi/police/walk_4.png` → police, camminata, fotogramma 4 di 4: passaggio
-423. `assets/incoming/personaggi/police/punch_1.png` → police, pugno diretto a braccio teso
-424. `assets/incoming/personaggi/police/hurt_1.png` → police, colpito, testa all'indietro, smorfia
-425. `assets/incoming/personaggi/police/down_1.png` → police, a terra, sdraiato sulla schiena (figura orizzontale)
-426. `assets/incoming/personaggi/police/baton_swing_1.png` → police, manganello
-427. `assets/incoming/personaggi/police/charge_1.png` → police, charge
-428. `assets/incoming/personaggi/police_woman/idle_1.png` → police_woman, in guardia, fermo, pugni alzati
-429. `assets/incoming/personaggi/police_woman/sit_1.png` → police_woman, seduto su un sedile della metro
-430. `assets/incoming/personaggi/police_woman/arrest_1.png` → police_woman, a terra, ammanettato
-431. `assets/incoming/personaggi/cyrus/idle_1.png` → cyrus, in guardia, fermo, pugni alzati
-432. `assets/incoming/personaggi/cyrus/speech_1.png` → cyrus, speech
-433. `assets/incoming/personaggi/cyrus/shot_1.png` → cyrus, colpito
-434. `assets/incoming/personaggi/riff/idle_1.png` → riff, in guardia, fermo, pugni alzati
-435. `assets/incoming/personaggi/riff/idle_1.png` → riff, in guardia, fermo, pugni alzati
-436. `assets/incoming/personaggi/masai/idle_1.png` → masai, in guardia, fermo, pugni alzati
-437. `assets/incoming/personaggi/masai/idle_1.png` → masai, in guardia, fermo, pugni alzati
+330. `assets/incoming/personaggi/turnbull/roof_1.png` → turnbull, in piedi sul tetto del bus, braccia alzate, urla
+331. `assets/incoming/personaggi/turnbull/hang_1.png` → turnbull, aggrappato di lato alla porta di un bus, un braccio teso, una gamba nel vuoto
+332. `assets/incoming/personaggi/turnbull_fast/idle_1.png` → turnbull_fast, in guardia, fermo, pugni alzati
+333. `assets/incoming/personaggi/turnbull_fast/walk_1.png` → turnbull_fast, camminata, fotogramma 1 di 4: gamba destra avanti
+334. `assets/incoming/personaggi/turnbull_fast/walk_2.png` → turnbull_fast, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+335. `assets/incoming/personaggi/turnbull_fast/walk_3.png` → turnbull_fast, camminata, fotogramma 3 di 4: gamba sinistra avanti
+336. `assets/incoming/personaggi/turnbull_fast/walk_4.png` → turnbull_fast, camminata, fotogramma 4 di 4: passaggio
+337. `assets/incoming/personaggi/turnbull_fast/punch_1.png` → turnbull_fast, pugno diretto a braccio teso
+338. `assets/incoming/personaggi/turnbull_fast/hurt_1.png` → turnbull_fast, colpito, testa all'indietro, smorfia
+339. `assets/incoming/personaggi/turnbull_fast/down_1.png` → turnbull_fast, a terra, sdraiato sulla schiena (figura orizzontale)
+340. `assets/incoming/personaggi/turnbull_fast/charge_1.png` → turnbull_fast, charge
+341. `assets/incoming/personaggi/orphan/idle_1.png` → orphan, in guardia, fermo, pugni alzati
+342. `assets/incoming/personaggi/orphan/walk_1.png` → orphan, camminata, fotogramma 1 di 4: gamba destra avanti
+343. `assets/incoming/personaggi/orphan/walk_2.png` → orphan, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+344. `assets/incoming/personaggi/orphan/walk_3.png` → orphan, camminata, fotogramma 3 di 4: gamba sinistra avanti
+345. `assets/incoming/personaggi/orphan/walk_4.png` → orphan, camminata, fotogramma 4 di 4: passaggio
+346. `assets/incoming/personaggi/orphan/punch_1.png` → orphan, pugno diretto a braccio teso
+347. `assets/incoming/personaggi/orphan/hurt_1.png` → orphan, colpito, testa all'indietro, smorfia
+348. `assets/incoming/personaggi/orphan/down_1.png` → orphan, a terra, sdraiato sulla schiena (figura orizzontale)
+349. `assets/incoming/personaggi/orphan/board_swing_1.png` → orphan, colpo con un'asse
+350. `assets/incoming/personaggi/sully/idle_1.png` → sully, in guardia, fermo, pugni alzati
+351. `assets/incoming/personaggi/sully/walk_1.png` → sully, camminata, fotogramma 1 di 4: gamba destra avanti
+352. `assets/incoming/personaggi/sully/walk_2.png` → sully, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+353. `assets/incoming/personaggi/sully/walk_3.png` → sully, camminata, fotogramma 3 di 4: gamba sinistra avanti
+354. `assets/incoming/personaggi/sully/walk_4.png` → sully, camminata, fotogramma 4 di 4: passaggio
+355. `assets/incoming/personaggi/sully/punch_1.png` → sully, pugno diretto a braccio teso
+356. `assets/incoming/personaggi/sully/hurt_1.png` → sully, colpito, testa all'indietro, smorfia
+357. `assets/incoming/personaggi/sully/down_1.png` → sully, a terra, sdraiato sulla schiena (figura orizzontale)
+358. `assets/incoming/personaggi/lizzie/idle_1.png` → lizzie, in guardia, fermo, pugni alzati
+359. `assets/incoming/personaggi/lizzie/walk_1.png` → lizzie, camminata, fotogramma 1 di 4: gamba destra avanti
+360. `assets/incoming/personaggi/lizzie/walk_2.png` → lizzie, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+361. `assets/incoming/personaggi/lizzie/walk_3.png` → lizzie, camminata, fotogramma 3 di 4: gamba sinistra avanti
+362. `assets/incoming/personaggi/lizzie/walk_4.png` → lizzie, camminata, fotogramma 4 di 4: passaggio
+363. `assets/incoming/personaggi/lizzie/punch_1.png` → lizzie, pugno diretto a braccio teso
+364. `assets/incoming/personaggi/lizzie/hurt_1.png` → lizzie, colpito, testa all'indietro, smorfia
+365. `assets/incoming/personaggi/lizzie/down_1.png` → lizzie, a terra, sdraiato sulla schiena (figura orizzontale)
+366. `assets/incoming/personaggi/lizzie/gun_aim_1.png` → lizzie, gun_aim
+367. `assets/incoming/personaggi/lizzie/gun_shoot_1.png` → lizzie, pistola
+368. `assets/incoming/personaggi/lizzie/push_1.png` → lizzie, push
+369. `assets/incoming/personaggi/lizzie_boss/idle_1.png` → lizzie_boss, in guardia, fermo, pugni alzati
+370. `assets/incoming/personaggi/lizzie_boss/walk_1.png` → lizzie_boss, camminata, fotogramma 1 di 4: gamba destra avanti
+371. `assets/incoming/personaggi/lizzie_boss/walk_2.png` → lizzie_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+372. `assets/incoming/personaggi/lizzie_boss/walk_3.png` → lizzie_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
+373. `assets/incoming/personaggi/lizzie_boss/walk_4.png` → lizzie_boss, camminata, fotogramma 4 di 4: passaggio
+374. `assets/incoming/personaggi/lizzie_boss/punch_1.png` → lizzie_boss, pugno diretto a braccio teso
+375. `assets/incoming/personaggi/lizzie_boss/hurt_1.png` → lizzie_boss, colpito, testa all'indietro, smorfia
+376. `assets/incoming/personaggi/lizzie_boss/down_1.png` → lizzie_boss, a terra, sdraiato sulla schiena (figura orizzontale)
+377. `assets/incoming/personaggi/lizzie_boss/gun_aim_1.png` → lizzie_boss, gun_aim
+378. `assets/incoming/personaggi/punk/idle_1.png` → punk, in guardia, fermo, pugni alzati
+379. `assets/incoming/personaggi/punk/walk_1.png` → punk, camminata, fotogramma 1 di 4: gamba destra avanti
+380. `assets/incoming/personaggi/punk/walk_2.png` → punk, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+381. `assets/incoming/personaggi/punk/walk_3.png` → punk, camminata, fotogramma 3 di 4: gamba sinistra avanti
+382. `assets/incoming/personaggi/punk/walk_4.png` → punk, camminata, fotogramma 4 di 4: passaggio
+383. `assets/incoming/personaggi/punk/punch_1.png` → punk, pugno diretto a braccio teso
+384. `assets/incoming/personaggi/punk/hurt_1.png` → punk, colpito, testa all'indietro, smorfia
+385. `assets/incoming/personaggi/punk/down_1.png` → punk, a terra, sdraiato sulla schiena (figura orizzontale)
+386. `assets/incoming/personaggi/punk/skate_1.png` → punk, skate
+387. `assets/incoming/personaggi/punk/skate_2.png` → punk, pattina
+388. `assets/incoming/personaggi/punk/grab_1.png` → punk, presa
+389. `assets/incoming/personaggi/punk_boss/idle_1.png` → punk_boss, in guardia, fermo, pugni alzati
+390. `assets/incoming/personaggi/punk_boss/walk_1.png` → punk_boss, camminata, fotogramma 1 di 4: gamba destra avanti
+391. `assets/incoming/personaggi/punk_boss/walk_2.png` → punk_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+392. `assets/incoming/personaggi/punk_boss/walk_3.png` → punk_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
+393. `assets/incoming/personaggi/punk_boss/walk_4.png` → punk_boss, camminata, fotogramma 4 di 4: passaggio
+394. `assets/incoming/personaggi/punk_boss/punch_1.png` → punk_boss, pugno diretto a braccio teso
+395. `assets/incoming/personaggi/punk_boss/hurt_1.png` → punk_boss, colpito, testa all'indietro, smorfia
+396. `assets/incoming/personaggi/punk_boss/down_1.png` → punk_boss, a terra, sdraiato sulla schiena (figura orizzontale)
+397. `assets/incoming/personaggi/punk_boss/skate_1.png` → punk_boss, skate
+398. `assets/incoming/personaggi/punk_boss/grab_1.png` → punk_boss, afferra qualcuno davanti a sé per il bavero
+399. `assets/incoming/personaggi/rogue/idle_1.png` → rogue, in guardia, fermo, pugni alzati
+400. `assets/incoming/personaggi/rogue/walk_1.png` → rogue, camminata, fotogramma 1 di 4: gamba destra avanti
+401. `assets/incoming/personaggi/rogue/walk_2.png` → rogue, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+402. `assets/incoming/personaggi/rogue/walk_3.png` → rogue, camminata, fotogramma 3 di 4: gamba sinistra avanti
+403. `assets/incoming/personaggi/rogue/walk_4.png` → rogue, camminata, fotogramma 4 di 4: passaggio
+404. `assets/incoming/personaggi/rogue/punch_1.png` → rogue, pugno diretto a braccio teso
+405. `assets/incoming/personaggi/rogue/hurt_1.png` → rogue, colpito, testa all'indietro, smorfia
+406. `assets/incoming/personaggi/rogue/down_1.png` → rogue, a terra, sdraiato sulla schiena (figura orizzontale)
+407. `assets/incoming/personaggi/rogue/bottle_throw_1.png` → rogue, bottle_throw
+408. `assets/incoming/personaggi/luther/idle_1.png` → luther, in guardia, fermo, pugni alzati
+409. `assets/incoming/personaggi/luther/walk_1.png` → luther, camminata, fotogramma 1 di 4: gamba destra avanti
+410. `assets/incoming/personaggi/luther/walk_2.png` → luther, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+411. `assets/incoming/personaggi/luther/walk_3.png` → luther, camminata, fotogramma 3 di 4: gamba sinistra avanti
+412. `assets/incoming/personaggi/luther/walk_4.png` → luther, camminata, fotogramma 4 di 4: passaggio
+413. `assets/incoming/personaggi/luther/punch_1.png` → luther, pugno diretto a braccio teso
+414. `assets/incoming/personaggi/luther/hurt_1.png` → luther, colpito, testa all'indietro, smorfia
+415. `assets/incoming/personaggi/luther/down_1.png` → luther, a terra, sdraiato sulla schiena (figura orizzontale)
+416. `assets/incoming/personaggi/luther/gun_aim_1.png` → luther, gun_aim
+417. `assets/incoming/personaggi/luther/bottles_1.png` → luther, tre bottiglie vuote infilate tra le dita
+418. `assets/incoming/personaggi/luther/knifehit_1.png` → luther, coltello piantato nel braccio
+419. `assets/incoming/personaggi/luther/down_1.png` → luther, a terra, sdraiato sulla schiena (figura orizzontale)
+420. `assets/incoming/personaggi/police/idle_1.png` → police, in guardia, fermo, pugni alzati
+421. `assets/incoming/personaggi/police/walk_1.png` → police, camminata, fotogramma 1 di 4: gamba destra avanti
+422. `assets/incoming/personaggi/police/walk_2.png` → police, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+423. `assets/incoming/personaggi/police/walk_3.png` → police, camminata, fotogramma 3 di 4: gamba sinistra avanti
+424. `assets/incoming/personaggi/police/walk_4.png` → police, camminata, fotogramma 4 di 4: passaggio
+425. `assets/incoming/personaggi/police/punch_1.png` → police, pugno diretto a braccio teso
+426. `assets/incoming/personaggi/police/hurt_1.png` → police, colpito, testa all'indietro, smorfia
+427. `assets/incoming/personaggi/police/down_1.png` → police, a terra, sdraiato sulla schiena (figura orizzontale)
+428. `assets/incoming/personaggi/police/baton_swing_1.png` → police, manganello
+429. `assets/incoming/personaggi/police/charge_1.png` → police, charge
+430. `assets/incoming/personaggi/police_woman/idle_1.png` → police_woman, in guardia, fermo, pugni alzati
+431. `assets/incoming/personaggi/police_woman/sit_1.png` → police_woman, seduto su un sedile della metro
+432. `assets/incoming/personaggi/police_woman/arrest_1.png` → police_woman, a terra, ammanettato
+433. `assets/incoming/personaggi/cyrus/idle_1.png` → cyrus, in guardia, fermo, pugni alzati
+434. `assets/incoming/personaggi/cyrus/speech_1.png` → cyrus, speech
+435. `assets/incoming/personaggi/cyrus/shot_1.png` → cyrus, colpito
+436. `assets/incoming/personaggi/riff/idle_1.png` → riff, in guardia, fermo, pugni alzati
+437. `assets/incoming/personaggi/riff/idle_1.png` → riff, in guardia, fermo, pugni alzati
+438. `assets/incoming/personaggi/masai/idle_1.png` → masai, in guardia, fermo, pugni alzati
+439. `assets/incoming/personaggi/masai/idle_1.png` → masai, in guardia, fermo, pugni alzati
 
 ### 6. Scene (illustrazioni per le transizioni, 1536×1024)
 
-438. `assets/incoming/scene/cine_cyrus.png` → Cyrus sul palco a braccia aperte davanti a una folla immensa di bande, di notte, fari
-439. `assets/incoming/scene/cine_accusation.png` → lo sparo al raduno: Cyrus cade, la folla si scatena, polizia che arriva
-440. `assets/incoming/scene/cine_furies_appear.png` → i Furies con le mazze sotto i lampioni del parco, i Warriors di fronte
-441. `assets/incoming/scene/cine_ajax_arrest.png` → Ajax ammanettato a terra vicino a una panchina, luci blu delle volanti
-442. `assets/incoming/scene/cine_lizzies_trap.png` → le Lizzies con le pistole davanti a una porta chiusa, tre Warriors in trappola
-443. `assets/incoming/scene/cine_swan_mercy.png` → Swan e Mercy che camminano in un tunnel della metro
-444. `assets/incoming/scene/talk_c7_couple.png` → sul treno all'alba Mercy si sistema i capelli e Swan le ferma la mano; di fronte una coppia elegante
-445. `assets/incoming/scene/cine_bottles.png` → Luther sporto dal finestrino del carro funebre dei Rogues coperto di graffiti, a Coney Island all'alba, tre bottiglie vuote infilate tra le dita, giacca blu con cappuccio e fascia sulla fronte; riferimento: `riferimenti/luther_4.png`, `riferimenti/luoghi/auto_rogues_coney.png`
-446. `assets/incoming/scene/cine_disarm.png` → sulla spiaggia all'alba il coltello di Swan colpisce il braccio di Luther, la pistola cade
-447. `assets/incoming/scene/cine_epilogue.png` → i Warriors e Mercy camminano sulla spiaggia di Coney Island all'alba
+440. `assets/incoming/scene/cine_cyrus.png` → Cyrus sul palco a braccia aperte davanti a una folla immensa di bande, di notte, fari
+441. `assets/incoming/scene/cine_accusation.png` → lo sparo al raduno: Cyrus cade, la folla si scatena, polizia che arriva
+442. `assets/incoming/scene/cine_furies_appear.png` → i Furies con le mazze sotto i lampioni del parco, i Warriors di fronte
+443. `assets/incoming/scene/cine_ajax_arrest.png` → Ajax ammanettato a terra vicino a una panchina, luci blu delle volanti
+444. `assets/incoming/scene/cine_lizzies_trap.png` → le Lizzies con le pistole davanti a una porta chiusa, tre Warriors in trappola
+445. `assets/incoming/scene/cine_swan_mercy.png` → Swan e Mercy che camminano in un tunnel della metro
+446. `assets/incoming/scene/talk_c7_couple.png` → sul treno all'alba Mercy si sistema i capelli e Swan le ferma la mano; di fronte una coppia elegante
+447. `assets/incoming/scene/cine_bottles.png` → Luther sporto dal finestrino del carro funebre dei Rogues coperto di graffiti, a Coney Island all'alba, tre bottiglie vuote infilate tra le dita, giacca blu con cappuccio e fascia sulla fronte; riferimento: `riferimenti/luther_4.png`, `riferimenti/luoghi/auto_rogues_coney.png`
+448. `assets/incoming/scene/cine_disarm.png` → sulla spiaggia all'alba il coltello di Swan colpisce il braccio di Luther, la pistola cade
+449. `assets/incoming/scene/cine_epilogue.png` → i Warriors e Mercy camminano sulla spiaggia di Coney Island all'alba
 
-448. `assets/incoming/scene/radio_dj.png` → la DJ alla radio: primissimo piano della bocca con il rossetto rosso scuro, di profilo verso destra, davanti a un microfono nero, fondo rosso acceso, controluce; si vede solo la parte bassa del viso; riferimento: `riferimenti/dj_1.png`, `dj_2`, `dj_3`
+450. `assets/incoming/scene/radio_dj.png` → la DJ alla radio: primissimo piano della bocca con il rossetto rosso scuro, di profilo verso destra, davanti a un microfono nero, fondo rosso acceso, controluce; si vede solo la parte bassa del viso; riferimento: `riferimenti/dj_1.png`, `dj_2`, `dj_3`
 
 ### 7. Ritratti (mezzo busto, tre quarti verso destra, sfondo magenta)
 
-449. `assets/incoming/ritratti/idle_1.png` → ritratto di idle_1
-450. `assets/incoming/ritratti/punch_1.png` → ritratto di punch_1
-451. `assets/incoming/ritratti/kick_1.png` → ritratto di kick_1
-452. `assets/incoming/ritratti/heavy_1.png` → ritratto di heavy_1
-453. `assets/incoming/ritratti/jump_1.png` → ritratto di jump_1
-454. `assets/incoming/ritratti/jumpkick_1.png` → ritratto di jumpkick_1
-455. `assets/incoming/ritratti/hurt_1.png` → ritratto di hurt_1
-456. `assets/incoming/ritratti/down_1.png` → ritratto di down_1
-457. `assets/incoming/ritratti/getup_1.png` → ritratto di getup_1
-458. `assets/incoming/ritratti/grab_1.png` → ritratto di grab_1
-459. `assets/incoming/ritratti/throw_1.png` → ritratto di throw_1
-460. `assets/incoming/ritratti/dodge_1.png` → ritratto di dodge_1
-461. `assets/incoming/ritratti/pipe_swing_1.png` → ritratto di pipe_swing_1
-462. `assets/incoming/ritratti/revive_1.png` → ritratto di revive_1
-463. `assets/incoming/ritratti/sit_1.png` → ritratto di sit_1
-464. `assets/incoming/ritratti/swan.png` → ritratto di swan
-465. `assets/incoming/ritratti/ajax.png` → ritratto di ajax
-466. `assets/incoming/ritratti/snow.png` → ritratto di snow
-467. `assets/incoming/ritratti/cowboy.png` → ritratto di cowboy
-468. `assets/incoming/ritratti/cochise.png` → ritratto di cochise
-469. `assets/incoming/ritratti/vermin.png` → ritratto di vermin
-470. `assets/incoming/ritratti/rembrandt.png` → ritratto di rembrandt
-471. `assets/incoming/ritratti/fox.png` → ritratto di fox
-472. `assets/incoming/ritratti/cleon.png` → ritratto di cleon
-473. `assets/incoming/ritratti/mercy.png` → ritratto di mercy
+451. `assets/incoming/ritratti/idle_1.png` → ritratto di idle_1
+452. `assets/incoming/ritratti/punch_1.png` → ritratto di punch_1
+453. `assets/incoming/ritratti/kick_1.png` → ritratto di kick_1
+454. `assets/incoming/ritratti/heavy_1.png` → ritratto di heavy_1
+455. `assets/incoming/ritratti/jump_1.png` → ritratto di jump_1
+456. `assets/incoming/ritratti/jumpkick_1.png` → ritratto di jumpkick_1
+457. `assets/incoming/ritratti/hurt_1.png` → ritratto di hurt_1
+458. `assets/incoming/ritratti/down_1.png` → ritratto di down_1
+459. `assets/incoming/ritratti/getup_1.png` → ritratto di getup_1
+460. `assets/incoming/ritratti/grab_1.png` → ritratto di grab_1
+461. `assets/incoming/ritratti/throw_1.png` → ritratto di throw_1
+462. `assets/incoming/ritratti/dodge_1.png` → ritratto di dodge_1
+463. `assets/incoming/ritratti/pipe_swing_1.png` → ritratto di pipe_swing_1
+464. `assets/incoming/ritratti/revive_1.png` → ritratto di revive_1
+465. `assets/incoming/ritratti/sit_1.png` → ritratto di sit_1
+466. `assets/incoming/ritratti/swan.png` → ritratto di swan
+467. `assets/incoming/ritratti/ajax.png` → ritratto di ajax
+468. `assets/incoming/ritratti/snow.png` → ritratto di snow
+469. `assets/incoming/ritratti/cowboy.png` → ritratto di cowboy
+470. `assets/incoming/ritratti/cochise.png` → ritratto di cochise
+471. `assets/incoming/ritratti/vermin.png` → ritratto di vermin
+472. `assets/incoming/ritratti/rembrandt.png` → ritratto di rembrandt
+473. `assets/incoming/ritratti/fox.png` → ritratto di fox
+474. `assets/incoming/ritratti/cleon.png` → ritratto di cleon
+475. `assets/incoming/ritratti/mercy.png` → ritratto di mercy
 
 ### 8. Oggetti ed effetti (sfondo magenta, vista laterale)
 
-474. `assets/incoming/oggetti/bus_turnbull.png` → il bus dei Turnbull: vecchio scuolabus americano grigio-verde scuro coperto di graffiti, fari bianco-blu accecanti, vista laterale rivolta a destra, senza persone; riferimento: `riferimenti/luoghi/bus_turnbull.png`
-475. `assets/incoming/oggetti/treno_esterno.png` → vagone della metro anni '70 visto di lato, interamente coperto di graffiti colorati, numero sul fianco, porte aperte; riferimento: `riferimenti/luoghi/treno_graffiti.png`
-476. `assets/incoming/oggetti/auto_rogues.png` → il carro funebre dei Rogues: Cadillac anni '50 nera coperta di graffiti colorati, cromature, vista laterale rivolta a destra; riferimento: `riferimenti/luoghi/auto_rogues.png`, `auto_rogues_coney.png`
-477. `assets/incoming/oggetti/auto_orphans_fuoco.png` → auto_orphans_fuoco (auto in fiamme)
-478. `assets/incoming/oggetti/tornello.png` → tornello
-479. `assets/incoming/oggetti/transenna.png` → transenna
-480. `assets/incoming/oggetti/panchina.png` → panchina
-481. `assets/incoming/oggetti/cestino.png` → cestino
-482. `assets/incoming/oggetti/cassa.png` → cassa
-483. `assets/incoming/oggetti/bidone.png` → bidone
-484. `assets/incoming/oggetti/porta_gabinetto.png` → porta_gabinetto
-485. `assets/incoming/oggetti/lavandino.png` → lavandino
-486. `assets/incoming/oggetti/giradischi.png` → giradischi
-487. `assets/incoming/oggetti/sedia.png` → sedia
-488. `assets/incoming/oggetti/bomboletta.png` → bomboletta
-489. `assets/incoming/oggetti/coltello.png` → coltello
-490. `assets/incoming/oggetti/pistola.png` → pistola
-491. `assets/incoming/oggetti/bottiglia.png` → bottiglia
-492. `assets/incoming/oggetti/mazza.png` → mazza
-493. `assets/incoming/oggetti/tubo.png` → tubo
-494. `assets/incoming/oggetti/asse.png` → asse
-495. `assets/incoming/oggetti/manganello.png` → manganello
-496. `assets/incoming/oggetti/fx_spruzzo.png` → fx_spruzzo
-497. `assets/incoming/oggetti/fx_scintille.png` → fx_scintille
-498. `assets/incoming/oggetti/fx_polvere.png` → fx_polvere
-499. `assets/incoming/oggetti/fx_fuoco.png` → fx_fuoco
-500. `assets/incoming/oggetti/fx_vetro.png` → fx_vetro
-501. `assets/incoming/oggetti/fx_sparo.png` → fx_sparo
+476. `assets/incoming/oggetti/bus_turnbull.png` → il bus dei Turnbull: vecchio scuolabus americano grigio-verde scuro coperto di graffiti, fari bianco-blu accecanti, vista laterale rivolta a destra, senza persone; riferimento: `riferimenti/luoghi/bus_turnbull.png`
+477. `assets/incoming/oggetti/treno_esterno.png` → vagone della metro anni '70 visto di lato, interamente coperto di graffiti colorati, numero sul fianco, porte aperte; riferimento: `riferimenti/luoghi/treno_graffiti.png`
+478. `assets/incoming/oggetti/auto_rogues.png` → il carro funebre dei Rogues: Cadillac anni '50 nera coperta di graffiti colorati, cromature, vista laterale rivolta a destra; riferimento: `riferimenti/luoghi/auto_rogues.png`, `auto_rogues_coney.png`
+479. `assets/incoming/oggetti/auto_orphans_fuoco.png` → auto_orphans_fuoco (auto in fiamme)
+480. `assets/incoming/oggetti/tornello.png` → tornello
+481. `assets/incoming/oggetti/transenna.png` → transenna
+482. `assets/incoming/oggetti/panchina.png` → panchina
+483. `assets/incoming/oggetti/cestino.png` → cestino
+484. `assets/incoming/oggetti/cassa.png` → cassa
+485. `assets/incoming/oggetti/bidone.png` → bidone
+486. `assets/incoming/oggetti/porta_gabinetto.png` → porta_gabinetto
+487. `assets/incoming/oggetti/lavandino.png` → lavandino
+488. `assets/incoming/oggetti/giradischi.png` → giradischi
+489. `assets/incoming/oggetti/sedia.png` → sedia
+490. `assets/incoming/oggetti/bomboletta.png` → bomboletta
+491. `assets/incoming/oggetti/coltello.png` → coltello
+492. `assets/incoming/oggetti/pistola.png` → pistola
+493. `assets/incoming/oggetti/bottiglia.png` → bottiglia
+494. `assets/incoming/oggetti/mazza.png` → mazza
+495. `assets/incoming/oggetti/tubo.png` → tubo
+496. `assets/incoming/oggetti/asse.png` → asse
+497. `assets/incoming/oggetti/manganello.png` → manganello
+498. `assets/incoming/oggetti/fx_spruzzo.png` → fx_spruzzo
+499. `assets/incoming/oggetti/fx_scintille.png` → fx_scintille
+500. `assets/incoming/oggetti/fx_polvere.png` → fx_polvere
+501. `assets/incoming/oggetti/fx_fuoco.png` → fx_fuoco
+502. `assets/incoming/oggetti/fx_vetro.png` → fx_vetro
+503. `assets/incoming/oggetti/fx_sparo.png` → fx_sparo
 
 ## Fine
 
-In tutto 501 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
+In tutto 503 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
 
