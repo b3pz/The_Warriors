@@ -44,7 +44,7 @@ Aprilo prima di disegnare: è il modo per restare fedeli al film.
 - `assets/incoming/riferimenti/<set>_1.png`, `_2`, `_3`: fotogrammi del film per swan, ajax, snow, fox, cleon, cochise, vermin, cowboy, rembrandt, mercy, luther, cyrus, fury, punk. Usali per capelli, costume, colori ed espressione. Alcuni `_2` sono personaggi di un altro videogioco sul film: vanno bene per il costume intero, non per lo stile.
 - `assets/incoming/riferimenti/mappe/bande_collage_*.png`: le bande del film insieme (Rogues, Furies, Lizzies, Punks, Boppers, Hi-Hats, Electric Eliminators e altre).
 - `assets/incoming/riferimenti/<set>.png` (sfondo magenta): figure provvisorie del gioco attuale, solo per scala e tipo di pixel art; costumi e facce si prendono dalle foto.
-- `assets/incoming/riferimenti/luoghi/`: i luoghi del film. `raduno_*` (il raduno nel nord del Bronx: anfiteatro con arcate di pietra, folla sugli spalti, Cyrus sul palco con la veste), `union_square_scale` (scala piastrellata bianca della stazione), `bagno_union_square` (il bagno della rissa con i Punks: piastrelle bianche, porte dei gabinetti verde scuro, tubi sul soffitto), `strada_notte` e `strada_orphans` (strade bagnate di notte, palazzi di mattoni, scale antincendio), `spiaggia_riffs` (la spiaggia all'alba), `coney_lungomare` e `coney_wonder_wheel` (Coney Island: ruota panoramica, chioschi, lungomare).
+- `assets/incoming/riferimenti/luoghi/`: i luoghi del film. `raduno_*` (il raduno nel nord del Bronx: anfiteatro con arcate di pietra, folla sugli spalti, Cyrus sul palco con la veste), `union_square_scale` (scala piastrellata bianca della stazione), `bagno_union_square` (il bagno della rissa con i Punks: piastrelle bianche, porte dei gabinetti verde scuro, tubi sul soffitto), `strada_notte` e `strada_orphans` (strade bagnate di notte, palazzi di mattoni, scale antincendio), `spiaggia_riffs` (la spiaggia all'alba), `coney_lungomare` e `coney_wonder_wheel` (Coney Island: ruota panoramica, chioschi, lungomare), `auto_rogues` e `auto_rogues_coney` (il carro funebre dei Rogues coperto di graffiti, nella scena finale).
 - `assets/incoming/riferimenti/mappe/`: dove sta ogni banda (Furies a Riverside, Lizzies a Union Square, Punks al Bowery, Orphans a Tremont, Turnbull a Gun Hill, Riffs a Gramercy, Rogues a Hell's Kitchen) e i loro loghi: utili per colori e stile delle bande.
 
 ## Personaggi
@@ -90,7 +90,7 @@ Tutti i Warriors portano un gilet di pelle marrone senza maniche, senza scritte.
 | `punk` | punk di strada: salopette di jeans sopra una maglia a righe orizzontali, capelli lunghi, **pattini a rotelle** ai piedi |
 | `punk_boss` | capo dei Punks: più grosso, salopette di jeans e maglia a righe, pattini |
 | `rogue` | membro dei Rogues: gilet o giubbotto di pelle nera, maglietta scura, berretto, aria folle |
-| `luther` | capo dei Rogues: magro, capelli castani ricci lunghi fino alle spalle, fascia intrecciata sulla fronte, gilet di pelle nera sopra una maglietta grigia, catenine, pantaloni neri; sorriso folle |
+| `luther` | capo dei Rogues: magro, capelli castani ricci lunghi fino alle spalle, fascia intrecciata sulla fronte, gilet di pelle nera sopra una maglietta grigia, catenine, pantaloni neri; sorriso folle; nella scena finale in auto porta sopra una giacca blu con cappuccio |
 | `police` | poliziotto di New York anni '70, divisa blu, berretto |
 | `police_woman` | poliziotta in borghese seduta su una panchina, aria innocua |
 | `cyrus` | carismatico capo dei Riffs e della banda più grande della città: capelli neri pettinati all'indietro, lunga veste a quadri marrone e rame aperta su una camicia nera, pantaloni neri; braccia aperte mentre parla dal palco |
@@ -577,7 +577,7 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 442. `assets/incoming/scene/cine_lizzies_trap.png` → le Lizzies con le pistole davanti a una porta chiusa, tre Warriors in trappola
 443. `assets/incoming/scene/cine_swan_mercy.png` → Swan e Mercy che camminano in un tunnel della metro
 444. `assets/incoming/scene/talk_c7_couple.png` → sul treno all'alba Mercy si sistema i capelli e Swan le ferma la mano; di fronte una coppia elegante
-445. `assets/incoming/scene/cine_bottles.png` → Luther sporto dal finestrino di un'auto con tre bottiglie vuote tra le dita
+445. `assets/incoming/scene/cine_bottles.png` → Luther sporto dal finestrino del carro funebre dei Rogues coperto di graffiti, a Coney Island all'alba, tre bottiglie vuote infilate tra le dita, giacca blu con cappuccio e fascia sulla fronte; riferimento: `riferimenti/luther_4.png`, `riferimenti/luoghi/auto_rogues_coney.png`
 446. `assets/incoming/scene/cine_disarm.png` → sulla spiaggia all'alba il coltello di Swan colpisce il braccio di Luther, la pistola cade
 447. `assets/incoming/scene/cine_epilogue.png` → i Warriors e Mercy camminano sulla spiaggia di Coney Island all'alba
 
@@ -613,7 +613,7 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 
 473. `assets/incoming/oggetti/bus_turnbull.png` → bus_turnbull (bus scolastico verde dipinto)
 474. `assets/incoming/oggetti/treno_esterno.png` → treno_esterno (vagone della metro anni '70 con graffiti, di lato)
-475. `assets/incoming/oggetti/auto_rogues.png` → auto_rogues (berlina scura anni '70)
+475. `assets/incoming/oggetti/auto_rogues.png` → il carro funebre dei Rogues: Cadillac anni '50 nera coperta di graffiti colorati, cromature, vista laterale rivolta a destra; riferimento: `riferimenti/luoghi/auto_rogues.png`, `auto_rogues_coney.png`
 476. `assets/incoming/oggetti/auto_orphans_fuoco.png` → auto_orphans_fuoco (auto in fiamme)
 477. `assets/incoming/oggetti/tornello.png` → tornello
 478. `assets/incoming/oggetti/transenna.png` → transenna

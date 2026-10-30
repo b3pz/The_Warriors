@@ -111,7 +111,7 @@ Pose base: `idle_1`, `walk_1`…`walk_4`, `punch_1`, `hurt_1`, `down_1`, più le
 | `punk` | punk di strada: salopette di jeans sopra una maglia a righe orizzontali, capelli lunghi, **pattini a rotelle** ai piedi | `skate_1`, `skate_2` (pattina), `grab_1` (presa) |
 | `punk_boss` | capo dei Punks: più grosso, salopette di jeans e maglia a righe, pattini | `skate_1`, `grab_1` |
 | `rogue` | membro dei Rogues: gilet o giubbotto di pelle nera, maglietta scura, berretto, aria folle | `bottle_throw_1` |
-| `luther` | capo dei Rogues: magro, capelli castani ricci lunghi fino alle spalle, fascia intrecciata sulla fronte, gilet di pelle nera sopra una maglietta grigia, catenine, pantaloni neri; sorriso folle | `gun_aim_1`, `bottles_1` (tre bottiglie vuote infilate tra le dita), `knifehit_1` (coltello piantato nel braccio), `down_1` |
+| `luther` | capo dei Rogues: magro, capelli castani ricci lunghi fino alle spalle, fascia intrecciata sulla fronte, gilet di pelle nera sopra una maglietta grigia, catenine, pantaloni neri; sorriso folle; nella scena finale in auto porta sopra una giacca blu con cappuccio | `gun_aim_1`, `bottles_1` (tre bottiglie vuote infilate tra le dita), `knifehit_1` (coltello piantato nel braccio), `down_1` |
 | `police` | poliziotto di New York anni '70, divisa blu, berretto | `baton_swing_1` (manganello), `charge_1` |
 | `police_woman` | poliziotta in borghese seduta su una panchina, aria innocua | `sit_1`, `arrest_1` |
 | `cyrus` | carismatico capo dei Riffs e della banda più grande della città: capelli neri pettinati all'indietro, lunga veste a quadri marrone e rame aperta su una camicia nera, pantaloni neri; braccia aperte mentre parla dal palco | `speech_1`, `shot_1` (colpito) |

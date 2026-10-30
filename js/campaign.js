@@ -173,7 +173,7 @@ var W = window.W;
   S.cine_bottles = { cine: 'cine_bottles', steps: [
     ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'],
     ['npc', 'luther', 'luther', 1150, 560, -1], ['npc', 'rg1', 'rogue', 1220, 620, -1],
-    ['caption', 'Un\'auto si ferma. Luther si sporge dal finestrino, tre bottiglie vuote infilate tra le dita.'],
+    ['caption', 'Il carro funebre dei Rogues, coperto di graffiti, si ferma. Luther si sporge dal finestrino, tre bottiglie vuote infilate tra le dita.'],
     ['say', 'luther', 'Warriors... venite fuori a giocare!'], ['sfx', 'bottle'], ['wait', 0.4], ['sfx', 'bottle'], ['say', 'swan', 'Finisce sulla spiaggia.'],
     ['move', 'luther', 1500, null, 1.4], ['move', 'rg1', 1560, null, 1.4], ['wait', 1.2], ['clearNpcs'], ['flag', 'rogues_arrived']] };
   S.cine_disarm = { cine: 'cine_disarm', steps: seq(
