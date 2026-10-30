@@ -83,6 +83,7 @@ Gli ID sono gli stessi dei video (`docs/SCENE_E_VIDEO.md`); quelli che iniziano 
 
 ## Momenti dove una traccia vera conta di più
 
+- `cine_opening` — l'apertura con la Wonder Wheel di notte, prima del ritrovo: è il posto del brano «Wonder Wheel» di Barry De Vorzon.
 - `menu` — tema principale sulla copertina.
 - `cine_cyrus` — il discorso al raduno (consigliato `loop: false`).
 - `C1-03` / `chase` — la fuga dal parco dopo lo sparo.

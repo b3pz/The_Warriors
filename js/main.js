@@ -790,7 +790,7 @@ var W = window.W;
     W.Audio.radio(!!(a.scene && a.scene.def.radio));
     // tracce originali (js/musiche.js): scena → area:situazione → area → capitolo → situazione
     var sit = a.scene ? (a.scene.def.radio ? 'radio' : 'scene') : m === 'fight' || m === 'chase' || m === 'dawn' || m === 'silence' ? m : 'explore';
-    if (W.Music) W.Music.update({ scene: a.scene ? a.scene.def.cine || null : null, area: def.id, sit: sit, screen: null });
+    if (W.Music) W.Music.update({ scene: a.scene ? (a.scene.wheel ? 'cine_opening' : a.scene.def.cine || null) : null, area: def.id, sit: sit, screen: null });
   }
   var padPrev = {};
   function pollMenuPad() {

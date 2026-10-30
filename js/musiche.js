@@ -12,6 +12,7 @@
 //
 // Ordine di ricerca (vince la prima chiave trovata):
 //   1. ID della scena in corso          es. cine_cyrus, radio_hunt (elenco in docs/MUSICHE.md)
+//      cine_opening = l'apertura con la Wonder Wheel di notte (es. il brano «Wonder Wheel» della colonna sonora)
 //   2. area + situazione                es. 'C4-02:fight', 'C3-04:chase', 'C5-02:explore'
 //   3. area                             es. 'C4-02'
 //   4. capitolo + situazione / capitolo es. 'C4:fight', 'C4'
