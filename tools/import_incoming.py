@@ -186,7 +186,18 @@ def do_simple(sub, out_sub, fmt, key=False, max_side=None):
     return out
 
 
+def check_files():
+    """Segnala i file che non sono immagini valide (caricamenti rotti): vanno ricaricati."""
+    for f in sorted(INC.rglob('*')):
+        if f.suffix.lower() not in ('.png', '.jpg', '.jpeg') or 'riferimenti' in f.parts: continue
+        try:
+            with Image.open(f) as im: im.verify()
+        except Exception:
+            report.append(f'- **file rotto** `{f.relative_to(INC)}`: non è un\'immagine valida (caricamento non riuscito). Rigeneralo e ricaricalo con lo stesso nome.')
+
+
 def main():
+    check_files()
     sets = do_characters()
     bg = do_backgrounds()
     art = {'scene': do_simple('scene', 'scenes_ai', 'jpg', max_side=1600),

@@ -127,7 +127,10 @@ W.Render = (function () {
     var P = W.ATLAS_PX; if (!P || !useSprites) return false;
     var sid = setOf(a), set = P.sets[sid], im = PX[sid];
     if (!set || !im || !im.ok) return false;
-    var sel = pickPose(a), list = set.frames[sel.p] || (sel.alt && set.frames[sel.alt]), fake = null;
+    var sel = pickPose(a);
+    // Ajax senza gilet dopo la sfida al capo dei Furies: pose novest_* quando ci sono
+    if (a.char && a.char.id === 'ajax' && a.world && a.world.flags && a.world.flags.ajax_novest && set.frames['novest_' + sel.p]) sel.p = 'novest_' + sel.p;
+    var list = set.frames[sel.p] || (sel.alt && set.frames[sel.alt]), fake = null;
     if (sel.armed && set.frames[sel.p]) sel.batArc = false;   // posa con l'arma vera: niente mazza disegnata sopra
     if (!list) {
       // ripieghi: colpito = idle inclinato, a terra = idle sdraiato, attacco = idle in avanti

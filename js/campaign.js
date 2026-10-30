@@ -107,7 +107,7 @@ var W = window.W;
   S.dlg_c4_stand = { cine: 'dlg_c4_stand', letterbox: false, steps: [['say', 'ajax', 'Io non corro più. Non da quattro pagliacci con le mazze.'], ['say', 'snow', 'Tieni d\'occhio le mazze.']] };
   S.dlg_c4_ajax = { cine: 'dlg_c4_ajax', letterbox: false, mood: 'fight', steps: [
     ['caption', 'Il capo dei Furies si fa avanti, la mazza sulla spalla. Ajax scoppia a ridere.'],
-    ['caption', 'Si toglie il gilet, lo butta da parte e va incontro alle mazze a mani nude.'],
+    ['caption', 'Si toglie il gilet, lo butta da parte e va incontro alle mazze a mani nude.'], ['flag', 'ajax_novest'],
     ['say', 'ajax', 'Quella mazza te la faccio rimangiare.']] };
   S.cine_ajax_stays = { cine: 'cine_ajax_stays', steps: seq(
     [['players', 'hide']], line(C4G, 360, 90, Y, 1, 18),
