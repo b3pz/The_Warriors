@@ -2,7 +2,7 @@
 
 Aggiornato a ogni caricamento in `assets/incoming/`.
 
-- **ajax**: nel gioco con 15 immagini (arrest, down, getup, heavy, hurt, idle, jump, kick, novest_idle, novest_punch, punch, walk)
+- **ajax**: nel gioco con 26 immagini (arrest, bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, novest_idle, novest_punch, pipe_swing, punch, revive, run, sit, throw, walk)
 - **cleon**: nel gioco con 12 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, walk)
 - **cochise**: nel gioco con 13 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, turnstile, walk)
 - **cowboy**: nel gioco con 12 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, walk)
