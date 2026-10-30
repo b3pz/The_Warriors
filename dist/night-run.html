@@ -2028,12 +2028,24 @@ var W = window.W;
     st.phase = 'done'; st.t2 = 0; st.result = ok;
     w.players.forEach(function (q) { q.hidden = false; q.y = self.floor[0] + 60; });
     w.npcs.forEach(function (n) { if (!n.crowd) n.hidden = false; });
-    var sprayer = w.players.concat(w.npcs).filter(function (q) { return (q.char ? q.char.id : q.id) === 'rembrandt'; })[0];
+    // il colpo a sorpresa dipende dal Warrior che giochi; lo spruzzo resta sempre di Rembrandt, come nella storia
+    var me = w.players.filter(function (q) { return !q.cpu; })[0] || w.players[0], myId = me.char.id;
+    var MOVE = { swan: ['un diretto e un calcio che lo allontana', 'l3'], ajax: ['un gancio che lo mette giù', 'heavy'], snow: ['un calcio laterale', 'l3'],
+      cowboy: ['un calcio basso e una spinta', 'l3'], cochise: ['un gancio in avanzamento', 'heavy'], vermin: ['una ginocchiata', 'heavy'], rembrandt: ['la bomboletta', null] };
+    var rem = w.npcs.filter(function (n) { return n.id === 'rembrandt'; })[0];
     if (ok) {
       w.flags.skater_down = true; sk.pose = 'down';
-      this.objective = sprayer ? 'Rembrandt gli spruzza la vernice in faccia!' : 'Colpito per primo!';
-      w.emit('hit', { x: sk.x, y: sk.y, z: 70, target: 'enemy', heavy: true }); w.emit('spray', { x: sk.x, y: sk.y });
-      this.sprayFx = { x: sk.x, y: sk.y, t: 0 };
+      if (myId === 'rembrandt') {
+        this.objective = 'Rembrandt esce e gli spruzza la vernice in faccia!';
+        me.x = sk.x - 70; me.face = 1; me.startAttack('l1');
+      } else {
+        var mv = MOVE[myId] || ['un colpo secco', 'heavy'];
+        me.x = sk.x - 70; me.y = sk.y; me.face = 1; me.startAttack(mv[1]);
+        this.objective = me.char.name + ' esce con ' + mv[0] + (rem ? '. Rembrandt gli spruzza la vernice in faccia!' : '!');
+        if (rem) { rem.x = sk.x + 80; rem.y = sk.y + 20; rem.face = -1; }
+      }
+      w.emit('hit', { x: sk.x, y: sk.y, z: 70, target: 'enemy', heavy: true });
+      if (myId === 'rembrandt' || rem) { w.emit('spray', { x: sk.x, y: sk.y }); this.sprayFx = { x: sk.x, y: sk.y, t: 0 }; }
     } else {
       this.objective = (why || 'Scoperti') + '! Fuori tutti!'; w.emit('shakefx', { amt: 8 }); w.emit('horn', {});
     }
