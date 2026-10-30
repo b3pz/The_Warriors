@@ -154,7 +154,7 @@ var W = window.W;
   }
   // ------------------------------------------------------------------ transizione a fumetto
   // L'ultimo fotogramma dell'area diventa una vignetta inchiostrata con retino; la didascalia annuncia il luogo successivo.
-  var COMIC_LEAD = { P0: 'Coney Island, quella sera.', C1: 'Nel Bronx.', C2: 'Le strade del Bronx.', C3: 'Territorio degli Orphans.', C4: 'Riverside Park.', C5: 'La banda si divide.', C6: 'Union Square.', C7: 'L\'ultimo treno.', C8: 'Coney Island, all\'alba.' };
+  var COMIC_LEAD = { P0: 'Coney Island, quella sera.', C1: 'Pelham Bay Park, Bronx.', C2: 'Le strade del Bronx.', C3: 'Territorio degli Orphans.', C4: 'Riverside Park, Manhattan.', C5: 'La banda si divide.', C6: 'Union Square.', C7: 'L\'ultimo treno.', C8: 'Coney Island, all\'alba.' };
   function startComic(next, then) {
     var snap = document.createElement('canvas'); snap.width = C.VIEW_W; snap.height = C.VIEW_H;
     try { snap.getContext('2d').drawImage(cv, 0, 0); } catch (e) {}

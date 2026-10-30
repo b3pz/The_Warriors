@@ -42,7 +42,7 @@ var W = window.W;
     [['players', 'hide'], ['crowd', 'cr', ['orphan', 'punk', 'turnbull', 'rogue', 'lizzie', 'police', 'masai', 'fury_hood', 'turnbull_b', 'lizzie_b'], 120, 1160, 600, 690, 22, 1]],
     line(ALL9, 140, 46, 640, 1),
     [['npc', 'cyrus', 'cyrus', 760, 470, -1], ['npc', 'luther', 'luther', 1010, 540, -1], ['npc', 'masai', 'masai', 860, 492, -1],
-     ['caption', 'Nel parco del Bronx, centinaia di bande ascoltano Cyrus. Per una notte, nessuno combatte.'],
+     ['caption', 'Pelham Bay Park, nel Bronx. Ventimila ragazzi delle bande, disarmati, ascoltano Cyrus. Per una notte, nessuno combatte.'],
      ['say', 'cyrus', 'Ci dividono poche strade. Se smettiamo di consumarci gli uni contro gli altri, questa città dovrà ascoltarci.'],
      ['wait', 0.6]]) };
   S.cine_accusation = { cine: 'cine_accusation', steps: [
@@ -79,6 +79,9 @@ var W = window.W;
      ['say', 'mercy', 'Sono loro quelli di cui si parla stanotte?'],
      ['say', 'mercy', 'E tu li lasci passare così, Sully? Davanti a tutti?'],
      ['say', 'orphan', 'Nessuno passa. Avete sentito?'],
+     ['say', 'swan', 'Togliti di mezzo, Sully.'],
+     ['caption', 'Swan non alza le mani. Lo guarda e basta, finché Sully abbassa gli occhi davanti alla sua gente.'],
+     ['say', 'mercy', 'Tutto qui? Lo lasci andare così?'],
      ['say', 'ajax', 'Se volevano discrezione, hanno scelto male la notte.'],
      ['fade', 'out', 0.6], ['clearNpcs'], ['flag', 'orphans_confrontation']]) };
   S.dlg_c3_fire = { cine: 'dlg_c3_fire', letterbox: false, steps: [
@@ -90,7 +93,7 @@ var W = window.W;
     [['npc', 'pol1', 'police', -60, 600, 1], ['npc', 'pol2', 'police', -120, 540, 1], ['move', 'pol1', 240, null, 1.2], ['move', 'pol2', 200, null, 1.4],
      ['sfx', 'siren'], ['say', 'swan', 'Al punto di ritrovo! Se ci dividiamo, andate là!'],
      ['move', 'fox', 160, 660, 1], ['move', 'mercy', 280, 650, 1], ['moveAll', 900, 1.6], ['wait', 1.2],
-     ['caption', 'Sui binari, nella corsa, Fox non ce la fa.'], ['flag', 'fox_killed'],
+     ['caption', 'Nella lotta sulla banchina un agente spinge Fox sui binari. Il treno arriva in quel momento.'], ['flag', 'fox_killed'],
      ['fade', 'out', 0.8], ['clearNpcs'], ['flag', 'fox_lost'], ['flag', 'party_split']]) };
 
   // C4
@@ -110,7 +113,7 @@ var W = window.W;
     ['caption', 'Ajax resta nel parco. Su una panchina, una donna sola.'], ['move', 'ajax', 540, null, 2.4], ['wait', 1.2],
     ['say', 'officer', 'Fermo. Sei in arresto.'], ['sfx', 'siren'],
     ['npc', 'pol1', 'police', 1340, 560, -1], ['npc', 'pol2', 'police', 1380, 620, -1], ['move', 'pol1', 640, null, 1.6], ['move', 'pol2', 600, null, 1.8], ['wait', 1.4],
-    ['fade', 'out', 1], ['clearNpcs'], ['caption', 'Snow e Cowboy, poco lontano, vedono le luci delle volanti.'], ['say', 'snow', 'Non possiamo fermarci qui.'], ['flag', 'ajax_arrested']] };
+    ['caption', 'Ajax viene messo a terra e ammanettato. Resta indietro.'], ['fade', 'out', 1], ['clearNpcs'], ['caption', 'Snow e Cowboy, poco lontano, vedono le luci delle volanti.'], ['say', 'snow', 'Non possiamo fermarci qui.'], ['flag', 'ajax_arrested']] };
   S.dlg_c5_welcome = { cine: 'dlg_c5_welcome', steps: seq(
     [['players', 'hide']], line(['vermin', 'cochise', 'rembrandt'], 260, 80, Y, 1, 18),
     [['npc', 'lz1', 'lizzie', 760, 560, -1], ['npc', 'lz2', 'lizzie_b', 860, 620, -1], ['npc', 'lz3', 'lizzie', 960, 540, -1],
@@ -150,7 +153,10 @@ var W = window.W;
   // C7
   S.cine_train_dawn = { cine: 'cine_train_dawn', letterbox: false, steps: [
     ['say', 'mercy', 'È quasi giorno.'], ['say', 'swan', 'Sì.'], ['say', 'mercy', 'Non sembra la stessa città.']] };
-  S.talk_c7_couple = { cine: 'cine_train_dawn', letterbox: false, steps: [['caption', 'Una coppia elegante sale alla fermata. Li guardano, poi guardano altrove.'], ['wait', 0.4]] };
+  S.talk_c7_couple = { cine: 'cine_train_dawn', letterbox: false, steps: [
+    ['caption', 'Alla fermata sale una coppia di ragazzi ben vestiti, di ritorno da una festa. Si siedono di fronte.'], ['wait', 0.4],
+    ['caption', 'Mercy si accorge dei suoi capelli, della giacca sporca. Prova a sistemarsi.'],
+    ['caption', 'Swan le prende la mano e la ferma. Piano. Non c\'è niente da sistemare.'], ['flag', 'mercy_dignity']] };
   S.cine_home_arrival = { cine: 'cine_home_arrival', steps: seq(
     [['players', 'hide']], line(FINAL6.concat(['mercy']), 300, 70, Y, 1, 18),
     [['sfx', 'train'], ['say', 'cowboy', 'La prossima è casa.'], ['say', 'vermin', 'Era ora.'], ['moveAll', 600, 2.4], ['wait', 1.8], ['fade', 'out', 1], ['clearNpcs'], ['flag', 'home_reached']]) };
@@ -159,6 +165,7 @@ var W = window.W;
   S.cine_bottles = { cine: 'cine_bottles', steps: [
     ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'],
     ['npc', 'luther', 'luther', 1150, 560, -1], ['npc', 'rg1', 'rogue', 1220, 620, -1],
+    ['caption', 'Un\'auto si ferma. Luther si sporge dal finestrino, tre bottiglie vuote infilate tra le dita.'],
     ['say', 'luther', 'Warriors... venite fuori a giocare!'], ['sfx', 'bottle'], ['wait', 0.4], ['sfx', 'bottle'], ['say', 'swan', 'Finisce sulla spiaggia.'],
     ['move', 'luther', 1500, null, 1.4], ['move', 'rg1', 1560, null, 1.4], ['wait', 1.2], ['clearNpcs'], ['flag', 'rogues_arrived']] };
   S.cine_disarm = { cine: 'cine_disarm', steps: seq(
@@ -172,12 +179,13 @@ var W = window.W;
   S.cine_riffs_arrival = { cine: 'cine_riffs_arrival', steps: [
     ['crowd', 'rf', ['masai', 'cyrus', 'masai', 'cyrus'], 1150, 1260, 520, 660, 8, -1], ['npc', 'masai', 'masai', 1300, 580, -1], ['move', 'masai', 1000, null, 2],
     ['moveAll', -180, 2, 'crowd'], ['wait', 1.8],
-    ['say', 'masai', 'Sappiamo cos\'è successo. Avete attraversato tutta la città stanotte.'], ['say', 'masai', 'Andate. Di loro ci occupiamo noi.'],
+    ['say', 'masai', 'Sappiamo cos\'è successo. Avete attraversato tutta la città stanotte.'], ['say', 'masai', 'Non è da tutti. Andate: di loro ci occupiamo noi.'],
     ['moveAll', 220, 1.6, 'crowd'],
     ['move', 'swan', 300, null, 2.4], ['wait', 2], ['fade', 'out', 1.2], ['clearNpcs'], ['flag', 'innocence_recognized']] };
   S.cine_epilogue = { cine: 'cine_epilogue', steps: seq(
     [['players', 'hide']], line(FINAL6, 120, 90, Y, 1, 22), [['npc', 'mercy', 'mercy', 210, 640, 1]],
-    [['moveAll', 1100, 12], ['wait', 1.5], ['caption', 'L\'alba su Coney Island.'], ['wait', 6], ['fade', 'out', 2], ['clearNpcs'], ['flag', 'campaign_complete']]) };
+    [['moveAll', 1100, 12], ['wait', 1.5], ['caption', 'Trenta miglia di città nemica. Ora, davanti a loro, c\'è il mare.'], ['wait', 2],
+     ['caption', 'Swan e Mercy camminano mano nella mano. Gli altri, poco dietro. Sono a casa.'], ['wait', 4], ['fade', 'out', 2], ['clearNpcs'], ['flag', 'campaign_complete']]) };
 
   // ------------------------------------------------------------------ la radio durante la notte
   // Tono della DJ: calmo, caldo, quasi ironico; non prende posizione. Dediche in codice che dicono alle bande dove sono i Warriors.
@@ -229,7 +237,7 @@ var W = window.W;
       exitLabel: 'Apri il cancello', exitInteract: { x: 1820, y: 580, label: 'Apri il cancello' } },
     { id: 'C2-03', ch: 'C2', kind: 'escape', name: 'Corsa alle scale', bg: 'street_b', width: 3840, depth: 230, party: AFTER_C1, objective: 'Raggiungi le scale della metro',
       enter: 'dlg_c2_run', timer: 70, timerEasy: 85, pursuers: { solo: { turnbull_rusher: 2 }, duo: { turnbull_rusher: 3 } }, bus: true, barriers: [900, 1700, 2500, 3200] },
-    { id: 'C2-04', ch: 'C2', kind: 'escape', name: 'Banchina', bg: 'metro', width: 1920, depth: 200, party: AFTER_C1, objective: 'Sali sul treno', timer: 25, exitScene: 'cine_train_escape' },
+    { id: 'C2-04', ch: 'C2', kind: 'escape', name: 'Stazione di Gun Hill Road', bg: 'metro', width: 1920, depth: 200, party: AFTER_C1, objective: 'Sali sul treno', timer: 25, exitScene: 'cine_train_escape' },
 
     { id: 'C3-01', ch: 'C3', kind: 'scene', name: 'Strada degli Orphans', bg: 'street', width: 1280, depth: 200, party: AFTER_C1, chapterCard: true, scenes: ['dlg_c3_orphans'] },
     { id: 'C3-02', ch: 'C3', kind: 'arena', name: 'Cortile', bg: 'harbor', width: 2560, depth: 190, party: AFTER_C1, objective: 'Gli Orphans attaccano',
@@ -282,7 +290,7 @@ var W = window.W;
       objective: 'Sali sul treno', exitScene: 'cine_truth_reaches_riffs' },
 
     { id: 'C7-01', ch: 'C7', kind: 'traversal', name: 'L\'ultimo treno', bg: 'metro', width: 1920, depth: 110, party: ['swan'], mercy: 'player2', present: ['snow', 'cowboy', 'cochise', 'vermin', 'rembrandt'], peace: true, chapterCard: true, seated: true,
-      enter: 'cine_train_dawn', objective: 'Il treno corre verso casa', talks: [{ who: 'couple', set: 'civilian', x: 1100, y: 600, scene: 'talk_c7_couple' }, { who: 'cowboy', x: 700, y: 620 }], needTalks: 1 },
+      enter: 'cine_train_dawn', objective: 'Il treno corre verso casa', talks: [{ who: 'couple', set: 'civilian', x: 1100, y: 600, scene: 'talk_c7_couple' }, { who: 'cowboy', x: 700, y: 620 }], needTalks: 1, needTalk: 'couple' },
     { id: 'C7-02', ch: 'C7', kind: 'scene', name: 'Casa', bg: 'metro_b', width: 1280, depth: 200, party: ['swan'], scenes: ['cine_home_arrival'] },
 
     { id: 'C8-01', ch: 'C8', kind: 'traversal', name: 'Strada di casa', bg: 'coney_b', width: 1920, depth: 200, party: FINAL6, present: FINAL6, mercy: 'npc', chapterCard: true, peace: true,

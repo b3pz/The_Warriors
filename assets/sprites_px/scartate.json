@@ -2,23 +2,8 @@
  "swan": [
   "hurt"
  ],
- "snow": [
-  "punch",
-  "jump",
-  "hurt"
- ],
  "ajax": [
   "punch",
-  "hurt",
-  "down"
- ],
- "cochise": [
-  "kick",
-  "hurt",
-  "down"
- ],
- "rembrandt": [
-  "kick",
   "hurt",
   "down"
  ],
@@ -28,10 +13,25 @@
   "hurt",
   "down"
  ],
- "fox": [
+ "cochise": [
+  "kick",
+  "hurt",
+  "down"
+ ],
+ "vermin": [
   "punch",
   "kick",
   "down"
+ ],
+ "rembrandt": [
+  "kick",
+  "hurt",
+  "down"
+ ],
+ "fox": [
+  "punch",
+  "jump",
+  "hurt"
  ],
  "cleon": [
   "walk",

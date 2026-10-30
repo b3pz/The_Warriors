@@ -10,10 +10,10 @@ const { chromium } = require('playwright');
   for (let k = 0; k < 4; k++) { const st0 = await p.evaluate(() => W.Game.game.state); if (st0 === 'party') { await p.keyboard.press('Enter'); await p.waitForTimeout(100); } }
   let res = null;
   for (let t = 0; t < 60 && !res; t++) {
-    const s = await p.evaluate(() => { const g = W.Game.game, a = g.world.area || { id: 'party' }; if (!g.world.area || g.state === 'party') return { state: g.state, id: a.id }; return { state: g.state, id: a.id, scene: !!a.scene, done: a.done, x: Math.round(g.world.players[0].x), prompt: g.world.promptFor(g.world.players[0]), talks: a.talkCount }; });
+    const s = await p.evaluate(() => { const g = W.Game.game, a = g.world.area || { id: 'party' }; if (!g.world.area || g.state === 'party' || g.state === 'comic') return { state: g.state, id: g.state === 'comic' ? 'comic' : a.id }; return { state: g.state, id: a.id, scene: !!a.scene, done: a.done, x: Math.round(g.world.players[0].x), prompt: g.world.promptFor(g.world.players[0]), talks: a.talkCount, couple: !!(a.talked && a.talked.couple) }; });
     if (s.state === 'party' || s.id !== id || s.done) { res = 'OK (' + t + ' passi)'; break; }
     if (s.scene) { await p.keyboard.press('Enter'); await p.waitForTimeout(150); continue; }
-    if (s.prompt && !(/^Parla/.test(s.prompt) && s.talks >= 1)) { await p.keyboard.press('KeyE'); await p.waitForTimeout(300); continue; }
+    if (s.prompt && !(/^Parla/.test(s.prompt) && s.talks >= 1 && !(/Passeggeri/.test(s.prompt) && !s.couple))) { await p.keyboard.press('KeyE'); await p.waitForTimeout(300); continue; }
     await p.keyboard.down('KeyD'); await p.waitForTimeout(400); await p.keyboard.up('KeyD');
 
   }

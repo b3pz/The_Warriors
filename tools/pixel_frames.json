@@ -1,5 +1,5 @@
 {
- "_note": "Associazione figura → personaggio e pose. Numeri = figure di personaggi_nemici_fondali_04.png in tools/pixel_extract.py (vedi assets/sprites_px/_numerata.png). Un elemento {\"n\":42,\"cut\":[50],\"part\":1} divide la figura 42 al pixel 50 e prende la seconda parte. L'associazione ai nove Warriors e ai personaggi è PROVVISORIA: correggerla qui e rigenerare. Pose tolte a mano il 30/10 perché di un altro personaggio o doppie: snow heavy/down, cochise punch, cleon hurt. Le pose mancanti usano ripieghi con le pose del personaggio stesso.",
+ "_note": "Associazione figura → personaggio e pose. Numeri = figure di personaggi_nemici_fondali_04.png in tools/pixel_extract.py (vedi assets/sprites_px/_numerata.png). Un elemento {\"n\":42,\"cut\":[50],\"part\":1} divide la figura 42 al pixel 50 e prende la seconda parte. Associazione corretta il 30/10 sulle descrizioni dell'autore (vedi 'identita'); Ajax, Vermin e Cleon restano provvisori: correggerla qui e rigenerare. Pose tolte a mano il 30/10 perché di un altro personaggio o doppie: snow heavy/down, cochise punch, cleon hurt. Le pose mancanti usano ripieghi con le pose del personaggio stesso.",
  "sheet": "assets/source/raccolta_04/Sorgenti/Nuove_tavole/personaggi_nemici_fondali_04.png",
  "y_max": 600,
  "scale": 2.2,
@@ -31,29 +31,6 @@
    ],
    "down": [
     15
-   ]
-  },
-  "snow": {
-   "idle": [
-    16
-   ],
-   "walk": [
-    17,
-    18,
-    19,
-    20
-   ],
-   "punch": [
-    24
-   ],
-   "kick": [
-    22
-   ],
-   "jump": [
-    27
-   ],
-   "hurt": [
-    28
    ]
   },
   "ajax": {
@@ -90,6 +67,87 @@
    "down": [
     {
      "n": 42,
+     "cut": [
+      50
+     ],
+     "part": 1
+    }
+   ]
+  },
+  "snow": {
+   "idle": [
+    56
+   ],
+   "walk": [
+    {
+     "n": 57,
+     "cut": [
+      45
+     ],
+     "part": 0
+    },
+    {
+     "n": 57,
+     "cut": [
+      45
+     ],
+     "part": 1
+    },
+    58,
+    59
+   ],
+   "punch": [
+    61
+   ],
+   "kick": [
+    64
+   ],
+   "heavy": [
+    62
+   ],
+   "jump": [
+    65
+   ],
+   "hurt": [
+    66
+   ],
+   "down": [
+    68
+   ]
+  },
+  "cowboy": {
+   "idle": [
+    81
+   ],
+   "walk": [
+    82,
+    83,
+    84
+   ],
+   "punch": [
+    85
+   ],
+   "kick": [
+    89
+   ],
+   "heavy": [
+    90
+   ],
+   "jump": [
+    86
+   ],
+   "hurt": [
+    {
+     "n": 91,
+     "cut": [
+      50
+     ],
+     "part": 0
+    }
+   ],
+   "down": [
+    {
+     "n": 91,
      "cut": [
       50
      ],
@@ -137,122 +195,6 @@
   },
   "vermin": {
    "idle": [
-    56
-   ],
-   "walk": [
-    {
-     "n": 57,
-     "cut": [
-      45
-     ],
-     "part": 0
-    },
-    {
-     "n": 57,
-     "cut": [
-      45
-     ],
-     "part": 1
-    },
-    58,
-    59
-   ],
-   "punch": [
-    61
-   ],
-   "kick": [
-    64
-   ],
-   "heavy": [
-    62
-   ],
-   "jump": [
-    65
-   ],
-   "hurt": [
-    66
-   ],
-   "down": [
-    68
-   ]
-  },
-  "rembrandt": {
-   "idle": [
-    69
-   ],
-   "walk": [
-    70,
-    71,
-    72,
-    73
-   ],
-   "punch": [
-    76
-   ],
-   "kick": [
-    75
-   ],
-   "heavy": [
-    77
-   ],
-   "jump": [
-    74
-   ],
-   "hurt": [
-    {
-     "n": 79,
-     "cut": [
-      49
-     ],
-     "part": 1
-    }
-   ],
-   "down": [
-    80
-   ]
-  },
-  "cowboy": {
-   "idle": [
-    81
-   ],
-   "walk": [
-    82,
-    83,
-    84
-   ],
-   "punch": [
-    85
-   ],
-   "kick": [
-    89
-   ],
-   "heavy": [
-    90
-   ],
-   "jump": [
-    86
-   ],
-   "hurt": [
-    {
-     "n": 91,
-     "cut": [
-      50
-     ],
-     "part": 0
-    }
-   ],
-   "down": [
-    {
-     "n": 91,
-     "cut": [
-      50
-     ],
-     "part": 1
-    }
-   ]
-  },
-  "fox": {
-   "idle": [
     92
    ],
    "walk": [
@@ -290,6 +232,64 @@
    ],
    "down": [
     102
+   ]
+  },
+  "rembrandt": {
+   "idle": [
+    69
+   ],
+   "walk": [
+    70,
+    71,
+    72,
+    73
+   ],
+   "punch": [
+    76
+   ],
+   "kick": [
+    75
+   ],
+   "heavy": [
+    77
+   ],
+   "jump": [
+    74
+   ],
+   "hurt": [
+    {
+     "n": 79,
+     "cut": [
+      49
+     ],
+     "part": 1
+    }
+   ],
+   "down": [
+    80
+   ]
+  },
+  "fox": {
+   "idle": [
+    16
+   ],
+   "walk": [
+    17,
+    18,
+    19,
+    20
+   ],
+   "punch": [
+    24
+   ],
+   "kick": [
+    22
+   ],
+   "jump": [
+    27
+   ],
+   "hurt": [
+    28
    ]
   },
   "cleon": {
@@ -677,5 +677,22 @@
     143
    ]
   }
+ },
+ "identita": {
+  "sicuri": {
+   "swan": "riga con capelli castano chiaro e gilet sul petto nudo",
+   "fox": "biondo riccio",
+   "snow": "afro altissimo",
+   "cochise": "pelle scura, pantaloni a zampa rossi",
+   "rembrandt": "ricci neri, il più minuto",
+   "cowboy": "cappello Stetson",
+   "mercy": "capelli scuri, giacca, minigonna e stivali alti"
+  },
+  "provvisori": {
+   "ajax": "nessuna figura con capelli corti e guanti senza dita: usata la riga con la fascia rossa",
+   "vermin": "nessuna figura tarchiata con capelli castani corti: usata la riga con la fascia e i pantaloni grigi",
+   "cleon": "nessuna figura afroamericana con bandana leopardata: usata la riga con i capelli lunghi"
+  },
+  "fonte": "descrizioni dell'autore, 30 ottobre 2026"
  }
 }

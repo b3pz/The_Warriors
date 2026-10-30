@@ -90,7 +90,7 @@ var W = window.W;
     var def = this.def, w = this.world, self = this, list = [];
     if (def.talks) def.talks.forEach(function (tk) {
       var n = w.npcs.filter(function (q) { return q.id === tk.who; })[0]; if (!n) return;
-      list.push({ x: n.x, y: n.y, label: 'Parla con ' + (n.name || tk.who), fn: function () { self.talkCount += self.talked[tk.who] ? 0 : 1; self.talked[tk.who] = true; self.playScene(W.SCENES[tk.scene || ('talk_' + tk.who)] || { steps: [['caption', '…']] }); if (self.talkCount >= (def.needTalks || 0) && !def.exitInteract) w.exitOpen = true; } });
+      list.push({ x: n.x, y: n.y, label: 'Parla con ' + (n.name || tk.who), fn: function () { self.talkCount += self.talked[tk.who] ? 0 : 1; self.talked[tk.who] = true; self.playScene(W.SCENES[tk.scene || ('talk_' + tk.who)] || { steps: [['caption', '…']] }); if (self.talkCount >= (def.needTalks || 0) && (!def.needTalk || self.talked[def.needTalk]) && !def.exitInteract) w.exitOpen = true; } });
     });
     if (def.kind === 'stealth' && this.st && this.st.phase === 'hide') def.stalls.forEach(function (sx, i) {
       list.push({ x: sx, y: self.floor[0] + 24, label: 'Nasconditi qui', fn: function (p) { self.hideIn(p, i); } });
@@ -129,6 +129,7 @@ var W = window.W;
   AreaRun.prototype.canExit = function () {
     if (this.kind === 'arena' || this.def.waves) return this.waveIdx >= (this.def.waves || []).length;
     if (this.def.needTalks && this.talkCount < this.def.needTalks) return false;
+    if (this.def.needTalk && !this.talked[this.def.needTalk]) return false;
     if (this.def.midScene && !this.midDone) return false;
     return true;
   };
