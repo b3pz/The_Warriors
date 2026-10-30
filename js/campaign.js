@@ -63,10 +63,10 @@ var W = window.W;
     ['flag', 'cleon_lost'], ['flag', 'swan_leads']] };
 
   S.cine_cemetery_tag = { cine: 'cine_cemetery_tag', steps: seq(
-    [['players', 'hide']], line(['swan', 'ajax', 'snow', 'cowboy', 'cochise', 'vermin', 'fox'], 560, 64, Y, 1, 18),
-    [['npc', 'rembrandt', 'rembrandt', 900, 560, 1], ['caption', 'Prima di andarsene, Rembrandt tira fuori la bomboletta.'], ['move', 'rembrandt', 1040, 548, 0.9], ['wait', 0.9],
-     ['sfx', 'spray'], ['wait', 0.6], ['sfx', 'spray'], ['npc', 'tag', 'tagstone', 1120, 540, -1], ['wait', 0.5],
-     ['caption', 'Sulla lapide resta il segno dei Warriors. Erano qui.'], ['flag', 'cemetery_tag'], ['wait', 0.6], ['fade', 'out', 0.8], ['clearNpcs']]) };
+    [['players', 'hide']], line(['swan', 'ajax', 'snow', 'cowboy', 'cochise', 'vermin', 'fox'], 380, 64, Y, 1, 18),
+    [['npc', 'rembrandt', 'rembrandt', 900, 560, 1], ['caption', 'Prima di andarsene, Rembrandt tira fuori la bomboletta.'], ['move', 'rembrandt', 1020, 556, 0.9], ['wait', 0.9],
+     ['npc', 'tag', 'tagstone', 1160, 540, -1], ['sfx', 'spray'], ['wait', 0.6], ['sfx', 'spray'], ['wait', 0.5],
+     ['wait', 1.4], ['caption', 'Sopra le scritte delle altre bande, una grande W rossa che cola: i Warriors sono passati di qui.'], ['flag', 'cemetery_tag'], ['wait', 0.6], ['fade', 'out', 0.8], ['clearNpcs']]) };
 
   // C2
   S.dlg_c2_bus = { cine: 'dlg_c2_bus', letterbox: false, steps: [

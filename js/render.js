@@ -715,17 +715,28 @@ W.Render = (function () {
     ctx.save(); ctx.imageSmoothingEnabled = false; ctx.translate(Math.round(x), Math.round(y)); ctx.scale(face * k, k);
     ctx.drawImage(im, fr[0], fr[1], fr[2], fr[3], -fr[4], -fr[5], fr[2], fr[3]); ctx.restore();
   }
-  // lapide con il logo dei Warriors spruzzato da Rembrandt (emblema dell'autore)
+  // lapide del cimitero come nel film: piena di scritte di altre bande, Rembrandt ci spruzza sopra una grande W rossa che cola
   function drawTagStone(n, cx, t) {
-    var x = Math.round(n.x - cx), y = n.y;
-    if (!OBJ.emblem) OBJ.emblem = loadImg('menu/emblema.png');
-    ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.beginPath(); ctx.ellipse(x, y, 60, 9, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = '#6a6e78'; ctx.fillRect(x - 52, y - 150, 104, 150); ctx.beginPath(); ctx.arc(x, y - 150, 52, Math.PI, 0); ctx.fill();
-    ctx.fillStyle = '#4c5058'; ctx.fillRect(x + 36, y - 150, 16, 150); ctx.fillStyle = '#585c64'; ctx.fillRect(x - 60, y - 14, 120, 14);
-    var im = OBJ.emblem;
-    if (im.ok) { var k = Math.min(1, (n.st || 0) * 2 + 0.4), hh = 150 * k, ww = im.width * hh / im.height; ctx.save(); ctx.globalAlpha = 0.92; ctx.drawImage(im, x - ww / 2, y - 175 + (150 - hh) / 2, ww, hh); ctx.restore(); }
-    // nebbiolina di vernice appena spruzzata
-    ctx.fillStyle = 'rgba(220,60,60,0.12)'; ctx.beginPath(); ctx.arc(x - 10, y - 110, 70, 0, Math.PI * 2); ctx.fill();
+    var x = Math.round(n.x - cx), y = n.y, k = Math.min(1, (n.st || 0) / 1.1);
+    ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.beginPath(); ctx.ellipse(x, y, 74, 10, 0, 0, Math.PI * 2); ctx.fill();
+    // lastra larga e bassa, bordo superiore curvo
+    ctx.fillStyle = '#8a8e96'; ctx.beginPath(); ctx.moveTo(x - 70, y); ctx.lineTo(x - 70, y - 120); ctx.quadraticCurveTo(x, y - 150, x + 70, y - 120); ctx.lineTo(x + 70, y); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#6c7078'; ctx.beginPath(); ctx.moveTo(x + 54, y); ctx.lineTo(x + 54, y - 124); ctx.quadraticCurveTo(x + 64, y - 122, x + 70, y - 120); ctx.lineTo(x + 70, y); ctx.fill();
+    // scritte vecchie di altre bande: nero, verde, una freccia rossa
+    ctx.lineCap = 'round'; ctx.lineWidth = 3;
+    ctx.strokeStyle = 'rgba(30,30,34,0.8)'; ctx.beginPath(); ctx.moveTo(x - 58, y - 92); ctx.bezierCurveTo(x - 40, y - 110, x - 20, y - 70, x - 4, y - 96); ctx.stroke();
+    ctx.strokeStyle = 'rgba(70,110,80,0.8)'; ctx.font = '700 22px "Oswald", sans-serif'; ctx.fillStyle = 'rgba(70,110,80,0.75)'; ctx.textAlign = 'left'; ctx.fillText('EN', x - 10, y - 46);
+    ctx.font = '600 12px "Oswald", sans-serif'; ctx.fillStyle = 'rgba(40,40,46,0.7)'; ctx.fillText('THE BEST', x + 18, y - 58);
+    ctx.strokeStyle = 'rgba(200,40,40,0.8)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x + 40, y - 118); ctx.lineTo(x + 40, y - 74); ctx.moveTo(x + 28, y - 86); ctx.lineTo(x + 40, y - 72); ctx.lineTo(x + 52, y - 86); ctx.stroke();
+    // la W di Rembrandt, tracciata un pezzo alla volta mentre spruzza
+    var P = [[x - 56, y - 112], [x - 34, y - 24], [x - 14, y - 82], [x + 6, y - 24], [x + 26, y - 112]], L = 0, seg = [];
+    for (var i = 1; i < P.length; i++) { var d = Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); seg.push(d); L += d; }
+    var left = L * k; ctx.strokeStyle = '#d8231c'; ctx.lineWidth = 9; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]);
+    for (var j = 1; j < P.length && left > 0; j++) { var f = Math.min(1, left / seg[j - 1]); ctx.lineTo(P[j - 1][0] + (P[j][0] - P[j - 1][0]) * f, P[j - 1][1] + (P[j][1] - P[j - 1][1]) * f); left -= seg[j - 1]; }
+    ctx.stroke();
+    // colature e alone di vernice
+    if (k >= 1) { ctx.lineWidth = 2; ctx.strokeStyle = 'rgba(216,35,28,0.85)'; [[-34, 10], [6, 14], [-56, 8], [26, 6]].forEach(function (c, i) { var dl = Math.min(c[1], ((n.st || 0) - 1.1) * 14); ctx.beginPath(); ctx.moveTo(x + c[0], y - (i < 2 ? 24 : 112)); ctx.lineTo(x + c[0], y - (i < 2 ? 24 : 112) + dl); ctx.stroke(); }); }
+    ctx.fillStyle = 'rgba(216,35,28,0.06)'; ctx.beginPath(); ctx.arc(x - 16, y - 70, 70, 0, Math.PI * 2); ctx.fill();
   }
   // carro funebre dei Rogues: Cadillac nera anni '50 coperta di graffiti (immagine nuova se c'è, altrimenti disegnato)
   var OBJ = {};
