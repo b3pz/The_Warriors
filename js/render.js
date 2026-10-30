@@ -715,6 +715,18 @@ W.Render = (function () {
     ctx.save(); ctx.imageSmoothingEnabled = false; ctx.translate(Math.round(x), Math.round(y)); ctx.scale(face * k, k);
     ctx.drawImage(im, fr[0], fr[1], fr[2], fr[3], -fr[4], -fr[5], fr[2], fr[3]); ctx.restore();
   }
+  // lapide con il logo dei Warriors spruzzato da Rembrandt (emblema dell'autore)
+  function drawTagStone(n, cx, t) {
+    var x = Math.round(n.x - cx), y = n.y;
+    if (!OBJ.emblem) OBJ.emblem = loadImg('menu/emblema.png');
+    ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.beginPath(); ctx.ellipse(x, y, 60, 9, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#6a6e78'; ctx.fillRect(x - 52, y - 150, 104, 150); ctx.beginPath(); ctx.arc(x, y - 150, 52, Math.PI, 0); ctx.fill();
+    ctx.fillStyle = '#4c5058'; ctx.fillRect(x + 36, y - 150, 16, 150); ctx.fillStyle = '#585c64'; ctx.fillRect(x - 60, y - 14, 120, 14);
+    var im = OBJ.emblem;
+    if (im.ok) { var k = Math.min(1, (n.st || 0) * 2 + 0.4), hh = 150 * k, ww = im.width * hh / im.height; ctx.save(); ctx.globalAlpha = 0.92; ctx.drawImage(im, x - ww / 2, y - 175 + (150 - hh) / 2, ww, hh); ctx.restore(); }
+    // nebbiolina di vernice appena spruzzata
+    ctx.fillStyle = 'rgba(220,60,60,0.12)'; ctx.beginPath(); ctx.arc(x - 10, y - 110, 70, 0, Math.PI * 2); ctx.fill();
+  }
   // carro funebre dei Rogues: Cadillac nera anni '50 coperta di graffiti (immagine nuova se c'è, altrimenti disegnato)
   var OBJ = {};
   function drawHearse(n, cx) {
@@ -895,7 +907,7 @@ W.Render = (function () {
     w.items.forEach(function (it) { list.push({ y: it.y - 1, d: function () { drawItem(it, cx, w.time); } }); });
     w.enemies.forEach(function (e) { e.isEnemy = true; list.push({ y: e.y, d: function () { drawFigure(e, cx, w); } }); });
     w.players.forEach(function (p) { if (p.hidden) return; list.push({ y: p.y + 0.5, d: function () { drawFigure(p, cx, w); if (!(w.area && w.area.scene)) drawSlotMarker(p, cx, w); } }); });
-    w.npcs.forEach(function (n) { if (n.hidden) return; list.push({ y: n.y, d: function () { if (n.vehicle) { drawHearse(n, cx); return; } drawPixel(n, cx, w); if (n.skates) drawSkates(n, cx); } }); });
+    w.npcs.forEach(function (n) { if (n.hidden) return; list.push({ y: n.y, d: function () { if (n.set === 'tagstone') { drawTagStone(n, cx, w.time); return; } if (n.vehicle) { drawHearse(n, cx); return; } drawPixel(n, cx, w); if (n.skates) drawSkates(n, cx); } }); });
     if (w.area && w.area.def.kind === 'stealth') drawStalls(w, cx, list);
     w.eproj.forEach(function (pr) { list.push({ y: pr.y, d: function () {
       if (pr.kind === 'bullet') { ctx.strokeStyle = '#fff3c4'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(pr.x - cx, pr.y - 60); ctx.lineTo(pr.x - cx - Math.sign(pr.vx) * 40, pr.y - 60); ctx.stroke(); }

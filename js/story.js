@@ -14,7 +14,8 @@ var W = window.W;
     this.state = 'idle'; this.st = 0; this.anim = Math.random() * 3; this.uid = 'npc_' + id;
     this.move = null; this.follow = null; this.followOff = 0; this.hidden = false; this.npc = true; this.pose = null;
     var ch = W.rosterById(id); this.name = ch ? ch.name : (W.NPC_NAMES[id] || id);
-    if (this.set === 'hearse') { this.vehicle = true; this.name = ''; }   // il carro funebre dei Rogues
+    if (this.set === 'hearse') { this.vehicle = true; this.name = ''; }
+    if (this.set === 'tagstone') { this.vehicle = true; this.name = ''; }   // la lapide con il logo di Rembrandt   // il carro funebre dei Rogues
   }
   W.Npc = Npc;
   Npc.prototype.update = function (dt) {

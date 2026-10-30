@@ -62,6 +62,12 @@ var W = window.W;
     ['say', 'swan', 'Cleon mi ha lasciato il comando. Torniamo a Coney Island, tutti.'],
     ['flag', 'cleon_lost'], ['flag', 'swan_leads']] };
 
+  S.cine_cemetery_tag = { cine: 'cine_cemetery_tag', steps: seq(
+    [['players', 'hide']], line(['swan', 'ajax', 'snow', 'cowboy', 'cochise', 'vermin', 'fox'], 560, 64, Y, 1, 18),
+    [['npc', 'rembrandt', 'rembrandt', 900, 560, 1], ['caption', 'Prima di andarsene, Rembrandt tira fuori la bomboletta.'], ['move', 'rembrandt', 1040, 548, 0.9], ['wait', 0.9],
+     ['sfx', 'spray'], ['wait', 0.6], ['sfx', 'spray'], ['npc', 'tag', 'tagstone', 1120, 540, -1], ['wait', 0.5],
+     ['caption', 'Sulla lapide resta il segno dei Warriors. Erano qui.'], ['flag', 'cemetery_tag'], ['wait', 0.6], ['fade', 'out', 0.8], ['clearNpcs']]) };
+
   // C2
   S.dlg_c2_bus = { cine: 'dlg_c2_bus', letterbox: false, steps: [
     ['say', 'fox', 'Turnbull AC\'s. Sul bus. Ci hanno visti.'], ['say', 'snow', 'La scala è dall\'altra parte. Muoviamoci.']] };
@@ -251,7 +257,7 @@ var W = window.W;
       waves: [{ trigger: 900, objective: 'Supera gli Orphans nella strettoia', solo: [['orphan_brawler', 'R', 560], ['orphan_brawler', 'R', 620]], duo: [['orphan_brawler', 'R', 560], ['orphan_brawler', 'R', 620], ['orphan_brawler', 'L', 600]] }],
       pursuers: { solo: { police_pursuer: 2 }, duo: { police_pursuer: 3 } }, barriers: [1500, 1900] },
     { id: 'C1-04', ch: 'C1', kind: 'traversal', name: 'Il cimitero di Woodlawn', bg: 'park', amb: 'park', width: 1280, depth: 180, party: AFTER_C1, present: AFTER_C1, peace: true, mood: 'silence',
-      enter: 'cine_swan_leads', objective: 'Scavalca il cancello: la metro è di là', exitInteract: { x: 1150, y: 560, label: 'Scavalca il cancello' } },
+      enter: 'cine_swan_leads', objective: 'Scavalca il cancello: la metro è di là', exitInteract: { x: 1150, y: 560, label: 'Scavalca il cancello' }, exitScene: 'cine_cemetery_tag' },
 
     { id: 'C2-01', ch: 'C2', kind: 'traversal', name: 'Isolato del Bronx', bg: 'street', width: 2560, depth: 220, party: AFTER_C1, present: AFTER_C1, chapterCard: true,
       enter: 'dlg_c2_bus', objective: 'Trova l\'accesso alla metro', busBg: true },
