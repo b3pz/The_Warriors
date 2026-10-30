@@ -78,7 +78,9 @@ W.Audio = (function () {
     chase:   { drone: 0.12, pulse: 0.16, kick: 0.12, cut: 900, bpm: 128 },
     fight:   { drone: 0.12, pulse: 0.14, kick: 0.18, cut: 760, bpm: 112 },
     dawn:    { drone: 0.12, pulse: 0, kick: 0, cut: 1400, bright: true },
-    radio:   { drone: 0.05, pulse: 0, kick: 0, cut: 400 }
+    radio:   { drone: 0.05, pulse: 0, kick: 0, cut: 400 },
+    // apertura sulla Wonder Wheel: tema originale del gioco, arpeggio di synth lento e lucido (non è il brano del film)
+    wonder:  { drone: 0.08, pulse: 0, kick: 0, cut: 1100, bpm: 64, arp: true, bright: true }
   };
   function startMusic() {
     if (layers.drone) return;
@@ -100,6 +102,11 @@ W.Audio = (function () {
         var o = ac.createOscillator(), g = ac.createGain(), lf = ac.createBiquadFilter();
         o.type = 'sawtooth'; o.frequency.value = n * 2; lf.type = 'lowpass'; lf.frequency.setValueAtTime(M.cut, now); lf.frequency.exponentialRampToValueAtTime(120, now + 0.18);
         env(g, now, 0.005, 0.9, 0.2); o.connect(lf); lf.connect(g); g.connect(layers.pulse); o.start(now); o.stop(now + 0.25);
+      }
+      if (M.arp && step % 4 === 0) {
+        // la ruota gira: arpeggio di La minore, Fa, Do, Sol, con eco
+        var ARP = [220, 261.63, 329.63, 440, 174.61, 220, 261.63, 349.23, 261.63, 329.63, 392, 523.25, 196, 246.94, 293.66, 392], fq = ARP[(step / 4) % 16];
+        [0, 0.36].forEach(function (dl, ei) { var ao = ac.createOscillator(), ag = ac.createGain(); ao.type = 'triangle'; ao.frequency.value = fq * (ei ? 2 : 1); env(ag, now + dl, 0.01, ei ? 0.05 : 0.11, 0.9); ao.connect(ag); ag.connect(mus); ao.start(now + dl); ao.stop(now + dl + 1); });
       }
       if (M.kick && step % 4 === 0) { var k = ac.createOscillator(), kg = ac.createGain(); k.frequency.setValueAtTime(110, now); k.frequency.exponentialRampToValueAtTime(40, now + 0.15); env(kg, now, 0.002, 1, 0.25); k.connect(kg); kg.connect(layers.kick); k.start(now); k.stop(now + 0.3); }
       if (M.kick && step % 8 === 4) { var hn = noise(), hf = ac.createBiquadFilter(), hg = ac.createGain(); hf.type = 'highpass'; hf.frequency.value = 6000; env(hg, now, 0.002, 0.25, 0.06); hn.connect(hf); hf.connect(hg); hg.connect(layers.kick); hn.start(now); hn.stop(now + 0.1); }

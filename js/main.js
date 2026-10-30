@@ -781,7 +781,8 @@ var W = window.W;
   function mixFor(w) {
     var a = w.area; if (!a) return;
     var def = a.def, m;
-    if (a.scene) m = a.scene.def.mood || def.mood || (def.kind === 'epilogue' ? 'dawn' : 'tension');
+    if (a.scene && a.scene.wheel) m = 'wonder';
+    else if (a.scene) m = a.scene.def.mood || def.mood || (def.kind === 'epilogue' ? 'dawn' : 'tension');
     else if (a.fighting) m = 'fight';
     else if (a.timer !== null || a.pursuerType) m = def.mood === 'silence' ? 'silence' : 'chase';
     else m = def.mood || (def.kind === 'training' ? 'silence' : 'tension');
