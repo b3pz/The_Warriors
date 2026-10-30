@@ -33,6 +33,16 @@ Divieti:
 - **Fondali e scene**: orizzontali **1536×1024**, nessun personaggio nei fondali. Nei fondali il pavimento calpestabile (marciapiede, banchina, sentiero) occupa la fascia bassa, dal 65% dell'altezza fino al fondo, piatto e libero. I pezzi `_b`, `_c` di un fondale continuano verso destra il pezzo precedente: stessa luce, stessa linea del pavimento.
 - Formato PNG. Nome del file esattamente come nell'elenco.
 
+## Materiale di riferimento fornito dall'autore
+
+Aprilo prima di disegnare: è il modo per restare fedeli al film.
+
+- `assets/incoming/riferimenti/gruppo_warriors_coney.png`: **la foto di riferimento principale.** I Warriors e Mercy a Coney Island: gilet di pelle marrone-rossiccio con bordo scuro, petto nudo, pantaloni rossicci o neri, cinture con fibbia, scarpe da ginnastica o stivali. Da sinistra: Cowboy (cappello scuro, mazza), Rembrandt (afro, borsa a tracolla), Cochise (collane di perline, fascia, stivali con frange), Vermin (ricci, dietro), Swan (al centro), Snow (afro), Mercy (giacca di jeans scura e gonna a fiori: il suo aspetto dell'alba; di notte ha la giacca di lana e la minigonna viola).
+- `assets/incoming/riferimenti/<set>_1.png`: volto di ciascun Warrior nel film (swan, ajax, snow, fox, cleon, cochise, vermin). Usali per capelli, colore della pelle, età ed espressione.
+- `assets/incoming/riferimenti/<set>.png` (sfondo magenta): le figure già approvate nel gioco, da usare per proporzioni e stile pixel.
+- `assets/incoming/riferimenti/luoghi/`: i luoghi del film. `raduno_*` (il raduno nel nord del Bronx: anfiteatro con arcate di pietra, folla sugli spalti, Cyrus sul palco con la veste), `union_square_scale` (scala piastrellata bianca della stazione), `strada_notte` e `strada_orphans` (strade bagnate di notte, palazzi di mattoni, scale antincendio), `spiaggia_riffs` (la spiaggia all'alba), `coney_lungomare` e `coney_wonder_wheel` (Coney Island: ruota panoramica, chioschi, lungomare).
+- `assets/incoming/riferimenti/mappe/`: dove sta ogni banda (Furies a Riverside, Lizzies a Union Square, Punks al Bowery, Orphans a Tremont, Turnbull a Gun Hill, Riffs a Gramercy, Rogues a Hell's Kitchen) e i loro loghi: utili per colori e stile delle bande.
+
 ## Personaggi
 
 Tutti i Warriors portano un gilet di pelle marrone senza maniche, senza scritte.
@@ -57,7 +67,7 @@ Tutti i Warriors portano un gilet di pelle marrone senza maniche, senza scritte.
 | `swan` | uomo bianco sui vent'anni, statura media, asciutto e atletico; capelli castano chiaro lisci di media lunghezza pettinati all'indietro; gilet di pelle marrone aperto sul petto nudo, jeans, stivali |
 | `ajax` | uomo bianco, alto e massiccio; capelli castano scuro corti; guanti di pelle senza dita; espressione provocatoria; gilet di pelle marrone sul petto nudo, jeans |
 | `snow` | uomo afroamericano, alto, braccia lunghe; capigliatura afro altissima e squadrata; espressione calma; gilet di pelle marrone, pantaloni scuri |
-| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo; cappello da cowboy chiaro sempre in testa; gilet di pelle marrone, jeans |
+| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo; cappello da cowboy sempre in testa (colore come nella foto di gruppo); gilet di pelle marrone, jeans |
 | `cochise` | uomo afroamericano, medio-alto e agile; treccine e afro, fascia sulla fronte, collana di perline; gilet di pelle marrone sul petto nudo, pantaloni a zampa |
 | `vermin` | uomo bianco tarchiato e robusto; capelli castani corti e spettinati; faccia stanca e scocciata; gilet di pelle marrone, maglietta, jeans |
 | `rembrandt` | ragazzo ispanico, il più giovane e minuto del gruppo; ricci neri folti; borsa a tracolla con bombolette spray; gilet di pelle marrone, jeans |
@@ -86,7 +96,7 @@ Tutti i Warriors portano un gilet di pelle marrone senza maniche, senza scritte.
 
 Nessuna posa si genera prima che l'autore abbia approvato il modello del personaggio.
 
-1. Per ogni set dell'elenco di lavoro, crea **un foglio modello**: lo stesso personaggio tre volte affiancato (di fronte, di profilo verso destra, di spalle), figura intera, sfondo magenta #FF00FF, 1536×1024, pixel art 16-bit. Salvalo in `assets/incoming/modelli/<set>.png`.
+1. Per ogni set dell'elenco di lavoro, crea **un foglio modello**: lo stesso personaggio tre volte affiancato (di fronte, di profilo verso destra, di spalle), figura intera, fedele alle foto di riferimento, sfondo magenta #FF00FF, 1536×1024, pixel art 16-bit. Salvalo in `assets/incoming/modelli/<set>.png`.
 2. Se esiste `assets/incoming/riferimenti/<set>.png`, aprilo e **usalo come base**: sono le figure già approvate dall'autore nel gioco. Il modello deve essere lo stesso personaggio (stessi capelli, vestiti, colori, proporzioni), solo più pulito e completo. Se l'autore ha caricato altro materiale di riferimento in `assets/incoming/riferimenti/` (es. `<set>_1.jpg`), usalo insieme alla descrizione.
 3. Dopo i modelli fermati e scrivi all'utente: «Modelli pronti per: …». L'autore li guarda e scrive i set approvati in `assets/incoming/modelli/APPROVATI.md`.
 4. Genera le pose di un set **solo se compare in `APPROVATI.md`**, e allega sempre il suo modello come riferimento a ogni immagine di quel set. Se un modello viene rifiutato o modificato dall'autore, rifallo prima di andare avanti.
@@ -157,36 +167,36 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 
 ### 3. Fondali delle aree
 
-52. `assets/incoming/fondali/P0-01_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera
-53. `assets/incoming/fondali/P0-02_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera
-54. `assets/incoming/fondali/P0-03_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera
-55. `assets/incoming/fondali/P0-04_a.png` → banchina della metropolitana sopraelevata di Coney Island, sera; luce: sera
-56. `assets/incoming/fondali/C1-01_a.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-57. `assets/incoming/fondali/C1-01_b.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-58. `assets/incoming/fondali/C1-02_a.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte
+52. `assets/incoming/fondali/P0-01_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+53. `assets/incoming/fondali/P0-02_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+54. `assets/incoming/fondali/P0-03_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+55. `assets/incoming/fondali/P0-04_a.png` → banchina della metropolitana sopraelevata di Coney Island, sera; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+56. `assets/incoming/fondali/C1-01_a.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` raduno_arcate, raduno_folla, raduno_cyrus
+57. `assets/incoming/fondali/C1-01_b.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` raduno_arcate, raduno_folla, raduno_cyrus
+58. `assets/incoming/fondali/C1-02_a.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; riferimento: `riferimenti/luoghi/` raduno_arcate, raduno_folla, raduno_cyrus
 59. `assets/incoming/fondali/C1-03_a.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
 60. `assets/incoming/fondali/C1-03_b.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
 61. `assets/incoming/fondali/C1-03_c.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
 62. `assets/incoming/fondali/C1-04_a.png` → sottopasso di cemento con scala che sale, luci al neon rotte; luce: notte
-63. `assets/incoming/fondali/C2-01_a.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
-64. `assets/incoming/fondali/C2-01_b.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
-65. `assets/incoming/fondali/C2-01_c.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
-66. `assets/incoming/fondali/C2-03_a.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
-67. `assets/incoming/fondali/C2-03_b.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
-68. `assets/incoming/fondali/C2-03_c.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
-69. `assets/incoming/fondali/C2-02_a.png` → vicolo stretto tra palazzi di mattoni, cancello di rete in fondo, bidoni; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-70. `assets/incoming/fondali/C2-02_b.png` → vicolo stretto tra palazzi di mattoni, cancello di rete in fondo, bidoni; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-71. `assets/incoming/fondali/C2-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-72. `assets/incoming/fondali/C2-04_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-73. `assets/incoming/fondali/C3-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-74. `assets/incoming/fondali/C3-04_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-75. `assets/incoming/fondali/C6-01_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-76. `assets/incoming/fondali/C6-01_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-77. `assets/incoming/fondali/C6-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte
-78. `assets/incoming/fondali/C3-01_a.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte
-79. `assets/incoming/fondali/C3-03_a.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
-80. `assets/incoming/fondali/C3-03_b.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
-81. `assets/incoming/fondali/C3-03_c.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
+63. `assets/incoming/fondali/C2-01_a.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
+64. `assets/incoming/fondali/C2-01_b.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
+65. `assets/incoming/fondali/C2-01_c.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_notte
+66. `assets/incoming/fondali/C2-03_a.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
+67. `assets/incoming/fondali/C2-03_b.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
+68. `assets/incoming/fondali/C2-03_c.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_notte
+69. `assets/incoming/fondali/C2-02_a.png` → vicolo stretto tra palazzi di mattoni, cancello di rete in fondo, bidoni; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
+70. `assets/incoming/fondali/C2-02_b.png` → vicolo stretto tra palazzi di mattoni, cancello di rete in fondo, bidoni; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
+71. `assets/incoming/fondali/C2-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
+72. `assets/incoming/fondali/C2-04_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
+73. `assets/incoming/fondali/C3-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
+74. `assets/incoming/fondali/C3-04_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
+75. `assets/incoming/fondali/C6-01_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` union_square_scale
+76. `assets/incoming/fondali/C6-01_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` union_square_scale
+77. `assets/incoming/fondali/C6-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; riferimento: `riferimenti/luoghi/` union_square_scale
+78. `assets/incoming/fondali/C3-01_a.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; riferimento: `riferimenti/luoghi/` strada_orphans
+79. `assets/incoming/fondali/C3-03_a.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_orphans
+80. `assets/incoming/fondali/C3-03_b.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_orphans
+81. `assets/incoming/fondali/C3-03_c.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_orphans
 82. `assets/incoming/fondali/C3-02_a.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
 83. `assets/incoming/fondali/C3-02_b.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
 84. `assets/incoming/fondali/C3-02_c.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
@@ -212,13 +222,13 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 104. `assets/incoming/fondali/C6-03_b.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
 105. `assets/incoming/fondali/C7-01_a.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 1 di 2, il lato sinistro del luogo
 106. `assets/incoming/fondali/C7-01_b.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a
-107. `assets/incoming/fondali/C7-02_a.png` → stazione sopraelevata di Coney Island all'alba; luce: alba
-108. `assets/incoming/fondali/C8-01_a.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 1 di 2, il lato sinistro del luogo
-109. `assets/incoming/fondali/C8-01_b.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a
-110. `assets/incoming/fondali/C8-02_a.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 1 di 2, il lato sinistro del luogo
-111. `assets/incoming/fondali/C8-02_b.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a
-112. `assets/incoming/fondali/C8-03_a.png` → spiaggia di Coney Island all'alba, sabbia, mare calmo, il molo sullo sfondo; luce: alba
-113. `assets/incoming/fondali/C8-04_a.png` → spiaggia di Coney Island all'alba, sabbia, mare calmo, il molo sullo sfondo; luce: alba
+107. `assets/incoming/fondali/C7-02_a.png` → stazione sopraelevata di Coney Island all'alba; luce: alba; riferimento: `riferimenti/luoghi/` coney_wonder_wheel
+108. `assets/incoming/fondali/C8-01_a.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+109. `assets/incoming/fondali/C8-01_b.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+110. `assets/incoming/fondali/C8-02_a.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+111. `assets/incoming/fondali/C8-02_b.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+112. `assets/incoming/fondali/C8-03_a.png` → spiaggia di Coney Island all'alba, sabbia, mare calmo, il molo sullo sfondo; luce: alba; riferimento: `riferimenti/luoghi/` spiaggia_riffs
+113. `assets/incoming/fondali/C8-04_a.png` → spiaggia di Coney Island all'alba, sabbia, mare calmo, il molo sullo sfondo; luce: alba; riferimento: `riferimenti/luoghi/` spiaggia_riffs
 
 ### 4. Gli altri Warriors: pose che mancano e pose speciali
 

@@ -42,7 +42,7 @@ var W = window.W;
     [['players', 'hide'], ['crowd', 'cr', ['orphan', 'punk', 'turnbull', 'rogue', 'lizzie', 'police', 'masai', 'fury_hood', 'turnbull_b', 'lizzie_b'], 120, 1160, 600, 690, 22, 1]],
     line(ALL9, 140, 46, 640, 1),
     [['npc', 'cyrus', 'cyrus', 760, 470, -1], ['npc', 'luther', 'luther', 1010, 540, -1], ['npc', 'masai', 'masai', 860, 492, -1],
-     ['caption', 'Pelham Bay Park, nel Bronx. Ventimila ragazzi delle bande, disarmati, ascoltano Cyrus. Per una notte, nessuno combatte.'],
+     ['caption', 'Un parco nel nord del Bronx. Ventimila ragazzi delle bande, disarmati, ascoltano Cyrus. Per una notte, nessuno combatte.'],
      ['say', 'cyrus', 'Ci dividono poche strade. Se smettiamo di consumarci gli uni contro gli altri, questa città dovrà ascoltarci.'],
      ['say', 'cyrus', 'Siamo più di loro. Ci state?'], ['shake', 4], ['caption', 'La folla risponde con un boato.'],
      ['wait', 0.6]]) };
