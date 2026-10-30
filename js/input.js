@@ -39,6 +39,7 @@ W.Input = (function () {
   Device.prototype.isDown = function (a) {
     var ks = this.keys(a);
     for (var i = 0; i < ks.length; i++) if (down[ks[i]]) return true;
+    if ((this.layout === 'solo' || this.layout === 'p1') && W.Touch && W.Touch.held[a]) return true;
     return !!this.held[a];
   };
   Device.prototype.poll = function () {
@@ -75,6 +76,10 @@ W.Input = (function () {
         }
       }
     }
+    // tasti touch: ogni pressione entra nel buffer come un tasto della tastiera
+    if ((this.layout === 'solo' || this.layout === 'p1') && W.Touch) {
+      for (var ti = 0; ti < ACTIONS.length; ti++) { var ta = ACTIONS[ti], tp = W.Touch.pressed[ta]; if (tp !== undefined && tp > (this.buf['_seen_t_' + ta] || -1)) { this.buf[ta] = tp; this.buf['_seen_t_' + ta] = tp; } }
+    }
     // doppio tocco orizzontale = corsa
     var dx = this.axisX();
     if (dx !== 0 && this.prevDirX === 0) {
@@ -82,6 +87,7 @@ W.Input = (function () {
       this.lastDirTap = { dir: dx, t: now };
     }
     if (this.prevDirX !== 0 && dx !== this.prevDirX) this.runIntent = false;
+    if ((this.layout === 'solo' || this.layout === 'p1') && W.Touch && W.Touch.run()) this.runIntent = true;
     this.prevDirX = dx;
   };
   Device.prototype.axisX = function () { return (this.isDown('right') ? 1 : 0) - (this.isDown('left') ? 1 : 0); };
@@ -114,5 +120,79 @@ W.Input = (function () {
     // per i test automatici
     _press: function (code) { if (!down[code]) pressedAt[code] = now; down[code] = true; for (var i = 0; i < listeners.length; i++) listeners[i](code); },
     _release: function (code) { down[code] = false; }
+  };
+})();
+
+// ------------------------------------------------------------------ comandi touch (telefono e tablet)
+// Joystick a sinistra, tasti a destra, pausa in alto. Le coordinate sono quelle logiche 1280×720 del gioco.
+W.Touch = (function () {
+  var active = false, held = {}, pressed = {}, stick = null, canvas = null, run = false, lastNav = 0, navDir = 0;
+  var BTN = [
+    { a: 'light', x: 1150, y: 600, r: 62, label: 'COLPO' },
+    { a: 'heavy', x: 1028, y: 652, r: 48, label: 'FORTE' },
+    { a: 'jump', x: 1180, y: 470, r: 48, label: 'SALTO' },
+    { a: 'dodge', x: 1050, y: 528, r: 42, label: 'SCHIVA' },
+    { a: 'interact', x: 912, y: 616, r: 46, label: 'AZIONE' },
+    { a: 'fury', x: 932, y: 500, r: 38, label: 'FURIA' },
+    { a: 'throw', x: 1220, y: 360, r: 32, label: 'LANCIA' },
+    { a: 'pause', x: 1232, y: 44, r: 30, label: '❚❚' }
+  ];
+  var STICK = { x: 170, y: 560, r: 96 };
+  var pointers = {};
+  function toLogical(e) { var r = canvas.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width * 1280, y: (e.clientY - r.top) / r.height * 720 }; }
+  function hit(p) { for (var i = 0; i < BTN.length; i++) { var b = BTN[i]; if (Math.hypot(p.x - b.x, p.y - b.y) < b.r * 1.25) return b; } return null; }
+  function setStick(p) {
+    var dx = p.x - STICK.x, dy = p.y - STICK.y, m = Math.hypot(dx, dy), k = m > STICK.r ? STICK.r / m : 1;
+    stick = { dx: dx * k, dy: dy * k };
+    var nx = stick.dx / STICK.r, ny = stick.dy / STICK.r;
+    held.left = nx < -0.35; held.right = nx > 0.35; held.up = ny < -0.35; held.down = ny > 0.35;
+    run = Math.abs(nx) > 0.92;
+  }
+  function clearStick() { stick = null; held.left = held.right = held.up = held.down = false; run = false; }
+  function down(e) {
+    if (e.pointerType === 'mouse') return;
+    active = true; e.preventDefault();
+    try { if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function () {}); } catch (x) {}
+    var p = toLogical(e), b = hit(p);
+    if (b) { pointers[e.pointerId] = { btn: b }; held[b.a] = true; pressed[b.a] = W.Input.time(); W.Touch.onButton && W.Touch.onButton(b.a); }
+    else if (p.x < 640) { pointers[e.pointerId] = { stick: true }; setStick(p); }
+  }
+  function move(e) { var pt = pointers[e.pointerId]; if (pt && pt.stick) { e.preventDefault(); setStick(toLogical(e)); } }
+  function up(e) { var pt = pointers[e.pointerId]; if (!pt) return; if (pt.btn) held[pt.btn.a] = false; if (pt.stick) clearStick(); delete pointers[e.pointerId]; }
+  return {
+    attach: function (cv) {
+      canvas = cv; cv.style.touchAction = 'none';
+      cv.addEventListener('pointerdown', down, { passive: false }); window.addEventListener('pointermove', move, { passive: false });
+      window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+      if ('ontouchstart' in window || (window.matchMedia && matchMedia('(pointer: coarse)').matches)) active = true;
+    },
+    active: function () { return active; },
+    held: held, pressed: pressed, run: function () { return run; },
+    // navigazione dei menu con il joystick: una mossa ogni 0,28 s
+    navTick: function (now, onKey) {
+      if (!active || !stick) { navDir = 0; return; }
+      var dir = held.up ? -1 : held.down ? 1 : 0, h = held.left ? -1 : held.right ? 1 : 0;
+      if ((dir || h) && (now - lastNav > 0.28 || (dir * 10 + h) !== navDir)) { lastNav = now; navDir = dir * 10 + h; onKey(dir < 0 ? 'ArrowUp' : dir > 0 ? 'ArrowDown' : h < 0 ? 'ArrowLeft' : 'ArrowRight'); }
+      if (!dir && !h) navDir = 0;
+    },
+    draw: function (ctx, playing, portrait) {
+      if (!active) return;
+      ctx.save();
+      if (portrait) {
+        ctx.fillStyle = 'rgba(0,0,0,0.88)'; ctx.fillRect(0, 0, 1280, 720); ctx.fillStyle = '#fff'; ctx.font = '700 48px "Oswald", sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText('Ruota il telefono in orizzontale', 640, 360); ctx.restore(); return;
+      }
+      ctx.globalAlpha = 0.5;
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(STICK.x, STICK.y, STICK.r, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,0.35)'; ctx.beginPath(); ctx.arc(STICK.x + (stick ? stick.dx : 0), STICK.y + (stick ? stick.dy : 0), 40, 0, Math.PI * 2); ctx.fill();
+      BTN.forEach(function (b) {
+        if (!playing && ['heavy', 'jump', 'dodge', 'fury', 'throw'].indexOf(b.a) >= 0) return;
+        ctx.fillStyle = held[b.a] ? 'rgba(214,40,40,0.75)' : 'rgba(20,20,26,0.55)'; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.7)'; ctx.stroke();
+        ctx.fillStyle = '#fff'; ctx.font = '600 ' + Math.max(12, Math.round(b.r * 0.34)) + 'px "Oswald", sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(!playing && b.a === 'light' ? 'OK' : !playing && b.a === 'interact' ? 'INDIETRO' : b.label, b.x, b.y + 5);
+      });
+      ctx.restore();
+    }
   };
 })();

@@ -102,6 +102,10 @@ var W = window.W;
     [['npc', 'f1', 'fury', 980, 520, -1], ['npc', 'f2', 'fury', 1060, 590, -1], ['npc', 'f3', 'fury_hood', 1120, 650, -1], ['npc', 'f4', 'fury', 900, 640, -1],
      ['wait', 1.4], ['say', 'cowboy', 'Ci aspettavano.'], ['say', 'swan', 'Nel parco. Restate insieme.'], ['clearNpcs'], ['flag', 'furies_seen']]) };
   S.dlg_c4_stand = { cine: 'dlg_c4_stand', letterbox: false, steps: [['say', 'ajax', 'Adesso basta correre.'], ['say', 'snow', 'Tieni d\'occhio le mazze.']] };
+  S.dlg_c4_ajax = { cine: 'dlg_c4_ajax', letterbox: false, mood: 'fight', steps: [
+    ['caption', 'Il capo dei Furies si fa avanti, la mazza sulla spalla. Ajax scoppia a ridere.'],
+    ['caption', 'Si toglie il gilet, lo butta da parte e va incontro alle mazze a mani nude.'],
+    ['say', 'ajax', 'Quella mazza te la faccio rimangiare.']] };
   S.cine_ajax_stays = { cine: 'cine_ajax_stays', steps: seq(
     [['players', 'hide']], line(C4G, 360, 90, Y, 1, 18),
     [['say', 'swan', 'Dobbiamo ripartire.'], ['npc', 'ajax', 'ajax', 360, Y, -1], ['say', 'ajax', 'Voi andate. Vi raggiungo.'], ['say', 'cowboy', 'Non è il momento di restare soli.'],
@@ -120,7 +124,8 @@ var W = window.W;
      ['say', 'lz1', 'Qui potete riposarvi. Fuori vi stanno cercando tutti.'], ['say', 'vermin', 'Finalmente una buona notizia.'],
      ['face', 'rembrandt', -1], ['say', 'rembrandt', 'Perché l\'hanno chiusa?'], ['clearNpcs']]) };
   S.cine_lizzies_trap = { cine: 'cine_lizzies_trap', letterbox: false, steps: [
-    ['say', 'lizzie', 'Sappiamo chi siete. Lo sa tutta la città, ormai.'], ['say', 'cochise', 'Ci cercano tutti. Tutti quanti.'], ['say', 'rembrandt', 'Alla finestra! Adesso!'], ['flag', 'lizzies_trap']] };
+    ['say', 'lizzie', 'Sappiamo chi siete. Lo sa tutta la città, ormai.'], ['caption', 'La porta è chiusa a chiave. Escono le pistole.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'], ['say', 'cochise', 'Ci cercano tutti. Tutti quanti.'],
+    ['caption', 'La radio suona ancora. Spaccala per fare confusione, poi sfonda il pannello verso la finestra.'], ['flag', 'lizzies_trap']] };
   S.cine_swan_mercy = { cine: 'cine_swan_mercy', letterbox: false, steps: [
     ['say', 'mercy', 'Quando arrivi a casa, finisce davvero?'], ['say', 'swan', 'Prima ci dobbiamo arrivare.'],
     ['say', 'mercy', 'Non hai risposto.'], ['wait', 1.2], ['say', 'swan', 'Lo so.'], ['flag', 'swan_mercy_bond']] };
@@ -173,8 +178,9 @@ var W = window.W;
     [['npc', 'mercy', 'mercy', 120, 650, 1], ['npc', 'swan', 'swan', 560, Y, 1], ['npc', 'luther', 'luther', 900, Y, -1], ['npc', 'rg1', 'rogue', 1000, 540, -1], ['npc', 'rg2', 'rogue', 1040, 640, -1],
      ['say', 'swan', 'Sappiamo chi ha sparato.'], ['say', 'luther', 'E pensi che cambierà qualcosa?'],
      ['say', 'swan', 'Niente pistole. Tu e io, con i coltelli.'],
-     ['caption', 'Luther accetta. Poi, all\'ultimo, tira fuori la pistola.'], ['wait', 0.6], ['sfx', 'shot'], ['flash'], ['shake', 8],
-     ['caption', 'Il colpo va a vuoto. Il coltello di Swan gli si pianta nel braccio.'], ['move', 'swan', 760, null, 0.25], ['pose', 'luther', 'down'], ['sfx', 'hit'],
+     ['caption', 'Luther accetta. Poi, all\'ultimo, tira fuori la pistola e la punta.'], ['wait', 0.5],
+     ['caption', 'Prima che possa sparare, Swan fa scattare il coltello e lo lancia.'], ['sfx', 'swing'], ['move', 'swan', 680, null, 0.2], ['sfx', 'hit'], ['flash'], ['shake', 8],
+     ['caption', 'La lama si pianta nel braccio di Luther. Il colpo parte verso la sabbia.'], ['sfx', 'shot'], ['pose', 'luther', 'down'],
      ['caption', 'La pistola cade nella sabbia. Luther è disarmato.'], ['flag', 'luther_disarmed']]) };
   S.cine_riffs_arrival = { cine: 'cine_riffs_arrival', steps: [
     ['crowd', 'rf', ['masai', 'cyrus', 'masai', 'cyrus'], 1150, 1260, 520, 660, 8, -1], ['npc', 'masai', 'masai', 1300, 580, -1], ['move', 'masai', 1000, null, 2],
@@ -263,14 +269,14 @@ var W = window.W;
       waves: [
         { trigger: 380, objective: 'Ondata A', solo: [['fury_batter', 'R', 520], ['fury_batter', 'L', 620], ['fury_flanker', 'R', 600]], duo: [['fury_batter', 'R', 520], ['fury_batter', 'L', 620], ['fury_flanker', 'R', 600], ['fury_batter', 'R', 660], ['fury_flanker', 'L', 500]],
           onClear: { solo: [['snack', 1, 560]], duo: [['snack', -1, 560], ['snack', 1, 600]] } },
-        { trigger: 1500, objective: 'Il veterano', boss: true, solo: [['fury_veteran', 'R', 560], ['fury_batter', 'L', 600]], duo: [['fury_veteran', 'R', 560], ['fury_batter', 'L', 600], ['fury_batter', 'R', 640]] }] },
+        { trigger: 1500, objective: 'Il capo dei Furies', boss: true, preScene: 'dlg_c4_ajax', preIf: 'ajax', preIfRoster: true, solo: [['fury_veteran', 'R', 560], ['fury_batter', 'L', 600]], duo: [['fury_veteran', 'R', 560], ['fury_batter', 'L', 600], ['fury_batter', 'R', 640]] }] },
     { id: 'C4-04', ch: 'C4', kind: 'scene', name: 'Il bivio', bg: 'park', width: 1280, depth: 200, party: C4G, scenes: ['cine_ajax_stays'] },
 
     { id: 'C5-01', ch: 'C5', kind: 'scene', name: 'La panchina', bg: 'park_b', width: 1280, depth: 200, party: ['snow', 'cowboy'], chapterCard: true, scenes: ['cine_ajax_arrest'] },
     { id: 'C5-02', ch: 'C5', kind: 'traversal', name: 'L\'appartamento', bg: 'interior', width: 1280, depth: 170, party: ['vermin', 'cochise', 'rembrandt'], present: ['vermin', 'cochise', 'rembrandt'], peace: true,
       enter: 'dlg_c5_welcome', objective: 'Entra nella stanza', exitInteract: { x: 1100, y: 560, label: 'Entra nella stanza' } },
     { id: 'C5-03', ch: 'C5', kind: 'escape', name: 'La trappola', bg: 'interior', width: 1920, depth: 170, party: ['vermin', 'cochise', 'rembrandt'], objective: 'Apri il pannello e raggiungi la finestra',
-      enter: 'cine_lizzies_trap', timer: 55, timerEasy: 70, panel: { x: 1700, y: 560, hits: 3 },
+      enter: 'cine_lizzies_trap', timer: 55, timerEasy: 70, panel: { x: 1700, y: 560, hits: 3 }, radioProp: { x: 420, y: 520 },
       props: [{ kind: 'crate', x0: 700, x1: 760, y0: 540, y1: 566, solid: true, cover: true }, { kind: 'crate', x0: 1180, x1: 1240, y0: 610, y1: 636, solid: true, cover: true }],
       stationed: { solo: [['lizzie_blocker', 1500, 600], ['lizzie_shooter', 1300, 530]], duo: [['lizzie_blocker', 1500, 600], ['lizzie_blocker', 1600, 540], ['lizzie_shooter', 1300, 530], ['lizzie_shooter', 1100, 650]] } },
     { id: 'C5-04', ch: 'C5', kind: 'traversal', name: 'Sotterraneo', bg: 'metro_b', width: 1920, depth: 170, party: ['swan'], mercy: 'player2', peace: true,

@@ -35,6 +35,17 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 - Sprite: filtro automatico contro pose di altri personaggi e figure doppie; associazioni corrette sulle descrizioni dell'autore; Ajax, Vermin e Cleon senza figura adatta.
 - Prossimo passo concordato: i fondali definitivi e le ~2.000 immagini in arrivo («quando tutti gli sfondi sono fatti per bene c'è più pathos»).
 
+## Aggiornamento 30 ottobre (notte, seconda parte)
+
+- Fondali disegnati a codice in scala (`js/scenery.js`), allineati al piano calpestabile, con luce per ora del giorno; i ritagli delle tavole restano selezionabili in Opzioni. Provvisori fino alle scene vere.
+- Ostacoli nei corridoi (transenne, tornelli, siepi da saltare, casse da sfondare, fuoco, treni con avviso) in 13 aree di attraversamento e fuga.
+- Comandi rimappabili (Opzioni → Comandi, `warriors-keys-v1`). Compagni liberi, non più in fila.
+- Game over: tentativi per capitolo (Facile 5, Normale 3, Difficile 2), poi si ricomincia dall'inizio del capitolo; il salvataggio torna all'inizio del capitolo.
+- Mobile: joystick e tasti touch, pausa, menu con il joystick, richiesta di ruotare il telefono (`tools/qa_mobile.js`).
+- Film: Rembrandt bloccato a terra dal Punk spruzza la vernice; Ajax senza gilet contro le mazze e la mazza strappata al capo dei Furies; radio delle Lizzies da spaccare (chi lo fa nel film è da confermare: l'autore ha indicato Snow, che però non è nel gruppo delle Lizzies).
+- Duello: Swan lancia il coltello prima che Luther spari. Rembrandt, se lo giochi e un Punk ti blocca, si libera con la bomboletta (tasto d'interazione).
+- Elenco completo di sprite e fondali mancanti con le misure: `docs/SPRITE_MANCANTI.md`.
+
 ## Grafica nel gioco
 
 - Personaggi da `personaggi_nemici_fondali_04.png` (26 set) e 12 fondali dai ritagli della Raccolta 04 e del pacchetto 02.

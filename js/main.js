@@ -54,10 +54,12 @@ var W = window.W;
   // ------------------------------------------------------------------ etichette tasti
   var KEYNAME = { Space: 'Spazio', ShiftLeft: 'Shift', ShiftRight: 'Shift', ControlRight: 'Ctrl dx', ArrowUp: '↑', ArrowDown: '↓', ArrowLeft: '←', ArrowRight: '→' };
   function keyLabel(code) { if (KEYNAME[code]) return KEYNAME[code]; if (code.indexOf('Key') === 0) return code.slice(3); if (code.indexOf('Numpad') === 0) return 'Num' + code.slice(6); return code; }
+  var TOUCH_NAMES = { light: 'COLPO', heavy: 'FORTE', jump: 'SALTO', dodge: 'SCHIVA', interact: 'AZIONE', fury: 'FURIA', throw: 'LANCIA' };
   var ui = {
-    keyFor: function (p, a) { var d = p.device; if (!d || !d.layout) return 'B'; return keyLabel(W.Input.LAYOUTS[d.layout][a][0]); },
+    keyFor: function (p, a) { var d = p.device; if (W.Touch && W.Touch.active()) return TOUCH_NAMES[a] ? TOUCH_NAMES[a].slice(0, 2) : '•'; if (!d || !d.layout) return 'B'; return keyLabel(W.Input.LAYOUTS[d.layout][a][0]); },
     tutorialText: function (t) {
       var p = game.world.players[0], lay = p.device && p.device.layout ? W.Input.LAYOUTS[p.device.layout] : W.Input.LAYOUTS.solo;
+      if (W.Touch && W.Touch.active()) return t.replace(/\{(\w+)\}/g, function (_, a) { return a === 'move' ? 'il joystick' : (TOUCH_NAMES[a] || a); });
       return t.replace(/\{(\w+)\}/g, function (_, a) {
         if (a === 'move') return lay.up[0] === 'KeyW' ? 'WASD' : 'frecce';
         return keyLabel(lay[a][0]);
@@ -90,7 +92,23 @@ var W = window.W;
     return def.party.filter(function (id) { return r.indexOf(id) >= 0; });
   }
   // decide gli slot; se un giocatore umano deve scegliere fra più Warriors, apre la selezione del gruppo
+  // tentativi per capitolo: finiti, game over e si ricomincia dall'inizio del capitolo
+  var TRIES = { facile: 5, normale: 3, difficile: 2 };
+  function chapterCheckpoint() {
+    var run = game.run, w = game.world, def = W.CAMPAIGN[run.areaIdx];
+    if (run.chapterId === def.ch) return;
+    run.chapterId = def.ch; run.triesLeft = TRIES[run.difficulty] || 3;
+    run.chapterSave = JSON.stringify({ areaIdx: run.areaIdx, roster: run.roster, records: run.records, chars: run.chars, cpuChar: run.cpuChar, score: w.score, flags: w.flags, stats: w.stats });
+  }
+  function restartChapter() {
+    var run = game.run, w = game.world, c = JSON.parse(run.chapterSave);
+    run.areaIdx = c.areaIdx; run.roster = c.roster; run.records = c.records; run.chars = c.chars; run.cpuChar = c.cpuChar;
+    w.score = c.score; w.flags = c.flags; var retries = w.stats.retries + 1; w.stats = c.stats; w.stats.retries = retries;
+    run.chapterId = null; w.npcs = [];
+    prepareArea();
+  }
   function prepareArea() {
+    chapterCheckpoint();
     var run = game.run, def = W.CAMPAIGN[run.areaIdx], pool = poolFor(def);
     if (!pool.length) pool = def.party.slice();
     var humans = run.mode === 'duo2' ? 2 : 1, picks = [], playable = ['scene', 'epilogue'].indexOf(def.kind) < 0;
@@ -271,6 +289,10 @@ var W = window.W;
       items.push({ label: 'Menu principale', act: function () { game.state = 'menu'; game.menuIdx = 0; } });
       return items;
     }
+    if (game.state === 'gameover') return [
+      { label: 'Ricomincia il capitolo', act: function () { restartChapter(); } },
+      { label: 'Menu principale', act: function () { game.state = 'menu'; game.menuIdx = 0; } }
+    ];
     if (game.state === 'fail') {
       var f = [{ label: 'Riprova dal checkpoint', act: function () { retry(false); } }];
       if (game.fails >= 2) f.push({ label: 'Riprova con assistenza (salute piena)', act: function () { retry(true); } });
@@ -326,6 +348,7 @@ var W = window.W;
       return;
     }
     if (game.state === 'howto') { if (ok || back) game.state = 'menu'; return; }
+    if (game.state === 'gameover' && game.gameoverT < 1.2) return;
     if (game.state === 'comic') { if (ok && game.comic && game.comic.t > 0.4) game.comic.t = 9; return; }
     if (game.state === 'credits') { if (ok || back) { game.state = 'result'; game.menuIdx = 0; } return; }
     if (game.state === 'select') { selectKey(up, down, left, right, ok, back); return; }
@@ -477,6 +500,19 @@ var W = window.W;
     drawList(menuItems(), C.VIEW_W / 2, 600);
   }
   function fmt(s) { var m = Math.floor(s / 60), x = Math.floor(s % 60); return m + ':' + (x < 10 ? '0' : '') + x; }
+  // game over: la notte finisce qui, lo annuncia la radio
+  var GO_LINES = ['Notizia dell\'ultima ora per chi è ancora sveglio.', 'I Warriors non torneranno a casa, stanotte.', 'La città ha vinto. Musica.'];
+  function drawGameOver(dt) {
+    game.gameoverT = (game.gameoverT || 0) + dt;
+    var t = game.gameoverT, a = Math.min(1, t / 1.2);
+    ctx.fillStyle = 'rgba(4,2,4,' + (0.6 + 0.35 * a) + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    ctx.save(); ctx.globalAlpha = a;
+    txt('GAME OVER', C.VIEW_W / 2, 220, 92, '#d62828', 'center', 700);
+    var n = Math.min(GO_LINES.length, Math.floor(t / 1.1) + 1);
+    for (var i = 0; i < n; i++) txt((i === 0 ? 'LA DJ · ' : '') + GO_LINES[i], C.VIEW_W / 2, 290 + i * 34, 22, i === 0 ? R.COL.p1 : R.COL.ink, 'center', 500);
+    ctx.restore();
+    if (t > 1.2) drawList(menuItems(), C.VIEW_W / 2, 470);
+  }
   function overlay(title, items, sub) {
     ctx.fillStyle = 'rgba(4,5,10,0.78)'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
     txt(title, C.VIEW_W / 2, 220, 56, '#d62828', 'center', 700);
@@ -493,6 +529,7 @@ var W = window.W;
   }
   function tick(dt) {
     pollMenuPad();
+    if (game.state !== 'play' || (game.world && game.world.area && game.world.area.scene && game.world.area.scene.choice)) W.Touch.navTick(simTime, onKey);
     if (game.state === 'play') {
       acc += dt;
       while (acc >= C.STEP) { simTime += C.STEP; W.Input.setTime(simTime); stepPlay(C.STEP); acc -= C.STEP; if (game.state !== 'play') { acc = 0; break; } }
@@ -506,7 +543,17 @@ var W = window.W;
     w.step(dt);
     W.Audio.consume(w.events);
     mixFor(w);
-    if (w.failed) { w.failReasonShown = w.failReason || null; w.failReason = null; game.fails++; game.state = 'fail'; game.menuIdx = 0; w.failed = false; return; }
+    if (w.failed) {
+      w.failReasonShown = w.failReason || null; w.failReason = null; game.fails++; w.failed = false; game.menuIdx = 0;
+      game.run.triesLeft = (game.run.triesLeft || 1) - 1;
+      game.state = game.run.triesLeft <= 0 ? 'gameover' : 'fail'; game.gameoverT = 0;
+      if (game.state === 'gameover' && game.run.chapterSave) {
+        var cs = JSON.parse(game.run.chapterSave), run0 = game.run;
+        writeSave({ version: 2, area: W.CAMPAIGN[cs.areaIdx].id, mode: run0.mode, difficulty: run0.difficulty, chars: cs.chars, cpuChar: cs.cpuChar, roster: cs.roster, records: cs.records,
+          score: cs.score, retries: w.stats.retries, assisted: w.stats.assisted, time: cs.stats.time, kos: cs.stats.kos, flags: cs.flags });
+      }
+      return;
+    }
     if (w.area.done) areaFinished();
   }
   // musica e ambiente secondo l'area: fuga = pulsazione, rissa = basso e cassa, attraversamento = bordone, alba = luce
@@ -534,6 +581,7 @@ var W = window.W;
   function draw(dt) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); }
+    if (game.state === 'gameover') { W.Audio.setMood('radio'); W.Audio.radio(true); }
     if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); }
     if (game.state === 'title') drawTitle();
     else if (game.state === 'menu') {
@@ -565,8 +613,13 @@ var W = window.W;
     else if (game.world) {
       R.frame(game.world, game.state === 'play' ? dt : 0, ui);
       if (game.state === 'pause') overlay('PAUSA', menuItems());
-      if (game.state === 'fail') overlay('A TERRA', menuItems(), game.world.failReasonShown || (game.fails >= 2 ? 'Puoi riprovare con salute piena: il risultato sarà segnato come assistito' : 'Si riparte dall\'ingresso dell\'area'));
+      if (game.state === 'fail') {
+        var left = game.run.triesLeft, tl = left === 1 ? 'Ultimo tentativo per questo capitolo' : 'Tentativi rimasti in questo capitolo: ' + left;
+        overlay('A TERRA', menuItems(), (game.world.failReasonShown ? game.world.failReasonShown + ' · ' : '') + tl + (game.fails >= 2 ? ' · puoi riprovare con salute piena' : ''));
+      }
+      if (game.state === 'gameover') drawGameOver(dt);
     }
+    W.Touch.draw(ctx, game.state === 'play' && !(game.world && game.world.area && game.world.area.scene), window.innerHeight > window.innerWidth);
     if (game.msg) { ctx.fillStyle = 'rgba(8,10,16,0.88)'; ctx.fillRect(C.VIEW_W / 2 - 330, 640, 660, 40); txt(game.msg.text, C.VIEW_W / 2, 667, 18, R.COL.ink, 'center', 400); }
   }
 
@@ -580,6 +633,13 @@ var W = window.W;
     R.init(cv); loadKeys(); loadOptions(); fit();
     window.addEventListener('resize', fit);
     W.Input.onKey(onKey);
+    W.Touch.attach(cv);
+    // tasti touch fuori dal gioco e nelle scene: OK = Invio, AZIONE = indietro, pausa = Esc
+    W.Touch.onButton = function (a) {
+      var sceneOn = game.state === 'play' && game.world && game.world.area && game.world.area.scene;
+      if (a === 'pause') { onKey('Escape'); return; }
+      if (game.state !== 'play' || sceneOn) { if (a === 'light') onKey('Enter'); else if (a === 'interact' && game.state !== 'play') onKey('Escape'); else if (a === 'interact' && sceneOn) onKey('Enter'); }
+    };
     cv.addEventListener('pointerdown', function () { W.Audio.unlock(); if (game.state === 'title') onKey('Enter'); });
     // pausa su perdita di visibilità: danni e timer fermi
     document.addEventListener('visibilitychange', function () { if (document.hidden) { if (game.state === 'play') { game.state = 'pause'; game.menuIdx = 0; } W.Audio.suspend(); } });

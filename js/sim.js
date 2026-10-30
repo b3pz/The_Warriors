@@ -195,6 +195,13 @@ var W = window.W;
       case 'getup': if (this.st > 0.4) { this.setState('idle'); this.protect = C.GETUP_PROTECT; } break;
       case 'ko': this.koT += dt; break;
       case 'held':
+        // Rembrandt, il graffitaro: con la bomboletta si libera subito e acceca chi lo tiene
+        if (this.char.id === 'rembrandt' && d.take('interact') && this.holder) {
+          var hd = this.holder; this.release(false); hd.setState('down'); hd.vx = hd.face * -120; hd.st = -0.8;
+          this.world.emit('spray', { x: hd.x, y: hd.y }); this.world.emit('hit', { x: hd.x, y: hd.y, z: 120, target: 'enemy', heavy: true });
+          if (this.world.area) this.world.area.sprayFx = { x: hd.x, y: hd.y, t: 0 };
+          break;
+        }
         if (d.take('light') || d.take('heavy') || d.take('dodge') || d.take('jump') || d.take('interact')) this.escape -= 0.26;
         if (this.escape <= 0) this.release(false);
         else if (!this.holder || this.holder.state !== 'holding') { this.holder = null; this.setState('idle'); }
@@ -476,7 +483,7 @@ var W = window.W;
     for (var j = 0; j < ps.length; j++) {
       var q = ps[j]; if (!q.low) continue;
       var ah = c.ax > 0 ? q.x0 - a.x : a.x - q.x1;
-      var full = q.y0 <= fl[0] + 14 && q.y1 >= fl[1] - 14;
+      var full = (q.y0 <= fl[0] + 14 && q.y1 >= fl[1] - 14) || (q.y0 - fl[0] < 50 && fl[1] - q.y1 < 50); // nessun varco abbastanza largo per aggirarlo
       if ((full || q.hazard) && ah > 8 && ah < 70 && a.y >= q.y0 - 10 && a.y <= q.y1 + 10 && a.state !== 'jump' && c.press) { c.press('jump'); return; }
     }
     for (var i = 0; i < ps.length; i++) {
@@ -702,6 +709,7 @@ var W = window.W;
     this.weapon = null; this.disarmed = true;
     w.flags.disarmed = (w.flags.disarmed || 0) + 1;
     w.emit('disarm', { x: this.x, y: this.y });
+    if (this.def.elite && this.def.weapon === 'bat' && w.area && w.players.some(function (q) { return q.char.id === 'ajax'; })) w.area.objective = 'Ajax strappa la mazza al capo dei Furies!';
   };
   Enemy.prototype.onDeath = function () { this.dropToken(); this.world.emit('defeat', { x: this.x, y: this.y }); };
   Enemy.prototype.hittable = function () {

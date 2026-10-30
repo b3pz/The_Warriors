@@ -104,6 +104,12 @@ var W = window.W;
       list.push({ x: sx, y: self.floor[0] + 24, label: 'Nasconditi qui', fn: function (p) { self.hideIn(p, i); } });
     });
         if (def.exitInteract && this.canExit()) list.push({ x: def.exitInteract.x, y: def.exitInteract.y, label: def.exitInteract.label, exit: true, fn: function () { self.tryExitInteract(); } });
+    if (def.radioProp && !this.radioSmashed) list.push({ x: def.radioProp.x, y: def.radioProp.y, label: 'Spacca la radio con la sedia', fn: function (p) {
+      self.radioSmashed = true; w.emit('break', { x: def.radioProp.x, y: def.radioProp.y }); w.emit('shakefx', { amt: 6 }); p.startAttack('heavy');
+      // la musica si spegne, nella stanza è il caos: le tiratrici perdono la mira per qualche secondo
+      w.enemies.forEach(function (e) { if (e.alive()) { if (e.att) { e.att = null; e.dropToken(); } e.setState('hurt'); e.st = -2.5; } });
+      self.objective = 'Caos! Sfonda il pannello e via dalla finestra';
+    } });
     if (def.panel && !this.panelOpen) list.push({ x: def.panel.x, y: def.panel.y, label: 'Sfonda il pannello (' + (def.panel.hits - this.panelHits) + ')', fn: function (p) {
       self.panelHits++; w.emit('hit', { x: def.panel.x, y: def.panel.y, z: 90, target: 'enemy', heavy: true }); p.startAttack('heavy');
       if (self.panelHits >= def.panel.hits) { self.panelOpen = true; w.exitOpen = true; self.objective = 'Alla finestra!'; w.emit('break', { x: def.panel.x, y: def.panel.y }); }
@@ -206,6 +212,7 @@ var W = window.W;
       if (lead >= wave.trigger) {
         this.fighting = true; this.objective = wave.objective; this.boss = !!wave.boss;
         this.queue = (duo ? wave.duo : wave.solo).slice();
+        if (wave.preScene && W.SCENES[wave.preScene] && (!wave.preIf || w.players.concat(w.npcs).some(function (q) { return (q.char ? q.char.id : q.id) === wave.preIf; }) || (wave.preIfRoster && W.Game.game.run && W.Game.game.run.roster.indexOf(wave.preIf) >= 0))) this.playScene(W.SCENES[wave.preScene]);
         if (wave.dropIf && w.flags[wave.dropIf]) this.queue.shift();
         w.cam.lockMin = w.cam.x; w.cam.lockMax = w.cam.x;
         w.emit('wave', { idx: this.waveIdx });
@@ -348,12 +355,12 @@ var W = window.W;
     if (ok) {
       w.flags.skater_down = true; sk.pose = 'down';
       if (myId === 'rembrandt') {
-        this.objective = 'Rembrandt esce e gli spruzza la vernice in faccia!';
+        this.objective = 'Il Punk ti trascina fuori e ti blocca a terra: gli spruzzi la vernice negli occhi!';
         me.x = sk.x - 70; me.face = 1; me.startAttack('l1');
       } else {
         var mv = MOVE[myId] || ['un colpo secco', 'heavy'];
         me.x = sk.x - 70; me.y = sk.y; me.face = 1; me.startAttack(mv[1]);
-        this.objective = me.char.name + ' esce con ' + mv[0] + (rem ? '. Rembrandt gli spruzza la vernice in faccia!' : '!');
+        this.objective = (rem ? 'Il Punk blocca a terra Rembrandt, che gli spruzza la vernice negli occhi. ' : '') + me.char.name + ' esce con ' + mv[0] + '!';
         if (rem) { rem.x = sk.x + 80; rem.y = sk.y + 20; rem.face = -1; }
       }
       w.emit('hit', { x: sk.x, y: sk.y, z: 70, target: 'enemy', heavy: true });

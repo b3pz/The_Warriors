@@ -10,7 +10,7 @@ Con GitHub Pages attivo (Settings → Pages → Deploy from a branch → `main`,
 
 **Versione 0.5: tutta la storia è giocabile**, dal prologo a Coney Island ai crediti: 35 aree, 15 tipi di nemici, 31 scene con dialoghi. Grafica pixel art della Raccolta 04 approvata (lotto completo in arrivo, vedi `docs/GRAFICA_IN_ARRIVO.md`); audio sintetizzato provvisorio. Ogni scena può diventare un video: `docs/SCENE_E_VIDEO.md`.
 
-Aprire `index.html` in un browser (o `dist/night-run.html`, un unico file con le immagini incluse). Verifiche: `node tools/qa.js` e `node tools/qa_campaign.js` (Playwright). Stato dettagliato in [CONTINUE_HERE.md](CONTINUE_HERE.md).
+Aprire `index.html` in un browser (o `dist/night-run.html`, un unico file con le immagini incluse). Si gioca anche da telefono in orizzontale, con comandi touch. Verifiche: `node tools/qa.js`, `qa_campaign.js`, `qa_exits.js`, `qa_stealth.js`, `qa_mobile.js` (Playwright). Sprite e fondali mancanti: `docs/SPRITE_MANCANTI.md`. Stato dettagliato in [CONTINUE_HERE.md](CONTINUE_HERE.md).
 
 Partire da [GAME_DESIGN.md](docs/GAME_DESIGN.md), indice della baseline 1.0.
 
