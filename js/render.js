@@ -604,7 +604,7 @@ W.Render = (function () {
     if (ar0.bus && ar0.bus.phase === 'warn' && Math.floor(w.time * 6) % 2) {
       ctx.fillStyle = 'rgba(255,200,40,0.18)'; ctx.fillRect(0, ar0.bus.lane[0] - 30, C.VIEW_W, ar0.bus.lane[1] - ar0.bus.lane[0] + 30);
       ctx.fillStyle = '#ffd36a'; ctx.font = '700 20px "Oswald", sans-serif'; ctx.textAlign = 'left';
-      ctx.fillText(ar0.bus.kind === 'train' ? '◀ ARRIVA UN TRENO: VIA DAI BINARI' : '◀ BUS DEI TURNBULL: SCENDI DALLA CORSIA', 20, ar0.bus.kind === 'train' ? ar0.bus.lane[0] - 12 : ar0.bus.lane[0] - 36);
+      ctx.fillText(ar0.bus.kind === 'train' ? '◀ ARRIVA UN TRENO: VIA DAI BINARI' : '◀ BUS DEI TURNBULL: VIA DA QUESTA CORSIA', 20, ar0.bus.kind === 'train' ? ar0.bus.lane[0] - 12 : ar0.bus.lane[0] - 36);
     }
     for (var i = 0; i < w.players.length; i++) {
       var np = w.players.length, bw = np >= 4 ? 290 : 312, p = w.players[i], x = 24 + i * (bw + 18), y = 22, col = SLOT_COL(p.slot);
@@ -913,7 +913,7 @@ W.Render = (function () {
         }
       } });
     }
-    if (w.area && w.area.bus && w.area.bus.kind === 'bus' && w.area.bus.phase === 'pass') { var bus = w.area.bus; list.push({ y: bus.lane[0], d: function () {
+    if (w.area && w.area.bus && w.area.bus.kind === 'bus' && w.area.bus.phase === 'pass') { var bus = w.area.bus; list.push({ y: bus.lane[1], d: function () {
       var bx = bus.x - cx, by = bus.lane[1], BS = 2;   // in scala con le persone: alto ~1,7 volte un uomo, lungo ~4
       // il bus dei Turnbull: scuolabus vecchio coperto di graffiti, fari accecanti, skinhead sul tetto e aggrappati fuori
       var bo = W.ART_AI && W.ART_AI.object && W.ART_AI.object.bus_turnbull;

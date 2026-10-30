@@ -259,9 +259,11 @@ var W = window.W;
 
   AreaRun.prototype.stepBus = function (w, dt) {
     // pericolo di percorso: corsia superiore, lampeggi e clacson prima del passaggio
-    var b = this.bus, lane = b.kind === 'train' ? [this.floor[1] - 46, this.floor[1]] : [this.floor[0], this.floor[0] + 60];
+    // il bus dei Turnbull è imprevedibile: a ogni passaggio sceglie a caso la corsia in alto o quella in basso
+    var b = this.bus;
+    var lane = b.kind === 'train' ? [this.floor[1] - 46, this.floor[1]] : b.low ? [this.floor[1] - 60, this.floor[1]] : [this.floor[0], this.floor[0] + 60];
     b.lane = lane; b.t -= dt;
-    if (b.phase === 'idle' && b.t <= 0) { b.phase = 'warn'; b.t = b.kind === 'train' ? 1.8 : 1.4; w.emit(b.kind === 'train' ? 'trainwarn' : 'horn', {}); }
+    if (b.phase === 'idle' && b.t <= 0) { if (b.kind !== 'train') { b.low = w.rng() < 0.5; lane = b.low ? [this.floor[1] - 60, this.floor[1]] : [this.floor[0], this.floor[0] + 60]; b.lane = lane; } b.phase = 'warn'; b.t = b.kind === 'train' ? 1.8 : 1.4; w.emit(b.kind === 'train' ? 'trainwarn' : 'horn', {}); }
     else if (b.phase === 'warn' && b.t <= 0) { b.phase = 'pass'; b.t = 1.3; b.x = w.cam.x - (b.kind === 'train' ? 900 : 800); b.hit = {}; if (b.kind === 'train') w.emit('train', {}); }
     else if (b.phase === 'pass') {
       b.x += (C.VIEW_W + (b.kind === 'train' ? 1800 : 1500)) / 1.3 * dt;
