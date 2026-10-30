@@ -79,13 +79,13 @@ Per la camminata chiedi i quattro fotogrammi uno alla volta: «camminata, fotogr
 | `swan` | uomo bianco sui vent'anni, statura media, asciutto e atletico; capelli castano chiaro lisci di media lunghezza pettinati all'indietro; gilet di pelle marrone aperto sul petto nudo, jeans, stivali |
 | `ajax` | uomo bianco, alto e massiccio; capelli castano scuro corti; guanti di pelle senza dita; espressione provocatoria; gilet di pelle marrone sul petto nudo, jeans |
 | `snow` | uomo afroamericano, alto, braccia lunghe; capigliatura afro altissima e squadrata; espressione calma; gilet di pelle marrone, pantaloni scuri |
-| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo; cappello da cowboy scuro sempre in testa; gilet di pelle marrone, jeans |
+| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo, capelli castani lisci fino al collo; cappello scuro a tesa larga sempre in testa; maglietta marrone sotto il gilet di pelle, pantaloni marroni, scarpe da ginnastica |
 | `cochise` | uomo afroamericano, medio-alto e agile; treccine e afro, fascia sulla fronte, collana di perline; gilet di pelle marrone sul petto nudo, pantaloni a zampa |
 | `vermin` | uomo bianco tarchiato e robusto; capelli castani corti e spettinati; faccia stanca e scocciata; gilet di pelle marrone, maglietta, jeans |
-| `rembrandt` | ragazzo ispanico, il più giovane e minuto del gruppo; ricci neri folti; borsa a tracolla con bombolette spray; gilet di pelle marrone, jeans |
+| `rembrandt` | ragazzo ispanico, il più giovane e minuto del gruppo; grande afro castano scuro; collarino rosso al collo; gilet di pelle sul petto nudo, pantaloni rossicci a zampa; borsa a tracolla con le bombolette spray |
 | `fox` | uomo bianco esile e slanciato; capelli biondo-castani ricci e folti; aria da ragazzo di buona famiglia; gilet di pelle marrone, camicia aperta |
 | `cleon` | uomo afroamericano alto, robusto e imponente; bandana leopardata in testa, capelli rasati ai lati; sguardo severo da capo; gilet di pelle marrone |
-| `mercy` | ragazza giovane, magra e minuta; capelli castano scuro ricci e vaporosi; giacca di lana grigio-marrone logora, maglietta scollata, minigonna viola, stivali alti |
+| `mercy` | ragazza giovane, magra e minuta; capelli castano scuro mossi e vaporosi fino alle spalle; top rosa a canottiera con collana sottile, gonna a fiori rosso scuro al ginocchio con spacco, sandali col tacco (aspetto della notte) |
 
 Pose speciali da aggiungere:
 - `swan`: `knife_1` (coltello a scatto in mano), `knifethrow_1` (lancia il coltello), `hand_1` (mano nella mano verso destra, per stare accanto a Mercy).
@@ -100,21 +100,21 @@ Pose base: `idle_1`, `walk_1`…`walk_4`, `punch_1`, `hurt_1`, `down_1`, più le
 
 | Set | Descrizione | Pose speciali |
 |---|---|---|
-| `fury` | membro di una banda vestita da squadra di baseball: divisa gessata, berretto, viso dipinto a colori come una maschera; mazza da baseball | `windup_1` (carica lo swing), `swing_1`, `nobat_punch_1` (disarmato) |
-| `fury_boss` | come sopra, il capo: trucco diverso e più vistoso, più grosso | `windup_1`, `swing_1` |
+| `fury` | membro di una banda vestita da squadra di baseball: divisa a righe sottili bianca, berretto nero, maglia nera a maniche lunghe sotto, calzettoni neri; il viso dipinto come una maschera di un solo colore (giallo, rosso, bianco, blu o nero con bordi bianchi); mazza da baseball | `windup_1` (carica lo swing), `swing_1`, `nobat_punch_1` (disarmato) |
+| `fury_boss` | come sopra, il capo: più grosso, trucco a due colori più vistoso | `windup_1`, `swing_1` |
 | `turnbull` | skinhead calvo e grosso, canotta di jeans senza maniche, catene | `charge_1` (carica a testa bassa) |
 | `turnbull_fast` | skinhead calvo magro e veloce | `charge_1` |
 | `orphan` | ragazzo di strada povero, maglietta sdrucita, nessun colore di banda | `board_swing_1` (colpo con un'asse) |
 | `sully` | capo degli Orphans, maglietta e giubbotto di jeans, aria spavalda | — |
-| `lizzie` | ragazza di una banda femminile anni '70, abiti eleganti da festa | `gun_aim_1`, `gun_shoot_1` (pistola), `push_1` |
-| `lizzie_boss` | la capa delle Lizzies, più sicura, abito scuro | `gun_aim_1` |
-| `punk` | punk di strada con salopette e maglia a righe, **pattini a rotelle** ai piedi | `skate_1`, `skate_2` (pattina), `grab_1` (presa) |
-| `punk_boss` | capo dei Punks, più grosso, salopette di jeans, pattini | `skate_1`, `grab_1` |
-| `rogue` | membro di una banda sguaiata, giacca di pelle nera, aria folle | `bottle_throw_1` |
-| `luther` | capo dei Rogues: magro, capelli scuri unti, sorriso folle, giacca scura | `gun_aim_1`, `bottles_1` (tre bottiglie vuote infilate tra le dita), `knifehit_1` (coltello piantato nel braccio), `down_1` |
+| `lizzie` | ragazza di una banda femminile anni '70: capelli ricci e voluminosi, top colorati e giacche anni '70, aria seducente e pericolosa | `gun_aim_1`, `gun_shoot_1` (pistola), `push_1` |
+| `lizzie_boss` | la capa delle Lizzies: capelli lunghi ricci, giacca scura, aria sicura | `gun_aim_1` |
+| `punk` | punk di strada: salopette di jeans sopra una maglia a righe orizzontali, capelli lunghi, **pattini a rotelle** ai piedi | `skate_1`, `skate_2` (pattina), `grab_1` (presa) |
+| `punk_boss` | capo dei Punks: più grosso, salopette di jeans e maglia a righe, pattini | `skate_1`, `grab_1` |
+| `rogue` | membro dei Rogues: gilet o giubbotto di pelle nera, maglietta scura, berretto, aria folle | `bottle_throw_1` |
+| `luther` | capo dei Rogues: magro, capelli castani ricci lunghi fino alle spalle, fascia intrecciata sulla fronte, gilet di pelle nera sopra una maglietta grigia, catenine, pantaloni neri; sorriso folle | `gun_aim_1`, `bottles_1` (tre bottiglie vuote infilate tra le dita), `knifehit_1` (coltello piantato nel braccio), `down_1` |
 | `police` | poliziotto di New York anni '70, divisa blu, berretto | `baton_swing_1` (manganello), `charge_1` |
 | `police_woman` | poliziotta in borghese seduta su una panchina, aria innocua | `sit_1`, `arrest_1` |
-| `cyrus` | carismatico capo della banda più grande della città, in piedi su un palco, braccia aperte mentre parla | `speech_1`, `shot_1` (colpito) |
+| `cyrus` | carismatico capo dei Riffs e della banda più grande della città: capelli neri pettinati all'indietro, lunga veste a quadri marrone e rame aperta su una camicia nera, pantaloni neri; braccia aperte mentre parla dal palco | `speech_1`, `shot_1` (colpito) |
 | `riff` | membro di una banda disciplinata in tenuta da arti marziali | `idle_1` |
 | `masai` | luogotenente dei Riffs, tenuta da arti marziali scura, sguardo duro | `idle_1` |
 

@@ -37,8 +37,9 @@ Divieti:
 
 Aprilo prima di disegnare: è il modo per restare fedeli al film.
 
-- `assets/incoming/riferimenti/gruppo_warriors_coney.png`: **la foto di riferimento principale.** I Warriors e Mercy a Coney Island: gilet di pelle marrone-rossiccio con bordo scuro, petto nudo, pantaloni rossicci o neri, cinture con fibbia, scarpe da ginnastica o stivali. Da sinistra: Cowboy (cappello scuro, mazza), Rembrandt (afro, borsa a tracolla), Cochise (collane di perline, fascia, stivali con frange), Vermin (ricci, dietro), Swan (al centro), Snow (afro), Mercy (giacca di jeans scura e gonna a fiori: il suo aspetto dell'alba; di notte ha la giacca di lana e la minigonna viola).
-- `assets/incoming/riferimenti/<set>_1.png`: volto di ciascun Warrior nel film (swan, ajax, snow, fox, cleon, cochise, vermin). Usali per capelli, colore della pelle, età ed espressione.
+- `assets/incoming/riferimenti/gruppo_warriors_coney.png`: **la foto di riferimento principale.** I Warriors e Mercy a Coney Island: gilet di pelle marrone-rossiccio con bordo scuro, petto nudo, pantaloni rossicci o neri, cinture con fibbia, scarpe da ginnastica o stivali. Da sinistra: Cowboy (cappello scuro, mazza), Rembrandt (afro, borsa a tracolla), Cochise (collane di perline, fascia, stivali con frange), Vermin (ricci, dietro), Swan (al centro), Snow (afro), Mercy (giacca di jeans scura sopra il top rosa e la gonna a fiori: aspetto dai tunnel in poi).
+- `assets/incoming/riferimenti/<set>_1.png`, `_2`, `_3`: fotogrammi del film per swan, ajax, snow, fox, cleon, cochise, vermin, cowboy, rembrandt, mercy, luther, cyrus, fury, punk. Usali per capelli, costume, colori ed espressione. Alcuni `_2` sono personaggi di un altro videogioco sul film: vanno bene per il costume intero, non per lo stile.
+- `assets/incoming/riferimenti/mappe/bande_collage_*.png`: le bande del film insieme (Rogues, Furies, Lizzies, Punks, Boppers, Hi-Hats, Electric Eliminators e altre).
 - `assets/incoming/riferimenti/<set>.png` (sfondo magenta): le figure già approvate nel gioco, da usare per proporzioni e stile pixel.
 - `assets/incoming/riferimenti/luoghi/`: i luoghi del film. `raduno_*` (il raduno nel nord del Bronx: anfiteatro con arcate di pietra, folla sugli spalti, Cyrus sul palco con la veste), `union_square_scale` (scala piastrellata bianca della stazione), `strada_notte` e `strada_orphans` (strade bagnate di notte, palazzi di mattoni, scale antincendio), `spiaggia_riffs` (la spiaggia all'alba), `coney_lungomare` e `coney_wonder_wheel` (Coney Island: ruota panoramica, chioschi, lungomare).
 - `assets/incoming/riferimenti/mappe/`: dove sta ogni banda (Furies a Riverside, Lizzies a Union Square, Punks al Bowery, Orphans a Tremont, Turnbull a Gun Hill, Riffs a Gramercy, Rogues a Hell's Kitchen) e i loro loghi: utili per colori e stile delle bande.
@@ -67,29 +68,29 @@ Tutti i Warriors portano un gilet di pelle marrone senza maniche, senza scritte.
 | `swan` | uomo bianco sui vent'anni, statura media, asciutto e atletico; capelli castano chiaro lisci di media lunghezza pettinati all'indietro; gilet di pelle marrone aperto sul petto nudo, jeans, stivali |
 | `ajax` | uomo bianco, alto e massiccio; capelli castano scuro corti; guanti di pelle senza dita; espressione provocatoria; gilet di pelle marrone sul petto nudo, jeans |
 | `snow` | uomo afroamericano, alto, braccia lunghe; capigliatura afro altissima e squadrata; espressione calma; gilet di pelle marrone, pantaloni scuri |
-| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo; cappello da cowboy scuro sempre in testa; gilet di pelle marrone, jeans |
+| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo, capelli castani lisci fino al collo; cappello scuro a tesa larga sempre in testa; maglietta marrone sotto il gilet di pelle, pantaloni marroni, scarpe da ginnastica |
 | `cochise` | uomo afroamericano, medio-alto e agile; treccine e afro, fascia sulla fronte, collana di perline; gilet di pelle marrone sul petto nudo, pantaloni a zampa |
 | `vermin` | uomo bianco tarchiato e robusto; capelli castani corti e spettinati; faccia stanca e scocciata; gilet di pelle marrone, maglietta, jeans |
-| `rembrandt` | ragazzo ispanico, il più giovane e minuto del gruppo; ricci neri folti; borsa a tracolla con bombolette spray; gilet di pelle marrone, jeans |
+| `rembrandt` | ragazzo ispanico, il più giovane e minuto del gruppo; grande afro castano scuro; collarino rosso al collo; gilet di pelle sul petto nudo, pantaloni rossicci a zampa; borsa a tracolla con le bombolette spray |
 | `fox` | uomo bianco esile e slanciato; capelli biondo-castani ricci e folti; aria da ragazzo di buona famiglia; gilet di pelle marrone, camicia aperta |
-| `mercy_giacca` | Mercy dai tunnel della metro in poi: stessa ragazza, con una giacca di jeans blu scuro troppo grande sopra la maglietta, gonna a fiori, sandali; vedi la foto di gruppo |
+| `mercy_giacca` | Mercy dai tunnel della metro in poi: stessa ragazza, stesso top rosa e gonna a fiori, con sopra una giacca di jeans blu scuro troppo grande; vedi la foto di gruppo |
 | `cleon` | uomo afroamericano alto, robusto e imponente; bandana leopardata in testa, capelli rasati ai lati; sguardo severo da capo; gilet di pelle marrone |
-| `mercy` | ragazza giovane, magra e minuta; capelli castano scuro ricci e vaporosi; giacca di lana grigio-marrone logora, maglietta rosa scollata, minigonna viola, stivali alti (aspetto della notte) |
-| `fury` | membro di una banda vestita da squadra di baseball: divisa gessata, berretto, viso dipinto a colori come una maschera; mazza da baseball |
-| `fury_boss` | come sopra, il capo: trucco diverso e più vistoso, più grosso |
+| `mercy` | ragazza giovane, magra e minuta; capelli castano scuro mossi e vaporosi fino alle spalle; top rosa a canottiera con collana sottile, gonna a fiori rosso scuro al ginocchio con spacco, sandali col tacco (aspetto della notte) |
+| `fury` | membro di una banda vestita da squadra di baseball: divisa a righe sottili bianca, berretto nero, maglia nera a maniche lunghe sotto, calzettoni neri; il viso dipinto come una maschera di un solo colore (giallo, rosso, bianco, blu o nero con bordi bianchi); mazza da baseball |
+| `fury_boss` | come sopra, il capo: più grosso, trucco a due colori più vistoso |
 | `turnbull` | skinhead calvo e grosso, canotta di jeans senza maniche, catene |
 | `turnbull_fast` | skinhead calvo magro e veloce |
 | `orphan` | ragazzo di strada povero, maglietta sdrucita, nessun colore di banda |
 | `sully` | capo degli Orphans, maglietta e giubbotto di jeans, aria spavalda |
-| `lizzie` | ragazza di una banda femminile anni '70, abiti eleganti da festa |
-| `lizzie_boss` | la capa delle Lizzies, più sicura, abito scuro |
-| `punk` | punk di strada con salopette e maglia a righe, **pattini a rotelle** ai piedi |
-| `punk_boss` | capo dei Punks, più grosso, salopette di jeans, pattini |
-| `rogue` | membro di una banda sguaiata, giacca di pelle nera, aria folle |
-| `luther` | capo dei Rogues: magro, capelli scuri unti, sorriso folle, giacca scura |
+| `lizzie` | ragazza di una banda femminile anni '70: capelli ricci e voluminosi, top colorati e giacche anni '70, aria seducente e pericolosa |
+| `lizzie_boss` | la capa delle Lizzies: capelli lunghi ricci, giacca scura, aria sicura |
+| `punk` | punk di strada: salopette di jeans sopra una maglia a righe orizzontali, capelli lunghi, **pattini a rotelle** ai piedi |
+| `punk_boss` | capo dei Punks: più grosso, salopette di jeans e maglia a righe, pattini |
+| `rogue` | membro dei Rogues: gilet o giubbotto di pelle nera, maglietta scura, berretto, aria folle |
+| `luther` | capo dei Rogues: magro, capelli castani ricci lunghi fino alle spalle, fascia intrecciata sulla fronte, gilet di pelle nera sopra una maglietta grigia, catenine, pantaloni neri; sorriso folle |
 | `police` | poliziotto di New York anni '70, divisa blu, berretto |
 | `police_woman` | poliziotta in borghese seduta su una panchina, aria innocua |
-| `cyrus` | carismatico capo della banda più grande della città, in piedi su un palco, braccia aperte mentre parla |
+| `cyrus` | carismatico capo dei Riffs e della banda più grande della città: capelli neri pettinati all'indietro, lunga veste a quadri marrone e rame aperta su una camicia nera, pantaloni neri; braccia aperte mentre parla dal palco |
 | `riff` | membro di una banda disciplinata in tenuta da arti marziali |
 | `masai` | luogotenente dei Riffs, tenuta da arti marziali scura, sguardo duro |
 

@@ -36,11 +36,11 @@ Le figure delle tavole attuali sono state associate a queste descrizioni. **Sicu
 | Swan | bianco, statura media, asciutto e atletico; capelli castano chiaro lisci, media lunghezza, all'indietro; gilet aperto sul petto nudo |
 | Ajax | bianco, alto, massiccio; capelli castano scuro corti; guanti di pelle senza dita; espressione provocatoria |
 | Fox | bianco, esile e slanciato; capelli biondo-castani ricci e folti; aria da ragazzo dei quartieri alti |
-| Cowboy | bianco, statura media; viso giovanile; cappello Stetson scuro, sempre |
-| Rembrandt | ispanico, il più giovane e minuto; ricci neri folti; borsa a tracolla con le bombolette spray |
+| Cowboy | bianco, statura media; viso giovanile; cappello scuro a tesa larga, sempre; maglietta marrone sotto il gilet |
+| Rembrandt | ispanico, il più giovane e minuto; grande afro; collarino rosso; borsa a tracolla con le bombolette spray |
 | Snow | afroamericano, alto, braccia lunghe; afro altissimo e geometrico; espressione calma |
 | Cochise | afroamericano, medio-alto, agile; treccine/afro, collana di perline, pantaloni a zampa |
 | Vermin | bianco, tarchiato e robusto; capelli castani corti e spettinati; faccia stanca o scocciata |
-| Mercy | giovane, magra e minuta; capelli castano scuro ricci e vaporosi; giacca di lana grigio-marrone logora, maglietta scollata, minigonna viola, stivali alti |
+| Mercy | giovane, magra e minuta; capelli castano scuro mossi e vaporosi; top rosa a canottiera, gonna a fiori rosso scuro con spacco, sandali; dai tunnel in poi giacca di jeans scura sopra (foto di riferimento dell'autore, 30 ottobre) |
 
 Pose che servono di più per ogni Warrior: riposo, camminata (4), pugno, calcio, pesante, salto, colpito, a terra, rialzata; per Rembrandt anche lo spruzzo con la bomboletta; per Swan il lancio del coltello; per Mercy camminata, attesa e la mano nella mano con Swan.
