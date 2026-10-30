@@ -137,7 +137,7 @@ Formato 1536×1024.
 | `P0-04` | banchina della metropolitana sopraelevata di Coney Island, sera |
 | `C1-01`, `C1-02` | un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari |
 | `C1-03` | parco di notte, alberi, siepi, prato calpestato, fuga |
-| `C1-04` | sottopasso di cemento con scala che sale, luci al neon rotte |
+| `C1-04` | il cimitero di Woodlawn di notte: lapidi, croci, una cappella, alberi spogli, cancellata di ferro, nebbia |
 | `C2-01`, `C2-03` | strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti |
 | `C2-02` | vicolo stretto tra palazzi di mattoni, cancello di rete in fondo, bidoni |
 | `C2-04`, `C3-04`, `C6-01`, `C6-04` | banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso |

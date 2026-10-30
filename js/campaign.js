@@ -55,6 +55,7 @@ var W = window.W;
     ['say', 'swan', 'Via da qui! Non fermatevi!'],
     ['fade', 'out', 0.8], ['clearNpcs'], ['flag', 'cyrus_shot'], ['flag', 'warriors_accused']] };
   S.cine_swan_leads = { cine: 'cine_swan_leads', letterbox: false, steps: [
+    ['caption', 'Il cimitero di Woodlawn. I Warriors si nascondono tra le tombe e riprendono fiato.'],
     ['say', 'cowboy', 'Cleon non è con noi.'],
     ['say', 'ajax', 'E adesso chi comanda? Io dico che tocca a me.'],
     ['say', 'swan', 'Cleon mi ha lasciato il comando. Torniamo a Coney Island, tutti.'],
@@ -236,8 +237,8 @@ var W = window.W;
     { id: 'C1-03', ch: 'C1', kind: 'escape', name: 'Fuga dal parco', bg: 'park', width: 2560, depth: 190, party: AFTER_C1, objective: 'Scappa: supera la strettoia',
       waves: [{ trigger: 900, objective: 'Supera gli Orphans nella strettoia', solo: [['orphan_brawler', 'R', 560], ['orphan_brawler', 'R', 620]], duo: [['orphan_brawler', 'R', 560], ['orphan_brawler', 'R', 620], ['orphan_brawler', 'L', 600]] }],
       pursuers: { solo: { police_pursuer: 2 }, duo: { police_pursuer: 3 } }, barriers: [1500, 1900] },
-    { id: 'C1-04', ch: 'C1', kind: 'traversal', name: 'Sottopasso', bg: 'metro_b', width: 1280, depth: 180, party: AFTER_C1, present: AFTER_C1, peace: true,
-      enter: 'cine_swan_leads', objective: 'Sali la scala', exitInteract: { x: 1150, y: 560, label: 'Sali la scala' } },
+    { id: 'C1-04', ch: 'C1', kind: 'traversal', name: 'Il cimitero di Woodlawn', bg: 'park', amb: 'park', width: 1280, depth: 180, party: AFTER_C1, present: AFTER_C1, peace: true, mood: 'silence',
+      enter: 'cine_swan_leads', objective: 'Scavalca il cancello: la metro è di là', exitInteract: { x: 1150, y: 560, label: 'Scavalca il cancello' } },
 
     { id: 'C2-01', ch: 'C2', kind: 'traversal', name: 'Isolato del Bronx', bg: 'street', width: 2560, depth: 220, party: AFTER_C1, present: AFTER_C1, chapterCard: true,
       enter: 'dlg_c2_bus', objective: 'Trova l\'accesso alla metro', busBg: true },
@@ -318,7 +319,7 @@ var W = window.W;
   // ostacoli dei corridoi: pochi, credibili per il luogo; si saltano, si aggirano o si sfondano
   var OBST = {
     'C1-03': { lowStyle: 'hedge', obstacles: [['low', 620, 0, 0.55], ['low', 1150, 0.45, 1], ['low', 2150, 0, 1]] },
-    'C1-04': { lowStyle: 'turnstile', obstacles: [['low', 640, 0, 1]] },
+    'C1-04': { lowStyle: 'grave', obstacles: [['low', 520, 0, 0.45], ['low', 820, 0.5, 1]] },
     'C2-01': { lowStyle: 'barrier', obstacles: [['crate', 760, 0.05, 0.4], ['low', 1300, 0, 0.6], ['crate', 1850, 0.6, 1, 'snack'], ['low', 2200, 0.35, 1]] },
     'C2-03': { lowStyle: 'barrier', obstacles: [['low', 2100, 0, 1], ['crate', 2850, 0.3, 0.7, 'drink']] },
     'C2-04': { lowStyle: 'turnstile', train: true, obstacles: [['low', 560, 0, 0.75]] },

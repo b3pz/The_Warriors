@@ -77,7 +77,7 @@ Il gioco è a 1280 × 720. Il pavimento comincia alla riga indicata e arriva in 
 | C1-01 | Il raduno | raduno | notte | 1920 × 720 | 500 |
 | C1-02 | Il discorso | raduno | notte | 1280 × 720 | 480 |
 | C1-03 | Fuga dal parco | parco | notte | 2560 × 720 | 490 |
-| C1-04 | Sottopasso | sottopasso | notte | 1280 × 720 | 500 |
+| C1-04 | Il cimitero di Woodlawn | cimitero | notte | 1280 × 720 | 500 |
 | C2-01 | Isolato del Bronx | strada | notte | 2560 × 720 | 460 |
 | C2-02 | Vicolo con cancello | vicolo | notte | 1920 × 720 | 490 |
 | C2-03 | Corsa alle scale | strada | notte | 3840 × 720 | 450 |

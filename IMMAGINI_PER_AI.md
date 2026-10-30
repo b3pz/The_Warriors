@@ -195,7 +195,7 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 68. `assets/incoming/fondali/C1-03_a.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
 69. `assets/incoming/fondali/C1-03_b.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
 70. `assets/incoming/fondali/C1-03_c.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
-71. `assets/incoming/fondali/C1-04_a.png` → sottopasso di cemento con scala che sale, luci al neon rotte; luce: notte
+71. `assets/incoming/fondali/C1-04_a.png` → il cimitero di Woodlawn nel Bronx di notte: file di lapidi, croci e obelischi, una cappella con le colonne, alberi spogli, cancellata di ferro con le punte, nebbia bassa, vialetto di ghiaia; luce: notte
 72. `assets/incoming/fondali/C2-01_a.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
 73. `assets/incoming/fondali/C2-01_b.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
 74. `assets/incoming/fondali/C2-01_c.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_notte

@@ -9,7 +9,7 @@ W.Scenery = (function () {
   var cache = {};
   var ENV_BY_BG = { park: 'park', park_b: 'park', metro: 'platform', metro_b: 'platform', alley: 'alley', street: 'street', street_b: 'street',
     harbor: 'courtyard', interior: 'bathroom', coney: 'coney', coney_b: 'coney', boardwalk: 'beach' };
-  var SIGNS = { 'P0-04': 'CONEY ISLAND', 'C1-04': 'PELHAM BAY PK', 'C2-04': 'GUN HILL RD', 'C3-04': '96 ST', 'C6-01': 'UNION SQ', 'C6-04': 'UNION SQ', 'C7-02': 'CONEY ISLAND' };
+  var SIGNS = { 'P0-04': 'CONEY ISLAND', 'C2-04': 'GUN HILL RD', 'C3-04': '96 ST', 'C6-01': 'UNION SQ', 'C6-04': 'UNION SQ', 'C7-02': 'CONEY ISLAND' };
 
   function rng(seed) { var s = 0; for (var i = 0; i < seed.length; i++) s = (s * 31 + seed.charCodeAt(i)) | 0; s = Math.abs(s) || 7; return function () { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
   function shade(hex, k) { var n = parseInt(hex.slice(1), 16), r = n >> 16, g = (n >> 8) & 255, b = n & 255; r = Math.min(255, Math.max(0, Math.round(r * k))); g = Math.min(255, Math.max(0, Math.round(g * k))); b = Math.min(255, Math.max(0, Math.round(b * k))); return 'rgb(' + r + ',' + g + ',' + b + ')'; }
@@ -212,6 +212,41 @@ W.Scenery = (function () {
     g.fillStyle = '#16231b'; g.fillRect(0, 352, w, 8);
   };
 
+
+  // il cimitero di Woodlawn: lapidi, croci, obelischi e una cappella, cancellata di ferro, nebbia bassa
+  ENV.cemetery = function (g, w, ft, light, r, opt) {
+    sky(g, w, ft, light, r, 180);
+    skyline(g, w, ft - 64, light, r, 30);
+    // alberi spogli in controluce
+    for (var tx = 30; tx < w; tx += 110 + Math.floor(r() * 70)) {
+      var th = 90 + r() * 50; g.strokeStyle = '#0b0e10'; g.lineWidth = 4; g.beginPath(); g.moveTo(tx, ft); g.lineTo(tx, ft - th); g.stroke();
+      g.lineWidth = 2; for (var b = 0; b < 6; b++) { var by = ft - th * (0.45 + r() * 0.5), dir = r() < 0.5 ? -1 : 1; g.beginPath(); g.moveTo(tx, by); g.lineTo(tx + dir * (14 + r() * 26), by - 10 - r() * 20); g.stroke(); }
+    }
+    // cappella con colonne
+    var mx = Math.floor(w * 0.62); g.fillStyle = '#1a1c22'; g.fillRect(mx, ft - 70, 90, 70); g.beginPath(); g.moveTo(mx - 8, ft - 70); g.lineTo(mx + 45, ft - 96); g.lineTo(mx + 98, ft - 70); g.fill();
+    g.fillStyle = '#25272e'; for (var c = 0; c < 4; c++) g.fillRect(mx + 8 + c * 22, ft - 64, 6, 64); g.fillStyle = '#0a0b0e'; g.fillRect(mx + 34, ft - 40, 22, 40);
+    // file di lapidi, croci e obelischi su tre piani
+    for (var row = 0; row < 3; row++) {
+      var y0 = ft - 30 + row * 12, sc = 0.7 + row * 0.18, col = shade('#4a4e58', 0.6 + row * 0.2);
+      for (var gx = 10 + row * 17; gx < w; gx += 34 + Math.floor(r() * 26)) {
+        if (gx > mx - 10 && gx < mx + 100 && row === 0) continue;
+        var kind = r(); g.fillStyle = col;
+        if (kind < 0.55) { var hw = 10 * sc, hh = (14 + r() * 8) * sc; g.fillRect(gx, y0 - hh, hw, hh); g.beginPath(); g.arc(gx + hw / 2, y0 - hh, hw / 2, Math.PI, 0); g.fill(); }
+        else if (kind < 0.8) { g.fillRect(gx + 4 * sc, y0 - 24 * sc, 3 * sc, 24 * sc); g.fillRect(gx, y0 - 18 * sc, 11 * sc, 3 * sc); }
+        else { g.beginPath(); g.moveTo(gx, y0); g.lineTo(gx + 3 * sc, y0 - 34 * sc); g.lineTo(gx + 6 * sc, y0 - 38 * sc); g.lineTo(gx + 9 * sc, y0 - 34 * sc); g.lineTo(gx + 12 * sc, y0); g.fill(); }
+      }
+    }
+    // cancellata di ferro con punte
+    g.fillStyle = '#0d0f12'; g.fillRect(0, ft - 6, w, 2); for (var fx = 0; fx < w; fx += 5) { g.fillRect(fx, ft - 22, 1, 20); g.fillRect(fx - 1, ft - 23, 3, 1); }
+    // nebbia
+    var fg = g.createLinearGradient(0, ft - 30, 0, ft + 10); fg.addColorStop(0, 'rgba(150,160,180,0)'); fg.addColorStop(1, 'rgba(150,160,180,0.22)'); g.fillStyle = fg; g.fillRect(0, ft - 30, w, 40);
+    // erba e vialetto di ghiaia
+    g.fillStyle = '#121a14'; g.fillRect(0, ft, w, 360 - ft);
+    for (var i = 0; i < w * 2; i++) { g.fillStyle = r() < 0.5 ? '#18231a' : '#0e150f'; g.fillRect(Math.floor(r() * w), ft + Math.floor(r() * (360 - ft)), 2, 1); }
+    g.fillStyle = '#2a2a2c'; g.fillRect(0, ft + Math.floor((360 - ft) * 0.35), w, Math.floor((360 - ft) * 0.4));
+    for (var k = 0; k < w; k++) { g.fillStyle = 'rgba(200,200,210,' + (r() * 0.08) + ')'; g.fillRect(Math.floor(r() * w), ft + Math.floor((360 - ft) * (0.35 + r() * 0.4)), 1, 1); }
+  };
+
   ENV.rally = function (g, w, ft, light, r) {
     ENV.park(g, w, ft, light, r, { moon: true });
     // palco con fari e la grande folla sullo sfondo
@@ -319,7 +354,7 @@ W.Scenery = (function () {
     if (def.env) return def.env;
     var id = def.id;
     if (id === 'C1-01' || id === 'C1-02') return 'rally';
-    if (id === 'C1-04') return 'underpass';
+    if (id === 'C1-04') return 'cemetery';
     if (id === 'C2-02') return 'alley';
     if (id === 'C5-02' || id === 'C5-03') return 'apartment';
     if (id === 'C5-04') return 'tunnel';

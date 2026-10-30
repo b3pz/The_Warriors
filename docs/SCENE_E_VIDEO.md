@@ -63,7 +63,7 @@ Gli intermezzi della DJ a inizio capitolo hanno ID `radio_C1`…`radio_C8`; anch
 | C1-01 | traversal | Il raduno | `park_b` |
 | C1-02 | scene | Il discorso | `park` |
 | C1-03 | escape | Fuga dal parco | `park` |
-| C1-04 | traversal | Sottopasso | `metro_b` |
+| C1-04 | traversal | Il cimitero di Woodlawn | `park` |
 | C2-01 | traversal | Isolato del Bronx | `street` |
 | C2-02 | arena | Vicolo con cancello | `alley` |
 | C2-03 | escape | Corsa alle scale | `street_b` |

@@ -345,6 +345,9 @@ W.Render = (function () {
     if (p.style === 'turnstile') {
       ctx.fillStyle = '#3c4146'; ctx.fillRect(x, y - 44, 26, 44); ctx.fillStyle = '#9aa3a8'; ctx.fillRect(x + 2, y - 46, 22, 5);
       ctx.strokeStyle = '#b8bfc4'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x + 13, y - 30); ctx.lineTo(x + 40, y - 34); ctx.stroke();
+    } else if (p.style === 'grave') {
+      ctx.fillStyle = '#5a5e68'; ctx.fillRect(x, y - 34, 28, 34); ctx.beginPath(); ctx.arc(x + 14, y - 34, 14, Math.PI, 0); ctx.fill();
+      ctx.fillStyle = '#3e424b'; ctx.fillRect(x + 22, y - 34, 6, 34); ctx.fillStyle = '#2a2d33'; ctx.fillRect(x + 8, y - 30, 12, 2); ctx.fillRect(x + 10, y - 24, 8, 2);
     } else if (p.style === 'hedge') {
       ctx.fillStyle = '#16261c'; ctx.beginPath(); ctx.arc(x + 12, y - 16, 18, Math.PI, 0); ctx.fill(); ctx.fillRect(x - 6, y - 16, 36, 16);
       ctx.fillStyle = '#20392a'; ctx.beginPath(); ctx.arc(x + 6, y - 20, 9, 0, Math.PI * 2); ctx.fill();
