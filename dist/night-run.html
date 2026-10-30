@@ -3322,26 +3322,29 @@ W.Render = (function () {
     if (cur) lines.push(cur); return lines;
   }
   // studio radio della DJ: buio, insegna IN ONDA, microfono, onda sonora
+  // la DJ come nel film: solo la bocca al microfono, in controluce su un fondo rosso
   function drawRadio(w, sc) {
-    var t = w.time;
-    ctx.fillStyle = '#050307'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
-    var glow = ctx.createRadialGradient(640, 300, 10, 640, 300, 520); glow.addColorStop(0, 'rgba(120,20,30,0.55)'); glow.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = glow; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
-    // insegna
-    var on = Math.floor(t * 1.3) % 6 !== 0;
-    ctx.fillStyle = on ? '#e0283a' : '#5a1018'; ctx.font = '700 30px "Oswald", sans-serif'; ctx.textAlign = 'center';
-    ctx.strokeStyle = ctx.fillStyle; ctx.lineWidth = 3; ctx.strokeRect(560, 92, 160, 50); ctx.fillText('IN ONDA', 640, 128);
-    // microfono
-    ctx.fillStyle = '#1c1a20'; ctx.fillRect(632, 300, 16, 170); ctx.fillRect(560, 462, 160, 14);
-    var mg = ctx.createLinearGradient(590, 0, 690, 0); mg.addColorStop(0, '#2a2a30'); mg.addColorStop(0.5, '#8a8a96'); mg.addColorStop(1, '#2a2a30');
-    ctx.fillStyle = mg; ctx.beginPath(); ctx.ellipse(640, 250, 52, 78, 0, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = 'rgba(0,0,0,0.5)'; ctx.lineWidth = 2; for (var gy = 190; gy < 320; gy += 10) { ctx.beginPath(); ctx.moveTo(592, gy); ctx.lineTo(688, gy); ctx.stroke(); }
-    // onda: si muove quando la DJ parla
-    var talking = sc.line && sc.lineT < 3.5;
-    ctx.strokeStyle = 'rgba(255,90,90,0.85)'; ctx.lineWidth = 3; ctx.beginPath();
-    for (var x = 340; x <= 940; x += 6) { var a = talking ? Math.sin(x * 0.07 + t * 18) * Math.sin(x * 0.013 + t * 3) * 34 : Math.sin(x * 0.05 + t * 2) * 3; if (x === 340) ctx.moveTo(x, 540 + a); else ctx.lineTo(x, 540 + a); }
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(233,228,214,0.55)'; ctx.font = '500 16px "Oswald", sans-serif'; ctx.fillText('LA RADIO DELLA NOTTE', 640, 600);
+    var t = w.time, art = ARTSC.radio_dj;
+    if (art && art.ok) { var sc2 = Math.max(C.VIEW_W / art.width, C.VIEW_H / art.height); ctx.drawImage(art, (C.VIEW_W - art.width * sc2) / 2, (C.VIEW_H - art.height * sc2) / 2, art.width * sc2, art.height * sc2); return; }
+    var bg = ctx.createRadialGradient(820, 330, 40, 760, 360, 760); bg.addColorStop(0, '#e0402a'); bg.addColorStop(0.55, '#a81e16'); bg.addColorStop(1, '#2a0606');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    var talking = sc.line && sc.lineT < 3.5, open = talking ? 6 + Math.abs(Math.sin(t * 13)) * 22 + Math.abs(Math.sin(t * 5.3)) * 8 : 4;
+    // profilo del viso in ombra, rivolto verso il microfono
+    ctx.fillStyle = '#140a0a'; ctx.beginPath();
+    ctx.moveTo(0, 0); ctx.lineTo(470, 0); ctx.bezierCurveTo(520, 90, 600, 170, 640, 250); ctx.quadraticCurveTo(650, 280, 610, 300);
+    ctx.quadraticCurveTo(600, 330, 625, 352); ctx.lineTo(600, 372 + open * 0.5); ctx.quadraticCurveTo(625, 395 + open, 590, 420 + open);
+    ctx.quadraticCurveTo(560, 470 + open, 500, 520 + open * 0.6); ctx.bezierCurveTo(470, 600, 520, 680, 560, 720); ctx.lineTo(0, 720); ctx.closePath(); ctx.fill();
+    // luce di contorno rossa sul profilo
+    ctx.strokeStyle = 'rgba(255,110,80,0.45)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(520, 90); ctx.bezierCurveTo(560, 150, 610, 200, 640, 250); ctx.quadraticCurveTo(650, 280, 610, 300); ctx.stroke();
+    // labbra lucide e denti quando parla
+    ctx.fillStyle = '#4a0c10'; ctx.beginPath(); ctx.ellipse(612, 350, 30, 13, -0.25, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(604, 388 + open, 30, 15, -0.2, 0, Math.PI * 2); ctx.fill();
+    if (open > 8) { ctx.fillStyle = '#e8dccb'; ctx.fillRect(588, 360, 30, Math.min(10, open * 0.4)); ctx.fillStyle = '#1a0204'; ctx.fillRect(584, 360 + Math.min(10, open * 0.4), 32, open * 0.55); }
+    ctx.fillStyle = 'rgba(255,170,150,0.7)'; ctx.beginPath(); ctx.ellipse(622, 344, 9, 3, -0.3, 0, Math.PI * 2); ctx.fill(); ctx.beginPath(); ctx.ellipse(614, 384 + open, 10, 3, -0.2, 0, Math.PI * 2); ctx.fill();
+    // microfono nero
+    ctx.fillStyle = '#060606'; ctx.beginPath(); ctx.ellipse(1060, 380, 120, 150, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillRect(1100, 500, 60, 220);
+    ctx.strokeStyle = 'rgba(255,120,90,0.25)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(1060, 380, 120, 150, 0, Math.PI * 0.75, Math.PI * 1.3); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,220,200,0.55)'; ctx.font = '500 15px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText('LA RADIO DELLA NOTTE', 40, 110);
   }
   // carro funebre dei Rogues: Cadillac nera anni '50 coperta di graffiti (immagine nuova se c'è, altrimenti disegnato)
   var OBJ = {};
@@ -3549,11 +3552,24 @@ W.Render = (function () {
     }
     if (w.area && w.area.bus && w.area.bus.kind === 'bus' && w.area.bus.phase === 'pass') { var bus = w.area.bus; list.push({ y: bus.lane[0], d: function () {
       var bx = bus.x - cx, by = bus.lane[1];
-      ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.fillRect(bx, by - 6, 380, 14);
-      ctx.fillStyle = '#2f6b3a'; ctx.fillRect(bx, by - 150, 380, 140); ctx.fillStyle = '#2b2b33'; for (var wi = 0; wi < 6; wi++) ctx.fillRect(bx + 20 + wi * 58, by - 135, 44, 40);
-      ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(bx + 70, by - 8, 20, 0, Math.PI * 2); ctx.arc(bx + 310, by - 8, 20, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#fff6b0'; ctx.fillRect(bx + 368, by - 60, 12, 16);
-      ctx.fillStyle = '#e8e2c8'; ctx.font = '700 22px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText('TURNBULL A.C.', bx + 190, by - 70);
+      // il bus dei Turnbull: scuolabus vecchio coperto di graffiti, fari accecanti, skinhead sul tetto e aggrappati fuori
+      var bo = W.ART_AI && W.ART_AI.object && W.ART_AI.object.bus_turnbull;
+      if (bo) { if (!OBJ.bus) OBJ.bus = loadImg(bo); if (OBJ.bus.ok) { var bh2 = 190, bw2 = OBJ.bus.width * bh2 / OBJ.bus.height; ctx.drawImage(OBJ.bus, bx, by - bh2, bw2, bh2); return; } }
+      ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(bx - 10, by - 6, 410, 14);
+      ctx.fillStyle = '#3d4038'; ctx.fillRect(bx, by - 150, 380, 128); ctx.fillStyle = '#2c2e29'; ctx.fillRect(bx + 330, by - 100, 60, 78);
+      ctx.fillStyle = '#4b4e45'; ctx.fillRect(bx, by - 156, 380, 10);
+      ctx.fillStyle = '#16181c'; for (var wi = 0; wi < 6; wi++) ctx.fillRect(bx + 18 + wi * 52, by - 140, 42, 36);
+      ctx.fillStyle = 'rgba(150,160,170,0.18)'; for (var wj = 0; wj < 6; wj++) ctx.fillRect(bx + 18 + wj * 52, by - 140, 42, 8);
+      var gcol = ['#e8e4dc', '#5ec4e6', '#e2463a', '#f2c14e'], rr2 = 11; ctx.lineWidth = 3;
+      for (var gi = 0; gi < 14; gi++) { rr2 = (rr2 * 9301 + 49297) % 233280; var gx2 = bx + 14 + rr2 % 340; ctx.strokeStyle = gcol[gi % 4]; ctx.beginPath(); ctx.moveTo(gx2, by - 90); ctx.lineTo(gx2 + 8, by - 70 - (rr2 % 12)); ctx.lineTo(gx2 + 16, by - 86); ctx.lineTo(gx2 + 24, by - 62); ctx.stroke(); }
+      ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(bx + 70, by - 18, 22, 0, Math.PI * 2); ctx.arc(bx + 300, by - 18, 22, 0, Math.PI * 2); ctx.fill();
+      // fari blu-bianchi
+      var hg = ctx.createRadialGradient(bx + 392, by - 58, 2, bx + 392, by - 58, 60); hg.addColorStop(0, 'rgba(220,235,255,0.95)'); hg.addColorStop(1, 'rgba(120,150,255,0)');
+      ctx.fillStyle = hg; ctx.fillRect(bx + 330, by - 120, 130, 120);
+      // Turnbull sul tetto e aggrappati (sagome calve)
+      [[40, -156], [120, -156], [230, -156], [300, -156]].forEach(function (q, i) { var hx = bx + q[0], hy = by + q[1];
+        ctx.fillStyle = '#1b1a1d'; ctx.fillRect(hx - 9, hy - 44, 18, 44 - (i % 2) * 8); ctx.fillStyle = '#d9b9a0'; ctx.beginPath(); ctx.arc(hx, hy - 52 + (i % 2) * 8, 9, 0, Math.PI * 2); ctx.fill(); });
+      ctx.fillStyle = '#1b1a1d'; ctx.fillRect(bx + 350, by - 140, 16, 60); ctx.fillStyle = '#d9b9a0'; ctx.beginPath(); ctx.arc(bx + 358, by - 148, 9, 0, Math.PI * 2); ctx.fill();
     } }); }
     if (w.area && !w.area.scene && w.area.interactions) w.area.interactions().forEach(function (it) {
       list.push({ y: it.y + 1, d: function () {

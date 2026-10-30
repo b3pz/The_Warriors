@@ -44,7 +44,8 @@ Aprilo prima di disegnare: è il modo per restare fedeli al film.
 - `assets/incoming/riferimenti/<set>_1.png`, `_2`, `_3`: fotogrammi del film per swan, ajax, snow, fox, cleon, cochise, vermin, cowboy, rembrandt, mercy, luther, cyrus, fury, punk. Usali per capelli, costume, colori ed espressione. Alcuni `_2` sono personaggi di un altro videogioco sul film: vanno bene per il costume intero, non per lo stile.
 - `assets/incoming/riferimenti/mappe/bande_collage_*.png`: le bande del film insieme (Rogues, Furies, Lizzies, Punks, Boppers, Hi-Hats, Electric Eliminators e altre).
 - `assets/incoming/riferimenti/<set>.png` (sfondo magenta): figure provvisorie del gioco attuale, solo per scala e tipo di pixel art; costumi e facce si prendono dalle foto.
-- `assets/incoming/riferimenti/luoghi/`: i luoghi del film. `raduno_*` (il raduno nel nord del Bronx: anfiteatro con arcate di pietra, folla sugli spalti, Cyrus sul palco con la veste), `union_square_scale` (scala piastrellata bianca della stazione), `bagno_union_square` (il bagno della rissa con i Punks: piastrelle bianche, porte dei gabinetti verde scuro, tubi sul soffitto), `strada_notte` e `strada_orphans` (strade bagnate di notte, palazzi di mattoni, scale antincendio), `spiaggia_riffs` (la spiaggia all'alba), `coney_lungomare` e `coney_wonder_wheel` (Coney Island: ruota panoramica, chioschi, lungomare), `auto_rogues` e `auto_rogues_coney` (il carro funebre dei Rogues coperto di graffiti, nella scena finale).
+- `assets/incoming/riferimenti/luoghi/`: i luoghi del film. `raduno_*` (il raduno nel nord del Bronx: anfiteatro con arcate di pietra, folla sugli spalti, Cyrus sul palco con la veste), `union_square_scale` (scala piastrellata bianca della stazione), `bagno_union_square` (il bagno della rissa con i Punks: piastrelle bianche, porte dei gabinetti verde scuro, tubi sul soffitto), `strada_notte` e `strada_orphans` (strade bagnate di notte, palazzi di mattoni, scale antincendio), `spiaggia_riffs` (la spiaggia all'alba), `coney_lungomare` e `coney_wonder_wheel` (Coney Island: ruota panoramica, chioschi, lungomare), `auto_rogues` e `auto_rogues_coney` (il carro funebre dei Rogues coperto di graffiti, nella scena finale), `bus_turnbull` (lo scuolabus dei Turnbull con gli skinhead sul tetto e aggrappati fuori), `treno_graffiti` e `vagone_interno` (la metro fuori e dentro).
+- `assets/incoming/riferimenti/dj_1.png`, `dj_2`, `dj_3`: la DJ della radio. Nel film non si vede mai il viso intero: solo la bocca con il rossetto scuro, di profilo, davanti a un microfono nero, su un fondo rosso acceso.
 - `assets/incoming/riferimenti/mappe/`: dove sta ogni banda (Furies a Riverside, Lizzies a Union Square, Punks al Bowery, Orphans a Tremont, Turnbull a Gun Hill, Riffs a Gramercy, Rogues a Hell's Kitchen) e i loro loghi: utili per colori e stile delle bande.
 
 ## Personaggi
@@ -237,8 +238,8 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 111. `assets/incoming/fondali/C6-02_a.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte; riferimento: `riferimenti/luoghi/` bagno_union_square
 112. `assets/incoming/fondali/C6-03_a.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` bagno_union_square
 113. `assets/incoming/fondali/C6-03_b.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` bagno_union_square
-114. `assets/incoming/fondali/C7-01_a.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 1 di 2, il lato sinistro del luogo
-115. `assets/incoming/fondali/C7-01_b.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a
+114. `assets/incoming/fondali/C7-01_a.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/vagone_interno.png` (sedili arancioni, pali, pubblicità in alto, graffiti)
+115. `assets/incoming/fondali/C7-01_b.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/vagone_interno.png` (sedili arancioni, pali, pubblicità in alto, graffiti)
 116. `assets/incoming/fondali/C7-02_a.png` → stazione sopraelevata di Coney Island all'alba; luce: alba; riferimento: `riferimenti/luoghi/` coney_wonder_wheel
 117. `assets/incoming/fondali/C8-01_a.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
 118. `assets/incoming/fondali/C8-01_b.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
@@ -584,66 +585,68 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 446. `assets/incoming/scene/cine_disarm.png` → sulla spiaggia all'alba il coltello di Swan colpisce il braccio di Luther, la pistola cade
 447. `assets/incoming/scene/cine_epilogue.png` → i Warriors e Mercy camminano sulla spiaggia di Coney Island all'alba
 
+448. `assets/incoming/scene/radio_dj.png` → la DJ alla radio: primissimo piano della bocca con il rossetto rosso scuro, di profilo verso destra, davanti a un microfono nero, fondo rosso acceso, controluce; si vede solo la parte bassa del viso; riferimento: `riferimenti/dj_1.png`, `dj_2`, `dj_3`
+
 ### 7. Ritratti (mezzo busto, tre quarti verso destra, sfondo magenta)
 
-448. `assets/incoming/ritratti/idle_1.png` → ritratto di idle_1
-449. `assets/incoming/ritratti/punch_1.png` → ritratto di punch_1
-450. `assets/incoming/ritratti/kick_1.png` → ritratto di kick_1
-451. `assets/incoming/ritratti/heavy_1.png` → ritratto di heavy_1
-452. `assets/incoming/ritratti/jump_1.png` → ritratto di jump_1
-453. `assets/incoming/ritratti/jumpkick_1.png` → ritratto di jumpkick_1
-454. `assets/incoming/ritratti/hurt_1.png` → ritratto di hurt_1
-455. `assets/incoming/ritratti/down_1.png` → ritratto di down_1
-456. `assets/incoming/ritratti/getup_1.png` → ritratto di getup_1
-457. `assets/incoming/ritratti/grab_1.png` → ritratto di grab_1
-458. `assets/incoming/ritratti/throw_1.png` → ritratto di throw_1
-459. `assets/incoming/ritratti/dodge_1.png` → ritratto di dodge_1
-460. `assets/incoming/ritratti/pipe_swing_1.png` → ritratto di pipe_swing_1
-461. `assets/incoming/ritratti/revive_1.png` → ritratto di revive_1
-462. `assets/incoming/ritratti/sit_1.png` → ritratto di sit_1
-463. `assets/incoming/ritratti/swan.png` → ritratto di swan
-464. `assets/incoming/ritratti/ajax.png` → ritratto di ajax
-465. `assets/incoming/ritratti/snow.png` → ritratto di snow
-466. `assets/incoming/ritratti/cowboy.png` → ritratto di cowboy
-467. `assets/incoming/ritratti/cochise.png` → ritratto di cochise
-468. `assets/incoming/ritratti/vermin.png` → ritratto di vermin
-469. `assets/incoming/ritratti/rembrandt.png` → ritratto di rembrandt
-470. `assets/incoming/ritratti/fox.png` → ritratto di fox
-471. `assets/incoming/ritratti/cleon.png` → ritratto di cleon
-472. `assets/incoming/ritratti/mercy.png` → ritratto di mercy
+449. `assets/incoming/ritratti/idle_1.png` → ritratto di idle_1
+450. `assets/incoming/ritratti/punch_1.png` → ritratto di punch_1
+451. `assets/incoming/ritratti/kick_1.png` → ritratto di kick_1
+452. `assets/incoming/ritratti/heavy_1.png` → ritratto di heavy_1
+453. `assets/incoming/ritratti/jump_1.png` → ritratto di jump_1
+454. `assets/incoming/ritratti/jumpkick_1.png` → ritratto di jumpkick_1
+455. `assets/incoming/ritratti/hurt_1.png` → ritratto di hurt_1
+456. `assets/incoming/ritratti/down_1.png` → ritratto di down_1
+457. `assets/incoming/ritratti/getup_1.png` → ritratto di getup_1
+458. `assets/incoming/ritratti/grab_1.png` → ritratto di grab_1
+459. `assets/incoming/ritratti/throw_1.png` → ritratto di throw_1
+460. `assets/incoming/ritratti/dodge_1.png` → ritratto di dodge_1
+461. `assets/incoming/ritratti/pipe_swing_1.png` → ritratto di pipe_swing_1
+462. `assets/incoming/ritratti/revive_1.png` → ritratto di revive_1
+463. `assets/incoming/ritratti/sit_1.png` → ritratto di sit_1
+464. `assets/incoming/ritratti/swan.png` → ritratto di swan
+465. `assets/incoming/ritratti/ajax.png` → ritratto di ajax
+466. `assets/incoming/ritratti/snow.png` → ritratto di snow
+467. `assets/incoming/ritratti/cowboy.png` → ritratto di cowboy
+468. `assets/incoming/ritratti/cochise.png` → ritratto di cochise
+469. `assets/incoming/ritratti/vermin.png` → ritratto di vermin
+470. `assets/incoming/ritratti/rembrandt.png` → ritratto di rembrandt
+471. `assets/incoming/ritratti/fox.png` → ritratto di fox
+472. `assets/incoming/ritratti/cleon.png` → ritratto di cleon
+473. `assets/incoming/ritratti/mercy.png` → ritratto di mercy
 
 ### 8. Oggetti ed effetti (sfondo magenta, vista laterale)
 
-473. `assets/incoming/oggetti/bus_turnbull.png` → bus_turnbull (bus scolastico verde dipinto)
-474. `assets/incoming/oggetti/treno_esterno.png` → treno_esterno (vagone della metro anni '70 con graffiti, di lato)
-475. `assets/incoming/oggetti/auto_rogues.png` → il carro funebre dei Rogues: Cadillac anni '50 nera coperta di graffiti colorati, cromature, vista laterale rivolta a destra; riferimento: `riferimenti/luoghi/auto_rogues.png`, `auto_rogues_coney.png`
-476. `assets/incoming/oggetti/auto_orphans_fuoco.png` → auto_orphans_fuoco (auto in fiamme)
-477. `assets/incoming/oggetti/tornello.png` → tornello
-478. `assets/incoming/oggetti/transenna.png` → transenna
-479. `assets/incoming/oggetti/panchina.png` → panchina
-480. `assets/incoming/oggetti/cestino.png` → cestino
-481. `assets/incoming/oggetti/cassa.png` → cassa
-482. `assets/incoming/oggetti/bidone.png` → bidone
-483. `assets/incoming/oggetti/porta_gabinetto.png` → porta_gabinetto
-484. `assets/incoming/oggetti/lavandino.png` → lavandino
-485. `assets/incoming/oggetti/giradischi.png` → giradischi
-486. `assets/incoming/oggetti/sedia.png` → sedia
-487. `assets/incoming/oggetti/bomboletta.png` → bomboletta
-488. `assets/incoming/oggetti/coltello.png` → coltello
-489. `assets/incoming/oggetti/pistola.png` → pistola
-490. `assets/incoming/oggetti/bottiglia.png` → bottiglia
-491. `assets/incoming/oggetti/mazza.png` → mazza
-492. `assets/incoming/oggetti/tubo.png` → tubo
-493. `assets/incoming/oggetti/asse.png` → asse
-494. `assets/incoming/oggetti/manganello.png` → manganello
-495. `assets/incoming/oggetti/fx_spruzzo.png` → fx_spruzzo
-496. `assets/incoming/oggetti/fx_scintille.png` → fx_scintille
-497. `assets/incoming/oggetti/fx_polvere.png` → fx_polvere
-498. `assets/incoming/oggetti/fx_fuoco.png` → fx_fuoco
-499. `assets/incoming/oggetti/fx_vetro.png` → fx_vetro
-500. `assets/incoming/oggetti/fx_sparo.png` → fx_sparo
+474. `assets/incoming/oggetti/bus_turnbull.png` → il bus dei Turnbull: vecchio scuolabus americano grigio-verde scuro coperto di graffiti, fari bianco-blu accecanti, vista laterale rivolta a destra, senza persone; riferimento: `riferimenti/luoghi/bus_turnbull.png`
+475. `assets/incoming/oggetti/treno_esterno.png` → vagone della metro anni '70 visto di lato, interamente coperto di graffiti colorati, numero sul fianco, porte aperte; riferimento: `riferimenti/luoghi/treno_graffiti.png`
+476. `assets/incoming/oggetti/auto_rogues.png` → il carro funebre dei Rogues: Cadillac anni '50 nera coperta di graffiti colorati, cromature, vista laterale rivolta a destra; riferimento: `riferimenti/luoghi/auto_rogues.png`, `auto_rogues_coney.png`
+477. `assets/incoming/oggetti/auto_orphans_fuoco.png` → auto_orphans_fuoco (auto in fiamme)
+478. `assets/incoming/oggetti/tornello.png` → tornello
+479. `assets/incoming/oggetti/transenna.png` → transenna
+480. `assets/incoming/oggetti/panchina.png` → panchina
+481. `assets/incoming/oggetti/cestino.png` → cestino
+482. `assets/incoming/oggetti/cassa.png` → cassa
+483. `assets/incoming/oggetti/bidone.png` → bidone
+484. `assets/incoming/oggetti/porta_gabinetto.png` → porta_gabinetto
+485. `assets/incoming/oggetti/lavandino.png` → lavandino
+486. `assets/incoming/oggetti/giradischi.png` → giradischi
+487. `assets/incoming/oggetti/sedia.png` → sedia
+488. `assets/incoming/oggetti/bomboletta.png` → bomboletta
+489. `assets/incoming/oggetti/coltello.png` → coltello
+490. `assets/incoming/oggetti/pistola.png` → pistola
+491. `assets/incoming/oggetti/bottiglia.png` → bottiglia
+492. `assets/incoming/oggetti/mazza.png` → mazza
+493. `assets/incoming/oggetti/tubo.png` → tubo
+494. `assets/incoming/oggetti/asse.png` → asse
+495. `assets/incoming/oggetti/manganello.png` → manganello
+496. `assets/incoming/oggetti/fx_spruzzo.png` → fx_spruzzo
+497. `assets/incoming/oggetti/fx_scintille.png` → fx_scintille
+498. `assets/incoming/oggetti/fx_polvere.png` → fx_polvere
+499. `assets/incoming/oggetti/fx_fuoco.png` → fx_fuoco
+500. `assets/incoming/oggetti/fx_vetro.png` → fx_vetro
+501. `assets/incoming/oggetti/fx_sparo.png` → fx_sparo
 
 ## Fine
 
-In tutto 500 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
+In tutto 501 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
 
