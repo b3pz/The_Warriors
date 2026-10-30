@@ -66,6 +66,7 @@ fs.mkdirSync(out, { recursive: true });
       const W = window.W, g = W.Game.game;
       for (let k = 0; k < 30; k++) {
         if (g.state === 'party') W.Game.onKey('Enter');
+        if (g.state === 'gameover') { window.__qa.log.push('GAME OVER ' + g.world.area.id); g.gameoverT = 9; W.Game.onKey('Enter'); }
         if (g.state === 'fail') { window.__qa.log.push('KO ' + g.world.area.id + ' ' + (g.world.failReasonShown || '')); W.Game.onKey('Enter'); }
         if (g.state === 'pause') W.Game.onKey('Escape');
         window.__bot();
