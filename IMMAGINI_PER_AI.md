@@ -67,13 +67,14 @@ Tutti i Warriors portano un gilet di pelle marrone senza maniche, senza scritte.
 | `swan` | uomo bianco sui vent'anni, statura media, asciutto e atletico; capelli castano chiaro lisci di media lunghezza pettinati all'indietro; gilet di pelle marrone aperto sul petto nudo, jeans, stivali |
 | `ajax` | uomo bianco, alto e massiccio; capelli castano scuro corti; guanti di pelle senza dita; espressione provocatoria; gilet di pelle marrone sul petto nudo, jeans |
 | `snow` | uomo afroamericano, alto, braccia lunghe; capigliatura afro altissima e squadrata; espressione calma; gilet di pelle marrone, pantaloni scuri |
-| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo; cappello da cowboy sempre in testa (colore come nella foto di gruppo); gilet di pelle marrone, jeans |
+| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo; cappello da cowboy scuro sempre in testa; gilet di pelle marrone, jeans |
 | `cochise` | uomo afroamericano, medio-alto e agile; treccine e afro, fascia sulla fronte, collana di perline; gilet di pelle marrone sul petto nudo, pantaloni a zampa |
 | `vermin` | uomo bianco tarchiato e robusto; capelli castani corti e spettinati; faccia stanca e scocciata; gilet di pelle marrone, maglietta, jeans |
 | `rembrandt` | ragazzo ispanico, il più giovane e minuto del gruppo; ricci neri folti; borsa a tracolla con bombolette spray; gilet di pelle marrone, jeans |
 | `fox` | uomo bianco esile e slanciato; capelli biondo-castani ricci e folti; aria da ragazzo di buona famiglia; gilet di pelle marrone, camicia aperta |
+| `mercy_giacca` | Mercy dai tunnel della metro in poi: stessa ragazza, con una giacca di jeans blu scuro troppo grande sopra la maglietta, gonna a fiori, sandali; vedi la foto di gruppo |
 | `cleon` | uomo afroamericano alto, robusto e imponente; bandana leopardata in testa, capelli rasati ai lati; sguardo severo da capo; gilet di pelle marrone |
-| `mercy` | ragazza giovane, magra e minuta; capelli castano scuro ricci e vaporosi; giacca di lana grigio-marrone logora, maglietta scollata, minigonna viola, stivali alti |
+| `mercy` | ragazza giovane, magra e minuta; capelli castano scuro ricci e vaporosi; giacca di lana grigio-marrone logora, maglietta rosa scollata, minigonna viola, stivali alti (aspetto della notte) |
 | `fury` | membro di una banda vestita da squadra di baseball: divisa gessata, berretto, viso dipinto a colori come una maschera; mazza da baseball |
 | `fury_boss` | come sopra, il capo: trucco diverso e più vistoso, più grosso |
 | `turnbull` | skinhead calvo e grosso, canotta di jeans senza maniche, catene |
@@ -164,367 +165,376 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 49. `assets/incoming/personaggi/mercy/hand_1.png` → mercy, cammina tenendo per mano qualcuno accanto a sé
 50. `assets/incoming/personaggi/mercy/sit_1.png` → mercy, seduto su un sedile della metro
 51. `assets/incoming/personaggi/mercy/cover_1.png` → mercy, si ripara, braccia davanti al viso
+52. `assets/incoming/personaggi/mercy_giacca/idle_1.png` → mercy_giacca, in attesa, braccia lungo i fianchi
+53. `assets/incoming/personaggi/mercy_giacca/walk_1.png` → mercy_giacca, camminata, fotogramma 1 di 4: gamba destra avanti
+54. `assets/incoming/personaggi/mercy_giacca/walk_2.png` → mercy_giacca, camminata, fotogramma 2 di 4: passaggio
+55. `assets/incoming/personaggi/mercy_giacca/walk_3.png` → mercy_giacca, camminata, fotogramma 3 di 4: gamba sinistra avanti
+56. `assets/incoming/personaggi/mercy_giacca/walk_4.png` → mercy_giacca, camminata, fotogramma 4 di 4: passaggio
+57. `assets/incoming/personaggi/mercy_giacca/run_1.png` → mercy_giacca, corsa
+58. `assets/incoming/personaggi/mercy_giacca/hair_1.png` → mercy_giacca, seduta, si sistema i capelli con una mano
+59. `assets/incoming/personaggi/mercy_giacca/hand_1.png` → mercy_giacca, cammina tenendo per mano qualcuno alla sua sinistra
+60. `assets/incoming/personaggi/mercy_giacca/sit_1.png` → mercy_giacca, seduta su un sedile della metro
 
 ### 3. Fondali delle aree
 
-52. `assets/incoming/fondali/P0-01_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
-53. `assets/incoming/fondali/P0-02_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
-54. `assets/incoming/fondali/P0-03_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
-55. `assets/incoming/fondali/P0-04_a.png` → banchina della metropolitana sopraelevata di Coney Island, sera; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
-56. `assets/incoming/fondali/C1-01_a.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` raduno_arcate, raduno_folla, raduno_cyrus
-57. `assets/incoming/fondali/C1-01_b.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` raduno_arcate, raduno_folla, raduno_cyrus
-58. `assets/incoming/fondali/C1-02_a.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; riferimento: `riferimenti/luoghi/` raduno_arcate, raduno_folla, raduno_cyrus
-59. `assets/incoming/fondali/C1-03_a.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
-60. `assets/incoming/fondali/C1-03_b.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
-61. `assets/incoming/fondali/C1-03_c.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
-62. `assets/incoming/fondali/C1-04_a.png` → sottopasso di cemento con scala che sale, luci al neon rotte; luce: notte
-63. `assets/incoming/fondali/C2-01_a.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
-64. `assets/incoming/fondali/C2-01_b.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
-65. `assets/incoming/fondali/C2-01_c.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_notte
-66. `assets/incoming/fondali/C2-03_a.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
-67. `assets/incoming/fondali/C2-03_b.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
-68. `assets/incoming/fondali/C2-03_c.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_notte
-69. `assets/incoming/fondali/C2-02_a.png` → vicolo stretto tra palazzi di mattoni, cancello di rete in fondo, bidoni; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
-70. `assets/incoming/fondali/C2-02_b.png` → vicolo stretto tra palazzi di mattoni, cancello di rete in fondo, bidoni; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
-71. `assets/incoming/fondali/C2-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
-72. `assets/incoming/fondali/C2-04_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
-73. `assets/incoming/fondali/C3-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
-74. `assets/incoming/fondali/C3-04_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
-75. `assets/incoming/fondali/C6-01_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` union_square_scale
-76. `assets/incoming/fondali/C6-01_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` union_square_scale
-77. `assets/incoming/fondali/C6-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; riferimento: `riferimenti/luoghi/` union_square_scale
-78. `assets/incoming/fondali/C3-01_a.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; riferimento: `riferimenti/luoghi/` strada_orphans
-79. `assets/incoming/fondali/C3-03_a.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_orphans
-80. `assets/incoming/fondali/C3-03_b.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_orphans
-81. `assets/incoming/fondali/C3-03_c.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_orphans
-82. `assets/incoming/fondali/C3-02_a.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
-83. `assets/incoming/fondali/C3-02_b.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
-84. `assets/incoming/fondali/C3-02_c.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
-85. `assets/incoming/fondali/C4-01_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-86. `assets/incoming/fondali/C4-01_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-87. `assets/incoming/fondali/C4-02_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
-88. `assets/incoming/fondali/C4-02_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
-89. `assets/incoming/fondali/C4-02_c.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
-90. `assets/incoming/fondali/C4-03_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
-91. `assets/incoming/fondali/C4-03_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
-92. `assets/incoming/fondali/C4-03_c.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
-93. `assets/incoming/fondali/C4-04_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte
-94. `assets/incoming/fondali/C5-01_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte
-95. `assets/incoming/fondali/C5-02_a.png` → appartamento anni '70: divani, tende, luci soffuse viola, giradischi, porta d'ingresso; luce: notte
-96. `assets/incoming/fondali/C5-03_a.png` → appartamento anni '70: divani, tende, luci soffuse viola, giradischi, porta d'ingresso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-97. `assets/incoming/fondali/C5-03_b.png` → appartamento anni '70: divani, tende, luci soffuse viola, giradischi, porta d'ingresso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-98. `assets/incoming/fondali/C5-04_a.png` → tunnel di servizio della metropolitana, tubi, luci di emergenza, binari; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-99. `assets/incoming/fondali/C5-04_b.png` → tunnel di servizio della metropolitana, tubi, luci di emergenza, binari; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-100. `assets/incoming/fondali/C5-05_a.png` → strada di Manhattan di notte verso una grande piazza, vapore dai tombini; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-101. `assets/incoming/fondali/C5-05_b.png` → strada di Manhattan di notte verso una grande piazza, vapore dai tombini; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-102. `assets/incoming/fondali/C6-02_a.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte
-103. `assets/incoming/fondali/C6-03_a.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
-104. `assets/incoming/fondali/C6-03_b.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
-105. `assets/incoming/fondali/C7-01_a.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 1 di 2, il lato sinistro del luogo
-106. `assets/incoming/fondali/C7-01_b.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a
-107. `assets/incoming/fondali/C7-02_a.png` → stazione sopraelevata di Coney Island all'alba; luce: alba; riferimento: `riferimenti/luoghi/` coney_wonder_wheel
-108. `assets/incoming/fondali/C8-01_a.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
-109. `assets/incoming/fondali/C8-01_b.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
-110. `assets/incoming/fondali/C8-02_a.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
-111. `assets/incoming/fondali/C8-02_b.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
-112. `assets/incoming/fondali/C8-03_a.png` → spiaggia di Coney Island all'alba, sabbia, mare calmo, il molo sullo sfondo; luce: alba; riferimento: `riferimenti/luoghi/` spiaggia_riffs
-113. `assets/incoming/fondali/C8-04_a.png` → spiaggia di Coney Island all'alba, sabbia, mare calmo, il molo sullo sfondo; luce: alba; riferimento: `riferimenti/luoghi/` spiaggia_riffs
+61. `assets/incoming/fondali/P0-01_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+62. `assets/incoming/fondali/P0-02_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+63. `assets/incoming/fondali/P0-03_a.png` → Coney Island la sera: lungomare, montagne russe e ruota panoramica spente sullo sfondo, insegne al neon, marciapiede; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+64. `assets/incoming/fondali/P0-04_a.png` → banchina della metropolitana sopraelevata di Coney Island, sera; luce: sera; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+65. `assets/incoming/fondali/C1-01_a.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` raduno_arcate, raduno_folla, raduno_cyrus
+66. `assets/incoming/fondali/C1-01_b.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` raduno_arcate, raduno_folla, raduno_cyrus
+67. `assets/incoming/fondali/C1-02_a.png` → un grande parco del Bronx di notte, migliaia di ragazzi delle bande ammassati sullo sfondo davanti a un palco illuminato da fari; luce: notte; riferimento: `riferimenti/luoghi/` raduno_arcate, raduno_folla, raduno_cyrus
+68. `assets/incoming/fondali/C1-03_a.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
+69. `assets/incoming/fondali/C1-03_b.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
+70. `assets/incoming/fondali/C1-03_c.png` → parco di notte, alberi, siepi, prato calpestato, fuga; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
+71. `assets/incoming/fondali/C1-04_a.png` → sottopasso di cemento con scala che sale, luci al neon rotte; luce: notte
+72. `assets/incoming/fondali/C2-01_a.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
+73. `assets/incoming/fondali/C2-01_b.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
+74. `assets/incoming/fondali/C2-01_c.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_notte
+75. `assets/incoming/fondali/C2-03_a.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
+76. `assets/incoming/fondali/C2-03_b.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
+77. `assets/incoming/fondali/C2-03_c.png` → strada del Bronx di notte, palazzi di mattoni, scale antincendio, negozi chiusi con saracinesche, cassonetti; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_notte
+78. `assets/incoming/fondali/C2-02_a.png` → vicolo stretto tra palazzi di mattoni, cancello di rete in fondo, bidoni; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_notte
+79. `assets/incoming/fondali/C2-02_b.png` → vicolo stretto tra palazzi di mattoni, cancello di rete in fondo, bidoni; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_notte
+80. `assets/incoming/fondali/C2-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
+81. `assets/incoming/fondali/C2-04_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
+82. `assets/incoming/fondali/C3-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
+83. `assets/incoming/fondali/C3-04_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` union_square_scale (stile delle stazioni)
+84. `assets/incoming/fondali/C6-01_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` union_square_scale
+85. `assets/incoming/fondali/C6-01_b.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` union_square_scale
+86. `assets/incoming/fondali/C6-04_a.png` → banchina della metropolitana sotterranea anni '70, piastrelle sporche, colonne, graffiti, binari in basso; luce: notte; riferimento: `riferimenti/luoghi/` union_square_scale
+87. `assets/incoming/fondali/C3-01_a.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; riferimento: `riferimenti/luoghi/` strada_orphans
+88. `assets/incoming/fondali/C3-03_a.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 1 di 3, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` strada_orphans
+89. `assets/incoming/fondali/C3-03_b.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` strada_orphans
+90. `assets/incoming/fondali/C3-03_c.png` → quartiere povero del Bronx, palazzi semidistrutti, auto abbandonate, bidoni con il fuoco; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b; riferimento: `riferimenti/luoghi/` strada_orphans
+91. `assets/incoming/fondali/C3-02_a.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
+92. `assets/incoming/fondali/C3-02_b.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
+93. `assets/incoming/fondali/C3-02_c.png` → cortile interno tra case popolari, fili da stendere, muri scrostati; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
+94. `assets/incoming/fondali/C4-01_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
+95. `assets/incoming/fondali/C4-01_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
+96. `assets/incoming/fondali/C4-02_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
+97. `assets/incoming/fondali/C4-02_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
+98. `assets/incoming/fondali/C4-02_c.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
+99. `assets/incoming/fondali/C4-03_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 1 di 3, il lato sinistro del luogo
+100. `assets/incoming/fondali/C4-03_b.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 2 di 3, continua verso destra il pezzo a
+101. `assets/incoming/fondali/C4-03_c.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte; pezzo 3 di 3, continua verso destra il pezzo b
+102. `assets/incoming/fondali/C4-04_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte
+103. `assets/incoming/fondali/C5-01_a.png` → parco lungo il fiume a Manhattan di notte, lampioni, panchine, alberi, il fiume scuro sullo sfondo; luce: notte
+104. `assets/incoming/fondali/C5-02_a.png` → appartamento anni '70: divani, tende, luci soffuse viola, giradischi, porta d'ingresso; luce: notte
+105. `assets/incoming/fondali/C5-03_a.png` → appartamento anni '70: divani, tende, luci soffuse viola, giradischi, porta d'ingresso; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
+106. `assets/incoming/fondali/C5-03_b.png` → appartamento anni '70: divani, tende, luci soffuse viola, giradischi, porta d'ingresso; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
+107. `assets/incoming/fondali/C5-04_a.png` → tunnel di servizio della metropolitana, tubi, luci di emergenza, binari; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
+108. `assets/incoming/fondali/C5-04_b.png` → tunnel di servizio della metropolitana, tubi, luci di emergenza, binari; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
+109. `assets/incoming/fondali/C5-05_a.png` → strada di Manhattan di notte verso una grande piazza, vapore dai tombini; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
+110. `assets/incoming/fondali/C5-05_b.png` → strada di Manhattan di notte verso una grande piazza, vapore dai tombini; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
+111. `assets/incoming/fondali/C6-02_a.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte
+112. `assets/incoming/fondali/C6-03_a.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte; pezzo 1 di 2, il lato sinistro del luogo
+113. `assets/incoming/fondali/C6-03_b.png` → bagno pubblico sotterraneo della metropolitana: fila di gabinetti con porte, lavandini, specchi crepati, piastrelle; luce: notte; pezzo 2 di 2, continua verso destra il pezzo a
+114. `assets/incoming/fondali/C7-01_a.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 1 di 2, il lato sinistro del luogo
+115. `assets/incoming/fondali/C7-01_b.png` → interno di un vagone della metropolitana anni '70 coperto di graffiti, sedili lungo i lati, finestrini con l'alba che passa; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a
+116. `assets/incoming/fondali/C7-02_a.png` → stazione sopraelevata di Coney Island all'alba; luce: alba; riferimento: `riferimenti/luoghi/` coney_wonder_wheel
+117. `assets/incoming/fondali/C8-01_a.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+118. `assets/incoming/fondali/C8-01_b.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+119. `assets/incoming/fondali/C8-02_a.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 1 di 2, il lato sinistro del luogo; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+120. `assets/incoming/fondali/C8-02_b.png` → Coney Island all'alba, lungomare deserto, giostre ferme, insegne spente; luce: alba; pezzo 2 di 2, continua verso destra il pezzo a; riferimento: `riferimenti/luoghi/` coney_lungomare, coney_wonder_wheel
+121. `assets/incoming/fondali/C8-03_a.png` → spiaggia di Coney Island all'alba, sabbia, mare calmo, il molo sullo sfondo; luce: alba; riferimento: `riferimenti/luoghi/` spiaggia_riffs
+122. `assets/incoming/fondali/C8-04_a.png` → spiaggia di Coney Island all'alba, sabbia, mare calmo, il molo sullo sfondo; luce: alba; riferimento: `riferimenti/luoghi/` spiaggia_riffs
 
 ### 4. Gli altri Warriors: pose che mancano e pose speciali
 
-114. `assets/incoming/personaggi/swan/idle_1.png` → swan, in guardia, fermo, pugni alzati
-115. `assets/incoming/personaggi/swan/walk_1.png` → swan, camminata, fotogramma 1 di 4: gamba destra avanti
-116. `assets/incoming/personaggi/swan/walk_2.png` → swan, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-117. `assets/incoming/personaggi/swan/walk_3.png` → swan, camminata, fotogramma 3 di 4: gamba sinistra avanti
-118. `assets/incoming/personaggi/swan/walk_4.png` → swan, camminata, fotogramma 4 di 4: passaggio
-119. `assets/incoming/personaggi/swan/punch_1.png` → swan, pugno diretto a braccio teso
-120. `assets/incoming/personaggi/swan/kick_1.png` → swan, calcio frontale alto
-121. `assets/incoming/personaggi/swan/heavy_1.png` → swan, gancio potente con tutto il corpo
-122. `assets/incoming/personaggi/swan/jump_1.png` → swan, in salto, ginocchia raccolte
-123. `assets/incoming/personaggi/swan/hurt_1.png` → swan, colpito, testa all'indietro, smorfia
-124. `assets/incoming/personaggi/swan/down_1.png` → swan, a terra, sdraiato sulla schiena (figura orizzontale)
-125. `assets/incoming/personaggi/swan/getup_1.png` → swan, si rialza, un ginocchio a terra
-126. `assets/incoming/personaggi/swan/knife_1.png` → swan, coltello a scatto aperto in mano
-127. `assets/incoming/personaggi/swan/knifethrow_1.png` → swan, lancia un coltello in avanti
-128. `assets/incoming/personaggi/swan/hand_1.png` → swan, cammina tenendo per mano qualcuno accanto a sé
-129. `assets/incoming/personaggi/snow/idle_1.png` → snow, in guardia, fermo, pugni alzati
-130. `assets/incoming/personaggi/snow/walk_1.png` → snow, camminata, fotogramma 1 di 4: gamba destra avanti
-131. `assets/incoming/personaggi/snow/walk_2.png` → snow, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-132. `assets/incoming/personaggi/snow/walk_3.png` → snow, camminata, fotogramma 3 di 4: gamba sinistra avanti
-133. `assets/incoming/personaggi/snow/walk_4.png` → snow, camminata, fotogramma 4 di 4: passaggio
-134. `assets/incoming/personaggi/snow/punch_1.png` → snow, pugno diretto a braccio teso
-135. `assets/incoming/personaggi/snow/kick_1.png` → snow, calcio frontale alto
-136. `assets/incoming/personaggi/snow/heavy_1.png` → snow, gancio potente con tutto il corpo
-137. `assets/incoming/personaggi/snow/jump_1.png` → snow, in salto, ginocchia raccolte
-138. `assets/incoming/personaggi/snow/hurt_1.png` → snow, colpito, testa all'indietro, smorfia
-139. `assets/incoming/personaggi/snow/down_1.png` → snow, a terra, sdraiato sulla schiena (figura orizzontale)
-140. `assets/incoming/personaggi/snow/getup_1.png` → snow, si rialza, un ginocchio a terra
-141. `assets/incoming/personaggi/cowboy/idle_1.png` → cowboy, in guardia, fermo, pugni alzati
-142. `assets/incoming/personaggi/cowboy/walk_1.png` → cowboy, camminata, fotogramma 1 di 4: gamba destra avanti
-143. `assets/incoming/personaggi/cowboy/walk_2.png` → cowboy, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-144. `assets/incoming/personaggi/cowboy/walk_3.png` → cowboy, camminata, fotogramma 3 di 4: gamba sinistra avanti
-145. `assets/incoming/personaggi/cowboy/walk_4.png` → cowboy, camminata, fotogramma 4 di 4: passaggio
-146. `assets/incoming/personaggi/cowboy/punch_1.png` → cowboy, pugno diretto a braccio teso
-147. `assets/incoming/personaggi/cowboy/kick_1.png` → cowboy, calcio frontale alto
-148. `assets/incoming/personaggi/cowboy/heavy_1.png` → cowboy, gancio potente con tutto il corpo
-149. `assets/incoming/personaggi/cowboy/jump_1.png` → cowboy, in salto, ginocchia raccolte
-150. `assets/incoming/personaggi/cowboy/hurt_1.png` → cowboy, colpito, testa all'indietro, smorfia
-151. `assets/incoming/personaggi/cowboy/down_1.png` → cowboy, a terra, sdraiato sulla schiena (figura orizzontale)
-152. `assets/incoming/personaggi/cowboy/getup_1.png` → cowboy, si rialza, un ginocchio a terra
-153. `assets/incoming/personaggi/cochise/idle_1.png` → cochise, in guardia, fermo, pugni alzati
-154. `assets/incoming/personaggi/cochise/walk_1.png` → cochise, camminata, fotogramma 1 di 4: gamba destra avanti
-155. `assets/incoming/personaggi/cochise/walk_2.png` → cochise, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-156. `assets/incoming/personaggi/cochise/walk_3.png` → cochise, camminata, fotogramma 3 di 4: gamba sinistra avanti
-157. `assets/incoming/personaggi/cochise/walk_4.png` → cochise, camminata, fotogramma 4 di 4: passaggio
-158. `assets/incoming/personaggi/cochise/punch_1.png` → cochise, pugno diretto a braccio teso
-159. `assets/incoming/personaggi/cochise/kick_1.png` → cochise, calcio frontale alto
-160. `assets/incoming/personaggi/cochise/heavy_1.png` → cochise, gancio potente con tutto il corpo
-161. `assets/incoming/personaggi/cochise/jump_1.png` → cochise, in salto, ginocchia raccolte
-162. `assets/incoming/personaggi/cochise/hurt_1.png` → cochise, colpito, testa all'indietro, smorfia
-163. `assets/incoming/personaggi/cochise/down_1.png` → cochise, a terra, sdraiato sulla schiena (figura orizzontale)
-164. `assets/incoming/personaggi/cochise/getup_1.png` → cochise, si rialza, un ginocchio a terra
-165. `assets/incoming/personaggi/cochise/turnstile_1.png` → cochise, scavalca un tornello della metro con un salto
-166. `assets/incoming/personaggi/rembrandt/idle_1.png` → rembrandt, in guardia, fermo, pugni alzati
-167. `assets/incoming/personaggi/rembrandt/walk_1.png` → rembrandt, camminata, fotogramma 1 di 4: gamba destra avanti
-168. `assets/incoming/personaggi/rembrandt/walk_2.png` → rembrandt, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-169. `assets/incoming/personaggi/rembrandt/walk_3.png` → rembrandt, camminata, fotogramma 3 di 4: gamba sinistra avanti
-170. `assets/incoming/personaggi/rembrandt/walk_4.png` → rembrandt, camminata, fotogramma 4 di 4: passaggio
-171. `assets/incoming/personaggi/rembrandt/punch_1.png` → rembrandt, pugno diretto a braccio teso
-172. `assets/incoming/personaggi/rembrandt/kick_1.png` → rembrandt, calcio frontale alto
-173. `assets/incoming/personaggi/rembrandt/heavy_1.png` → rembrandt, gancio potente con tutto il corpo
-174. `assets/incoming/personaggi/rembrandt/jump_1.png` → rembrandt, in salto, ginocchia raccolte
-175. `assets/incoming/personaggi/rembrandt/hurt_1.png` → rembrandt, colpito, testa all'indietro, smorfia
-176. `assets/incoming/personaggi/rembrandt/down_1.png` → rembrandt, a terra, sdraiato sulla schiena (figura orizzontale)
-177. `assets/incoming/personaggi/rembrandt/getup_1.png` → rembrandt, si rialza, un ginocchio a terra
-178. `assets/incoming/personaggi/rembrandt/spray_1.png` → rembrandt, spruzza vernice con una bomboletta spray
-179. `assets/incoming/personaggi/rembrandt/pinned_spray_1.png` → rembrandt, a terra sulla schiena, spruzza la bomboletta verso l'alto
-180. `assets/incoming/personaggi/fox/idle_1.png` → fox, in guardia, fermo, pugni alzati
-181. `assets/incoming/personaggi/fox/walk_1.png` → fox, camminata, fotogramma 1 di 4: gamba destra avanti
-182. `assets/incoming/personaggi/fox/walk_2.png` → fox, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-183. `assets/incoming/personaggi/fox/walk_3.png` → fox, camminata, fotogramma 3 di 4: gamba sinistra avanti
-184. `assets/incoming/personaggi/fox/walk_4.png` → fox, camminata, fotogramma 4 di 4: passaggio
-185. `assets/incoming/personaggi/fox/punch_1.png` → fox, pugno diretto a braccio teso
-186. `assets/incoming/personaggi/fox/kick_1.png` → fox, calcio frontale alto
-187. `assets/incoming/personaggi/fox/heavy_1.png` → fox, gancio potente con tutto il corpo
-188. `assets/incoming/personaggi/fox/jump_1.png` → fox, in salto, ginocchia raccolte
-189. `assets/incoming/personaggi/fox/hurt_1.png` → fox, colpito, testa all'indietro, smorfia
-190. `assets/incoming/personaggi/fox/down_1.png` → fox, a terra, sdraiato sulla schiena (figura orizzontale)
-191. `assets/incoming/personaggi/fox/getup_1.png` → fox, si rialza, un ginocchio a terra
+123. `assets/incoming/personaggi/swan/idle_1.png` → swan, in guardia, fermo, pugni alzati
+124. `assets/incoming/personaggi/swan/walk_1.png` → swan, camminata, fotogramma 1 di 4: gamba destra avanti
+125. `assets/incoming/personaggi/swan/walk_2.png` → swan, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+126. `assets/incoming/personaggi/swan/walk_3.png` → swan, camminata, fotogramma 3 di 4: gamba sinistra avanti
+127. `assets/incoming/personaggi/swan/walk_4.png` → swan, camminata, fotogramma 4 di 4: passaggio
+128. `assets/incoming/personaggi/swan/punch_1.png` → swan, pugno diretto a braccio teso
+129. `assets/incoming/personaggi/swan/kick_1.png` → swan, calcio frontale alto
+130. `assets/incoming/personaggi/swan/heavy_1.png` → swan, gancio potente con tutto il corpo
+131. `assets/incoming/personaggi/swan/jump_1.png` → swan, in salto, ginocchia raccolte
+132. `assets/incoming/personaggi/swan/hurt_1.png` → swan, colpito, testa all'indietro, smorfia
+133. `assets/incoming/personaggi/swan/down_1.png` → swan, a terra, sdraiato sulla schiena (figura orizzontale)
+134. `assets/incoming/personaggi/swan/getup_1.png` → swan, si rialza, un ginocchio a terra
+135. `assets/incoming/personaggi/swan/knife_1.png` → swan, coltello a scatto aperto in mano
+136. `assets/incoming/personaggi/swan/knifethrow_1.png` → swan, lancia un coltello in avanti
+137. `assets/incoming/personaggi/swan/hand_1.png` → swan, cammina tenendo per mano qualcuno accanto a sé
+138. `assets/incoming/personaggi/snow/idle_1.png` → snow, in guardia, fermo, pugni alzati
+139. `assets/incoming/personaggi/snow/walk_1.png` → snow, camminata, fotogramma 1 di 4: gamba destra avanti
+140. `assets/incoming/personaggi/snow/walk_2.png` → snow, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+141. `assets/incoming/personaggi/snow/walk_3.png` → snow, camminata, fotogramma 3 di 4: gamba sinistra avanti
+142. `assets/incoming/personaggi/snow/walk_4.png` → snow, camminata, fotogramma 4 di 4: passaggio
+143. `assets/incoming/personaggi/snow/punch_1.png` → snow, pugno diretto a braccio teso
+144. `assets/incoming/personaggi/snow/kick_1.png` → snow, calcio frontale alto
+145. `assets/incoming/personaggi/snow/heavy_1.png` → snow, gancio potente con tutto il corpo
+146. `assets/incoming/personaggi/snow/jump_1.png` → snow, in salto, ginocchia raccolte
+147. `assets/incoming/personaggi/snow/hurt_1.png` → snow, colpito, testa all'indietro, smorfia
+148. `assets/incoming/personaggi/snow/down_1.png` → snow, a terra, sdraiato sulla schiena (figura orizzontale)
+149. `assets/incoming/personaggi/snow/getup_1.png` → snow, si rialza, un ginocchio a terra
+150. `assets/incoming/personaggi/cowboy/idle_1.png` → cowboy, in guardia, fermo, pugni alzati
+151. `assets/incoming/personaggi/cowboy/walk_1.png` → cowboy, camminata, fotogramma 1 di 4: gamba destra avanti
+152. `assets/incoming/personaggi/cowboy/walk_2.png` → cowboy, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+153. `assets/incoming/personaggi/cowboy/walk_3.png` → cowboy, camminata, fotogramma 3 di 4: gamba sinistra avanti
+154. `assets/incoming/personaggi/cowboy/walk_4.png` → cowboy, camminata, fotogramma 4 di 4: passaggio
+155. `assets/incoming/personaggi/cowboy/punch_1.png` → cowboy, pugno diretto a braccio teso
+156. `assets/incoming/personaggi/cowboy/kick_1.png` → cowboy, calcio frontale alto
+157. `assets/incoming/personaggi/cowboy/heavy_1.png` → cowboy, gancio potente con tutto il corpo
+158. `assets/incoming/personaggi/cowboy/jump_1.png` → cowboy, in salto, ginocchia raccolte
+159. `assets/incoming/personaggi/cowboy/hurt_1.png` → cowboy, colpito, testa all'indietro, smorfia
+160. `assets/incoming/personaggi/cowboy/down_1.png` → cowboy, a terra, sdraiato sulla schiena (figura orizzontale)
+161. `assets/incoming/personaggi/cowboy/getup_1.png` → cowboy, si rialza, un ginocchio a terra
+162. `assets/incoming/personaggi/cochise/idle_1.png` → cochise, in guardia, fermo, pugni alzati
+163. `assets/incoming/personaggi/cochise/walk_1.png` → cochise, camminata, fotogramma 1 di 4: gamba destra avanti
+164. `assets/incoming/personaggi/cochise/walk_2.png` → cochise, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+165. `assets/incoming/personaggi/cochise/walk_3.png` → cochise, camminata, fotogramma 3 di 4: gamba sinistra avanti
+166. `assets/incoming/personaggi/cochise/walk_4.png` → cochise, camminata, fotogramma 4 di 4: passaggio
+167. `assets/incoming/personaggi/cochise/punch_1.png` → cochise, pugno diretto a braccio teso
+168. `assets/incoming/personaggi/cochise/kick_1.png` → cochise, calcio frontale alto
+169. `assets/incoming/personaggi/cochise/heavy_1.png` → cochise, gancio potente con tutto il corpo
+170. `assets/incoming/personaggi/cochise/jump_1.png` → cochise, in salto, ginocchia raccolte
+171. `assets/incoming/personaggi/cochise/hurt_1.png` → cochise, colpito, testa all'indietro, smorfia
+172. `assets/incoming/personaggi/cochise/down_1.png` → cochise, a terra, sdraiato sulla schiena (figura orizzontale)
+173. `assets/incoming/personaggi/cochise/getup_1.png` → cochise, si rialza, un ginocchio a terra
+174. `assets/incoming/personaggi/cochise/turnstile_1.png` → cochise, scavalca un tornello della metro con un salto
+175. `assets/incoming/personaggi/rembrandt/idle_1.png` → rembrandt, in guardia, fermo, pugni alzati
+176. `assets/incoming/personaggi/rembrandt/walk_1.png` → rembrandt, camminata, fotogramma 1 di 4: gamba destra avanti
+177. `assets/incoming/personaggi/rembrandt/walk_2.png` → rembrandt, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+178. `assets/incoming/personaggi/rembrandt/walk_3.png` → rembrandt, camminata, fotogramma 3 di 4: gamba sinistra avanti
+179. `assets/incoming/personaggi/rembrandt/walk_4.png` → rembrandt, camminata, fotogramma 4 di 4: passaggio
+180. `assets/incoming/personaggi/rembrandt/punch_1.png` → rembrandt, pugno diretto a braccio teso
+181. `assets/incoming/personaggi/rembrandt/kick_1.png` → rembrandt, calcio frontale alto
+182. `assets/incoming/personaggi/rembrandt/heavy_1.png` → rembrandt, gancio potente con tutto il corpo
+183. `assets/incoming/personaggi/rembrandt/jump_1.png` → rembrandt, in salto, ginocchia raccolte
+184. `assets/incoming/personaggi/rembrandt/hurt_1.png` → rembrandt, colpito, testa all'indietro, smorfia
+185. `assets/incoming/personaggi/rembrandt/down_1.png` → rembrandt, a terra, sdraiato sulla schiena (figura orizzontale)
+186. `assets/incoming/personaggi/rembrandt/getup_1.png` → rembrandt, si rialza, un ginocchio a terra
+187. `assets/incoming/personaggi/rembrandt/spray_1.png` → rembrandt, spruzza vernice con una bomboletta spray
+188. `assets/incoming/personaggi/rembrandt/pinned_spray_1.png` → rembrandt, a terra sulla schiena, spruzza la bomboletta verso l'alto
+189. `assets/incoming/personaggi/fox/idle_1.png` → fox, in guardia, fermo, pugni alzati
+190. `assets/incoming/personaggi/fox/walk_1.png` → fox, camminata, fotogramma 1 di 4: gamba destra avanti
+191. `assets/incoming/personaggi/fox/walk_2.png` → fox, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+192. `assets/incoming/personaggi/fox/walk_3.png` → fox, camminata, fotogramma 3 di 4: gamba sinistra avanti
+193. `assets/incoming/personaggi/fox/walk_4.png` → fox, camminata, fotogramma 4 di 4: passaggio
+194. `assets/incoming/personaggi/fox/punch_1.png` → fox, pugno diretto a braccio teso
+195. `assets/incoming/personaggi/fox/kick_1.png` → fox, calcio frontale alto
+196. `assets/incoming/personaggi/fox/heavy_1.png` → fox, gancio potente con tutto il corpo
+197. `assets/incoming/personaggi/fox/jump_1.png` → fox, in salto, ginocchia raccolte
+198. `assets/incoming/personaggi/fox/hurt_1.png` → fox, colpito, testa all'indietro, smorfia
+199. `assets/incoming/personaggi/fox/down_1.png` → fox, a terra, sdraiato sulla schiena (figura orizzontale)
+200. `assets/incoming/personaggi/fox/getup_1.png` → fox, si rialza, un ginocchio a terra
 
 ### 5. Bande e personaggi della storia
 
-192. `assets/incoming/personaggi/fury/idle_1.png` → fury, in guardia, fermo, pugni alzati
-193. `assets/incoming/personaggi/fury/walk_1.png` → fury, camminata, fotogramma 1 di 4: gamba destra avanti
-194. `assets/incoming/personaggi/fury/walk_2.png` → fury, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-195. `assets/incoming/personaggi/fury/walk_3.png` → fury, camminata, fotogramma 3 di 4: gamba sinistra avanti
-196. `assets/incoming/personaggi/fury/walk_4.png` → fury, camminata, fotogramma 4 di 4: passaggio
-197. `assets/incoming/personaggi/fury/punch_1.png` → fury, pugno diretto a braccio teso
-198. `assets/incoming/personaggi/fury/hurt_1.png` → fury, colpito, testa all'indietro, smorfia
-199. `assets/incoming/personaggi/fury/down_1.png` → fury, a terra, sdraiato sulla schiena (figura orizzontale)
-200. `assets/incoming/personaggi/fury/windup_1.png` → fury, carica lo swing
-201. `assets/incoming/personaggi/fury/swing_1.png` → fury, swing
-202. `assets/incoming/personaggi/fury/nobat_punch_1.png` → fury, disarmato
-203. `assets/incoming/personaggi/fury_boss/idle_1.png` → fury_boss, in guardia, fermo, pugni alzati
-204. `assets/incoming/personaggi/fury_boss/walk_1.png` → fury_boss, camminata, fotogramma 1 di 4: gamba destra avanti
-205. `assets/incoming/personaggi/fury_boss/walk_2.png` → fury_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-206. `assets/incoming/personaggi/fury_boss/walk_3.png` → fury_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
-207. `assets/incoming/personaggi/fury_boss/walk_4.png` → fury_boss, camminata, fotogramma 4 di 4: passaggio
-208. `assets/incoming/personaggi/fury_boss/punch_1.png` → fury_boss, pugno diretto a braccio teso
-209. `assets/incoming/personaggi/fury_boss/hurt_1.png` → fury_boss, colpito, testa all'indietro, smorfia
-210. `assets/incoming/personaggi/fury_boss/down_1.png` → fury_boss, a terra, sdraiato sulla schiena (figura orizzontale)
-211. `assets/incoming/personaggi/fury_boss/windup_1.png` → fury_boss, windup
-212. `assets/incoming/personaggi/fury_boss/swing_1.png` → fury_boss, swing
-213. `assets/incoming/personaggi/turnbull/idle_1.png` → turnbull, in guardia, fermo, pugni alzati
-214. `assets/incoming/personaggi/turnbull/walk_1.png` → turnbull, camminata, fotogramma 1 di 4: gamba destra avanti
-215. `assets/incoming/personaggi/turnbull/walk_2.png` → turnbull, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-216. `assets/incoming/personaggi/turnbull/walk_3.png` → turnbull, camminata, fotogramma 3 di 4: gamba sinistra avanti
-217. `assets/incoming/personaggi/turnbull/walk_4.png` → turnbull, camminata, fotogramma 4 di 4: passaggio
-218. `assets/incoming/personaggi/turnbull/punch_1.png` → turnbull, pugno diretto a braccio teso
-219. `assets/incoming/personaggi/turnbull/hurt_1.png` → turnbull, colpito, testa all'indietro, smorfia
-220. `assets/incoming/personaggi/turnbull/down_1.png` → turnbull, a terra, sdraiato sulla schiena (figura orizzontale)
-221. `assets/incoming/personaggi/turnbull/charge_1.png` → turnbull, carica a testa bassa
-222. `assets/incoming/personaggi/turnbull_fast/idle_1.png` → turnbull_fast, in guardia, fermo, pugni alzati
-223. `assets/incoming/personaggi/turnbull_fast/walk_1.png` → turnbull_fast, camminata, fotogramma 1 di 4: gamba destra avanti
-224. `assets/incoming/personaggi/turnbull_fast/walk_2.png` → turnbull_fast, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-225. `assets/incoming/personaggi/turnbull_fast/walk_3.png` → turnbull_fast, camminata, fotogramma 3 di 4: gamba sinistra avanti
-226. `assets/incoming/personaggi/turnbull_fast/walk_4.png` → turnbull_fast, camminata, fotogramma 4 di 4: passaggio
-227. `assets/incoming/personaggi/turnbull_fast/punch_1.png` → turnbull_fast, pugno diretto a braccio teso
-228. `assets/incoming/personaggi/turnbull_fast/hurt_1.png` → turnbull_fast, colpito, testa all'indietro, smorfia
-229. `assets/incoming/personaggi/turnbull_fast/down_1.png` → turnbull_fast, a terra, sdraiato sulla schiena (figura orizzontale)
-230. `assets/incoming/personaggi/turnbull_fast/charge_1.png` → turnbull_fast, charge
-231. `assets/incoming/personaggi/orphan/idle_1.png` → orphan, in guardia, fermo, pugni alzati
-232. `assets/incoming/personaggi/orphan/walk_1.png` → orphan, camminata, fotogramma 1 di 4: gamba destra avanti
-233. `assets/incoming/personaggi/orphan/walk_2.png` → orphan, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-234. `assets/incoming/personaggi/orphan/walk_3.png` → orphan, camminata, fotogramma 3 di 4: gamba sinistra avanti
-235. `assets/incoming/personaggi/orphan/walk_4.png` → orphan, camminata, fotogramma 4 di 4: passaggio
-236. `assets/incoming/personaggi/orphan/punch_1.png` → orphan, pugno diretto a braccio teso
-237. `assets/incoming/personaggi/orphan/hurt_1.png` → orphan, colpito, testa all'indietro, smorfia
-238. `assets/incoming/personaggi/orphan/down_1.png` → orphan, a terra, sdraiato sulla schiena (figura orizzontale)
-239. `assets/incoming/personaggi/orphan/board_swing_1.png` → orphan, colpo con un'asse
-240. `assets/incoming/personaggi/sully/idle_1.png` → sully, in guardia, fermo, pugni alzati
-241. `assets/incoming/personaggi/sully/walk_1.png` → sully, camminata, fotogramma 1 di 4: gamba destra avanti
-242. `assets/incoming/personaggi/sully/walk_2.png` → sully, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-243. `assets/incoming/personaggi/sully/walk_3.png` → sully, camminata, fotogramma 3 di 4: gamba sinistra avanti
-244. `assets/incoming/personaggi/sully/walk_4.png` → sully, camminata, fotogramma 4 di 4: passaggio
-245. `assets/incoming/personaggi/sully/punch_1.png` → sully, pugno diretto a braccio teso
-246. `assets/incoming/personaggi/sully/hurt_1.png` → sully, colpito, testa all'indietro, smorfia
-247. `assets/incoming/personaggi/sully/down_1.png` → sully, a terra, sdraiato sulla schiena (figura orizzontale)
-248. `assets/incoming/personaggi/lizzie/idle_1.png` → lizzie, in guardia, fermo, pugni alzati
-249. `assets/incoming/personaggi/lizzie/walk_1.png` → lizzie, camminata, fotogramma 1 di 4: gamba destra avanti
-250. `assets/incoming/personaggi/lizzie/walk_2.png` → lizzie, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-251. `assets/incoming/personaggi/lizzie/walk_3.png` → lizzie, camminata, fotogramma 3 di 4: gamba sinistra avanti
-252. `assets/incoming/personaggi/lizzie/walk_4.png` → lizzie, camminata, fotogramma 4 di 4: passaggio
-253. `assets/incoming/personaggi/lizzie/punch_1.png` → lizzie, pugno diretto a braccio teso
-254. `assets/incoming/personaggi/lizzie/hurt_1.png` → lizzie, colpito, testa all'indietro, smorfia
-255. `assets/incoming/personaggi/lizzie/down_1.png` → lizzie, a terra, sdraiato sulla schiena (figura orizzontale)
-256. `assets/incoming/personaggi/lizzie/gun_aim_1.png` → lizzie, gun_aim
-257. `assets/incoming/personaggi/lizzie/gun_shoot_1.png` → lizzie, pistola
-258. `assets/incoming/personaggi/lizzie/push_1.png` → lizzie, push
-259. `assets/incoming/personaggi/lizzie_boss/idle_1.png` → lizzie_boss, in guardia, fermo, pugni alzati
-260. `assets/incoming/personaggi/lizzie_boss/walk_1.png` → lizzie_boss, camminata, fotogramma 1 di 4: gamba destra avanti
-261. `assets/incoming/personaggi/lizzie_boss/walk_2.png` → lizzie_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-262. `assets/incoming/personaggi/lizzie_boss/walk_3.png` → lizzie_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
-263. `assets/incoming/personaggi/lizzie_boss/walk_4.png` → lizzie_boss, camminata, fotogramma 4 di 4: passaggio
-264. `assets/incoming/personaggi/lizzie_boss/punch_1.png` → lizzie_boss, pugno diretto a braccio teso
-265. `assets/incoming/personaggi/lizzie_boss/hurt_1.png` → lizzie_boss, colpito, testa all'indietro, smorfia
-266. `assets/incoming/personaggi/lizzie_boss/down_1.png` → lizzie_boss, a terra, sdraiato sulla schiena (figura orizzontale)
-267. `assets/incoming/personaggi/lizzie_boss/gun_aim_1.png` → lizzie_boss, gun_aim
-268. `assets/incoming/personaggi/punk/idle_1.png` → punk, in guardia, fermo, pugni alzati
-269. `assets/incoming/personaggi/punk/walk_1.png` → punk, camminata, fotogramma 1 di 4: gamba destra avanti
-270. `assets/incoming/personaggi/punk/walk_2.png` → punk, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-271. `assets/incoming/personaggi/punk/walk_3.png` → punk, camminata, fotogramma 3 di 4: gamba sinistra avanti
-272. `assets/incoming/personaggi/punk/walk_4.png` → punk, camminata, fotogramma 4 di 4: passaggio
-273. `assets/incoming/personaggi/punk/punch_1.png` → punk, pugno diretto a braccio teso
-274. `assets/incoming/personaggi/punk/hurt_1.png` → punk, colpito, testa all'indietro, smorfia
-275. `assets/incoming/personaggi/punk/down_1.png` → punk, a terra, sdraiato sulla schiena (figura orizzontale)
-276. `assets/incoming/personaggi/punk/skate_1.png` → punk, skate
-277. `assets/incoming/personaggi/punk/skate_2.png` → punk, pattina
-278. `assets/incoming/personaggi/punk/grab_1.png` → punk, presa
-279. `assets/incoming/personaggi/punk_boss/idle_1.png` → punk_boss, in guardia, fermo, pugni alzati
-280. `assets/incoming/personaggi/punk_boss/walk_1.png` → punk_boss, camminata, fotogramma 1 di 4: gamba destra avanti
-281. `assets/incoming/personaggi/punk_boss/walk_2.png` → punk_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-282. `assets/incoming/personaggi/punk_boss/walk_3.png` → punk_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
-283. `assets/incoming/personaggi/punk_boss/walk_4.png` → punk_boss, camminata, fotogramma 4 di 4: passaggio
-284. `assets/incoming/personaggi/punk_boss/punch_1.png` → punk_boss, pugno diretto a braccio teso
-285. `assets/incoming/personaggi/punk_boss/hurt_1.png` → punk_boss, colpito, testa all'indietro, smorfia
-286. `assets/incoming/personaggi/punk_boss/down_1.png` → punk_boss, a terra, sdraiato sulla schiena (figura orizzontale)
-287. `assets/incoming/personaggi/punk_boss/skate_1.png` → punk_boss, skate
-288. `assets/incoming/personaggi/punk_boss/grab_1.png` → punk_boss, afferra qualcuno davanti a sé per il bavero
-289. `assets/incoming/personaggi/rogue/idle_1.png` → rogue, in guardia, fermo, pugni alzati
-290. `assets/incoming/personaggi/rogue/walk_1.png` → rogue, camminata, fotogramma 1 di 4: gamba destra avanti
-291. `assets/incoming/personaggi/rogue/walk_2.png` → rogue, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-292. `assets/incoming/personaggi/rogue/walk_3.png` → rogue, camminata, fotogramma 3 di 4: gamba sinistra avanti
-293. `assets/incoming/personaggi/rogue/walk_4.png` → rogue, camminata, fotogramma 4 di 4: passaggio
-294. `assets/incoming/personaggi/rogue/punch_1.png` → rogue, pugno diretto a braccio teso
-295. `assets/incoming/personaggi/rogue/hurt_1.png` → rogue, colpito, testa all'indietro, smorfia
-296. `assets/incoming/personaggi/rogue/down_1.png` → rogue, a terra, sdraiato sulla schiena (figura orizzontale)
-297. `assets/incoming/personaggi/rogue/bottle_throw_1.png` → rogue, bottle_throw
-298. `assets/incoming/personaggi/luther/idle_1.png` → luther, in guardia, fermo, pugni alzati
-299. `assets/incoming/personaggi/luther/walk_1.png` → luther, camminata, fotogramma 1 di 4: gamba destra avanti
-300. `assets/incoming/personaggi/luther/walk_2.png` → luther, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-301. `assets/incoming/personaggi/luther/walk_3.png` → luther, camminata, fotogramma 3 di 4: gamba sinistra avanti
-302. `assets/incoming/personaggi/luther/walk_4.png` → luther, camminata, fotogramma 4 di 4: passaggio
-303. `assets/incoming/personaggi/luther/punch_1.png` → luther, pugno diretto a braccio teso
-304. `assets/incoming/personaggi/luther/hurt_1.png` → luther, colpito, testa all'indietro, smorfia
-305. `assets/incoming/personaggi/luther/down_1.png` → luther, a terra, sdraiato sulla schiena (figura orizzontale)
-306. `assets/incoming/personaggi/luther/gun_aim_1.png` → luther, gun_aim
-307. `assets/incoming/personaggi/luther/bottles_1.png` → luther, tre bottiglie vuote infilate tra le dita
-308. `assets/incoming/personaggi/luther/knifehit_1.png` → luther, coltello piantato nel braccio
-309. `assets/incoming/personaggi/luther/down_1.png` → luther, a terra, sdraiato sulla schiena (figura orizzontale)
-310. `assets/incoming/personaggi/police/idle_1.png` → police, in guardia, fermo, pugni alzati
-311. `assets/incoming/personaggi/police/walk_1.png` → police, camminata, fotogramma 1 di 4: gamba destra avanti
-312. `assets/incoming/personaggi/police/walk_2.png` → police, camminata, fotogramma 2 di 4: gambe vicine, passaggio
-313. `assets/incoming/personaggi/police/walk_3.png` → police, camminata, fotogramma 3 di 4: gamba sinistra avanti
-314. `assets/incoming/personaggi/police/walk_4.png` → police, camminata, fotogramma 4 di 4: passaggio
-315. `assets/incoming/personaggi/police/punch_1.png` → police, pugno diretto a braccio teso
-316. `assets/incoming/personaggi/police/hurt_1.png` → police, colpito, testa all'indietro, smorfia
-317. `assets/incoming/personaggi/police/down_1.png` → police, a terra, sdraiato sulla schiena (figura orizzontale)
-318. `assets/incoming/personaggi/police/baton_swing_1.png` → police, manganello
-319. `assets/incoming/personaggi/police/charge_1.png` → police, charge
-320. `assets/incoming/personaggi/police_woman/idle_1.png` → police_woman, in guardia, fermo, pugni alzati
-321. `assets/incoming/personaggi/police_woman/sit_1.png` → police_woman, seduto su un sedile della metro
-322. `assets/incoming/personaggi/police_woman/arrest_1.png` → police_woman, a terra, ammanettato
-323. `assets/incoming/personaggi/cyrus/idle_1.png` → cyrus, in guardia, fermo, pugni alzati
-324. `assets/incoming/personaggi/cyrus/speech_1.png` → cyrus, speech
-325. `assets/incoming/personaggi/cyrus/shot_1.png` → cyrus, colpito
-326. `assets/incoming/personaggi/riff/idle_1.png` → riff, in guardia, fermo, pugni alzati
-327. `assets/incoming/personaggi/riff/idle_1.png` → riff, in guardia, fermo, pugni alzati
-328. `assets/incoming/personaggi/masai/idle_1.png` → masai, in guardia, fermo, pugni alzati
-329. `assets/incoming/personaggi/masai/idle_1.png` → masai, in guardia, fermo, pugni alzati
+201. `assets/incoming/personaggi/fury/idle_1.png` → fury, in guardia, fermo, pugni alzati
+202. `assets/incoming/personaggi/fury/walk_1.png` → fury, camminata, fotogramma 1 di 4: gamba destra avanti
+203. `assets/incoming/personaggi/fury/walk_2.png` → fury, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+204. `assets/incoming/personaggi/fury/walk_3.png` → fury, camminata, fotogramma 3 di 4: gamba sinistra avanti
+205. `assets/incoming/personaggi/fury/walk_4.png` → fury, camminata, fotogramma 4 di 4: passaggio
+206. `assets/incoming/personaggi/fury/punch_1.png` → fury, pugno diretto a braccio teso
+207. `assets/incoming/personaggi/fury/hurt_1.png` → fury, colpito, testa all'indietro, smorfia
+208. `assets/incoming/personaggi/fury/down_1.png` → fury, a terra, sdraiato sulla schiena (figura orizzontale)
+209. `assets/incoming/personaggi/fury/windup_1.png` → fury, carica lo swing
+210. `assets/incoming/personaggi/fury/swing_1.png` → fury, swing
+211. `assets/incoming/personaggi/fury/nobat_punch_1.png` → fury, disarmato
+212. `assets/incoming/personaggi/fury_boss/idle_1.png` → fury_boss, in guardia, fermo, pugni alzati
+213. `assets/incoming/personaggi/fury_boss/walk_1.png` → fury_boss, camminata, fotogramma 1 di 4: gamba destra avanti
+214. `assets/incoming/personaggi/fury_boss/walk_2.png` → fury_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+215. `assets/incoming/personaggi/fury_boss/walk_3.png` → fury_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
+216. `assets/incoming/personaggi/fury_boss/walk_4.png` → fury_boss, camminata, fotogramma 4 di 4: passaggio
+217. `assets/incoming/personaggi/fury_boss/punch_1.png` → fury_boss, pugno diretto a braccio teso
+218. `assets/incoming/personaggi/fury_boss/hurt_1.png` → fury_boss, colpito, testa all'indietro, smorfia
+219. `assets/incoming/personaggi/fury_boss/down_1.png` → fury_boss, a terra, sdraiato sulla schiena (figura orizzontale)
+220. `assets/incoming/personaggi/fury_boss/windup_1.png` → fury_boss, windup
+221. `assets/incoming/personaggi/fury_boss/swing_1.png` → fury_boss, swing
+222. `assets/incoming/personaggi/turnbull/idle_1.png` → turnbull, in guardia, fermo, pugni alzati
+223. `assets/incoming/personaggi/turnbull/walk_1.png` → turnbull, camminata, fotogramma 1 di 4: gamba destra avanti
+224. `assets/incoming/personaggi/turnbull/walk_2.png` → turnbull, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+225. `assets/incoming/personaggi/turnbull/walk_3.png` → turnbull, camminata, fotogramma 3 di 4: gamba sinistra avanti
+226. `assets/incoming/personaggi/turnbull/walk_4.png` → turnbull, camminata, fotogramma 4 di 4: passaggio
+227. `assets/incoming/personaggi/turnbull/punch_1.png` → turnbull, pugno diretto a braccio teso
+228. `assets/incoming/personaggi/turnbull/hurt_1.png` → turnbull, colpito, testa all'indietro, smorfia
+229. `assets/incoming/personaggi/turnbull/down_1.png` → turnbull, a terra, sdraiato sulla schiena (figura orizzontale)
+230. `assets/incoming/personaggi/turnbull/charge_1.png` → turnbull, carica a testa bassa
+231. `assets/incoming/personaggi/turnbull_fast/idle_1.png` → turnbull_fast, in guardia, fermo, pugni alzati
+232. `assets/incoming/personaggi/turnbull_fast/walk_1.png` → turnbull_fast, camminata, fotogramma 1 di 4: gamba destra avanti
+233. `assets/incoming/personaggi/turnbull_fast/walk_2.png` → turnbull_fast, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+234. `assets/incoming/personaggi/turnbull_fast/walk_3.png` → turnbull_fast, camminata, fotogramma 3 di 4: gamba sinistra avanti
+235. `assets/incoming/personaggi/turnbull_fast/walk_4.png` → turnbull_fast, camminata, fotogramma 4 di 4: passaggio
+236. `assets/incoming/personaggi/turnbull_fast/punch_1.png` → turnbull_fast, pugno diretto a braccio teso
+237. `assets/incoming/personaggi/turnbull_fast/hurt_1.png` → turnbull_fast, colpito, testa all'indietro, smorfia
+238. `assets/incoming/personaggi/turnbull_fast/down_1.png` → turnbull_fast, a terra, sdraiato sulla schiena (figura orizzontale)
+239. `assets/incoming/personaggi/turnbull_fast/charge_1.png` → turnbull_fast, charge
+240. `assets/incoming/personaggi/orphan/idle_1.png` → orphan, in guardia, fermo, pugni alzati
+241. `assets/incoming/personaggi/orphan/walk_1.png` → orphan, camminata, fotogramma 1 di 4: gamba destra avanti
+242. `assets/incoming/personaggi/orphan/walk_2.png` → orphan, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+243. `assets/incoming/personaggi/orphan/walk_3.png` → orphan, camminata, fotogramma 3 di 4: gamba sinistra avanti
+244. `assets/incoming/personaggi/orphan/walk_4.png` → orphan, camminata, fotogramma 4 di 4: passaggio
+245. `assets/incoming/personaggi/orphan/punch_1.png` → orphan, pugno diretto a braccio teso
+246. `assets/incoming/personaggi/orphan/hurt_1.png` → orphan, colpito, testa all'indietro, smorfia
+247. `assets/incoming/personaggi/orphan/down_1.png` → orphan, a terra, sdraiato sulla schiena (figura orizzontale)
+248. `assets/incoming/personaggi/orphan/board_swing_1.png` → orphan, colpo con un'asse
+249. `assets/incoming/personaggi/sully/idle_1.png` → sully, in guardia, fermo, pugni alzati
+250. `assets/incoming/personaggi/sully/walk_1.png` → sully, camminata, fotogramma 1 di 4: gamba destra avanti
+251. `assets/incoming/personaggi/sully/walk_2.png` → sully, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+252. `assets/incoming/personaggi/sully/walk_3.png` → sully, camminata, fotogramma 3 di 4: gamba sinistra avanti
+253. `assets/incoming/personaggi/sully/walk_4.png` → sully, camminata, fotogramma 4 di 4: passaggio
+254. `assets/incoming/personaggi/sully/punch_1.png` → sully, pugno diretto a braccio teso
+255. `assets/incoming/personaggi/sully/hurt_1.png` → sully, colpito, testa all'indietro, smorfia
+256. `assets/incoming/personaggi/sully/down_1.png` → sully, a terra, sdraiato sulla schiena (figura orizzontale)
+257. `assets/incoming/personaggi/lizzie/idle_1.png` → lizzie, in guardia, fermo, pugni alzati
+258. `assets/incoming/personaggi/lizzie/walk_1.png` → lizzie, camminata, fotogramma 1 di 4: gamba destra avanti
+259. `assets/incoming/personaggi/lizzie/walk_2.png` → lizzie, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+260. `assets/incoming/personaggi/lizzie/walk_3.png` → lizzie, camminata, fotogramma 3 di 4: gamba sinistra avanti
+261. `assets/incoming/personaggi/lizzie/walk_4.png` → lizzie, camminata, fotogramma 4 di 4: passaggio
+262. `assets/incoming/personaggi/lizzie/punch_1.png` → lizzie, pugno diretto a braccio teso
+263. `assets/incoming/personaggi/lizzie/hurt_1.png` → lizzie, colpito, testa all'indietro, smorfia
+264. `assets/incoming/personaggi/lizzie/down_1.png` → lizzie, a terra, sdraiato sulla schiena (figura orizzontale)
+265. `assets/incoming/personaggi/lizzie/gun_aim_1.png` → lizzie, gun_aim
+266. `assets/incoming/personaggi/lizzie/gun_shoot_1.png` → lizzie, pistola
+267. `assets/incoming/personaggi/lizzie/push_1.png` → lizzie, push
+268. `assets/incoming/personaggi/lizzie_boss/idle_1.png` → lizzie_boss, in guardia, fermo, pugni alzati
+269. `assets/incoming/personaggi/lizzie_boss/walk_1.png` → lizzie_boss, camminata, fotogramma 1 di 4: gamba destra avanti
+270. `assets/incoming/personaggi/lizzie_boss/walk_2.png` → lizzie_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+271. `assets/incoming/personaggi/lizzie_boss/walk_3.png` → lizzie_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
+272. `assets/incoming/personaggi/lizzie_boss/walk_4.png` → lizzie_boss, camminata, fotogramma 4 di 4: passaggio
+273. `assets/incoming/personaggi/lizzie_boss/punch_1.png` → lizzie_boss, pugno diretto a braccio teso
+274. `assets/incoming/personaggi/lizzie_boss/hurt_1.png` → lizzie_boss, colpito, testa all'indietro, smorfia
+275. `assets/incoming/personaggi/lizzie_boss/down_1.png` → lizzie_boss, a terra, sdraiato sulla schiena (figura orizzontale)
+276. `assets/incoming/personaggi/lizzie_boss/gun_aim_1.png` → lizzie_boss, gun_aim
+277. `assets/incoming/personaggi/punk/idle_1.png` → punk, in guardia, fermo, pugni alzati
+278. `assets/incoming/personaggi/punk/walk_1.png` → punk, camminata, fotogramma 1 di 4: gamba destra avanti
+279. `assets/incoming/personaggi/punk/walk_2.png` → punk, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+280. `assets/incoming/personaggi/punk/walk_3.png` → punk, camminata, fotogramma 3 di 4: gamba sinistra avanti
+281. `assets/incoming/personaggi/punk/walk_4.png` → punk, camminata, fotogramma 4 di 4: passaggio
+282. `assets/incoming/personaggi/punk/punch_1.png` → punk, pugno diretto a braccio teso
+283. `assets/incoming/personaggi/punk/hurt_1.png` → punk, colpito, testa all'indietro, smorfia
+284. `assets/incoming/personaggi/punk/down_1.png` → punk, a terra, sdraiato sulla schiena (figura orizzontale)
+285. `assets/incoming/personaggi/punk/skate_1.png` → punk, skate
+286. `assets/incoming/personaggi/punk/skate_2.png` → punk, pattina
+287. `assets/incoming/personaggi/punk/grab_1.png` → punk, presa
+288. `assets/incoming/personaggi/punk_boss/idle_1.png` → punk_boss, in guardia, fermo, pugni alzati
+289. `assets/incoming/personaggi/punk_boss/walk_1.png` → punk_boss, camminata, fotogramma 1 di 4: gamba destra avanti
+290. `assets/incoming/personaggi/punk_boss/walk_2.png` → punk_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+291. `assets/incoming/personaggi/punk_boss/walk_3.png` → punk_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
+292. `assets/incoming/personaggi/punk_boss/walk_4.png` → punk_boss, camminata, fotogramma 4 di 4: passaggio
+293. `assets/incoming/personaggi/punk_boss/punch_1.png` → punk_boss, pugno diretto a braccio teso
+294. `assets/incoming/personaggi/punk_boss/hurt_1.png` → punk_boss, colpito, testa all'indietro, smorfia
+295. `assets/incoming/personaggi/punk_boss/down_1.png` → punk_boss, a terra, sdraiato sulla schiena (figura orizzontale)
+296. `assets/incoming/personaggi/punk_boss/skate_1.png` → punk_boss, skate
+297. `assets/incoming/personaggi/punk_boss/grab_1.png` → punk_boss, afferra qualcuno davanti a sé per il bavero
+298. `assets/incoming/personaggi/rogue/idle_1.png` → rogue, in guardia, fermo, pugni alzati
+299. `assets/incoming/personaggi/rogue/walk_1.png` → rogue, camminata, fotogramma 1 di 4: gamba destra avanti
+300. `assets/incoming/personaggi/rogue/walk_2.png` → rogue, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+301. `assets/incoming/personaggi/rogue/walk_3.png` → rogue, camminata, fotogramma 3 di 4: gamba sinistra avanti
+302. `assets/incoming/personaggi/rogue/walk_4.png` → rogue, camminata, fotogramma 4 di 4: passaggio
+303. `assets/incoming/personaggi/rogue/punch_1.png` → rogue, pugno diretto a braccio teso
+304. `assets/incoming/personaggi/rogue/hurt_1.png` → rogue, colpito, testa all'indietro, smorfia
+305. `assets/incoming/personaggi/rogue/down_1.png` → rogue, a terra, sdraiato sulla schiena (figura orizzontale)
+306. `assets/incoming/personaggi/rogue/bottle_throw_1.png` → rogue, bottle_throw
+307. `assets/incoming/personaggi/luther/idle_1.png` → luther, in guardia, fermo, pugni alzati
+308. `assets/incoming/personaggi/luther/walk_1.png` → luther, camminata, fotogramma 1 di 4: gamba destra avanti
+309. `assets/incoming/personaggi/luther/walk_2.png` → luther, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+310. `assets/incoming/personaggi/luther/walk_3.png` → luther, camminata, fotogramma 3 di 4: gamba sinistra avanti
+311. `assets/incoming/personaggi/luther/walk_4.png` → luther, camminata, fotogramma 4 di 4: passaggio
+312. `assets/incoming/personaggi/luther/punch_1.png` → luther, pugno diretto a braccio teso
+313. `assets/incoming/personaggi/luther/hurt_1.png` → luther, colpito, testa all'indietro, smorfia
+314. `assets/incoming/personaggi/luther/down_1.png` → luther, a terra, sdraiato sulla schiena (figura orizzontale)
+315. `assets/incoming/personaggi/luther/gun_aim_1.png` → luther, gun_aim
+316. `assets/incoming/personaggi/luther/bottles_1.png` → luther, tre bottiglie vuote infilate tra le dita
+317. `assets/incoming/personaggi/luther/knifehit_1.png` → luther, coltello piantato nel braccio
+318. `assets/incoming/personaggi/luther/down_1.png` → luther, a terra, sdraiato sulla schiena (figura orizzontale)
+319. `assets/incoming/personaggi/police/idle_1.png` → police, in guardia, fermo, pugni alzati
+320. `assets/incoming/personaggi/police/walk_1.png` → police, camminata, fotogramma 1 di 4: gamba destra avanti
+321. `assets/incoming/personaggi/police/walk_2.png` → police, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+322. `assets/incoming/personaggi/police/walk_3.png` → police, camminata, fotogramma 3 di 4: gamba sinistra avanti
+323. `assets/incoming/personaggi/police/walk_4.png` → police, camminata, fotogramma 4 di 4: passaggio
+324. `assets/incoming/personaggi/police/punch_1.png` → police, pugno diretto a braccio teso
+325. `assets/incoming/personaggi/police/hurt_1.png` → police, colpito, testa all'indietro, smorfia
+326. `assets/incoming/personaggi/police/down_1.png` → police, a terra, sdraiato sulla schiena (figura orizzontale)
+327. `assets/incoming/personaggi/police/baton_swing_1.png` → police, manganello
+328. `assets/incoming/personaggi/police/charge_1.png` → police, charge
+329. `assets/incoming/personaggi/police_woman/idle_1.png` → police_woman, in guardia, fermo, pugni alzati
+330. `assets/incoming/personaggi/police_woman/sit_1.png` → police_woman, seduto su un sedile della metro
+331. `assets/incoming/personaggi/police_woman/arrest_1.png` → police_woman, a terra, ammanettato
+332. `assets/incoming/personaggi/cyrus/idle_1.png` → cyrus, in guardia, fermo, pugni alzati
+333. `assets/incoming/personaggi/cyrus/speech_1.png` → cyrus, speech
+334. `assets/incoming/personaggi/cyrus/shot_1.png` → cyrus, colpito
+335. `assets/incoming/personaggi/riff/idle_1.png` → riff, in guardia, fermo, pugni alzati
+336. `assets/incoming/personaggi/riff/idle_1.png` → riff, in guardia, fermo, pugni alzati
+337. `assets/incoming/personaggi/masai/idle_1.png` → masai, in guardia, fermo, pugni alzati
+338. `assets/incoming/personaggi/masai/idle_1.png` → masai, in guardia, fermo, pugni alzati
 
 ### 6. Scene (illustrazioni per le transizioni, 1536×1024)
 
-330. `assets/incoming/scene/cine_cyrus.png` → Cyrus sul palco a braccia aperte davanti a una folla immensa di bande, di notte, fari
-331. `assets/incoming/scene/cine_accusation.png` → lo sparo al raduno: Cyrus cade, la folla si scatena, polizia che arriva
-332. `assets/incoming/scene/cine_furies_appear.png` → i Furies con le mazze sotto i lampioni del parco, i Warriors di fronte
-333. `assets/incoming/scene/cine_ajax_arrest.png` → Ajax ammanettato a terra vicino a una panchina, luci blu delle volanti
-334. `assets/incoming/scene/cine_lizzies_trap.png` → le Lizzies con le pistole davanti a una porta chiusa, tre Warriors in trappola
-335. `assets/incoming/scene/cine_swan_mercy.png` → Swan e Mercy che camminano in un tunnel della metro
-336. `assets/incoming/scene/talk_c7_couple.png` → sul treno all'alba Mercy si sistema i capelli e Swan le ferma la mano; di fronte una coppia elegante
-337. `assets/incoming/scene/cine_bottles.png` → Luther sporto dal finestrino di un'auto con tre bottiglie vuote tra le dita
-338. `assets/incoming/scene/cine_disarm.png` → sulla spiaggia all'alba il coltello di Swan colpisce il braccio di Luther, la pistola cade
-339. `assets/incoming/scene/cine_epilogue.png` → i Warriors e Mercy camminano sulla spiaggia di Coney Island all'alba
+339. `assets/incoming/scene/cine_cyrus.png` → Cyrus sul palco a braccia aperte davanti a una folla immensa di bande, di notte, fari
+340. `assets/incoming/scene/cine_accusation.png` → lo sparo al raduno: Cyrus cade, la folla si scatena, polizia che arriva
+341. `assets/incoming/scene/cine_furies_appear.png` → i Furies con le mazze sotto i lampioni del parco, i Warriors di fronte
+342. `assets/incoming/scene/cine_ajax_arrest.png` → Ajax ammanettato a terra vicino a una panchina, luci blu delle volanti
+343. `assets/incoming/scene/cine_lizzies_trap.png` → le Lizzies con le pistole davanti a una porta chiusa, tre Warriors in trappola
+344. `assets/incoming/scene/cine_swan_mercy.png` → Swan e Mercy che camminano in un tunnel della metro
+345. `assets/incoming/scene/talk_c7_couple.png` → sul treno all'alba Mercy si sistema i capelli e Swan le ferma la mano; di fronte una coppia elegante
+346. `assets/incoming/scene/cine_bottles.png` → Luther sporto dal finestrino di un'auto con tre bottiglie vuote tra le dita
+347. `assets/incoming/scene/cine_disarm.png` → sulla spiaggia all'alba il coltello di Swan colpisce il braccio di Luther, la pistola cade
+348. `assets/incoming/scene/cine_epilogue.png` → i Warriors e Mercy camminano sulla spiaggia di Coney Island all'alba
 
 ### 7. Ritratti (mezzo busto, tre quarti verso destra, sfondo magenta)
 
-340. `assets/incoming/ritratti/idle_1.png` → ritratto di idle_1
-341. `assets/incoming/ritratti/punch_1.png` → ritratto di punch_1
-342. `assets/incoming/ritratti/kick_1.png` → ritratto di kick_1
-343. `assets/incoming/ritratti/heavy_1.png` → ritratto di heavy_1
-344. `assets/incoming/ritratti/jump_1.png` → ritratto di jump_1
-345. `assets/incoming/ritratti/jumpkick_1.png` → ritratto di jumpkick_1
-346. `assets/incoming/ritratti/hurt_1.png` → ritratto di hurt_1
-347. `assets/incoming/ritratti/down_1.png` → ritratto di down_1
-348. `assets/incoming/ritratti/getup_1.png` → ritratto di getup_1
-349. `assets/incoming/ritratti/grab_1.png` → ritratto di grab_1
-350. `assets/incoming/ritratti/throw_1.png` → ritratto di throw_1
-351. `assets/incoming/ritratti/dodge_1.png` → ritratto di dodge_1
-352. `assets/incoming/ritratti/pipe_swing_1.png` → ritratto di pipe_swing_1
-353. `assets/incoming/ritratti/revive_1.png` → ritratto di revive_1
-354. `assets/incoming/ritratti/sit_1.png` → ritratto di sit_1
-355. `assets/incoming/ritratti/swan.png` → ritratto di swan
-356. `assets/incoming/ritratti/ajax.png` → ritratto di ajax
-357. `assets/incoming/ritratti/snow.png` → ritratto di snow
-358. `assets/incoming/ritratti/cowboy.png` → ritratto di cowboy
-359. `assets/incoming/ritratti/cochise.png` → ritratto di cochise
-360. `assets/incoming/ritratti/vermin.png` → ritratto di vermin
-361. `assets/incoming/ritratti/rembrandt.png` → ritratto di rembrandt
-362. `assets/incoming/ritratti/fox.png` → ritratto di fox
-363. `assets/incoming/ritratti/cleon.png` → ritratto di cleon
-364. `assets/incoming/ritratti/mercy.png` → ritratto di mercy
+349. `assets/incoming/ritratti/idle_1.png` → ritratto di idle_1
+350. `assets/incoming/ritratti/punch_1.png` → ritratto di punch_1
+351. `assets/incoming/ritratti/kick_1.png` → ritratto di kick_1
+352. `assets/incoming/ritratti/heavy_1.png` → ritratto di heavy_1
+353. `assets/incoming/ritratti/jump_1.png` → ritratto di jump_1
+354. `assets/incoming/ritratti/jumpkick_1.png` → ritratto di jumpkick_1
+355. `assets/incoming/ritratti/hurt_1.png` → ritratto di hurt_1
+356. `assets/incoming/ritratti/down_1.png` → ritratto di down_1
+357. `assets/incoming/ritratti/getup_1.png` → ritratto di getup_1
+358. `assets/incoming/ritratti/grab_1.png` → ritratto di grab_1
+359. `assets/incoming/ritratti/throw_1.png` → ritratto di throw_1
+360. `assets/incoming/ritratti/dodge_1.png` → ritratto di dodge_1
+361. `assets/incoming/ritratti/pipe_swing_1.png` → ritratto di pipe_swing_1
+362. `assets/incoming/ritratti/revive_1.png` → ritratto di revive_1
+363. `assets/incoming/ritratti/sit_1.png` → ritratto di sit_1
+364. `assets/incoming/ritratti/swan.png` → ritratto di swan
+365. `assets/incoming/ritratti/ajax.png` → ritratto di ajax
+366. `assets/incoming/ritratti/snow.png` → ritratto di snow
+367. `assets/incoming/ritratti/cowboy.png` → ritratto di cowboy
+368. `assets/incoming/ritratti/cochise.png` → ritratto di cochise
+369. `assets/incoming/ritratti/vermin.png` → ritratto di vermin
+370. `assets/incoming/ritratti/rembrandt.png` → ritratto di rembrandt
+371. `assets/incoming/ritratti/fox.png` → ritratto di fox
+372. `assets/incoming/ritratti/cleon.png` → ritratto di cleon
+373. `assets/incoming/ritratti/mercy.png` → ritratto di mercy
 
 ### 8. Oggetti ed effetti (sfondo magenta, vista laterale)
 
-365. `assets/incoming/oggetti/bus_turnbull.png` → bus_turnbull (bus scolastico verde dipinto)
-366. `assets/incoming/oggetti/treno_esterno.png` → treno_esterno (vagone della metro anni '70 con graffiti, di lato)
-367. `assets/incoming/oggetti/auto_rogues.png` → auto_rogues (berlina scura anni '70)
-368. `assets/incoming/oggetti/auto_orphans_fuoco.png` → auto_orphans_fuoco (auto in fiamme)
-369. `assets/incoming/oggetti/tornello.png` → tornello
-370. `assets/incoming/oggetti/transenna.png` → transenna
-371. `assets/incoming/oggetti/panchina.png` → panchina
-372. `assets/incoming/oggetti/cestino.png` → cestino
-373. `assets/incoming/oggetti/cassa.png` → cassa
-374. `assets/incoming/oggetti/bidone.png` → bidone
-375. `assets/incoming/oggetti/porta_gabinetto.png` → porta_gabinetto
-376. `assets/incoming/oggetti/lavandino.png` → lavandino
-377. `assets/incoming/oggetti/giradischi.png` → giradischi
-378. `assets/incoming/oggetti/sedia.png` → sedia
-379. `assets/incoming/oggetti/bomboletta.png` → bomboletta
-380. `assets/incoming/oggetti/coltello.png` → coltello
-381. `assets/incoming/oggetti/pistola.png` → pistola
-382. `assets/incoming/oggetti/bottiglia.png` → bottiglia
-383. `assets/incoming/oggetti/mazza.png` → mazza
-384. `assets/incoming/oggetti/tubo.png` → tubo
-385. `assets/incoming/oggetti/asse.png` → asse
-386. `assets/incoming/oggetti/manganello.png` → manganello
-387. `assets/incoming/oggetti/fx_spruzzo.png` → fx_spruzzo
-388. `assets/incoming/oggetti/fx_scintille.png` → fx_scintille
-389. `assets/incoming/oggetti/fx_polvere.png` → fx_polvere
-390. `assets/incoming/oggetti/fx_fuoco.png` → fx_fuoco
-391. `assets/incoming/oggetti/fx_vetro.png` → fx_vetro
-392. `assets/incoming/oggetti/fx_sparo.png` → fx_sparo
+374. `assets/incoming/oggetti/bus_turnbull.png` → bus_turnbull (bus scolastico verde dipinto)
+375. `assets/incoming/oggetti/treno_esterno.png` → treno_esterno (vagone della metro anni '70 con graffiti, di lato)
+376. `assets/incoming/oggetti/auto_rogues.png` → auto_rogues (berlina scura anni '70)
+377. `assets/incoming/oggetti/auto_orphans_fuoco.png` → auto_orphans_fuoco (auto in fiamme)
+378. `assets/incoming/oggetti/tornello.png` → tornello
+379. `assets/incoming/oggetti/transenna.png` → transenna
+380. `assets/incoming/oggetti/panchina.png` → panchina
+381. `assets/incoming/oggetti/cestino.png` → cestino
+382. `assets/incoming/oggetti/cassa.png` → cassa
+383. `assets/incoming/oggetti/bidone.png` → bidone
+384. `assets/incoming/oggetti/porta_gabinetto.png` → porta_gabinetto
+385. `assets/incoming/oggetti/lavandino.png` → lavandino
+386. `assets/incoming/oggetti/giradischi.png` → giradischi
+387. `assets/incoming/oggetti/sedia.png` → sedia
+388. `assets/incoming/oggetti/bomboletta.png` → bomboletta
+389. `assets/incoming/oggetti/coltello.png` → coltello
+390. `assets/incoming/oggetti/pistola.png` → pistola
+391. `assets/incoming/oggetti/bottiglia.png` → bottiglia
+392. `assets/incoming/oggetti/mazza.png` → mazza
+393. `assets/incoming/oggetti/tubo.png` → tubo
+394. `assets/incoming/oggetti/asse.png` → asse
+395. `assets/incoming/oggetti/manganello.png` → manganello
+396. `assets/incoming/oggetti/fx_spruzzo.png` → fx_spruzzo
+397. `assets/incoming/oggetti/fx_scintille.png` → fx_scintille
+398. `assets/incoming/oggetti/fx_polvere.png` → fx_polvere
+399. `assets/incoming/oggetti/fx_fuoco.png` → fx_fuoco
+400. `assets/incoming/oggetti/fx_vetro.png` → fx_vetro
+401. `assets/incoming/oggetti/fx_sparo.png` → fx_sparo
 
 ## Fine
 
-In tutto 392 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. Claude integra nel gioco quello che trova in `assets/incoming/` (ritaglio, scala, allineamento, palette) e aggiorna le cartelle definitive.
+In tutto 401 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. Claude integra nel gioco quello che trova in `assets/incoming/` (ritaglio, scala, allineamento, palette) e aggiorna le cartelle definitive.
 

@@ -131,6 +131,8 @@ var W = window.W;
     ['caption', 'Una delle Lizzies chiude la porta a chiave. Spunta un coltello, poi una pistola: spara male, ma spara.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'],
     ['caption', 'L\'unica via è la porta: sfondala.'], ['flag', 'lizzies_trap']] };
   S.cine_swan_mercy = { cine: 'cine_swan_mercy', letterbox: false, steps: [
+    ['caption', 'Mercy ora porta una giacca di jeans scura, troppo grande per lei.'], ['flag', 'mercy_jacket'],
+    ['say', 'swan', 'E quella?'], ['say', 'mercy', 'L\'ho rubata. La polizia cerca una con la maglietta rosa.'],
     ['say', 'mercy', 'Quando arrivi a casa, finisce davvero?'], ['say', 'swan', 'Prima ci dobbiamo arrivare.'],
     ['say', 'mercy', 'Non hai risposto.'], ['wait', 1.2], ['say', 'swan', 'Lo so.'], ['flag', 'swan_mercy_bond']] };
   S.cine_reunion_approach = { cine: 'cine_reunion_approach', steps: seq(

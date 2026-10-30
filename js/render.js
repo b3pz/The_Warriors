@@ -64,7 +64,13 @@ W.Render = (function () {
   }
 
   // ---- pixel art approvata (Raccolta 04): set per personaggio, pose con ripieghi dichiarati
+  // Mercy dall'alba dei tunnel in poi porta la giacca di jeans rubata (nel film copriva il gesso al polso dell'attrice)
   function setOf(a) {
+    var id = setOfBase(a), w = a.world;
+    if (id === 'mercy' && w && w.flags && w.flags.mercy_jacket && W.ATLAS_PX && W.ATLAS_PX.sets.mercy_giacca) return 'mercy_giacca';
+    return id;
+  }
+  function setOfBase(a) {
     if (a.npc) return a.set;
     if (a.isEnemy) { if (a.sparSet) return a.sparSet; return (a.def.weapon && !a.weapon && a.def.unarmedSet) ? a.def.unarmedSet : a.def.set; }
     return a.char.id;

@@ -79,7 +79,7 @@ Per la camminata chiedi i quattro fotogrammi uno alla volta: «camminata, fotogr
 | `swan` | uomo bianco sui vent'anni, statura media, asciutto e atletico; capelli castano chiaro lisci di media lunghezza pettinati all'indietro; gilet di pelle marrone aperto sul petto nudo, jeans, stivali |
 | `ajax` | uomo bianco, alto e massiccio; capelli castano scuro corti; guanti di pelle senza dita; espressione provocatoria; gilet di pelle marrone sul petto nudo, jeans |
 | `snow` | uomo afroamericano, alto, braccia lunghe; capigliatura afro altissima e squadrata; espressione calma; gilet di pelle marrone, pantaloni scuri |
-| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo; cappello da cowboy chiaro sempre in testa; gilet di pelle marrone, jeans |
+| `cowboy` | uomo bianco giovane, statura media, viso da ragazzo; cappello da cowboy scuro sempre in testa; gilet di pelle marrone, jeans |
 | `cochise` | uomo afroamericano, medio-alto e agile; treccine e afro, fascia sulla fronte, collana di perline; gilet di pelle marrone sul petto nudo, pantaloni a zampa |
 | `vermin` | uomo bianco tarchiato e robusto; capelli castani corti e spettinati; faccia stanca e scocciata; gilet di pelle marrone, maglietta, jeans |
 | `rembrandt` | ragazzo ispanico, il più giovane e minuto del gruppo; ricci neri folti; borsa a tracolla con bombolette spray; gilet di pelle marrone, jeans |

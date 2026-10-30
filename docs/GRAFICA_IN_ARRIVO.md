@@ -36,7 +36,7 @@ Le figure delle tavole attuali sono state associate a queste descrizioni. **Sicu
 | Swan | bianco, statura media, asciutto e atletico; capelli castano chiaro lisci, media lunghezza, all'indietro; gilet aperto sul petto nudo |
 | Ajax | bianco, alto, massiccio; capelli castano scuro corti; guanti di pelle senza dita; espressione provocatoria |
 | Fox | bianco, esile e slanciato; capelli biondo-castani ricci e folti; aria da ragazzo dei quartieri alti |
-| Cowboy | bianco, statura media; viso giovanile; cappello Stetson chiaro, sempre |
+| Cowboy | bianco, statura media; viso giovanile; cappello Stetson scuro, sempre |
 | Rembrandt | ispanico, il più giovane e minuto; ricci neri folti; borsa a tracolla con le bombolette spray |
 | Snow | afroamericano, alto, braccia lunghe; afro altissimo e geometrico; espressione calma |
 | Cochise | afroamericano, medio-alto, agile; treccine/afro, collana di perline, pantaloni a zampa |
