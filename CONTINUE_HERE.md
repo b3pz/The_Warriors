@@ -56,7 +56,7 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 
 ## Aggiornamento 30 ottobre (mattina)
 
-- Transizioni a fumetto rifatte: a ogni nuovo capitolo una tavola di tre vignette (l'ultimo istante inchiostrato, la mappa della notte dal Bronx a Coney Island con il percorso in rosso, il luogo successivo disegnato con il gruppo in posa e il titolo del capitolo); tra un'area e l'altra due vignette; per i gruppi divisi la vignetta del luogo e la tavola «Intanto…». L'ultimo istante si cattura senza HUD.
+- Transizioni a fumetto rifatte: a ogni nuovo capitolo una tavola di tre vignette (l'ultimo istante inchiostrato, la mappa delle bande fornita dall'autore `assets/menu/mappa_bande.jpg` che scorre dalla tappa precedente alla nuova con il percorso in rosso, il luogo successivo disegnato con il gruppo in posa e il titolo del capitolo); tra un'area e l'altra due vignette; per i gruppi divisi la vignetta del luogo e la tavola «Intanto…». L'ultimo istante si cattura senza HUD.
 - Modalità Arcade (menu → «Arcade · risse fino a 4»): le sei risse della storia sbloccate, da 1 a 4 giocatori (tastiera WASD, tastiera frecce, controller 1–4, CPU), una rissa o tutte di fila, senza scene, nemici in più per 3 e 4 giocatori. Colori e segni per G3 (cerchio verde) e G4 (rombo viola), HUD a quattro. Configurazione salvata in `warriors-arcade-v1`. Test: `node tools/qa_arcade.js`.
 - Soccorso a tre o quattro: il compagno soccorre chi è a terra più vicino.
 - Revisione dei dialoghi approvata dall'autore e applicata (Docs «The Warriors · Night Run — Revisione dei dialoghi»): Orphans e gilet, Cyrus «Ci state?», Lizzies riordinate, Swan davanti al mare, doppioni tolti.

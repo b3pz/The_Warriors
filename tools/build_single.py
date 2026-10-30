@@ -9,7 +9,7 @@ srcs = re.findall(r'src="([^"]+)"', block.group(1))
 import json, mimetypes
 atlas_files = re.findall(r'"file": "([^"]+)"', (root / 'js/atlas_px.js').read_text(encoding='utf-8') + (root / 'js/backgrounds_px.js').read_text(encoding='utf-8'))
 data = {}
-for f in sorted(set(atlas_files)) + ['menu/cover.jpg']:
+for f in sorted(set(atlas_files)) + ['menu/cover.jpg', 'menu/mappa_bande.jpg']:
     mime = mimetypes.guess_type(f)[0] or 'image/png'
     data[f] = 'data:' + mime + ';base64,' + base64.b64encode((root / 'assets' / f).read_bytes()).decode()
 assets_js = '<script>window.W = window.W || {}; W.ASSET_DATA = ' + json.dumps(data) + ';</script>\n'

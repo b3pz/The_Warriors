@@ -215,7 +215,39 @@ var W = window.W;
     { ch: 'C2', name: 'Gun Hill Road', x: 0.5, y: 0.2 }, { ch: 'C3', name: '96ª Strada', x: 0.38, y: 0.36 },
     { ch: 'C4', name: 'Riverside Park', x: 0.26, y: 0.46 }, { ch: 'C5', name: 'Divisi', x: 0.36, y: 0.56 },
     { ch: 'C6', name: 'Union Square', x: 0.44, y: 0.66 }, { ch: 'C7', name: 'Ultimo treno', x: 0.5, y: 0.78 }, { ch: 'C8', name: 'Coney Island', x: 0.42, y: 0.9 }];
+  // mappa delle bande fornita dall'autore (assets/menu/mappa_bande.jpg, 1080×1097): coordinate delle tappe sull'immagine
+  var gangMap = new Image(); gangMap.ok = false; gangMap.onload = function () { gangMap.ok = true; };
+  gangMap.src = (W.ASSET_DATA && W.ASSET_DATA['menu/mappa_bande.jpg']) || 'assets/menu/mappa_bande.jpg';
+  var MAP_PT = { P0: [700, 1035], C1: [560, 62], C2: [432, 52], C3: [412, 196], C4: [96, 362], C5: [250, 548], C6: [268, 600], C7: [455, 820], C8: [700, 1035] };
+  var MAP_NAME = { P0: 'Coney Island', C1: 'Bronx · il raduno', C2: 'Gun Hill Road', C3: 'Gli Orphans', C4: 'Riverside Park', C5: 'Divisi', C6: 'Union Square', C7: 'L\'ultimo treno', C8: 'Coney Island' };
+  function drawGangMap(x, y, w, h, ch, k) {
+    var order = ['P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'], idx = Math.max(0, order.indexOf(ch));
+    var sc = 1.15, vw = w / sc, vh = h / sc, from = MAP_PT[order[Math.max(0, idx - 1)]], to = MAP_PT[order[idx]];
+    var e = k * k * (3 - 2 * k), cx = from[0] + (to[0] - from[0]) * e, cy = from[1] + (to[1] - from[1]) * e;
+    var mx = Math.max(0, Math.min(gangMap.width - vw, cx - vw / 2)), my = Math.max(0, Math.min(gangMap.height - vh, cy - vh / 2));
+    ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+    ctx.drawImage(gangMap, mx, my, vw, vh, x, y, w, h);
+    var P = function (c) { var q = MAP_PT[c]; return [x + (q[0] - mx) * sc, y + (q[1] - my) * sc]; };
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    // andata: tratteggio scuro; ritorno: rosso fino al punto raggiunto
+    ctx.setLineDash([8, 7]); ctx.strokeStyle = 'rgba(20,20,20,0.75)'; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo.apply(ctx, P('P0')); ctx.lineTo.apply(ctx, P('C1')); ctx.stroke(); ctx.setLineDash([]);
+    if (idx >= 1) {
+      ctx.strokeStyle = '#111'; ctx.lineWidth = 11; var path = function () { ctx.beginPath(); ctx.moveTo.apply(ctx, P('C1'));
+        for (var i = 2; i <= idx; i++) { var a = P(order[i - 1]), b = P(order[i]), f = i === idx ? e : 1; ctx.lineTo(a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f); } };
+      path(); ctx.stroke(); ctx.strokeStyle = '#d62828'; ctx.lineWidth = 6; path(); ctx.stroke();
+    }
+    var p = P(order[idx]), pulse = 1 + 0.15 * Math.sin(performance.now() / 160);
+    ctx.fillStyle = '#f2d23c'; ctx.strokeStyle = '#111'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(p[0], p[1], 11 * pulse, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.restore();
+    // cartellino della tappa
+    ctx.save(); ctx.font = '700 18px "Oswald", sans-serif'; var lbl = MAP_NAME[order[idx]].toUpperCase(), tw = ctx.measureText(lbl).width + 24;
+    ctx.fillStyle = '#111'; ctx.fillRect(x + 12 + 4, y + h - 44 + 4, tw, 32); ctx.fillStyle = '#f2d23c'; ctx.fillRect(x + 12, y + h - 44, tw, 32);
+    ctx.strokeStyle = '#111'; ctx.lineWidth = 2; ctx.strokeRect(x + 12, y + h - 44, tw, 32); ctx.fillStyle = '#111'; ctx.textAlign = 'left'; ctx.fillText(lbl, x + 24, y + h - 21);
+    ctx.restore();
+  }
   function drawMap(x, y, w, h, ch, k) {
+    if (gangMap.ok) { drawGangMap(x, y, w, h, ch, k); return; }
     ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
     ctx.fillStyle = '#d9cfb4'; ctx.fillRect(x, y, w, h);
     // acqua e isole stilizzate
