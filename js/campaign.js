@@ -188,9 +188,9 @@ var W = window.W;
      ['say', 'swan', 'Sappiamo chi ha sparato. Perché l\'hai fatto?'], ['say', 'luther', 'Nessun motivo. Mi piacciono queste cose.'],
      ['say', 'swan', 'Niente pistole. Tu e io, con i coltelli.'],
      ['caption', 'Luther accetta. Poi, all\'ultimo, tira fuori la pistola e la punta.'], ['wait', 0.5],
-     ['caption', 'Prima che possa sparare, Swan fa scattare il coltello e lo lancia.'], ['sfx', 'swing'], ['move', 'swan', 680, null, 0.2], ['sfx', 'hit'], ['flash'], ['shake', 8],
-     ['caption', 'La lama si pianta nel braccio di Luther. Il colpo parte verso la sabbia.'], ['sfx', 'shot'], ['pose', 'luther', 'down'],
-     ['caption', 'La pistola cade nella sabbia. Luther è disarmato.'], ['flag', 'luther_disarmed']]) };
+     ['caption', 'Luther spara. Swan si butta di lato: il colpo lo manca.'], ['sfx', 'shot'], ['flash'], ['move', 'swan', 520, 640, 0.25], ['shake', 6], ['wait', 0.4],
+     ['caption', 'Swan fa scattare il coltello e lo lancia.'], ['sfx', 'swing'], ['sfx', 'hit'], ['shake', 8],
+     ['caption', 'La lama si pianta nell\'avambraccio di Luther. La pistola cade nella sabbia: è disarmato.'], ['pose', 'luther', 'down'], ['flag', 'luther_disarmed']]) };
   S.cine_riffs_arrival = { cine: 'cine_riffs_arrival', steps: [
     ['crowd', 'rf', ['masai', 'cyrus', 'masai', 'cyrus'], 1150, 1260, 520, 660, 8, -1], ['npc', 'masai', 'masai', 1300, 580, -1], ['move', 'masai', 1000, null, 2],
     ['moveAll', -180, 2, 'crowd'], ['wait', 1.8],

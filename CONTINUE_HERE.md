@@ -4,6 +4,8 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 
 ## Decisioni dell'autore
 
+- **Fedeltà al film al 100%** (30 ottobre 2026): quando le note dell'autore e il film non coincidono, vale il film. Verificare sempre sulla trama (Wikipedia e fonti sulle location) prima di scrivere una scena.
+
 - Grafica approvata: la pixel art della Raccolta 04 (`assets/source/raccolta_04`). Il lotto **non è definitivo**: l'autore manderà circa 2.000 immagini da sostituire o aggiungere.
 - Titolo e menu usano la copertina fornita dall'autore (`assets/menu/cover.jpg`).
 - Sviluppare tutta la storia. Le transizioni video si fanno con gli sprite; l'autore potrà sostituirle con video fatti con altri strumenti, e se quelli fatti qui vengono bene restano.
@@ -43,7 +45,7 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 - Game over: tentativi per capitolo (Facile 5, Normale 3, Difficile 2), poi si ricomincia dall'inizio del capitolo; il salvataggio torna all'inizio del capitolo.
 - Mobile: joystick e tasti touch, pausa, menu con il joystick, richiesta di ruotare il telefono (`tools/qa_mobile.js`).
 - Film: Rembrandt bloccato a terra dal Punk spruzza la vernice; Ajax senza gilet contro le mazze e la mazza strappata al capo dei Furies; radio delle Lizzies da spaccare (chi lo fa nel film è da confermare: l'autore ha indicato Snow, che però non è nel gruppo delle Lizzies).
-- Duello: Swan lancia il coltello prima che Luther spari. Rembrandt, se lo giochi e un Punk ti blocca, si libera con la bomboletta (tasto d'interazione).
+- Duello: come nel film, Luther spara, Swan schiva e poi lancia il coltello. Rembrandt, se lo giochi e un Punk ti blocca, si libera con la bomboletta (tasto d'interazione).
 - Elenco completo di sprite e fondali mancanti con le misure: `docs/SPRITE_MANCANTI.md`.
 
 ## Aggiornamento 30 ottobre (musiche)
