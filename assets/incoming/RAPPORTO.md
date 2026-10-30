@@ -2,4 +2,4 @@
 
 Aggiornato a ogni caricamento in `assets/incoming/`.
 
-Nessuna immagine da integrare.
+- **ajax**: nel gioco con 5 immagini (idle, walk)
