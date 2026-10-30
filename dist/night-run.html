@@ -3503,7 +3503,7 @@ var W = window.W;
 
 W.Audio = (function () {
   var ac = null, master, sfx, mus, amb, seen = {}, vol = { sfx: 0.8, music: 0.5 };
-  var mood = 'silence', ambName = 'none', layers = {}, ambNodes = null, seqT = null, step = 0, noiseBuf = null;
+  var ducked = false, mood = 'silence', ambName = 'none', layers = {}, ambNodes = null, seqT = null, step = 0, noiseBuf = null;
   function ensure() {
     if (ac) return true;
     try {
@@ -3590,7 +3590,7 @@ W.Audio = (function () {
     var BASS = [36.71, 36.71, 0, 36.71, 43.65, 0, 36.71, 32.7, 36.71, 36.71, 0, 36.71, 48.99, 0, 43.65, 41.2];
     seqT = setInterval(function () {
       if (!ac || ac.state !== 'running') return;
-      var M = MOODS[mood]; if (!M.bpm) return;
+      var M = MOODS[mood]; if (!M.bpm || ducked) return;
       var now = ac.currentTime, n = BASS[step % 16];
       if (n && M.pulse) {
         var o = ac.createOscillator(), g = ac.createGain(), lf = ac.createBiquadFilter();
@@ -3605,6 +3605,7 @@ W.Audio = (function () {
   function applyMood() {
     if (!ac || !layers.drone) return;
     var M = MOODS[mood] || MOODS.silence, t = ac.currentTime;
+    if (ducked) M = MOODS.silence; // traccia originale in corso: il synth tace
     layers.drone.gain.gain.setTargetAtTime(M.drone, t, 1.2);
     layers.drone.filter.frequency.setTargetAtTime(M.cut, t, 1.5);
     layers.drone.oscs[3].frequency.setTargetAtTime(M.bright ? 174.6 : 146.83, t, 2); // all'alba la terza sale: Re maggiore → Fa
@@ -3654,22 +3655,126 @@ W.Audio = (function () {
   }
 
   return {
-    unlock: function () { if (ensure()) { if (ac.state === 'suspended') ac.resume(); startMusic(); applyMood(); if (ambName === 'none' && pendingAmb) startAmb(pendingAmb); } },
+    unlock: function () { if (W.Music) W.Music.unlock(); if (ensure()) { if (ac.state === 'suspended') ac.resume(); startMusic(); applyMood(); if (ambName === 'none' && pendingAmb) startAmb(pendingAmb); } },
     consume: function (events) {
       if (!ac) return;
       for (var i = 0; i < events.length; i++) { var e = events[i]; if (seen[e.eid]) continue; seen[e.eid] = true; if (SFX[e.type]) try { SFX[e.type](e); } catch (x) {} }
     },
+    duck: function (on) { if (ducked === !!on) return; ducked = !!on; applyMood(); },
     setMood: function (m) { if (m === mood) return; mood = MOODS[m] ? m : 'silence'; applyMood(); },
     setAmbience: function (a) { pendingAmb = a; if (!ac || a === ambName) return; startAmb(a); },
     radio: radio,
     ui: function () { if (ac) burst(0.03, 0.08, 'bandpass', 1400, 4); },
-    setVol: function (k, v) { vol[k] = v; if (!ac) return; if (k === 'sfx') sfx.gain.value = v; else { mus.gain.value = v; amb.gain.value = v * 0.9; } },
+    setVol: function (k, v) { vol[k] = v; if (k === 'music' && W.Music) W.Music.setVol(v); if (!ac) return; if (k === 'sfx') sfx.gain.value = v; else { mus.gain.value = v; amb.gain.value = v * 0.9; } },
     vol: vol,
     mood: function () { return mood; },
-    suspend: function () { if (ac && ac.state === 'running') ac.suspend(); },
-    resume: function () { if (ac && ac.state === 'suspended') ac.resume(); }
+    suspend: function () { if (W.Music) W.Music.suspend(); if (ac && ac.state === 'running') ac.suspend(); },
+    resume: function () { if (W.Music) W.Music.resume(); if (ac && ac.state === 'suspended') ac.resume(); }
   };
   var pendingAmb = 'none';
+})();
+
+</script>
+<script>
+'use strict';
+// Tracce musicali originali. Senza righe resta la musica sintetizzata.
+//
+// Come aggiungere una traccia:
+// 1. salva il file in assets/music/ (mp3 o ogg; m4a funziona su Safari e Chrome);
+// 2. aggiungi una riga qui sotto con la chiave del momento e il percorso:
+//      menu: 'assets/music/tema_principale.mp3',
+//    oppure con opzioni:
+//      cine_cyrus: { src: 'assets/music/cyrus.mp3', loop: false, vol: 0.9, start: 2.5 },
+//    loop: ripete (predefinito sì, tranne che per le scene); vol: 0–1 rispetto al volume musica;
+//    start: secondi da cui partire; fade: secondi di dissolvenza (predefinito 1,5).
+//
+// Ordine di ricerca (vince la prima chiave trovata):
+//   1. ID della scena in corso          es. cine_cyrus, radio_hunt (elenco in docs/MUSICHE.md)
+//   2. area + situazione                es. 'C4-02:fight', 'C3-04:chase', 'C5-02:explore'
+//   3. area                             es. 'C4-02'
+//   4. capitolo + situazione / capitolo es. 'C4:fight', 'C4'
+//   5. situazione generica              explore, fight, chase, scene, radio, dawn, silence
+//   6. schermate                        menu, gameover, credits
+// La stessa traccia usata da due momenti di fila continua senza ripartire.
+// 'silence' come valore (es. 'C6-02': 'silence') spegne la musica in quel momento.
+window.W = window.W || {};
+W.MUSIC = {
+};
+
+</script>
+<script>
+'use strict';
+// Lettore delle tracce originali (W.MUSIC in musiche.js) con dissolvenza incrociata.
+// Quando una traccia suona, la musica sintetizzata si abbassa; ambienti, effetti e radio restano.
+window.W = window.W || {};
+W.Music = (function () {
+  var decks = [null, null], cur = -1, curKey = null, curSrc = null, vol = 0.5, unlocked = false, broken = {}, want = null, raf = null;
+  function entry(key) {
+    var e = W.MUSIC && W.MUSIC[key]; if (!e) return null;
+    if (e === 'silence') return { silence: true };
+    if (typeof e === 'string') e = { src: e };
+    return broken[e.src] ? null : e;
+  }
+  function resolve(ctx) {
+    var keys = [];
+    if (ctx.scene) keys.push(ctx.scene);
+    if (ctx.area) {
+      keys.push(ctx.area + ':' + ctx.sit, ctx.area);
+      var ch = ctx.area.split('-')[0]; keys.push(ch + ':' + ctx.sit, ch);
+    }
+    if (ctx.sit) keys.push(ctx.sit);
+    if (ctx.screen) keys.push(ctx.screen);
+    for (var i = 0; i < keys.length; i++) { var e = entry(keys[i]); if (e) return { key: keys[i], e: e, scene: keys[i] === ctx.scene }; }
+    return null;
+  }
+  function fadeTo(el, target, secs, done) {
+    var from = el.volume, t0 = performance.now(), d = Math.max(0.05, secs) * 1000;
+    (function stepF() {
+      var k = Math.min(1, (performance.now() - t0) / d); el.volume = Math.max(0, Math.min(1, from + (target - from) * k));
+      if (k < 1) el.__f = requestAnimationFrame(stepF); else if (done) done();
+    })();
+  }
+  function stopDeck(i, secs) {
+    var el = decks[i]; if (!el) return;
+    cancelAnimationFrame(el.__f); fadeTo(el, 0, secs, function () { el.pause(); });
+  }
+  function play(r) {
+    var e = r.e, fade = e.fade === undefined ? 1.5 : e.fade;
+    if (cur >= 0) stopDeck(cur, fade);
+    cur = cur === 0 ? 1 : 0;
+    var el = decks[cur] || (decks[cur] = new Audio());
+    cancelAnimationFrame(el.__f);
+    el.src = e.src; el.loop = e.loop === undefined ? !r.scene : !!e.loop; el.volume = 0; el.__gain = e.vol === undefined ? 1 : e.vol;
+    el.onerror = function () { broken[e.src] = true; if (curSrc === e.src) { curSrc = null; curKey = null; apply(); } }; // file mancante: passa alla chiave seguente
+    try { el.currentTime = e.start || 0; } catch (x) {}
+    var p = el.play(); if (p && p.catch) p.catch(function () {});
+    fadeTo(el, vol * el.__gain, fade);
+    curSrc = e.src;
+  }
+  function apply() {
+    var r = want ? resolve(want) : null;
+    if (!r || r.e.silence) {
+      if (curSrc) { stopDeck(cur, 1.2); curSrc = null; }
+      curKey = r ? r.key : null; W.Audio.duck(!!r); return;
+    }
+    W.Audio.duck(true);
+    if (r.e.src === curSrc) { curKey = r.key; return; }   // stessa traccia: continua
+    curKey = r.key; if (unlocked) play(r);
+  }
+  return {
+    // ctx: { scene, area, sit, screen }
+    update: function (ctx) {
+      var sig = ctx.scene + '|' + ctx.area + '|' + ctx.sit + '|' + ctx.screen;
+      if (want && want.sig === sig) return;
+      ctx.sig = sig; want = ctx; apply();
+    },
+    unlock: function () { if (unlocked) return; unlocked = true; curSrc = null; apply(); },
+    setVol: function (v) { vol = v; var el = decks[cur]; if (el && curSrc) { cancelAnimationFrame(el.__f); el.volume = Math.min(1, vol * (el.__gain || 1)); } },
+    suspend: function () { decks.forEach(function (d) { if (d) d.pause(); }); },
+    resume: function () { var el = decks[cur]; if (el && curSrc) { var p = el.play(); if (p && p.catch) p.catch(function () {}); } },
+    current: function () { var el = decks[cur]; return { key: curKey, src: curSrc, playing: !!(el && curSrc && !el.paused), vol: el ? +el.volume.toFixed(2) : 0 }; },
+    count: function () { return W.MUSIC ? Object.keys(W.MUSIC).length : 0; }
+  };
 })();
 
 </script>
@@ -3977,7 +4082,7 @@ var W = window.W;
     }
     if (game.state === 'options') return [
       { label: 'Effetti', val: function () { return Math.round(options.sfx * 10); }, adj: function (d) { options.sfx = Math.max(0, Math.min(1, options.sfx + d * 0.1)); saveOptions(); } },
-      { label: 'Ambiente', val: function () { return Math.round(options.music * 10); }, adj: function (d) { options.music = Math.max(0, Math.min(1, options.music + d * 0.1)); saveOptions(); } },
+      { label: 'Musica e ambiente', val: function () { return Math.round(options.music * 10); }, adj: function (d) { options.music = Math.max(0, Math.min(1, options.music + d * 0.1)); saveOptions(); } },
       { label: 'Scossa schermo', val: function () { return options.shake ? 'sì' : 'no'; }, adj: function () { options.shake = !options.shake; saveOptions(); } },
       { label: 'Lampi', val: function () { return options.flash ? 'sì' : 'no'; }, adj: function () { options.flash = !options.flash; saveOptions(); } },
       { label: 'Fondali', val: function () { return options.scenery ? 'disegnati' : 'ritagli delle tavole'; }, adj: function () { options.scenery = !options.scenery; saveOptions(); } },
@@ -4244,6 +4349,9 @@ var W = window.W;
     W.Audio.setMood(m);
     W.Audio.setAmbience(def.amb || AMB_BY_BG[def.bg] || 'city');
     W.Audio.radio(!!(a.scene && a.scene.def.radio));
+    // tracce originali (js/musiche.js): scena → area:situazione → area → capitolo → situazione
+    var sit = a.scene ? (a.scene.def.radio ? 'radio' : 'scene') : m === 'fight' || m === 'chase' || m === 'dawn' || m === 'silence' ? m : 'explore';
+    if (W.Music) W.Music.update({ scene: a.scene ? a.scene.def.cine || null : null, area: def.id, sit: sit, screen: null });
   }
   var padPrev = {};
   function pollMenuPad() {
@@ -4256,9 +4364,9 @@ var W = window.W;
   }
   function draw(dt) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); }
-    if (game.state === 'gameover') { W.Audio.setMood('radio'); W.Audio.radio(true); }
-    if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); }
+    if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'menu' }); }
+    if (game.state === 'gameover') { W.Audio.setMood('radio'); W.Audio.radio(true); if (W.Music) W.Music.update({ screen: 'gameover' }); }
+    if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'credits' }); }
     if (game.state === 'title') drawTitle();
     else if (game.state === 'menu') {
       backdrop(1);

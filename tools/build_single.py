@@ -13,7 +13,18 @@ for f in sorted(set(atlas_files)) + ['menu/cover.jpg']:
     mime = mimetypes.guess_type(f)[0] or 'image/png'
     data[f] = 'data:' + mime + ';base64,' + base64.b64encode((root / 'assets' / f).read_bytes()).decode()
 assets_js = '<script>window.W = window.W || {}; W.ASSET_DATA = ' + json.dumps(data) + ';</script>\n'
-inline = assets_js + '\n'.join('<script>\n' + (root / s).read_text(encoding='utf-8') + '\n</script>' for s in srcs)
+import sys
+def script_text(s):
+    t = (root / s).read_text(encoding='utf-8')
+    # tracce originali: incluse nel file unico solo con --musica (possono pesare molto)
+    if s.endswith('musiche.js') and '--musica' in sys.argv:
+        def emb(m):
+            f = root / m.group(1)
+            if not f.exists(): return m.group(0)
+            return "'data:" + (mimetypes.guess_type(str(f))[0] or 'audio/mpeg') + ';base64,' + base64.b64encode(f.read_bytes()).decode() + "'"
+        t = re.sub(r"'(assets/music/[^']+)'", emb, t)
+    return t
+inline = assets_js + '\n'.join('<script>\n' + script_text(s) + '\n</script>' for s in srcs)
 html = html[:block.start()] + inline + html[block.end():]
 fav = base64.b64encode((root / 'assets/favicon.svg').read_bytes()).decode()
 html = html.replace('href="assets/favicon.svg"', 'href="data:image/svg+xml;base64,' + fav + '"')

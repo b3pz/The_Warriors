@@ -27,7 +27,7 @@ fs.mkdirSync(out, { recursive: true });
       const ar = w.area, p0 = w.players[0];
       if (ar.scene) { if (ar.scene.line && ar.scene.lineT > 0.3) ar.scene.input('confirm'); if (ar.scene.choice) ar.scene.input('confirm'); return; }
       if (ar.kind === 'training' && (ar.stepIdx >= 1 || ar.t > 15) && !ar.trainDone) ar.stepIdx = ar.def.steps.length;
-      w.players.forEach(p => { if (!p.cpu) { p.cpu = true; p.qaHuman = true; } });
+      w.players.forEach(p => { if (!p.cpu) { p.cpu = true; p.qaHuman = p.slot === 0; } });
       if (!p0.__bot) {
         p0.__bot = true;
         const orig = W.Player.prototype.thinkCpu;

@@ -301,7 +301,7 @@ var W = window.W;
     }
     if (game.state === 'options') return [
       { label: 'Effetti', val: function () { return Math.round(options.sfx * 10); }, adj: function (d) { options.sfx = Math.max(0, Math.min(1, options.sfx + d * 0.1)); saveOptions(); } },
-      { label: 'Ambiente', val: function () { return Math.round(options.music * 10); }, adj: function (d) { options.music = Math.max(0, Math.min(1, options.music + d * 0.1)); saveOptions(); } },
+      { label: 'Musica e ambiente', val: function () { return Math.round(options.music * 10); }, adj: function (d) { options.music = Math.max(0, Math.min(1, options.music + d * 0.1)); saveOptions(); } },
       { label: 'Scossa schermo', val: function () { return options.shake ? 'sì' : 'no'; }, adj: function () { options.shake = !options.shake; saveOptions(); } },
       { label: 'Lampi', val: function () { return options.flash ? 'sì' : 'no'; }, adj: function () { options.flash = !options.flash; saveOptions(); } },
       { label: 'Fondali', val: function () { return options.scenery ? 'disegnati' : 'ritagli delle tavole'; }, adj: function () { options.scenery = !options.scenery; saveOptions(); } },
@@ -568,6 +568,9 @@ var W = window.W;
     W.Audio.setMood(m);
     W.Audio.setAmbience(def.amb || AMB_BY_BG[def.bg] || 'city');
     W.Audio.radio(!!(a.scene && a.scene.def.radio));
+    // tracce originali (js/musiche.js): scena → area:situazione → area → capitolo → situazione
+    var sit = a.scene ? (a.scene.def.radio ? 'radio' : 'scene') : m === 'fight' || m === 'chase' || m === 'dawn' || m === 'silence' ? m : 'explore';
+    if (W.Music) W.Music.update({ scene: a.scene ? a.scene.def.cine || null : null, area: def.id, sit: sit, screen: null });
   }
   var padPrev = {};
   function pollMenuPad() {
@@ -580,9 +583,9 @@ var W = window.W;
   }
   function draw(dt) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); }
-    if (game.state === 'gameover') { W.Audio.setMood('radio'); W.Audio.radio(true); }
-    if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); }
+    if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'menu' }); }
+    if (game.state === 'gameover') { W.Audio.setMood('radio'); W.Audio.radio(true); if (W.Music) W.Music.update({ screen: 'gameover' }); }
+    if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'credits' }); }
     if (game.state === 'title') drawTitle();
     else if (game.state === 'menu') {
       backdrop(1);

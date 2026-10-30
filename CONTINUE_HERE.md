@@ -46,6 +46,12 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 - Duello: Swan lancia il coltello prima che Luther spari. Rembrandt, se lo giochi e un Punk ti blocca, si libera con la bomboletta (tasto d'interazione).
 - Elenco completo di sprite e fondali mancanti con le misure: `docs/SPRITE_MANCANTI.md`.
 
+## Aggiornamento 30 ottobre (musiche)
+
+- Pronto per le tracce originali: `js/musiche.js` (elenco) e `js/music.js` (lettore con dissolvenza). Chiavi per scena, area, situazione, capitolo e schermata; senza tracce resta il synth. Guida e tabella dei momenti: `docs/MUSICHE.md`. File in `assets/music/`.
+- Il file unico include le tracce solo con `python3 tools/build_single.py --musica`.
+- Test della campagna: il bot ora guida solo il giocatore 1 come umano (prima un KO del giocatore 1 con il compagno in piedi lasciava il test fermo in C4-02; nel gioco vero quel caso porta al riprova).
+
 ## Grafica nel gioco
 
 - Personaggi da `personaggi_nemici_fondali_04.png` (26 set) e 12 fondali dai ritagli della Raccolta 04 e del pacchetto 02.
@@ -58,7 +64,7 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 
 1. Ricevere il lotto grafico completo e integrarlo con `tools/build_pixel_sprites.py` e `tools/build_backgrounds.py`; confermare l'associazione figura → personaggio.
 2. Video delle transizioni dove l'autore li prepara: basta aggiungerli a `js/videos.js`.
-3. Playtest umano e bilanciamento; musica e voci reali al posto dei suoni sintetizzati.
+3. Playtest umano e bilanciamento; tracce originali in `assets/music/` (vedi `docs/MUSICHE.md`) e voci reali.
 4. Estensioni dopo la campagna: Arcade fino a quattro, online, touch.
 
 ## Regole di continuità

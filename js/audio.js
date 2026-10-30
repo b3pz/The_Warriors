@@ -7,7 +7,7 @@ var W = window.W;
 
 W.Audio = (function () {
   var ac = null, master, sfx, mus, amb, seen = {}, vol = { sfx: 0.8, music: 0.5 };
-  var mood = 'silence', ambName = 'none', layers = {}, ambNodes = null, seqT = null, step = 0, noiseBuf = null;
+  var ducked = false, mood = 'silence', ambName = 'none', layers = {}, ambNodes = null, seqT = null, step = 0, noiseBuf = null;
   function ensure() {
     if (ac) return true;
     try {
@@ -94,7 +94,7 @@ W.Audio = (function () {
     var BASS = [36.71, 36.71, 0, 36.71, 43.65, 0, 36.71, 32.7, 36.71, 36.71, 0, 36.71, 48.99, 0, 43.65, 41.2];
     seqT = setInterval(function () {
       if (!ac || ac.state !== 'running') return;
-      var M = MOODS[mood]; if (!M.bpm) return;
+      var M = MOODS[mood]; if (!M.bpm || ducked) return;
       var now = ac.currentTime, n = BASS[step % 16];
       if (n && M.pulse) {
         var o = ac.createOscillator(), g = ac.createGain(), lf = ac.createBiquadFilter();
@@ -109,6 +109,7 @@ W.Audio = (function () {
   function applyMood() {
     if (!ac || !layers.drone) return;
     var M = MOODS[mood] || MOODS.silence, t = ac.currentTime;
+    if (ducked) M = MOODS.silence; // traccia originale in corso: il synth tace
     layers.drone.gain.gain.setTargetAtTime(M.drone, t, 1.2);
     layers.drone.filter.frequency.setTargetAtTime(M.cut, t, 1.5);
     layers.drone.oscs[3].frequency.setTargetAtTime(M.bright ? 174.6 : 146.83, t, 2); // all'alba la terza sale: Re maggiore → Fa
@@ -158,20 +159,21 @@ W.Audio = (function () {
   }
 
   return {
-    unlock: function () { if (ensure()) { if (ac.state === 'suspended') ac.resume(); startMusic(); applyMood(); if (ambName === 'none' && pendingAmb) startAmb(pendingAmb); } },
+    unlock: function () { if (W.Music) W.Music.unlock(); if (ensure()) { if (ac.state === 'suspended') ac.resume(); startMusic(); applyMood(); if (ambName === 'none' && pendingAmb) startAmb(pendingAmb); } },
     consume: function (events) {
       if (!ac) return;
       for (var i = 0; i < events.length; i++) { var e = events[i]; if (seen[e.eid]) continue; seen[e.eid] = true; if (SFX[e.type]) try { SFX[e.type](e); } catch (x) {} }
     },
+    duck: function (on) { if (ducked === !!on) return; ducked = !!on; applyMood(); },
     setMood: function (m) { if (m === mood) return; mood = MOODS[m] ? m : 'silence'; applyMood(); },
     setAmbience: function (a) { pendingAmb = a; if (!ac || a === ambName) return; startAmb(a); },
     radio: radio,
     ui: function () { if (ac) burst(0.03, 0.08, 'bandpass', 1400, 4); },
-    setVol: function (k, v) { vol[k] = v; if (!ac) return; if (k === 'sfx') sfx.gain.value = v; else { mus.gain.value = v; amb.gain.value = v * 0.9; } },
+    setVol: function (k, v) { vol[k] = v; if (k === 'music' && W.Music) W.Music.setVol(v); if (!ac) return; if (k === 'sfx') sfx.gain.value = v; else { mus.gain.value = v; amb.gain.value = v * 0.9; } },
     vol: vol,
     mood: function () { return mood; },
-    suspend: function () { if (ac && ac.state === 'running') ac.suspend(); },
-    resume: function () { if (ac && ac.state === 'suspended') ac.resume(); }
+    suspend: function () { if (W.Music) W.Music.suspend(); if (ac && ac.state === 'running') ac.suspend(); },
+    resume: function () { if (W.Music) W.Music.resume(); if (ac && ac.state === 'suspended') ac.resume(); }
   };
   var pendingAmb = 'none';
 })();
