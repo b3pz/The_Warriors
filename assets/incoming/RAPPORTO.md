@@ -6,6 +6,7 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **cleon**: nel gioco con 12 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, walk)
 - **mercy**: nel gioco con 11 immagini (cover, hair, hand, idle, jump, run, sit, walk)
 - **mercy_giacca**: nel gioco con 9 immagini (hair, hand, idle, run, sit, walk)
+- **swan**: nel gioco con 15 immagini (down, getup, hand, heavy, hurt, idle, jump, kick, knife, knifethrow, punch, walk)
 - **vermin**: nel gioco con 13 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, turnstile, walk)
 - **fondale C1-01**: nel gioco (2 pezzi, 1920×720)
 - **fondale C1-02**: nel gioco (1 pezzi, 1280×720)
