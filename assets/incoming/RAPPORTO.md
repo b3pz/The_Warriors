@@ -8,6 +8,7 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **cowboy**: nel gioco con 12 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, walk)
 - **mercy**: nel gioco con 11 immagini (cover, hair, hand, idle, jump, run, sit, walk)
 - **mercy_giacca**: nel gioco con 9 immagini (hair, hand, idle, run, sit, walk)
+- **rembrandt**: nel gioco con 14 immagini (down, getup, heavy, hurt, idle, jump, kick, pinned_spray, punch, spray, walk)
 - **snow**: nel gioco con 12 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, walk)
 - **swan**: nel gioco con 15 immagini (down, getup, hand, heavy, hurt, idle, jump, kick, knife, knifethrow, punch, walk)
 - **vermin**: nel gioco con 13 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, turnstile, walk)
