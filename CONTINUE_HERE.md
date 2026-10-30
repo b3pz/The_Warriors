@@ -54,6 +54,14 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 - Bilanciamento: la salute non si ricaricava mai tra un'area e l'altra, così si arrivava ai Furies (C4) quasi a zero e si finiva in game over a ripetizione. Ora a inizio capitolo la salute è piena e tra un'area e l'altra risale almeno al 75 / 55 / 40 % (Facile / Normale / Difficile).
 - Test della campagna: il bot guida solo il giocatore 1 come umano; `START=C4-01` e `STOP=C5-01` fanno partire o fermare il giro da un'area.
 
+## Aggiornamento 30 ottobre (mattina)
+
+- Transizioni a fumetto rifatte: a ogni nuovo capitolo una tavola di tre vignette (l'ultimo istante inchiostrato, la mappa della notte dal Bronx a Coney Island con il percorso in rosso, il luogo successivo disegnato con il gruppo in posa e il titolo del capitolo); tra un'area e l'altra due vignette; per i gruppi divisi la vignetta del luogo e la tavola «Intanto…». L'ultimo istante si cattura senza HUD.
+- Modalità Arcade (menu → «Arcade · risse fino a 4»): le sei risse della storia sbloccate, da 1 a 4 giocatori (tastiera WASD, tastiera frecce, controller 1–4, CPU), una rissa o tutte di fila, senza scene, nemici in più per 3 e 4 giocatori. Colori e segni per G3 (cerchio verde) e G4 (rombo viola), HUD a quattro. Configurazione salvata in `warriors-arcade-v1`. Test: `node tools/qa_arcade.js`.
+- Soccorso a tre o quattro: il compagno soccorre chi è a terra più vicino.
+- Revisione dei dialoghi: documento con tutte le 115 battute e le proposte (Docs «The Warriors · Night Run — Revisione dei dialoghi»). Nessuna battuta cambiata nel gioco finché l'autore non approva.
+- `W.QA_NODRAW = true` salta il disegno nei test (il canvas senza GPU costa ~40 ms a fotogramma).
+
 ## Grafica nel gioco
 
 - Personaggi da `personaggi_nemici_fondali_04.png` (26 set) e 12 fondali dai ritagli della Raccolta 04 e del pacchetto 02.
@@ -67,7 +75,7 @@ Checkpoint aggiornato il 29 ottobre 2026 (notte), versione 0.5. Questo file serv
 1. Ricevere il lotto grafico completo e integrarlo con `tools/build_pixel_sprites.py` e `tools/build_backgrounds.py`; confermare l'associazione figura → personaggio.
 2. Video delle transizioni dove l'autore li prepara: basta aggiungerli a `js/videos.js`.
 3. Playtest umano e bilanciamento; tracce originali in `assets/music/` (vedi `docs/MUSICHE.md`) e voci reali.
-4. Estensioni dopo la campagna: Arcade fino a quattro, online, touch.
+4. Applicare i dialoghi approvati dall'autore; estensioni: online.
 
 ## Regole di continuità
 

@@ -7,7 +7,7 @@ W.Render = (function () {
   var C = W.CFG, ctx, cv, bgCache = {}, fx = [], seenEvents = {}, shake = 0, flash = 0;
   var opts = { shake: true, flash: true };
   var COL = {
-    ink: '#e9e4d6', dim: '#8b8678', hp: '#d8443a', hpBack: '#3a1c1c', fury: '#e8b13a', p1: '#f2c14e', p2: '#5ec4e6',
+    ink: '#e9e4d6', dim: '#8b8678', hp: '#d8443a', hpBack: '#3a1c1c', fury: '#e8b13a', p1: '#f2c14e', p2: '#5ec4e6', p3: '#7ddc6a', p4: '#e57ad8',
     body: '#cfc8b8', bodyShade: '#9e9788', enemy: '#59606e', bat: '#a0703c', danger: '#ff5a3c'
   };
 
@@ -500,13 +500,18 @@ W.Render = (function () {
 
   function roundRect(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
 
+  // segno del giocatore: triangolo, quadrato, cerchio, rombo
+  var SLOT_COL = function (i) { return [COL.p1, COL.p2, COL.p3, COL.p4][i] || COL.p2; };
+  function slotShape(i, x, y, r) {
+    if (i === 0) { ctx.moveTo(x, y - r); ctx.lineTo(x - r, y + r * 0.8); ctx.lineTo(x + r, y + r * 0.8); }
+    else if (i === 2) ctx.arc(x, y, r * 0.85, 0, Math.PI * 2);
+    else if (i === 3) { ctx.moveTo(x, y - r); ctx.lineTo(x + r, y); ctx.lineTo(x, y + r); ctx.lineTo(x - r, y); }
+    else ctx.rect(x - r * 0.85, y - r * 0.8, r * 1.7, r * 1.6);
+  }
   function drawSlotMarker(p, cx, w) {
-    var x = p.x - cx, y = p.y + 16, col = p.slot === 0 ? COL.p1 : COL.p2;
+    var x = p.x - cx, y = p.y + 16, col = SLOT_COL(p.slot);
     ctx.fillStyle = col; ctx.strokeStyle = '#000'; ctx.lineWidth = 2;
-    ctx.beginPath();
-    if (p.slot === 0) { ctx.moveTo(x, y - 7); ctx.lineTo(x - 8, y + 6); ctx.lineTo(x + 8, y + 6); } // triangolo
-    else ctx.rect(x - 7, y - 6, 14, 12);                                                              // quadrato
-    ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); slotShape(p.slot, x, y, 8); ctx.closePath(); ctx.fill(); ctx.stroke();
     ctx.font = '600 13px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(233,228,214,0.8)';
     ctx.fillText(p.char.name.toUpperCase() + (p.cpu ? ' · CPU' : ''), x, p.y - (p.z || 0) - 200);
     if (p.state === 'ko' && !p.out) {
@@ -575,17 +580,16 @@ W.Render = (function () {
       ctx.fillText(ar0.bus.kind === 'train' ? '◀ ARRIVA UN TRENO: VIA DAI BINARI' : '◀ BUS DEI TURNBULL: SCENDI DALLA CORSIA', 20, ar0.bus.kind === 'train' ? ar0.bus.lane[0] - 12 : ar0.bus.lane[0] - 36);
     }
     for (var i = 0; i < w.players.length; i++) {
-      var p = w.players[i], x = 24 + i * 330, y = 22, col = p.slot === 0 ? COL.p1 : COL.p2;
+      var np = w.players.length, bw = np >= 4 ? 290 : 312, p = w.players[i], x = 24 + i * (bw + 18), y = 22, col = SLOT_COL(p.slot);
       if (p.state === 'held' && !p.cpu) { ctx.fillStyle = '#ffd36a'; ctx.font = '700 20px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(p.char.id === 'rembrandt' ? ui.keyFor(p, 'interact') + ': BOMBOLETTA NEGLI OCCHI' : 'PREMI PIÙ VOLTE ' + ui.keyFor(p, 'light') + ' PER LIBERARTI', p.x - w.cam.x, p.y - 220); }
-      ctx.fillStyle = 'rgba(8,10,16,0.72)'; ctx.fillRect(x - 8, y - 8, 312, 82);
+      ctx.fillStyle = 'rgba(8,10,16,0.72)'; ctx.fillRect(x - 8, y - 8, bw, 82);
       ctx.fillStyle = col; ctx.beginPath();
-      if (p.slot === 0) { ctx.moveTo(x + 9, y); ctx.lineTo(x, y + 16); ctx.lineTo(x + 18, y + 16); } else ctx.rect(x + 1, y + 1, 16, 15);
-      ctx.fill();
+      slotShape(p.slot, x + 9, y + 8, 9); ctx.fill();
       ctx.fillStyle = COL.ink; ctx.font = '600 20px "Oswald", sans-serif'; ctx.textAlign = 'left';
       ctx.fillText(p.char.name.toUpperCase() + (p.cpu ? '  ·  CPU' : ''), x + 26, y + 16);
       ctx.font = '500 14px "Oswald", sans-serif'; ctx.fillStyle = COL.dim; ctx.textAlign = 'right';
-      ctx.fillText(Math.ceil(p.hp) + '/' + p.maxhp, x + 296, y + 15); ctx.textAlign = 'left';
-      bar(x, y + 24, 296, 14, p.hp / p.maxhp, p.hp / p.maxhp < 0.3 ? '#ff7a4a' : COL.hp, COL.hpBack);
+      ctx.fillText(Math.ceil(p.hp) + '/' + p.maxhp, x + bw - 16, y + 15); ctx.textAlign = 'left';
+      bar(x, y + 24, bw - 16, 14, p.hp / p.maxhp, p.hp / p.maxhp < 0.3 ? '#ff7a4a' : COL.hp, COL.hpBack);
       bar(x, y + 44, 180, 8, p.fury / 100, p.fury >= 100 ? (Math.floor(w.time * 6) % 2 ? '#fff0b0' : COL.fury) : COL.fury, '#2b2410');
       ctx.fillStyle = COL.dim; ctx.font = '500 13px "Oswald", sans-serif';
       ctx.fillText(p.fury >= 100 ? 'FURIA PRONTA' : 'FURIA', x, y + 68);
@@ -874,7 +878,7 @@ W.Render = (function () {
     grade(w);
     if (w.debug) drawDebug(w);
     ctx.restore();
-    drawHud(w, ui);
+    if (!(ui && ui.noHud)) drawHud(w, ui);
   }
 
   return { pxImage: function (id) { return PX[id]; }, toggleSprites: function () { useSprites = !useSprites; }, init: init, frame: frame, opts: opts, COL: COL, ctx: function () { return ctx; }, reset: function () { fx = []; seenEvents = {}; } };

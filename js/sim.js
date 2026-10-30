@@ -26,7 +26,7 @@ var W = window.W;
     this.events = [];
     this.attackers = 0; this.lastAttackEnd = -9;
     this.stats = { damageTaken: 0, maxCombo: 0, retries: 0, assisted: false, time: 0, kos: 0 };
-    this.score = [0, 0];
+    this.score = [0, 0, 0, 0];
     this.flags = {};
     this.cam = { x: 0, lockMax: null };
     this.prompt = null;
@@ -244,7 +244,15 @@ var W = window.W;
     }
   };
 
-  Player.prototype.buddy = function () { var ps = this.world.players; for (var i = 0; i < ps.length; i++) if (ps[i] !== this) return ps[i]; return null; };
+  // compagno: in due è l'altro; in tre o quattro (Arcade) chi è a terra più vicino, altrimenti il primo degli altri
+  Player.prototype.buddy = function () {
+    var ps = this.world.players, best = null, bd = 1e9, first = null;
+    for (var i = 0; i < ps.length; i++) {
+      var q = ps[i]; if (q === this) continue; if (!first) first = q;
+      if (ps.length > 2 && q.state === 'ko' && !q.out) { var d = Math.abs(q.x - this.x) + Math.abs(q.y - this.y); if (d < bd) { bd = d; best = q; } }
+    }
+    return best || first;
+  };
 
   Player.prototype.startAttack = function (m) {
     var base = W.MOVES[m], sp = {}; for (var k in base) sp[k] = base[k];
@@ -904,8 +912,8 @@ var W = window.W;
     for (var i = 0; i < ps.length; i++) {
       var p = ps[i]; if (p.state !== 'ko' || p.out) continue;
       // il danno subito interrompe il soccorso conservando al massimo 0,8 s
-      var helper = p.buddy();
-      if (!helper || !helper.reviving) p.reviveProg = Math.max(0, Math.min(p.reviveProg, C.REVIVE.keep) - dt * 0.5);
+      var helping = ps.some(function (q) { return q !== p && q.reviving && q.buddy() === p; });
+      if (!helping) p.reviveProg = Math.max(0, Math.min(p.reviveProg, C.REVIVE.keep) - dt * 0.5);
       if (p.koT > this.diff.revive && up.length > 0) { p.out = true; this.emit('out', { player: p.slot }); }
     }
     // nessun umano in piedi o in attesa di soccorso: la CPU non prosegue da sola → retry
