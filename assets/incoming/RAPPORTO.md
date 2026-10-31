@@ -6,7 +6,7 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **cleon**: nel gioco con 12 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, walk)
 - **cochise**: nel gioco con 24 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pipe_swing, punch, revive, run, sit, throw, turnstile, walk)
 - **cowboy**: nel gioco con 23 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pipe_swing, punch, revive, run, sit, throw, walk)
-- **fox**: nel gioco con 12 immagini (down, getup, heavy, hurt, idle, jump, kick, punch, walk)
+- **fox**: nel gioco con 23 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pipe_swing, punch, revive, run, sit, throw, walk)
 - **mercy**: nel gioco con 11 immagini (cover, hair, hand, idle, jump, run, sit, walk)
 - **mercy_giacca**: nel gioco con 9 immagini (hair, hand, idle, run, sit, walk)
 - **rembrandt**: nel gioco con 25 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pinned_spray, pipe_swing, punch, revive, run, sit, spray, throw, walk)
