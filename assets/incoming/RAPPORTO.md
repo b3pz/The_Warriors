@@ -14,6 +14,7 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **rembrandt**: nel gioco con 25 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pinned_spray, pipe_swing, punch, revive, run, sit, spray, throw, walk)
 - **snow**: nel gioco con 23 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pipe_swing, punch, revive, run, sit, throw, walk)
 - **swan**: nel gioco con 26 immagini (bat_swing, bat_walk, dodge, down, getup, grab, hand, heavy, hurt, idle, jump, jumpkick, kick, knife, knifethrow, pipe_swing, punch, revive, run, sit, throw, walk)
+- **turnbull**: nel gioco con 11 immagini (charge, down, hang, hurt, idle, punch, roof, walk)
 - **vermin**: nel gioco con 24 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pipe_swing, punch, revive, run, sit, throw, turnstile, walk)
 - **fondale C1-01**: nel gioco (2 pezzi, 1920×720)
 - **fondale C1-02**: nel gioco (1 pezzi, 1280×720)
