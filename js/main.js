@@ -802,16 +802,17 @@ var W = window.W;
   var idleT = 0, IDLE_DEMO = 20, DEMO_LEN = 45;
   function startCinema() { W.AutoPilot.start('cinema'); newRun({ mode: 'cpu', difficulty: 'facile' }, null, 0); game.msg = { text: 'Cinema: la storia si gioca da sola · Esc per uscire', t: 4 }; }
   // demo a rotazione: ogni volta una banda diversa, con la sua presentazione e la sua rissa
-  var DEMOS = [['furies', 'C4-02'], ['punks', 'C6-03'], ['turnbull', 'C2-02'], ['lizzies', 'C5-03'], ['rogues', 'C8-01'], ['orphans', 'C3-02']], demoI = Math.floor(Math.random() * 6);
+  // niente Lizzies (la trappola è una sorpresa) né Rogues (il finale): le demo non devono rovinare la storia
+  var DEMOS = [['furies', 'C4-02'], ['punks', 'C6-03'], ['turnbull', 'C2-02'], ['orphans', 'C3-02']], demoI = Math.floor(Math.random() * 4);
   function startDemo() {
     var d = DEMOS[demoI++ % DEMOS.length], idx = W.areaIndex(d[1]); if (idx < 0) return;
     W.AutoPilot.start('demo'); newRun({ mode: 'cpu', difficulty: 'normale' }, null, idx);
     game.world.flags.forceIntro = d[0];
   }
   // presentazione animata «anni '90»: le illustrazioni della storia con zoom lenti, didascalie e il tema; poi una demo
-  var ATTRACT = [['cine_cyrus', 'Cento bande. Una notte di tregua.'], ['cine_accusation', 'Poi uno sparo. Cyrus è morto.'], ['radio_dj', 'E la radio dà la colpa ai Warriors.'],
-    ['intro_furies', 'Trenta miglia di città nemica.'], ['cine_lizzies_trap', 'Ogni banda di New York li cerca.'], ['cine_swan_mercy', 'Nessun posto dove nascondersi.'],
-    ['cine_bottles', 'E alla fine della notte, qualcuno li aspetta.'], ['cine_epilogue', 'Fino all\'alba. Fino a casa.']];
+  // solo l'inizio della storia, come un trailer: il raduno, lo sparo, la caccia e le bande che li aspettano. Niente trappole, niente Luther, niente finale.
+  var ATTRACT = [['cine_cyrus', 'Cento bande. Una notte di tregua.'], ['cine_accusation', 'Poi, uno sparo.'], ['radio_dj', 'E ora tutta New York li cerca.'],
+    ['intro_turnbull', 'Ogni quartiere ha la sua banda.'], ['intro_orphans', 'Ogni strada è un confine.'], ['intro_furies', 'Trenta miglia di città nemica.'], ['intro_punks', 'Fino a Coney Island. Se ci arrivano.']];
   var SHOT = 4.4;
   function attractShots() { return ATTRACT.filter(function (a) { return R.sceneArt(a[0]); }); }
   function startAttract() {
