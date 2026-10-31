@@ -927,8 +927,13 @@ var W = window.W;
     var minX = 1e9, maxX = -1e9;
     for (var i = 0; i < ps.length; i++) { minX = Math.min(minX, ps[i].x); maxX = Math.max(maxX, ps[i].x); }
     var c = this.cam, target = c.x;
-    if (maxX > c.x + C.VIEW_W - C.CAM_MARGIN - 200) target = maxX - (C.VIEW_W - C.CAM_MARGIN - 200);
-    if (minX < c.x + C.CAM_MARGIN) target = Math.min(target, minX - C.CAM_MARGIN);
+    // giocatori troppo distanti per le due regole insieme (uno all'estremo sinistro, l'altro a destra):
+    // la telecamera resta ferma al centro fra i due invece di rincorrere ora l'uno ora l'altro (tremolio)
+    if (maxX - minX > C.VIEW_W - 2 * C.CAM_MARGIN - 200) target = (minX + maxX) / 2 - C.VIEW_W / 2;
+    else {
+      if (maxX > c.x + C.VIEW_W - C.CAM_MARGIN - 200) target = maxX - (C.VIEW_W - C.CAM_MARGIN - 200);
+      if (minX < c.x + C.CAM_MARGIN) target = Math.min(target, minX - C.CAM_MARGIN);
+    }
     var b = this.bounds(), hi = Math.min(b[1] - C.VIEW_W, c.lockMax === null ? 1e9 : c.lockMax);
     var lo = c.lockMin === undefined || c.lockMin === null ? b[0] : c.lockMin;
     target = clamp(target, lo, Math.max(lo, hi));

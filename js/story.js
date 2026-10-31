@@ -29,27 +29,37 @@ var W = window.W;
       moving = k < 1;
       if (k >= 1) this.move = null;
     } else if (this.follow) {
-      // compagni liberi: ognuno ha un posto suo intorno al gruppo, lo cambia ogni tanto, si ferma e si guarda intorno
+      // compagni al seguito in formazione: ognuno ha un posto suo (fila e corsia) dietro a chi guida, senza ammucchiarsi.
+      // Chi va avanti (Fox) sta davanti; quando il capo si ferma, il gruppo si ferma sparso; nessuno si sovrappone agli altri.
       var f = this.follow, w = this.world, fl = (w.area && w.area.floor) || [470, 680], P = FOLLOW_STYLE[this.id] || FOLLOW_STYLE._;
-      this.spotT = (this.spotT || 0) - dt;
-      var far = this.spot && Math.abs(f.x - this.spotRefX) > 240;
-      if (!this.spot || this.spotT <= 0 || far) {
-        var r = Math.random();
-        this.spot = { dx: P.ahead[0] + r * (P.ahead[1] - P.ahead[0]), y: fl[0] + 14 + Math.random() * (fl[1] - fl[0] - 24) };
-        this.spotRefX = f.x; this.spotT = 2.5 + Math.random() * 4; this.lookT = Math.random() * 2;
-      }
-      var tx = f.x + this.spot.dx * (f.face || 1), ty = this.spot.y;
+      var depth = fl[1] - fl[0], lanes = [0.18, 0.52, 0.86], k = this.followOff || 0;
+      var lane = lanes[(k + 1) % 3], col = Math.floor(k / 3);
+      var back = 120 + col * 135 + ((k + 1) % 3 === 1 ? 65 : 0);
+      if (P.lead) back = -P.lead;                       // lo scout sta davanti
+      if (this.id === 'mercy') { back = 70; lane = 0.7; } // Mercy vicino a chi guida
+      if (!this.faceRef || (f.state === 'walk' || f.state === 'run')) this.faceRef = f.face || 1;
+      var tx = f.x - back * this.faceRef, ty = fl[0] + 10 + lane * (depth - 20);
       if (w.area) tx = Math.max(40, Math.min(w.area.width - 40, tx));
-      // si tengono a distanza fra loro
-      for (var i = 0; i < w.npcs.length; i++) { var o = w.npcs[i]; if (o === this || !o.follow) continue; if (Math.abs(o.x - this.x) < 46 && Math.abs(o.y - this.y) < 22) { this.x += (this.x < o.x ? -1 : 1) * 40 * dt; this.y += (this.y < o.y ? -1 : 1) * 30 * dt; } }
-      var dx = tx - this.x, dy = ty - this.y;
-      if (Math.abs(dx) > 50 || Math.abs(dy) > 26) {
-        var sp = (Math.abs(dx) > 420 ? 360 : P.speed) * (this.st < 0.2 ? 0.5 : 1);
-        this.x += Math.max(-sp * dt, Math.min(sp * dt, dx)); this.y += Math.max(-120 * dt, Math.min(120 * dt, dy));
-        this.face = sign(dx); moving = true;
+      // separazione morbida da chiunque sia troppo vicino (compagni e giocatori): si scansa di lato, in profondità
+      var others = w.npcs.concat(w.players);
+      for (var i = 0; i < others.length; i++) {
+        var o = others[i]; if (o === this || o.hidden || o.crowd || (o.npc && !o.follow)) continue;
+        var ox = this.x - o.x, oy = this.y - o.y;
+        if (Math.abs(ox) < 54 && Math.abs(oy) < 24) { var dirY = oy === 0 ? (this.followOff % 2 ? 1 : -1) : Math.sign(oy); ty += dirY * 26; tx += (ox === 0 ? 1 : Math.sign(ox)) * 18; }
+      }
+      ty = Math.max(fl[0] + 6, Math.min(fl[1] - 6, ty));
+      var dx = tx - this.x, dy = ty - this.y, far = Math.abs(dx) > 420;
+      // zona morta ampia: niente passetti avanti e indietro quando è quasi al suo posto
+      this.settled = this.settled ? (Math.abs(dx) < 70 && Math.abs(dy) < 34) : (Math.abs(dx) < 24 && Math.abs(dy) < 14);
+      if (!this.settled) {
+        var sp = far ? 380 : Math.min(P.speed * 1.35, 90 + Math.abs(dx) * 2.2);
+        var mx = Math.max(-sp * dt, Math.min(sp * dt, dx)), my = Math.max(-110 * dt, Math.min(110 * dt, dy));
+        this.x += mx; this.y += my;
+        if (Math.abs(dx) > 8) this.face = sign(dx);
+        moving = Math.abs(mx) > 0.4 || Math.abs(my) > 0.4;
       } else {
-        this.lookT -= dt;
-        if (this.lookT <= 0) { this.face = Math.random() < 0.6 ? sign(f.x - this.x || 1) : -sign(f.x - this.x || 1); this.lookT = 1.5 + Math.random() * 3; }
+        this.lookT = (this.lookT || 0) - dt;
+        if (this.lookT <= 0) { this.face = Math.random() < 0.7 ? (f.face || 1) : -(f.face || 1); this.lookT = 1.8 + Math.random() * 3; }
       }
       this.y = Math.max(fl[0], Math.min(fl[1], this.y));
     }
@@ -61,7 +71,7 @@ var W = window.W;
 
   // carattere di ognuno nel gruppo: dove sta rispetto a chi guidi (pixel, positivo = davanti) e passo
   var FOLLOW_STYLE = {
-    fox:       { ahead: [120, 320], speed: 250 },   // lo scout va avanti
+    fox:       { ahead: [120, 320], speed: 250, lead: 150 },   // lo scout va avanti
     cowboy:    { ahead: [-320, -140], speed: 205 },  // resta un po' indietro
     vermin:    { ahead: [-260, -80], speed: 185 },   // si trascina
     snow:      { ahead: [-160, 120], speed: 225 },
@@ -102,6 +112,7 @@ var W = window.W;
       if (k === 'confirm') { this.vars.choice = this.choice.sel; this.line = { who: this.choice.who, text: this.choice.opts[this.choice.sel] }; this.choice = null; this.lineT = 0; }
       return;
     }
+    if (k === 'confirm' && this.def.intro && (this.age || 0) > 0.7) { this.wait = 0; return; }   // presentazione della banda: Invio la chiude
     if (k === 'confirm' && this.clip && this.clip.t > 0.4) { this.endClip(); return; }
     if (k === 'confirm' && this.line && this.lineT > 0.25) { this.line = null; }
   };
@@ -131,6 +142,7 @@ var W = window.W;
 
   Scene.prototype.step = function (dt) {
     if (this.done) return;
+    this.age = (this.age || 0) + dt;
     if (this.fade !== this.fadeTo) { var d = this.fadeTo - this.fade; this.fade += sign(d) * Math.min(Math.abs(d), dt * this.fadeSpeed); }
     if (this.title) { this.title.t += dt; if (this.title.t > this.title.dur) this.title = null; }
     if (this.wheel) { this.wheel.t += dt; if (this.wheel.t > this.wheel.dur) this.wheel = null; }

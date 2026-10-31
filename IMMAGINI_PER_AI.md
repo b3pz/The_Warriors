@@ -659,7 +659,51 @@ Mercy diventa giocabile nell'Arcade quando si trovano tutte le W di Rembrandt. S
 508. `assets/incoming/personaggi/mercy/down_1.png` → mercy, a terra, sdraiata su un fianco
 509. `assets/incoming/personaggi/mercy/getup_1.png` → mercy, si rialza: un ginocchio a terra, una mano sul pavimento
 
+### 10. Corsa a 4 tempi per i Warriors
+
+Oggi la corsa ha solo 2 disegni (`run_1`, `run_2`) e non è fluida. Servono i due tempi intermedi, con lo stesso modello e la stessa inclinazione del busto delle prime due.
+
+510. `assets/incoming/personaggi/swan/run_3.png` → swan, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+511. `assets/incoming/personaggi/swan/run_4.png` → swan, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+512. `assets/incoming/personaggi/ajax/run_3.png` → ajax, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+513. `assets/incoming/personaggi/ajax/run_4.png` → ajax, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+514. `assets/incoming/personaggi/snow/run_3.png` → snow, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+515. `assets/incoming/personaggi/snow/run_4.png` → snow, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+516. `assets/incoming/personaggi/cowboy/run_3.png` → cowboy, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+517. `assets/incoming/personaggi/cowboy/run_4.png` → cowboy, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+518. `assets/incoming/personaggi/cochise/run_3.png` → cochise, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+519. `assets/incoming/personaggi/cochise/run_4.png` → cochise, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+520. `assets/incoming/personaggi/vermin/run_3.png` → vermin, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+521. `assets/incoming/personaggi/vermin/run_4.png` → vermin, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+522. `assets/incoming/personaggi/rembrandt/run_3.png` → rembrandt, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+523. `assets/incoming/personaggi/rembrandt/run_4.png` → rembrandt, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+524. `assets/incoming/personaggi/fox/run_3.png` → fox, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+525. `assets/incoming/personaggi/fox/run_4.png` → fox, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+526. `assets/incoming/personaggi/cleon/run_3.png` → cleon, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+527. `assets/incoming/personaggi/cleon/run_4.png` → cleon, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+
+### 11. Loghi delle bande (presentazione delle bande)
+
+Quando una banda entra in scena per la prima volta il gioco si ferma su di lei e mostra il suo logo. **Eccezione alla regola del testo:** il logo contiene il nome della banda come nel film. Copia forma, colori e scritta del logo com'è nella mappa delle bande (`riferimenti/mappe/`), ridisegnato in pixel art pulita, su sfondo magenta, 1024×1024, centrato.
+
+528. `assets/incoming/oggetti/logo_turnbull.png` → logo dei Turnbull A.C.'s: testa di toro viola con le corna in un cerchio arancione, scritta TURNBULL AC'S
+529. `assets/incoming/oggetti/logo_orphans.png` → logo dei Orphans: scritta ORPHANS
+530. `assets/incoming/oggetti/logo_furies.png` → logo dei Baseball Furies: il loro logo con la scritta FURIES
+531. `assets/incoming/oggetti/logo_lizzies.png` → logo dei Lizzies: scritta corsiva rosa LIZZIES
+532. `assets/incoming/oggetti/logo_punks.png` → logo dei Punks: scritta PUNKS
+533. `assets/incoming/oggetti/logo_rogues.png` → logo dei Rogues: il loro logo con la scritta ROGUES
+
+### 12. Fury senza mazza
+
+Quando un Fury viene disarmato deve restare senza mazza in tutte le pose. Stesso modello di `modelli/fury.png`, mani vuote.
+
+534. `assets/incoming/personaggi/fury/nobat_idle_1.png` → fury, in guardia a mani nude, pugni alzati
+535. `assets/incoming/personaggi/fury/nobat_walk_1.png` → fury, camminata a mani nude, gamba destra avanti
+536. `assets/incoming/personaggi/fury/nobat_walk_2.png` → fury, camminata a mani nude, passaggio
+537. `assets/incoming/personaggi/fury/nobat_walk_3.png` → fury, camminata a mani nude, gamba sinistra avanti
+538. `assets/incoming/personaggi/fury/nobat_walk_4.png` → fury, camminata a mani nude, passaggio
+
 ## Fine
 
-In tutto 509 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
+In tutto 538 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
 

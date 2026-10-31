@@ -83,6 +83,26 @@ var W = window.W;
   W.AreaRun = AreaRun;
 
   AreaRun.prototype.playScene = function (s) { if (s) this.sceneQueue.push(s); };
+  // presentazione delle bande: la prima volta che una banda entra in scena il gioco si ferma su di lei, con nome, territorio e logo
+  W.GANGS = {
+    turnbull: { name: "TURNBULL A.C.'s", where: 'Gun Hill Road · Bronx', col: '#d8a23a', sets: /^turnbull/ },
+    orphans:  { name: 'THE ORPHANS', where: 'Tremont · Bronx', col: '#9a8f7a', sets: /^(orphan|sully)/ },
+    furies:   { name: 'THE BASEBALL FURIES', where: 'Riverside Park · Manhattan', col: '#e9e4d6', sets: /^fury/ },
+    lizzies:  { name: 'THE LIZZIES', where: 'Union Square · Manhattan', col: '#d84a8a', sets: /^lizzie/ },
+    punks:    { name: 'THE PUNKS', where: 'Union Square · stazione della metro', col: '#5a8ed8', sets: /^punk/ },
+    rogues:   { name: 'THE ROGUES', where: "Hell's Kitchen · Manhattan", col: '#7a7f8a', sets: /^rogue/ }
+  };
+  function gangOf(set) { for (var g in W.GANGS) if (W.GANGS[g].sets.test(set || '')) return g; return null; }
+  AreaRun.prototype.checkGangIntro = function () {
+    var w = this.world; if (this.scene || this.sceneQueue.length) return;
+    for (var i = 0; i < w.enemies.length; i++) {
+      var e = w.enemies[i]; if (!e.alive() || !e.onScreen() || e.x < w.cam.x + 160 || e.x > w.cam.x + C.VIEW_W - 160) continue;
+      var g = gangOf(e.def.set); if (!g || w.flags['intro_' + g]) continue;
+      w.flags['intro_' + g] = true;
+      this.playScene({ cine: 'intro_' + g, intro: g, focus: e, letterbox: false, steps: [['sfx', 'horn'], ['shake', 6], ['wait', 3.2]] });
+      return;
+    }
+  };
 
   AreaRun.prototype.setupTraining = function () {
     var w = this.world, partner = new W.Enemy(w, 'sparring', 460, 580);
@@ -193,6 +213,7 @@ var W = window.W;
     if (this.tagToast) { this.tagToast.t += dt; if (this.tagToast.t > 4) this.tagToast = null; }
     if (W.TAG_AUTO && W.TAG_AUTO[this.def.id] && !this.def.arcade && this.world.flags[W.TAG_AUTO[this.def.id]] && W.Tags.add(this.def.id)) this.tagToast = { text: 'La W dei Warriors · ' + W.Tags.count() + ' / ' + W.Tags.total, t: 0 };
     var def = this.def, duo = w.duo(), self = this;
+    this.checkGangIntro();
     // scene: la simulazione di gioco si ferma (zero danni durante dialoghi e cinematiche)
     if (!this.scene && this.sceneQueue.length) { this.scene = new W.Scene(w, this.sceneQueue.shift(), {}); }
     if (this.scene) {

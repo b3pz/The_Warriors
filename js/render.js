@@ -85,7 +85,7 @@ W.Render = (function () {
     return a.char.id;
   }
   function pickPose(a) {
-    var st = a.state, m = a.curMove, ph = a.att ? a.att.phase : null, wf = Math.floor(a.anim * (st === 'run' ? 9 : 6));
+    var st = a.state, m = a.curMove, ph = a.att ? a.att.phase : null, wf = Math.floor(a.anim * (st === 'run' ? 11 : 6));
     if (a.npc) return a.pose === 'down' ? { p: 'down' } : a.pose ? { p: a.pose, alt: 'idle' } : (st === 'walk' ? { p: 'walk', i: wf } : { p: 'idle' });
     if (a.isEnemy) {
       var moving = Math.abs(a.x - (a.lx === undefined ? a.x : a.lx)) + Math.abs(a.y - (a.ly === undefined ? a.y : a.ly)) > 0.3;
@@ -146,9 +146,13 @@ W.Render = (function () {
       if (sel.p === 'down') fake = 'lie'; else if (sel.p === 'hurt') fake = 'tilt'; else if (sel.p === 'walk') fake = null;
       list = set.frames.walk && sel.p === 'walk' ? set.frames.walk : set.frames.idle;
     }
-    var fr = list[(sel.i || 0) % list.length];
+    var fr = list[(sel.i || 0) % list.length], runBob = 0;
+    // corsa con solo 2 disegni: si alternano con i passi intermedi della camminata (4 tempi) e un piccolo rimbalzo, così è fluida
+    if (sel.p === 'run' && list === set.frames.run && list.length < 4 && set.frames.walk && set.frames.walk.length >= 4) {
+      var ri = (sel.i || 0) % 4; fr = [list[0], set.frames.walk[1], list[1 % list.length], set.frames.walk[3]][ri]; runBob = ri % 2 ? 0 : 5;
+    }
     var k = (set.scale || P.scale) * ((a.isEnemy && a.def.scale) || 1);
-    var x = Math.round(a.x - cx), y = a.y, z = a.z || 0;
+    var x = Math.round(a.x - cx), y = a.y, z = (a.z || 0) + runBob;
     var lying = sel.p === 'down' || fake === 'lie';
     ctx.fillStyle = 'rgba(0,0,0,' + (0.42 - Math.min(0.25, z / 400)) + ')';
     ctx.beginPath(); ctx.ellipse(x, y, lying ? 64 : 30, 8, 0, 0, Math.PI * 2); ctx.fill();
@@ -819,6 +823,39 @@ W.Render = (function () {
     gl.addColorStop(0, c1); gl.addColorStop(1, 'rgba(0,0,0,0)'); gr.addColorStop(0, c2); gr.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = gl; ctx.fillRect(0, 0, 260, C.VIEW_H); ctx.fillStyle = gr; ctx.fillRect(C.VIEW_W - 260, 0, 260, C.VIEW_H); ctx.restore();
   }
+  // fermo immagine di presentazione della banda: mondo in seppia e retino, luce sul gruppo, nome a pennarello, territorio, logo
+  var LOGOS = {};
+  function drawGangIntro(w, sc) {
+    var g = W.GANGS[sc.def.intro]; if (!g) return;
+    var t = sc.age || 0, cx = w.cam.x, fo = sc.def.focus, mem = w.enemies.filter(function (e) { return e.alive() && g.sets.test(e.def.set) && (!fo || Math.abs(e.x - fo.x) < 320); });   // il gruppo attorno a chi è comparso per primo
+    var gx = mem.length ? mem.reduce(function (s2, e) { return s2 + e.x; }, 0) / mem.length - cx : C.VIEW_W * 0.7, gy = mem.length ? mem.reduce(function (s2, e) { return s2 + e.y; }, 0) / mem.length - 90 : 500;
+    gx = Math.max(160, Math.min(C.VIEW_W - 160, gx));
+    var k = Math.min(1, t / 0.25);
+    // flash iniziale
+    if (t < 0.15) { ctx.fillStyle = 'rgba(255,255,255,' + (1 - t / 0.15) + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
+    // tutto scuro tranne un cerchio di luce sul gruppo
+    ctx.save(); var rg = ctx.createRadialGradient(gx, gy, 60, gx, gy, 420);
+    rg.addColorStop(0, 'rgba(10,6,4,0)'); rg.addColorStop(0.55, 'rgba(10,6,4,' + 0.35 * k + ')'); rg.addColorStop(1, 'rgba(10,6,4,' + 0.82 * k + ')');
+    ctx.fillStyle = rg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = 'rgba(214,190,150,' + 0.5 * k + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); ctx.globalCompositeOperation = 'source-over';
+    // retino da fumetto
+    ctx.fillStyle = 'rgba(0,0,0,' + 0.14 * k + ')'; for (var yy = 0; yy < C.VIEW_H; yy += 7) for (var xx = (yy / 7 % 2) * 3.5; xx < C.VIEW_W; xx += 7) ctx.fillRect(xx, yy, 2, 2);
+    ctx.restore();
+    // i membri della banda ridisegnati sopra il buio: sono loro i protagonisti del fermo immagine
+    mem.slice().sort(function (a2, b2) { return a2.y - b2.y; }).forEach(function (e) { e.isEnemy = true; drawFigure(e, cx, w); });
+    // fascia con il nome che entra di lato
+    var sl = Math.min(1, Math.max(0, (t - 0.2) / 0.35)), ease = 1 - Math.pow(1 - sl, 3), bx = -900 + ease * 900, by = 120;
+    ctx.save(); ctx.translate(bx, by); ctx.rotate(-0.04);
+    ctx.fillStyle = '#000'; ctx.fillRect(14, 14, 820, 128); ctx.fillStyle = '#c81e1e'; ctx.fillRect(0, 0, 820, 128);
+    ctx.fillStyle = g.col; ctx.fillRect(0, 118, 820, 10);
+    ctx.font = '64px "Permanent Marker", sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = '#000'; ctx.fillText(g.name, 44, 86); ctx.fillStyle = '#fff'; ctx.fillText(g.name, 40, 82);
+    ctx.restore();
+    if (t > 0.6) { ctx.save(); ctx.globalAlpha = Math.min(1, (t - 0.6) / 0.3); ctx.font = '600 24px "Oswald", sans-serif'; ctx.fillStyle = '#f2d23c'; ctx.textAlign = 'left'; ctx.fillText(g.where.toUpperCase(), 70, 300); ctx.restore(); }
+    // logo della banda (immagine nuova, se c'è)
+    var lp = W.ART_AI && W.ART_AI.object && W.ART_AI.object['logo_' + sc.def.intro];
+    if (lp) { var im = LOGOS[lp] || (LOGOS[lp] = loadImg(lp)); if (im.ok) { var ls = Math.min(1, Math.max(0, (t - 0.45) / 0.3)), lh = 210 * (0.6 + 0.4 * ls); ctx.save(); ctx.globalAlpha = ls; ctx.drawImage(im, C.VIEW_W - 60 - lh * im.width / im.height, 60, lh * im.width / im.height, lh); ctx.restore(); } }
+    if (t > 1) { ctx.globalAlpha = 0.7; ctx.font = '500 14px "Oswald", sans-serif'; ctx.fillStyle = '#fff'; ctx.textAlign = 'right'; ctx.fillText('Invio per continuare', C.VIEW_W - 24, C.VIEW_H - 18); ctx.globalAlpha = 1; }
+  }
   function drawScene(w, sc, ui) {
     if (sc.wheel) { drawWheelShot(sc.wheel); return; }
     var art = sc.def.cine && ARTSC[sc.def.cine];
@@ -829,6 +866,7 @@ W.Render = (function () {
       if (ah < C.VIEW_H * zs) { ah = C.VIEW_H * zs; aw = ah * art.width / art.height; }
       ctx.save(); ctx.globalAlpha = Math.min(1, at / 0.6); ctx.drawImage(art, (C.VIEW_W - aw) / 2, (C.VIEW_H - ah) / 2, aw, ah); ctx.restore();
     }
+    if (sc.def.intro) drawGangIntro(w, sc);
     if (sc.lights) drawLights(w.time);
     if (sc.def.radio && !sc.title) drawRadio(w, sc);
     if (sc.clip) drawClip(sc.clip);

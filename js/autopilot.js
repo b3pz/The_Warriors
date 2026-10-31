@@ -55,7 +55,7 @@ W.AutoPilot = (function () {
     if (game.state !== 'play' || !w || !w.area) return;
     var a = w.area, sc = a.scene;
     if (sc) {
-      if (AP.kind === 'demo') { sc.skip(); return; }
+      if (AP.kind === 'demo' && !sc.def.intro) { sc.skip(); return; }
       if (sc.choice) { sc.choiceT = (sc.choiceT || 0) + dt; if (sc.choiceT > 1.6) { sc.input('confirm'); sc.choiceT = 0; } return; }
       if (sc.line && sc.lineT > readTime(sc.line.text)) sc.input('confirm');
       return;

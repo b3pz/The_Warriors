@@ -117,3 +117,11 @@ Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source,
 - `js/autopilot.js` (`W.AutoPilot`): la CPU guida il giocatore 1 con la stessa logica del test della campagna; dialoghi al ritmo di lettura; nessuno resta a terra.
 - Menu «Cinema · guarda tutta la storia»: tutta la campagna fino ai titoli (circa 15 minuti), niente salvataggi, sblocchi, W o punteggi (`writeSave`, `unlock`, `W.Tags.add` non fanno niente col pilota attivo). Esc → pausa → Menu principale per uscire.
 - Demo: 25 s fermi su titolo o menu → un'arena o una fuga a caso, al massimo 45 s; un tasto, un tocco o il controller la chiude.
+
+## Rifiniture del 31 ottobre (sera)
+
+- Compagni al seguito in formazione (story.js): posto fisso per fila e corsia, zona morta, separazione morbida da compagni e giocatori. Niente più mucchio e passetti avanti e indietro.
+- Corsa: se un Warrior ha solo `run_1`/`run_2`, il ciclo usa 4 tempi con i passi intermedi della camminata e un piccolo rimbalzo; chiesti `run_3`/`run_4` a ChatGPT (510–527).
+- Presentazione delle bande (`W.GANGS` in areas.js, `drawGangIntro` in render.js): alla prima apparizione di Turnbull, Orphans, Furies, Lizzies, Punks e Rogues il gioco si ferma su di loro con nome, territorio e logo (`oggetti/logo_<banda>.png`, punti 528–533). Invio la chiude; nella demo resta.
+- Telecamera: con due giocatori troppo distanti resta al centro fra i due (prima rincorreva l'uno e l'altro e tremava).
+- Set vecchi mappati sulle figure nuove (`SET_ALIAS` in render.js); Fury disarmato: pose `nobat_*` chieste a ChatGPT (534–538).
