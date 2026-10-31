@@ -11,6 +11,7 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **fury_boss**: nel gioco con 10 immagini (down, hurt, idle, punch, swing, walk, windup)
 - **lizzie**: nel gioco con 11 immagini (down, gun_aim, gun_shoot, hurt, idle, punch, push, walk)
 - **lizzie_boss**: nel gioco con 9 immagini (down, gun_aim, hurt, idle, punch, walk)
+- **luther**: nel gioco con 11 immagini (bottles, down, gun_aim, hurt, idle, knifehit, punch, walk)
 - **mercy**: nel gioco con 11 immagini (cover, hair, hand, idle, jump, run, sit, walk)
 - **mercy_giacca**: nel gioco con 9 immagini (hair, hand, idle, run, sit, walk)
 - **orphan**: nel gioco con 9 immagini (board_swing, down, hurt, idle, punch, walk)
