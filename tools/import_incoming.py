@@ -224,6 +224,45 @@ def do_music():
     return out
 
 
+# effetti sonori: nome del file (o del pacchetto Kenney «Impact Sounds», licenza CC0) → evento del gioco
+SFX_RULES = [
+    ('hit_heavy', ['hit_heavy', 'impactpunch_heavy', 'pugno_forte']), ('hit_light', ['hit_light', 'impactpunch_medium', 'impactpunch_light', 'pugno']),
+    ('hit_weapon', ['hit_weapon', 'impactwood', 'impactplank', 'mazza']), ('hit_metal', ['hit_metal', 'impactmetal', 'tubo']),
+    ('bottle', ['bottle', 'impactglass_light', 'impactglass_medium', 'bottiglia']), ('break', ['break', 'impactglass_heavy', 'rottura', 'vetro']),
+    ('ko', ['ko', 'impactsoft_heavy', 'caduta']), ('throw', ['throw', 'impactsoft_medium', 'lancio']), ('swing', ['swing', 'whoosh', 'fendente']),
+    ('pickup', ['pickup', 'raccogli']), ('shot', ['shot', 'gunshot', 'sparo']), ('siren', ['siren', 'sirena']), ('train', ['train', 'subway', 'treno', 'metro']),
+    ('skate', ['skate', 'roller', 'pattini']), ('spray', ['spray', 'bomboletta']), ('fire', ['fire', 'fuoco', 'fiamme']), ('open', ['door', 'porta'])]
+
+
+def do_sfx():
+    """Effetti in assets/incoming/suoni/ (anche sottocartelle): convertiti in mp3 mono in assets/sfx/<evento>_<n>.mp3."""
+    import shutil, subprocess
+    od = ROOT / 'assets' / 'sfx'; od.mkdir(parents=True, exist_ok=True)
+    base = INC / 'suoni'; ff = shutil.which('ffmpeg'); new = 0
+    man_f = od / '_fonti.json'; man = json.loads(man_f.read_text()) if man_f.exists() else {}
+    if base.exists():
+        for f in sorted(base.rglob('*')):
+            if f.suffix.lower() not in ('.wav', '.ogg', '.mp3', '.flac', '.aif', '.aiff', '.m4a'): continue
+            rel = str(f.relative_to(INC))
+            if rel in man and (od / man[rel]).exists(): continue
+            name = f.stem.lower().replace(' ', '_').replace('-', '_')
+            key = next((k for k, words in SFX_RULES if any(name.startswith(wd) or ('_' + wd) in name for wd in words)), None)
+            if not key: report.append(f'- suono: `{rel}` non riconosciuto (rinominalo con l\'evento, es. mazza_1.wav)'); continue
+            if not ff: report.append('- suoni: ffmpeg non disponibile'); break
+            n = 1
+            while (od / f'{key}_{n}.mp3').exists(): n += 1
+            dst = od / f'{key}_{n}.mp3'
+            r = subprocess.run([ff, '-y', '-loglevel', 'error', '-i', str(f), '-ac', '1', '-ar', '44100', '-c:a', 'libmp3lame', '-b:a', '96k', str(dst)])
+            if r.returncode != 0: report.append(f'- **suono rotto** `{f.name}`'); continue
+            man[rel] = dst.name; new += 1
+    man_f.write_text(json.dumps(man, indent=1, sort_keys=True))
+    out = {}
+    for f in sorted(od.glob('*.mp3')):
+        k = f.stem.rsplit('_', 1)[0]; out.setdefault(k, []).append(f'assets/sfx/{f.name}')
+    if new: report.append(f'- **suoni**: {new} nuovi · ' + ', '.join(f'{k} {len(v)}' for k, v in sorted(out.items())))
+    return out
+
+
 VIDEO_IDS = ['v_radio_dj', 'v_wonder_wheel', 'v_beach_dawn', 'v_cyrus_shot', 'v_luther_bottles', 'v_furies_bats', 'v_conclave', 'v_train_night', 'v_duel',
              'v_riffs_order', 'v_turnbull_bus', 'v_car_fire', 'v_ajax_cuffs', 'v_lizzies_lock', 'v_punks_skates', 'v_rembrandt_tag', 'v_train_dawn', 'v_riffs_beach']
 
@@ -272,8 +311,10 @@ def main():
            'object': do_simple('oggetti', 'objects_ai', 'png', key=True, max_side=900)}
     tracks = do_music()
     videos = do_video()
+    sounds = do_sfx()
     head = "'use strict';\n// Generato da tools/import_incoming.py dalle immagini in assets/incoming/: non modificare a mano.\nwindow.W = window.W || {};\n"
     (ROOT / 'js' / 'atlas_ai.js').write_text(head + 'W.ATLAS_AI = ' + json.dumps({'sets': sets}) + ';\n', encoding='utf-8')
+    (ROOT / 'js' / 'suoni_auto.js').write_text(head.replace('dalle immagini', 'dai suoni') + 'W.SFX_AUTO = ' + json.dumps(sounds) + ';\n', encoding='utf-8')
     (ROOT / 'js' / 'videos_auto.js').write_text(head.replace('dalle immagini', 'dai video') + 'W.VIDEOS_AUTO = ' + json.dumps(videos) + ';\n', encoding='utf-8')
     (ROOT / 'js' / 'musiche_auto.js').write_text(head + 'W.MUSIC_AUTO = ' + json.dumps(tracks) + ';\n', encoding='utf-8')
     (ROOT / 'js' / 'art_ai.js').write_text(head + 'W.BG_AI = ' + json.dumps(bg) + ';\nW.ART_AI = ' + json.dumps(art) + ';\n', encoding='utf-8')

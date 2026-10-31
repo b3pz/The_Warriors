@@ -35,6 +35,33 @@ W.Audio = (function () {
     env(g, t, 0.003, peak, dur); n.connect(f); f.connect(g); g.connect(out || sfx); n.start(t, Math.random() * 2); n.stop(t + dur + 0.05);
   }
 
+  // ------------------------------------------------------------------ effetti registrati (W.SFX_AUTO da js/suoni_auto.js)
+  // Ogni evento cerca prima un suono registrato (più varianti: ne sceglie una a caso, con un filo di variazione d'intonazione);
+  // se non c'è, resta il suono sintetizzato qui sotto.
+  var bufs = {}, loading = {};
+  function sampleKey(e) {
+    switch (e.type) {
+      case 'hit': return e.weapon ? (e.weaponType === 'pipe' ? 'hit_metal' : 'hit_weapon') : (e.heavy ? 'hit_heavy' : 'hit_light');
+      case 'break': return 'break';
+      default: return e.type;
+    }
+  }
+  function loadSample(src) {
+    if (bufs[src] || loading[src]) return; loading[src] = true;
+    fetch(src).then(function (r) { return r.arrayBuffer(); }).then(function (ab) { return new Promise(function (ok, ko) { ac.decodeAudioData(ab, ok, ko); }); })
+      .then(function (b) { bufs[src] = b; }).catch(function () { bufs[src] = null; });
+  }
+  function preloadSamples() { var A = W.SFX_AUTO || {}; for (var k in A) A[k].forEach(loadSample); }
+  function playSample(e) {
+    var A = W.SFX_AUTO, key = A && sampleKey(e), list = key && A[key]; if (!list || !list.length) return false;
+    var src = list[Math.floor(Math.random() * list.length)], b = bufs[src];
+    if (!b) { loadSample(src); return false; }       // ancora in caricamento: per questa volta suona il sintetizzato
+    var n = ac.createBufferSource(), g = ac.createGain(); n.buffer = b; n.playbackRate.value = 0.94 + Math.random() * 0.12;
+    g.gain.value = SAMPLE_GAIN[key] || 0.9; n.connect(g); g.connect(key === 'siren' || key === 'train' ? amb : sfx); n.start();
+    return true;
+  }
+  var SAMPLE_GAIN = { swing: 0.5, step: 0.4, pickup: 0.6, spray: 0.7 };
+
   // ------------------------------------------------------------------ effetti: secchi, bassi, sporchi
   var SFX = {
     hit: function (e) {
@@ -166,10 +193,10 @@ W.Audio = (function () {
   }
 
   return {
-    unlock: function () { if (W.Music) W.Music.unlock(); if (ensure()) { if (ac.state === 'suspended') ac.resume(); startMusic(); applyMood(); if (ambName === 'none' && pendingAmb) startAmb(pendingAmb); } },
+    unlock: function () { if (W.Music) W.Music.unlock(); if (ensure()) { if (ac.state === 'suspended') ac.resume(); preloadSamples(); startMusic(); applyMood(); if (ambName === 'none' && pendingAmb) startAmb(pendingAmb); } },
     consume: function (events) {
       if (!ac) return;
-      for (var i = 0; i < events.length; i++) { var e = events[i]; if (seen[e.eid]) continue; seen[e.eid] = true; if (SFX[e.type]) try { SFX[e.type](e); } catch (x) {} }
+      for (var i = 0; i < events.length; i++) { var e = events[i]; if (seen[e.eid]) continue; seen[e.eid] = true; if (playSample(e)) continue; if (SFX[e.type]) try { SFX[e.type](e); } catch (x) {} }
     },
     duck: function (on) { if (ducked === !!on) return; ducked = !!on; applyMood(); },
     setMood: function (m) { if (m === mood) return; mood = MOODS[m] ? m : 'silence'; applyMood(); },

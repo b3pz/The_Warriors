@@ -64,7 +64,9 @@ W.ROSTER = [
   { id: 'cleon',     name: 'Cleon',     p: 4, s: 3, r: 4, g: 4 }
 ];
 W.MERCY = { id: 'mercy', name: 'Mercy', p: 1, s: 4, r: 3, g: 1, noncombat: true };
-W.rosterById = function (id) { if (id === 'mercy') return W.MERCY; for (var i = 0; i < W.ROSTER.length; i++) if (W.ROSTER[i].id === id) return W.ROSTER[i]; return null; };
+// Mercy combattente: solo nell'Arcade, sbloccata con tutte le W di Rembrandt
+W.MERCY_FIGHTER = { id: 'mercy', name: 'Mercy', p: 2, s: 5, r: 2, g: 4 };
+W.rosterById = function (id) { if (id === 'mercy') return W.mercyFights ? W.MERCY_FIGHTER : W.MERCY; for (var i = 0; i < W.ROSTER.length; i++) if (W.ROSTER[i].id === id) return W.ROSTER[i]; return null; };
 W.statMods = function (c) {
   return {
     dmg: 0.85 + (c.p - 1) * 0.0875,           // 0,85 – 1,20

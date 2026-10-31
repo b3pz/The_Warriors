@@ -648,7 +648,18 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 502. `assets/incoming/oggetti/fx_vetro.png` → fx_vetro
 503. `assets/incoming/oggetti/fx_sparo.png` → fx_sparo
 
+### 9. Extra: Mercy combattente (solo modalità Arcade)
+
+Mercy diventa giocabile nell'Arcade quando si trovano tutte le W di Rembrandt. Stesso modello di `modelli/mercy.png` (top rosa, gonna a fiori rosso scuro con lo spacco, sandali col tacco), stesse regole delle altre pose: allega il modello e chiedi «lo stesso personaggio di questa immagine, nella posa: …». Non è una lottatrice: movimenti rapidi e sporchi, da strada.
+
+504. `assets/incoming/personaggi/mercy/punch_1.png` → mercy, schiaffo-pugno rapido: braccio destro teso in avanti, busto ruotato
+505. `assets/incoming/personaggi/mercy/kick_1.png` → mercy, calcio frontale basso con il tacco, gonna che si apre sullo spacco
+506. `assets/incoming/personaggi/mercy/heavy_1.png` → mercy, spinta a due mani in avanti con tutto il peso del corpo
+507. `assets/incoming/personaggi/mercy/hurt_1.png` → mercy, colpita: testa all'indietro, braccia a proteggersi
+508. `assets/incoming/personaggi/mercy/down_1.png` → mercy, a terra, sdraiata su un fianco
+509. `assets/incoming/personaggi/mercy/getup_1.png` → mercy, si rialza: un ginocchio a terra, una mano sul pavimento
+
 ## Fine
 
-In tutto 503 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
+In tutto 509 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
 

@@ -100,6 +100,8 @@ var W = window.W;
       var n = w.npcs.filter(function (q) { return q.id === tk.who; })[0]; if (!n) return;
       list.push({ x: n.x, y: n.y, label: 'Parla con ' + (n.name || tk.who), fn: function () { self.talkCount += self.talked[tk.who] ? 0 : 1; self.talked[tk.who] = true; self.playScene(W.SCENES[tk.scene || ('talk_' + tk.who)] || { steps: [['caption', '…']] }); if (self.talkCount >= (def.needTalks || 0) && (!def.needTalk || self.talked[def.needTalk]) && !def.exitInteract) w.exitOpen = true; } });
     });
+    var tg = this.tagSpot();
+    if (tg && !tg.done && !this.tagAnim) list.push({ x: tg.x, y: tg.y, label: w.players.concat(w.npcs).some(function (q) { return (q.char ? q.char.id : q.id) === 'rembrandt' && !q.crowd; }) ? 'Lascia la W di Rembrandt' : 'Lascia la W (bomboletta di Rembrandt)', fn: function (p) { self.sprayTag(p); } });
     if (def.kind === 'stealth' && this.st && this.st.phase === 'hide') def.stalls.forEach(function (sx, i) {
       list.push({ x: sx, y: self.floor[0] + 24, label: 'Nasconditi qui', fn: function (p) { self.hideIn(p, i); } });
     });
@@ -116,6 +118,29 @@ var W = window.W;
     } });
     if (this.reviveDummy && !this.reviveDummy.helped) list.push({ x: this.reviveDummy.x, y: this.reviveDummy.y, label: 'Aiuta ' + this.reviveDummy.name, fn: function () { self.reviveDummy.helped = true; self.reviveDummy.pose = null; w.stats.train.revive = 1; w.emit('revive', { x: self.reviveDummy.x, y: self.reviveDummy.y }); } });
     return list;
+  };
+  // punto graffito dell'area: solo in campagna, solo se Rembrandt è nel gruppo (giocatore o compagno)
+  AreaRun.prototype.tagSpot = function () {
+    var def = this.def, w = this.world;
+    if (def.arcade || W.TAG_SPOTS === undefined || W.TAG_SPOTS[def.id] === undefined) return null;
+    if (!this._tag) this._tag = { x: Math.round(def.width * W.TAG_SPOTS[def.id]), y: this.floor[0] + 16 };
+    // Rembrandt deve essere nel gruppo di quest'area (anche se non è in campo: allora la bomboletta è la sua)
+    var grp = def.thread && W.THREADS[def.thread] ? W.THREADS[def.thread].members : (def.party || []);
+    var rem = grp.indexOf('rembrandt') >= 0 || w.players.some(function (p) { return p.char.id === 'rembrandt'; });
+    if (!rem) return null;
+    this._tag.done = W.Tags.has(def.id) && !this.tagAnim;
+    this._tag.drawn = W.Tags.has(def.id);
+    return this._tag;
+  };
+  AreaRun.prototype.sprayTag = function (p) {
+    var w = this.world, tg = this._tag, self = this;
+    var rem = w.players.filter(function (q) { return q.char.id === 'rembrandt' && !q.out; })[0] || w.npcs.filter(function (n) { return n.id === 'rembrandt' && !n.crowd; })[0];
+    if (rem && rem.npc) { rem.move = { x0: rem.x, y0: rem.y, x1: tg.x - 50, y1: tg.y + 6, dur: 0.5, t: 0 }; }
+    this.tagAnim = { t: 0 };
+    w.emit('spray', { x: tg.x, y: tg.y });
+    var isNew = W.Tags.add(this.def.id);
+    this.tagToast = { text: (isNew ? 'La W dei Warriors · ' : 'Già fatta · ') + W.Tags.count() + ' / ' + W.Tags.total + (isNew && W.Tags.count() === Math.ceil(W.Tags.total / 2) ? ' · Galleria sbloccata!' : '') + (isNew && W.Tags.count() === W.Tags.total ? ' · Mercy sbloccata nell\'Arcade!' : ''), t: 0 };
+    setTimeout(function () { if (self.tagAnim) w.emit('spray', { x: tg.x, y: tg.y }); }, 600);
   };
   AreaRun.prototype.nearInteraction = function (p) {
     var list = this.interactions(), best = null, bd = 1e9;
@@ -164,6 +189,9 @@ var W = window.W;
 
   AreaRun.prototype.step = function (w, dt) {
     this.t += dt; this.banner.t += dt;
+    if (this.tagAnim) { this.tagAnim.t += dt; if (this.tagAnim.t > 2.2) this.tagAnim = null; }
+    if (this.tagToast) { this.tagToast.t += dt; if (this.tagToast.t > 4) this.tagToast = null; }
+    if (W.TAG_AUTO && W.TAG_AUTO[this.def.id] && !this.def.arcade && this.world.flags[W.TAG_AUTO[this.def.id]] && W.Tags.add(this.def.id)) this.tagToast = { text: 'La W dei Warriors · ' + W.Tags.count() + ' / ' + W.Tags.total, t: 0 };
     var def = this.def, duo = w.duo(), self = this;
     // scene: la simulazione di gioco si ferma (zero danni durante dialoghi e cinematiche)
     if (!this.scene && this.sceneQueue.length) { this.scene = new W.Scene(w, this.sceneQueue.shift(), {}); }

@@ -21,6 +21,34 @@ W.Input = (function () {
   };
   // Controller standard: X=2 Y=3 A=0 B=1 LB=4 RB=5 RT=7 Start=9
   var PAD = { light: 2, heavy: 3, jump: 0, dodge: 5, interact: 1, fury: 4, throw: 7 };
+  // ---- controller: tutto viene riportato alla disposizione «standard» (Xbox/PS4/PS5 nel browser).
+  // I controller USB che il browser non riconosce (es. quelli della PlayStation Classic, mini PSX) hanno i tasti in un altro ordine
+  // e la croce direzionale sugli assi: qui una tabella per modello e un ripiego generico.
+  // Disposizione standard: 0 basso (X/A) · 1 destra (O/B) · 2 sinistra (□/X) · 3 alto (△/Y) · 4 L1 · 5 R1 · 6 L2 · 7 R2 · 8 Select · 9 Start · 12-15 croce
+  var PROFILES = [
+    { name: 'PlayStation Classic', test: /054c.*0cda|0cda.*054c|playstation\(r\)\s*classic|classic controller/i, map: { 0: 3, 1: 1, 2: 0, 3: 2, 4: 6, 5: 7, 6: 4, 7: 5, 8: 8, 9: 9 } },
+    { name: 'Controller USB generico', test: /./, generic: true, map: { 0: 3, 1: 1, 2: 0, 3: 2, 4: 6, 5: 7, 6: 4, 7: 5, 8: 8, 9: 9 } }
+  ];
+  W.Pad = {
+    // stato normalizzato: { b: [18 booleani nella disposizione standard], x, y, name }
+    read: function (gp) {
+      if (!gp) return null;
+      var b = [], i, x = gp.axes[0] || 0, y = gp.axes[1] || 0, name = 'Controller';
+      if (gp.mapping === 'standard') { for (i = 0; i < 18; i++) b[i] = !!(gp.buttons[i] && (gp.buttons[i].pressed || gp.buttons[i].value > 0.5)); name = /054c|playstation|dualshock|dualsense/i.test(gp.id) ? 'PlayStation' : /xbox|xinput|045e/i.test(gp.id) ? 'Xbox' : 'Controller'; }
+      else {
+        var P = PROFILES.filter(function (q) { return q.test.test(gp.id); })[0]; name = P.name;
+        for (i = 0; i < 18; i++) b[i] = false;
+        for (var raw in P.map) { var bt = gp.buttons[raw]; if (bt && (bt.pressed || bt.value > 0.5)) b[P.map[raw]] = true; }
+        // croce sugli assi 0/1 oppure su un «cappello» (un asse con valori a scatti, di solito l'ultimo)
+        for (i = 2; i < gp.axes.length; i++) { var h = gp.axes[i]; if (h < -1.05 || h > 1.05 || Math.abs(h) < 0.01) continue;
+          if (P.generic && gp.axes.length > 4 && i === gp.axes.length - 1 && Math.abs(h) <= 1) { var k = Math.round((h + 1) / 2 * 7); if (h > -1.01 && Math.abs(h - (k / 7 * 2 - 1)) < 0.05) { if (k === 0 || k === 1 || k === 7) y = -1; if (k >= 3 && k <= 5) y = 1; if (k >= 1 && k <= 3) x = 1; if (k >= 5 && k <= 7) x = -1; } } }
+      }
+      if (b[14]) x = -1; if (b[15]) x = 1; if (b[12]) y = -1; if (b[13]) y = 1;
+      if (Math.abs(x) > 0.5) { b[x < 0 ? 14 : 15] = true; } if (Math.abs(y) > 0.5) { b[y < 0 ? 12 : 13] = true; }
+      return { b: b, x: x, y: y, name: name, id: gp.id };
+    },
+    list: function () { var out = []; if (!navigator.getGamepads) return out; var g = navigator.getGamepads(); for (var i = 0; i < g.length; i++) if (g[i]) out.push({ index: i, st: W.Pad.read(g[i]) }); return out; }
+  };
 
   var down = {};            // code -> true
   var pressedAt = {};       // code -> time of last keydown
@@ -47,20 +75,16 @@ W.Input = (function () {
     this.held = {}; this.edge = {};
     var ax = 0, ay = 0;
     if (this.pad !== null && navigator.getGamepads) {
-      var gp = navigator.getGamepads()[this.pad];
+      var pl = W.Pad.list(), gp = pl[this.pad] ? pl[this.pad].st : null;   // n-esimo controller collegato, anche se il browser lo mette in un altro posto
       if (gp) {
-        ax = gp.axes[0] || 0; ay = gp.axes[1] || 0;
-        if (gp.buttons[14] && gp.buttons[14].pressed) ax = -1;
-        if (gp.buttons[15] && gp.buttons[15].pressed) ax = 1;
-        if (gp.buttons[12] && gp.buttons[12].pressed) ay = -1;
-        if (gp.buttons[13] && gp.buttons[13].pressed) ay = 1;
+        ax = gp.x; ay = gp.y;
         for (var a in PAD) {
-          var b = gp.buttons[PAD[a]]; var p = !!(b && (b.pressed || b.value > 0.5));
+          var p = !!gp.b[PAD[a]];
           this.held[a] = p;
           if (p && !this.prevPad[a]) this.buf[a] = now;
           this.prevPad[a] = p;
         }
-        var st = gp.buttons[9] && gp.buttons[9].pressed;
+        var st = gp.b[9];
         if (st && !this.prevPad.start) this.edge.pause = true;
         this.prevPad.start = st;
       }

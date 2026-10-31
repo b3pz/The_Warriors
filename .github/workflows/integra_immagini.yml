@@ -27,7 +27,7 @@ jobs:
         run: |
           git config user.name "integrazione-immagini"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A assets/sprites_ai assets/backgrounds_ai assets/scenes_ai assets/portraits_ai assets/objects_ai js/atlas_ai.js js/art_ai.js js/musiche_auto.js js/videos_auto.js assets/music assets/video assets/incoming/RAPPORTO.md || true
+          git add -A assets/sprites_ai assets/backgrounds_ai assets/scenes_ai assets/portraits_ai assets/objects_ai js/atlas_ai.js js/art_ai.js js/musiche_auto.js js/videos_auto.js js/suoni_auto.js assets/music assets/video assets/sfx assets/incoming/RAPPORTO.md || true
           if git diff --cached --quiet; then echo "niente di nuovo"; exit 0; fi
           git commit -m "Immagini integrate nel gioco (automatico)"
           for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && exit 0; sleep 5; done

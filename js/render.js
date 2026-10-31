@@ -123,6 +123,9 @@ W.Render = (function () {
     }
     return { p: 'idle' };
   }
+  // pose sostitutive per chi non ha ancora le pose di lotta (Mercy nell'Arcade)
+  var POSE_ALIAS = { mercy: { punch: 'hand', heavy: 'hand', kick: 'run', jumpkick: 'jump', hurt: 'cover', dodge: 'run', grab: 'hand', throw: 'hand' } };
+  POSE_ALIAS.mercy_giacca = POSE_ALIAS.mercy;
   function drawPixel(a, cx, w) {
     var P = W.ATLAS_PX; if (!P || !useSprites) return false;
     var sid = setOf(a), set = P.sets[sid], im = PX[sid];
@@ -130,7 +133,8 @@ W.Render = (function () {
     var sel = pickPose(a);
     // Ajax senza gilet dopo la sfida al capo dei Furies: pose novest_* quando ci sono
     if (a.char && a.char.id === 'ajax' && a.world && a.world.flags && a.world.flags.ajax_novest && set.frames['novest_' + sel.p]) sel.p = 'novest_' + sel.p;
-    var list = set.frames[sel.p] || (sel.alt && set.frames[sel.alt]), fake = null;
+    var al = POSE_ALIAS[sid] && POSE_ALIAS[sid][sel.p];
+    var list = set.frames[sel.p] || (sel.alt && set.frames[sel.alt]) || (al && set.frames[al]), fake = null;
     if (sel.armed && set.frames[sel.p]) sel.batArc = false;   // posa con l'arma vera: niente mazza disegnata sopra
     if (!list) {
       // ripieghi: colpito = idle inclinato, a terra = idle sdraiato, attacco = idle in avanti
@@ -647,6 +651,7 @@ W.Render = (function () {
     var ar = w.area;
     ctx.textAlign = 'center'; ctx.font = '600 18px "Oswald", sans-serif'; ctx.fillStyle = 'rgba(233,228,214,0.85)';
     ctx.fillText(ui.tutorialText(ar.objective || ''), C.VIEW_W / 2, 108);
+    if (ar.tagToast) { var tt = ar.tagToast, ta = Math.min(1, tt.t / 0.3, (4 - tt.t) / 0.5); ctx.save(); ctx.globalAlpha = Math.max(0, ta); ctx.font = '26px "Permanent Marker", sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#000'; ctx.fillText(tt.text, C.VIEW_W / 2 + 2, 152); ctx.fillStyle = '#e8322a'; ctx.fillText(tt.text, C.VIEW_W / 2, 150); ctx.restore(); }
     if (false && ar.banner.t < 2.4) { // sostituito dalla vignetta a fumetto
       ctx.globalAlpha = Math.min(1, (3 - ar.banner.t)); ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(0, 300, C.VIEW_W, 90);
       ctx.fillStyle = COL.ink; ctx.font = '700 46px "Oswald", sans-serif'; ctx.fillText(ar.banner.text.toUpperCase(), C.VIEW_W / 2, 362); ctx.globalAlpha = 1;
@@ -984,6 +989,43 @@ W.Render = (function () {
       }
     }
   }
+  // la W di Rembrandt sul muro di fondo: prima le scritte delle altre bande, poi la W rossa tracciata mentre spruzza
+  function drawWallTag(w) {
+    var ar = w.area; if (!ar || !ar.tagSpot) return; var tg = ar.tagSpot(); if (!tg) return;
+    var x = Math.round(tg.x - w.cam.x), y = ar.floor[0] - 36, t = w.time, bg = ar.def.bg || ''; if (x < -200 || x > C.VIEW_W + 200) return;
+    ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    // dove il fondale non ha un muro (parco, spiaggia sotto il molo) la W va su un muretto di pietra o su un pilone di legno
+    var fy = ar.floor[0] + 14;
+    if (/park/.test(bg)) {
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(x - 16, fy, 120, 10, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#6f7178'; ctx.fillRect(x - 126, fy - 150, 220, 150); ctx.fillStyle = '#5b5d63'; ctx.fillRect(x - 126, fy - 158, 220, 12);
+      ctx.strokeStyle = 'rgba(40,40,46,0.55)'; ctx.lineWidth = 2;
+      for (var r = 0; r < 4; r++) { ctx.beginPath(); ctx.moveTo(x - 126, fy - 150 + r * 38); ctx.lineTo(x + 94, fy - 150 + r * 38); ctx.stroke(); for (var c = 0; c < 4; c++) { var bx = x - 126 + ((c * 60 + (r % 2) * 30) % 220); ctx.beginPath(); ctx.moveTo(bx, fy - 150 + r * 38); ctx.lineTo(bx, fy - 112 + r * 38); ctx.stroke(); } }
+      y = fy - 18;
+    } else if (/boardwalk/.test(bg)) {
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(x - 16, fy, 90, 9, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#4a3423'; ctx.fillRect(x - 96, fy - 300, 160, 300); ctx.fillStyle = '#3a2819'; ctx.fillRect(x + 34, fy - 300, 30, 300);
+      ctx.fillStyle = 'rgba(20,14,8,0.6)'; [60, 150, 240].forEach(function (b) { ctx.fillRect(x - 96, fy - b, 160, 8); });
+      y = fy - 40;
+    }
+    ctx.strokeStyle = 'rgba(40,160,90,0.55)'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(x - 90, y - 70); ctx.bezierCurveTo(x - 60, y - 110, x - 40, y - 30, x - 10, y - 80); ctx.stroke();
+    ctx.font = '26px "Permanent Marker", sans-serif'; ctx.fillStyle = 'rgba(90,140,230,0.5)'; ctx.textAlign = 'left'; ctx.fillText('LZ', x + 30, y - 20);
+    ctx.font = '16px "Permanent Marker", sans-serif'; ctx.fillStyle = 'rgba(235,235,235,0.35)'; ctx.fillText('ORPHANS', x - 92, y - 8);
+    var k = tg.drawn ? (ar.tagAnim ? Math.min(1, ar.tagAnim.t / 1.1) : 1) : 0;
+    if (k > 0) {
+      var P = [[x - 62, y - 118], [x - 38, y - 4], [x - 16, y - 70], [x + 6, y - 4], [x + 30, y - 118]], L = 0, seg = [];
+      for (var i = 1; i < P.length; i++) { var d = Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); seg.push(d); L += d; }
+      var left = L * k; ctx.strokeStyle = '#d8231c'; ctx.lineWidth = 11; ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]);
+      for (var j = 1; j < P.length && left > 0; j++) { var f = Math.min(1, left / seg[j - 1]); ctx.lineTo(P[j - 1][0] + (P[j][0] - P[j - 1][0]) * f, P[j - 1][1] + (P[j][1] - P[j - 1][1]) * f); left -= seg[j - 1]; }
+      ctx.stroke();
+      if (k >= 1) { ctx.lineWidth = 2.5; ctx.strokeStyle = 'rgba(216,35,28,0.85)'; [[-38, 18], [6, 22], [-62, 10], [30, 12]].forEach(function (c) { ctx.beginPath(); ctx.moveTo(x + c[0], y - 4); ctx.lineTo(x + c[0], y - 4 + c[1]); ctx.stroke(); }); }
+    } else if (!ar.scene) {
+      // invito: alone che pulsa dove c'è il muro da firmare
+      var a = 0.18 + 0.12 * Math.sin(t * 4), g = ctx.createRadialGradient(x - 16, y - 60, 6, x - 16, y - 60, 90);
+      g.addColorStop(0, 'rgba(216,35,28,' + a + ')'); g.addColorStop(1, 'rgba(216,35,28,0)'); ctx.fillStyle = g; ctx.fillRect(x - 110, y - 150, 190, 180);
+    }
+    ctx.restore();
+  }
   // sopra la scena: neon che respirano, tubi al neon che sfarfallano, luce di un treno che passa, fumo nell'appartamento, lampeggianti della polizia
   function drawAmbientOver(w) {
     if (!w.area || !w.area.def) return;
@@ -1019,6 +1061,7 @@ W.Render = (function () {
     if (shake > 0) { ctx.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake); shake *= 0.85; if (shake < 0.5) shake = 0; }
     drawBg(w);
     drawAmbient(w);
+    drawWallTag(w);
     var cx = w.cam.x;
     if (!(useSprites && bgImg && bgImg.ok)) w.props.forEach(function (p) { if (p.kind === 'lamp') drawLamp(p, cx, w.time); }); // i lampioni sono già dipinti nel fondale
     // ordinamento per profondità
@@ -1118,5 +1161,5 @@ W.Render = (function () {
     if (!(ui && ui.noHud)) drawHud(w, ui);
   }
 
-  return { pxImage: function (id) { return PX[id]; }, bgAi: function (id) { var im = BGAI[id]; return im && im.ok && W.BG_AI[id] ? { img: im, w: W.BG_AI[id].w } : null; }, toggleSprites: function () { useSprites = !useSprites; }, init: init, frame: frame, opts: opts, COL: COL, ctx: function () { return ctx; }, reset: function () { fx = []; seenEvents = {}; } };
+  return { pxImage: function (id) { return PX[id]; }, sceneArt: function (id) { var im = ARTSC[id]; return im && im.ok ? im : null; }, bgAi: function (id) { var im = BGAI[id]; return im && im.ok && W.BG_AI[id] ? { img: im, w: W.BG_AI[id].w } : null; }, toggleSprites: function () { useSprites = !useSprites; }, init: init, frame: frame, opts: opts, COL: COL, ctx: function () { return ctx; }, reset: function () { fx = []; seenEvents = {}; } };
 })();

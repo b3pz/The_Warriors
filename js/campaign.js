@@ -229,6 +229,29 @@ var W = window.W;
     [['clip', 'v_beach_dawn'], ['moveAll', 1100, 12], ['wait', 1.5], ['caption', 'Trenta miglia di città nemica. Ora, davanti a loro, c\'è il mare.'], ['wait', 2],
      ['caption', 'Swan e Mercy camminano mano nella mano. Gli altri, poco dietro. Sono a casa.'], ['wait', 4], ['fade', 'out', 2], ['clearNpcs'], ['flag', 'campaign_complete']]) };
 
+  // ------------------------------------------------------------------ la W di Rembrandt (collezionabili)
+  // Come al cimitero nel film: dove passano i Warriors, Rembrandt lascia la W rossa sopra le scritte delle altre bande.
+  // Un punto per area (posizione in frazione della larghezza), solo dove Rembrandt è nel gruppo. Il cimitero conta da solo (scena del film).
+  W.TAG_SPOTS = { 'C1-03': 0.5, 'C2-01': 0.46, 'C2-03': 0.62, 'C2-04': 0.4, 'C3-03': 0.55, 'C3-04': 0.68,
+    'C6-01': 0.5, 'C6-04': 0.35, 'C7-01': 0.6, 'C8-01': 0.42, 'C8-02': 0.66 };
+  W.TAG_AUTO = { 'C1-04': 'cemetery_tag' };
+  W.Tags = (function () {
+    var KEY = 'warriors_tags', got = {};
+    try { got = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { got = {}; }
+    function save() { try { localStorage.setItem(KEY, JSON.stringify(got)); } catch (e) {} }
+    var ids = Object.keys(W.TAG_AUTO).concat(Object.keys(W.TAG_SPOTS)).sort();
+    return {
+      total: ids.length, ids: ids,
+      has: function (id) { return !!got[id]; },
+      add: function (id) { if (got[id]) return false; got[id] = Date.now(); save(); return true; },
+      count: function () { return ids.filter(function (i) { return got[i]; }).length; },
+      // sblocchi: metà dei graffiti = galleria; tutti = Mercy nell'Arcade
+      gallery: function () { return this.count() >= Math.ceil(ids.length / 2); },
+      mercy: function () { return this.count() >= ids.length; },
+      reset: function () { got = {}; save(); }
+    };
+  })();
+
   // ------------------------------------------------------------------ la radio durante la notte
   // Tono della DJ: calmo, caldo, quasi ironico; non prende posizione. Dediche in codice che dicono alle bande dove sono i Warriors.
   function radioScene(id, lines) { S[id] = { cine: id, radio: true, mood: 'radio', letterbox: false, steps: lines.map(function (l) { return ['say', 'dj', l]; }) }; }

@@ -70,6 +70,7 @@ var W = window.W;
   // ------------------------------------------------------------------ campagna
   // run: modalità, difficoltà, personaggi degli slot, compagno CPU, roster disponibile, record per personaggio
   function newRun(sel, fromSave, startArea0) {
+    W.mercyFights = false;
     var run = game.run = {
       mode: sel.mode, difficulty: sel.difficulty, chars: (fromSave && fromSave.chars) || [], cpuChar: fromSave ? fromSave.cpuChar : null,
       roster: (fromSave && fromSave.roster) || ALL9.slice(), records: (fromSave && fromSave.records) || {},
@@ -395,7 +396,7 @@ var W = window.W;
     A.slots.forEach(function (sl, i) {
       items.push({ label: 'G' + (i + 1), val: function () { var d = ARC_DEV.filter(function (x) { return x[0] === sl.dev; })[0]; return d[1] + (sl.dev === 'off' ? '' : '  ·  ' + W.rosterById(sl.ch).name); },
         adj: function (d) { var k = ARC_DEV.findIndex(function (x) { return x[0] === sl.dev; }); sl.dev = ARC_DEV[(k + d + ARC_DEV.length) % ARC_DEV.length][0]; arcSave(); },
-        act: function () { if (sl.dev === 'off') return; var k = ALL9.indexOf(sl.ch); sl.ch = ALL9[(k + 1) % ALL9.length]; arcSave(); } });
+        act: function () { if (sl.dev === 'off') return; var L = ALL9.concat(W.Tags && W.Tags.mercy() ? ['mercy'] : []), k = L.indexOf(sl.ch); sl.ch = L[(k + 1) % L.length]; arcSave(); } });
     });
     items.push({ label: 'Rissa', val: function () { return A.stage === 0 ? 'tutte di fila (' + avail.length + ')' : defById(avail[A.stage - 1]).name; },
       adj: function (d) { A.stage = (A.stage + d + avail.length + 1) % (avail.length + 1); arcSave(); } });
@@ -412,6 +413,7 @@ var W = window.W;
     var devs = act.map(function (s) { return s.dev; }).filter(function (d) { return d !== 'cpu'; });
     if (devs.some(function (d, i) { return devs.indexOf(d) !== i; })) { game.msg = { text: 'Due giocatori sullo stesso comando', t: 2 }; return; }
     var stages = A.stage === 0 ? avail.slice() : [avail[A.stage - 1]];
+    W.mercyFights = true;
     game.run = { arcade: true, mode: 'arcade', difficulty: A.difficulty, chars: [], roster: ALL9.slice(), records: {}, stages: stages, stageI: 0,
       areaIdx: W.areaIndex(stages[0]), devices: [], triesLeft: 999 };
     var w = new W.World({ players: [], difficulty: A.difficulty, seed: (Date.now() % 100000) + 7 });
@@ -422,7 +424,7 @@ var W = window.W;
   function arcadeDef(id, n) {
     var d = defById(id), c = Object.assign({}, d);
     ['enter', 'exitScene', 'tutorial', 'needTalk', 'needTalks', 'midScene', 'scenes', 'mercy', 'thread', 'talks', 'present', 'seated', 'watcher', 'crowd'].forEach(function (k) { delete c[k]; });
-    c.chapterCard = false;
+    c.chapterCard = false; c.arcade = true;
     c.waves = (d.waves || []).map(function (wv) {
       var o = Object.assign({}, wv); delete o.preScene; delete o.preIf; delete o.dropIf; delete o.afterScene;
       var base = (n >= 2 ? wv.duo : wv.solo).slice();
@@ -469,6 +471,7 @@ var W = window.W;
       it.push({ label: 'Nuova storia', act: function () { game.state = 'select'; game.sel = { step: 0, mode: 'solo', difficulty: 'normale', start: 0 }; } });
       if (unlocks().length > 1) it.push({ label: 'Capitoli', act: function () { game.state = 'chapters'; game.menuIdx = 0; } });
       if (arcStages().length) it.push({ label: 'Arcade · risse fino a 4', act: function () { game.state = 'arcade'; game.menuIdx = 0; } });
+      it.push({ label: 'Extra · graffiti ' + W.Tags.count() + '/' + W.Tags.total, act: function () { game.state = 'extra'; game.gal = 0; } });
       it.push({ label: 'Come si gioca', act: function () { game.state = 'howto'; } });
       it.push({ label: 'Opzioni', act: function () { game.state = 'options'; game.menuIdx = 0; } });
       return it;
@@ -552,6 +555,8 @@ var W = window.W;
       return;
     }
     if (game.state === 'howto') { if (ok || back) game.state = 'menu'; return; }
+    if (game.state === 'extra') { if (back) { game.state = 'menu'; game.menuIdx = 0; } else if (ok && W.Tags.gallery() && galleryList().length) { game.state = 'gallery'; game.gal = 0; } return; }
+    if (game.state === 'gallery') { var gl = galleryList().length; if (back || (ok && false)) game.state = 'extra'; if (right || down) game.gal = (game.gal + 1) % gl; if (left || up) game.gal = (game.gal + gl - 1) % gl; if (ok) game.gal = (game.gal + 1) % gl; return; }
     if (game.state === 'gameover' && game.gameoverT < 1.2) return;
     if (game.state === 'comic') { if (ok && game.comic && game.comic.t > 0.4) game.comic.t = 9; return; }
     if (game.state === 'credits') { if (ok || back) { game.state = 'result'; game.menuIdx = 0; } return; }
@@ -683,6 +688,41 @@ var W = window.W;
     });
     txt('← → scegli · Invio conferma', C.VIEW_W / 2, 640, 18, R.COL.dim, 'center', 400);
   }
+  // ---- Extra: le W di Rembrandt trovate e quello che sbloccano
+  function galleryList() {
+    var out = [];
+    Object.keys(W.ART_AI && W.ART_AI.scene || {}).forEach(function (k) { var im = R.sceneArt(k); if (im) out.push({ img: im, name: 'Scena · ' + k.replace(/^(cine|dlg|scene)_/, '').replace(/_/g, ' ') }); });
+    W.CAMPAIGN.forEach(function (a) { var b = R.bgAi(a.id); if (b) out.push({ img: b.img, w: b.w, name: a.id + ' · ' + a.name }); });
+    return out;
+  }
+  function drawExtra() {
+    backdrop(0.3); var T = W.Tags, n = T.count();
+    txt('EXTRA', 82, 100, 48, '#fff', 'left', 700); ctx.fillStyle = '#d62828'; ctx.fillRect(84, 118, 60, 5);
+    txt('La W di Rembrandt: ' + n + ' su ' + T.total, 82, 160, 22, R.COL.p1, 'left', 600);
+    txt('Dove passano i Warriors, Rembrandt firma il muro sopra le scritte delle altre bande. Cerca il muro che pulsa di rosso e premi Interazione.', 82, 190, 15, R.COL.dim, 'left', 400);
+    T.ids.forEach(function (id, i) {
+      var a = W.CAMPAIGN[W.areaIndex(id)] || { name: id }, got = T.has(id), y = 240 + i * 30, x = 100;
+      txt(got ? 'W' : '·', x, y, got ? 22 : 22, got ? '#e8322a' : R.COL.dim, 'center', got ? 700 : 400);
+      txt(got ? id + ' · ' + a.name : id + ' · ???', x + 26, y, 18, got ? R.COL.ink : R.COL.dim, 'left', 500);
+    });
+    var half = Math.ceil(T.total / 2), gx = 700;
+    txt('SBLOCCHI', gx, 250, 26, '#fff', 'left', 700);
+    txt((T.gallery() ? '✔ ' : '🔒 ') + 'Galleria · fondali e illustrazioni', gx, 300, 20, T.gallery() ? R.COL.ink : R.COL.dim, 'left', 600);
+    txt(T.gallery() ? 'Invio per aprirla' : 'con ' + half + ' W', gx + 26, 326, 15, R.COL.dim, 'left', 400);
+    txt((T.mercy() ? '✔ ' : '🔒 ') + 'Mercy giocabile nell\'Arcade', gx, 380, 20, T.mercy() ? R.COL.ink : R.COL.dim, 'left', 600);
+    txt(T.mercy() ? 'Scegli Mercy nella schermata Arcade' : 'con tutte le ' + T.total + ' W', gx + 26, 406, 15, R.COL.dim, 'left', 400);
+    txt('Esc per tornare', 82, C.VIEW_H - 24, 15, R.COL.dim, 'left', 400);
+  }
+  function drawGallery() {
+    var L = galleryList(); ctx.fillStyle = '#05050a'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    if (!L.length) { txt('Nessuna immagine ancora', C.VIEW_W / 2, 360, 24, R.COL.dim, 'center', 500); return; }
+    var g = L[game.gal % L.length], im = g.img, sw = g.w ? Math.min(im.width, Math.round(C.VIEW_W * im.height / C.VIEW_H)) : im.width, sh = im.height;
+    var k = Math.min((C.VIEW_W - 80) / sw, (C.VIEW_H - 140) / sh), dw = sw * k, dh = sh * k;
+    var sx = g.w ? Math.max(0, (im.width - sw) * (0.5 + 0.5 * Math.sin(performance.now() / 4000))) : 0;
+    ctx.drawImage(im, sx, 0, sw, sh, (C.VIEW_W - dw) / 2, 40, dw, dh);
+    txt(g.name, C.VIEW_W / 2, C.VIEW_H - 54, 26, '#fff', 'center', 700);
+    txt((game.gal % L.length + 1) + ' / ' + L.length + ' · ← → sfoglia · Esc indietro', C.VIEW_W / 2, C.VIEW_H - 22, 15, R.COL.dim, 'center', 400);
+  }
   function drawHowto() {
     backdrop(); txt('COME SI GIOCA', C.VIEW_W / 2, 90, 40, R.COL.p1, 'center', 700);
     var L = W.Input.LAYOUTS.solo, k = function (x) { return keyLabel(L[x][0]); };
@@ -691,6 +731,7 @@ var W = window.W;
     txt('Controller: X leggero · Y pesante · A salto · RB schivata · B interazione · LB furia · RT lancio · Start pausa', C.VIEW_W / 2, 650, 17, R.COL.dim, 'center', 400);
     txt('Telefono: joystick dove appoggi il pollice · COLPO (tienilo premuto = forte) · SALTO · SCHIVA · i tasti AZIONE, FURIA e LANCIA compaiono quando servono', C.VIEW_W / 2, 625, 16, R.COL.dim, 'center', 400);
     txt('Invio per tornare', C.VIEW_W / 2, 690, 17, R.COL.dim, 'center', 400);
+    txt(game.padName ? 'Controller collegato: ' + game.padName + ' · X conferma, O indietro nei menu' : 'Nessun controller: collegalo e premi un tasto', C.VIEW_W / 2, 600, 16, game.padName ? R.COL.p1 : R.COL.dim, 'center', 500);
   }
   var CREDITS = ['THE WARRIORS · NIGHT RUN', '', 'Progetto e storia', 'Giuseppe (b3pz)', '', 'Grafica approvata', 'Raccolta grafica 04', '', 'Motore, livelli e scene', 'Claude', '', 'Dal ritrovo di Coney Island', 'al ritorno all\'alba', '', 'Grazie per aver giocato'];
   function drawCredits(dt) {
@@ -802,7 +843,9 @@ var W = window.W;
   var padPrev = {};
   function pollMenuPad() {
     if (!navigator.getGamepads) return;
-    var gp = navigator.getGamepads()[0]; if (!gp) return;
+    // menu: risponde il primo controller collegato, qualunque sia il suo indice; X/A conferma, O/B indietro, croce o levetta per muoversi
+    var pads = W.Pad.list(); if (!pads.length) return; var gp = { buttons: pads[0].st.b.map(function (v) { return { pressed: v }; }) };
+    game.padName = pads.map(function (q) { return q.st.name; }).join(' · ');
     var playing = game.state === 'play';
     var map = playing ? { 0: 'Enter', 12: 'ArrowUp', 13: 'ArrowDown' } : { 12: 'ArrowUp', 13: 'ArrowDown', 14: 'ArrowLeft', 15: 'ArrowRight', 0: 'Enter', 1: 'Escape', 9: 'Escape' };
     if (playing && !(game.world.area && game.world.area.scene)) { padPrev = {}; return; }
@@ -810,7 +853,7 @@ var W = window.W;
   }
   function draw(dt) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys', 'arcade'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'menu' }); }
+    if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys', 'arcade', 'extra', 'gallery'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'menu' }); }
     if (game.state === 'gameover') { W.Audio.setMood('radio'); W.Audio.radio(true); if (W.Music) W.Music.update({ screen: 'gameover' }); }
     if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'credits' }); }
     if (game.state === 'title') drawTitle();
@@ -827,6 +870,8 @@ var W = window.W;
     else if (game.state === 'select') drawSelect();
     else if (game.state === 'party') drawParty();
     else if (game.state === 'howto') drawHowto();
+    else if (game.state === 'extra') drawExtra();
+    else if (game.state === 'gallery') drawGallery();
     else if (game.state === 'credits') drawCredits(dt);
     else if (game.state === 'keys') {
       backdrop(0.3); txt('COMANDI · ' + LAYOUT_NAMES[game.keyLayout].toUpperCase(), 82, 90, 36, '#fff', 'left', 700);

@@ -105,3 +105,9 @@ Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source,
 - Discorso di Cyrus rifatto fedele al film: niente polizia tra la folla, volanti ai bordi del parco durante il discorso (`lights`), 60.000 contro 20.000, «Can you dig it?».
 - Ajax: la poliziotta in borghese lo ammanetta alla panchina (come nel film).
 - Dettagli animati sopra qualunque fondale (`drawAmbient`, `drawAmbientOver` in render.js): vapore dai tombini, nebbia nei parchi, neon, tubi al neon che sfarfallano, luce del treno in metro, fumo dalle Lizzies, gabbiani all'alba, lampeggianti quando c'è la polizia in campo.
+
+## W di Rembrandt, Extra, suoni registrati, controller (31 ottobre)
+
+- Collezionabili: `W.TAG_SPOTS` in campaign.js (11 muri + cimitero automatico = 12), salvati in localStorage `warriors_tags` (`W.Tags`). Interazione in areas.js (`tagSpot`, `sprayTag`), disegno in render.js (`drawWallTag`: muretto nel parco, pilone sotto il molo). Menu Extra: elenco, galleria (con 6 W), Mercy giocabile nell'Arcade (con 12 W; `W.MERCY_FIGHTER`, pose sostitutive `POSE_ALIAS` finché non arrivano le pose 504–509).
+- Suoni registrati: `assets/incoming/suoni/` (nomi per evento o file del pacchetto Kenney «Impact Sounds», CC0) → `assets/sfx/` + `js/suoni_auto.js`; audio.js li usa al posto dei sintetizzati, con varianti casuali.
+- Controller: `W.Pad` in input.js normalizza tutto sulla disposizione standard; profilo PlayStation Classic (mini PSX: tasti in altro ordine, croce sugli assi) e ripiego generico; il gioco usa l'n-esimo controller collegato, qualunque indice gli dia il browser.
