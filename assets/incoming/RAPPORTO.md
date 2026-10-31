@@ -15,6 +15,7 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **mercy**: nel gioco con 11 immagini (cover, hair, hand, idle, jump, run, sit, walk)
 - **mercy_giacca**: nel gioco con 9 immagini (hair, hand, idle, run, sit, walk)
 - **orphan**: nel gioco con 9 immagini (board_swing, down, hurt, idle, punch, walk)
+- **police**: nel gioco con 10 immagini (baton_swing, charge, down, hurt, idle, punch, walk)
 - **punk**: nel gioco con 11 immagini (down, grab, hurt, idle, punch, skate, walk)
 - **punk_boss**: nel gioco con 10 immagini (down, grab, hurt, idle, punch, skate, walk)
 - **rembrandt**: nel gioco con 25 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pinned_spray, pipe_swing, punch, revive, run, sit, spray, throw, walk)
