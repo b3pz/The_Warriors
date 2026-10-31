@@ -10,9 +10,14 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0b0d16">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* caratteri inclusi nel gioco (licenza OFL): Oswald per i testi, Permanent Marker (pennarello da graffiti) per titoli e nomi */
+  @font-face { font-family: 'Oswald'; font-weight: 400; font-display: block; src: url('assets/fonts/oswald-latin-400-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Oswald'; font-weight: 500; font-display: block; src: url('assets/fonts/oswald-latin-500-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Oswald'; font-weight: 600; font-display: block; src: url('assets/fonts/oswald-latin-600-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Oswald'; font-weight: 700; font-display: block; src: url('assets/fonts/oswald-latin-700-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Permanent Marker'; font-weight: 400; font-display: block; src: url('assets/fonts/permanent-marker-latin-400-normal.woff2') format('woff2'); }
+
   :root { --bg: #03040a; }
   html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; }
   body { display: flex; align-items: center; justify-content: center; }

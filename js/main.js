@@ -599,7 +599,9 @@ var W = window.W;
     W.Audio.ui();
   }
 
-  function txt(s, x, y, size, col, align, weight) { ctx.font = (weight || 600) + ' ' + size + 'px "Oswald", sans-serif'; ctx.fillStyle = col || R.COL.ink; ctx.textAlign = align || 'center'; ctx.fillText(s, x, y); }
+  // titoli e nomi con il pennarello da graffiti, il resto in Oswald (caratteri in assets/fonts)
+  if (document.fonts && document.fonts.load) ['400 20px Oswald', '500 20px Oswald', '600 20px Oswald', '700 20px Oswald', '20px "Permanent Marker"'].forEach(function (f) { document.fonts.load(f).catch(function () {}); });
+  function txt(s, x, y, size, col, align, weight) { ctx.font = (weight >= 700 && size >= 20) ? size + 'px "Permanent Marker", "Oswald", sans-serif' : (weight || 600) + ' ' + size + 'px "Oswald", sans-serif'; ctx.fillStyle = col || R.COL.ink; ctx.textAlign = align || 'center'; ctx.fillText(s, x, y); }
   // copertina del menu fornita dall'autore (assets/menu/cover.jpg)
   var cover = new Image(); cover.ok = false;
   cover.onload = function () { cover.ok = true; };
@@ -661,6 +663,7 @@ var W = window.W;
     var P = W.ATLAS_PX, set = P && P.sets[id], im = R.pxImage && R.pxImage(id);
     if (!set || !im || !im.ok) { ctx.fillStyle = '#555'; ctx.fillRect(x - 30, y - 150, 60, 150); return; }
     var fr = set.frames.idle[0];
+    scale = scale * (set.scale || P.scale) / 1.1;   // stessa proporzione del gioco: figure nuove e provvisorie alla stessa altezza
     ctx.save(); ctx.imageSmoothingEnabled = false; ctx.globalAlpha = on ? 1 : 0.55;
     ctx.drawImage(im, fr[0], fr[1], fr[2], fr[3], Math.round(x - fr[4] * scale), Math.round(y - fr[5] * scale), fr[2] * scale, fr[3] * scale);
     ctx.restore();
@@ -674,7 +677,7 @@ var W = window.W;
     pk.opts.forEach(function (id, i) {
       var c = W.rosterById(id), on = i === pt.cursor, x = x0 + i * cw + cw / 2;
       if (on) { ctx.fillStyle = 'rgba(214,40,40,0.22)'; ctx.fillRect(x - cw / 2 + 6, 170, cw - 12, 380); ctx.fillStyle = '#d62828'; ctx.fillRect(x - cw / 2 + 6, 546, cw - 12, 4); }
-      drawPortrait(id, x, 470, 2.4, on);
+      drawPortrait(id, x, 478, 1.6, on);
       txt(c.name.toUpperCase(), x, 500, 22, on ? '#fff' : R.COL.ink, 'center', 700);
       var stats = 'POT ' + c.p + ' · VEL ' + c.s + ' · RES ' + c.r + ' · PRE ' + c.g; txt(stats, x, 530, 13, R.COL.dim, 'center', 400);
     });

@@ -31,6 +31,7 @@ fav = base64.b64encode((root / 'assets/favicon.svg').read_bytes()).decode()
 html = html.replace('href="assets/favicon.svg"', 'href="data:image/svg+xml;base64,' + fav + '"')
 for f in ['favicon-32.png', 'favicon-16.png', 'apple-touch-icon.png']:
     html = html.replace('href="assets/' + f + '"', 'href="data:image/png;base64,' + base64.b64encode((root / 'assets' / f).read_bytes()).decode() + '"')
+html = re.sub(r"url\('(assets/fonts/[^']+)'\)", lambda m: "url('data:font/woff2;base64," + base64.b64encode((root / m.group(1)).read_bytes()).decode() + "')", html)
 html = re.sub(r'<link rel="manifest"[^>]*>\n?', '', html)
 out = root / 'dist' / 'night-run.html'
 out.parent.mkdir(exist_ok=True)
