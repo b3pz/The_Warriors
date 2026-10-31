@@ -71,8 +71,11 @@ W.Render = (function () {
 
   // ---- pixel art approvata (Raccolta 04): set per personaggio, pose con ripieghi dichiarati
   // Mercy dall'alba dei tunnel in poi porta la giacca di jeans rubata (nel film copriva il gesso al polso dell'attrice)
+  // set vecchi che hanno un equivalente fra le figure nuove: si usano quelle (i disarmati restano nello stesso set, pose nobat_*)
+  var SET_ALIAS = { turnbull_b: 'turnbull', fury_hood: 'fury', lizzie_b: 'lizzie_boss', fury_nobat: 'fury', fury_hood_nobat: 'fury', turnbull_fast: 'turnbull', fury_boss: 'fury', punk_boss: 'punk', lizzie_boss: 'lizzie', sully: 'orphan' };
+  function aiSet(id) { var A = W.ATLAS_AI && W.ATLAS_AI.sets; if (!A) return id; var seen = 0; while (!A[id] && SET_ALIAS[id] && seen++ < 3) id = SET_ALIAS[id]; return id; }
   function setOf(a) {
-    var id = setOfBase(a), w = a.world;
+    var id0 = setOfBase(a), id = aiSet(id0), w = a.world; a._nobat = /_nobat$/.test(id0) && id !== id0;
     if (id === 'mercy' && w && w.flags && w.flags.mercy_jacket && W.ATLAS_PX && W.ATLAS_PX.sets.mercy_giacca) return 'mercy_giacca';
     return id;
   }
@@ -133,6 +136,8 @@ W.Render = (function () {
     var sel = pickPose(a);
     // Ajax senza gilet dopo la sfida al capo dei Furies: pose novest_* quando ci sono
     if (a.char && a.char.id === 'ajax' && a.world && a.world.flags && a.world.flags.ajax_novest && set.frames['novest_' + sel.p]) sel.p = 'novest_' + sel.p;
+    if (a._nobat && set.frames['nobat_' + sel.p]) sel.p = 'nobat_' + sel.p;
+    if (sel.p === 'swing' && !set.frames.swing && set.frames.board_swing) sel.p = 'board_swing';   // Orphans con l'asse
     var al = POSE_ALIAS[sid] && POSE_ALIAS[sid][sel.p];
     var list = set.frames[sel.p] || (sel.alt && set.frames[sel.alt]) || (al && set.frames[al]), fake = null;
     if (sel.armed && set.frames[sel.p]) sel.batArc = false;   // posa con l'arma vera: niente mazza disegnata sopra

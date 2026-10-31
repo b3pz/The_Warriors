@@ -110,18 +110,18 @@ W.statMods = function (c) {
 // 15 archetipi (docs/CAST.md). behavior: melee, charge, grab, shoot, throw, pursue, block.
 // set = set di sprite pixel art (tools/pixel_frames.json). HP e danni: COMBAT_AND_SYSTEMS.md.
 W.ENEMIES = {
-  turnbull_rusher: { label: 'Turnbull', set: 'turnbull',   hp: 55,  speed: 1.25, dmg: 9,  weapon: null,    behavior: 'charge', atk: { prep: .45, act: .16, rec: .55, reach: 95,  ty: 26, lunge: 170 } },
+  turnbull_rusher: { label: 'Turnbull', set: 'turnbull_fast',   hp: 55,  speed: 1.25, dmg: 9,  weapon: null,    behavior: 'charge', atk: { prep: .45, act: .16, rec: .55, reach: 95,  ty: 26, lunge: 170 } },
   turnbull_heavy:  { label: 'Turnbull', set: 'turnbull_b', hp: 90,  speed: 0.8,  dmg: 14, weapon: null,    behavior: 'melee',  atk: { prep: .58, act: .12, rec: .60, reach: 112, ty: 30, kd: true }, scale: 1.08 },
   orphan_brawler:  { label: 'Orphan',   set: 'orphan',     hp: 55,  speed: 1.05, dmg: 8,  weapon: null,    behavior: 'melee',  atk: { prep: .36, act: .09, rec: .42, reach: 82,  ty: 24 }, yield: true },
   orphan_board:    { label: 'Orphan',   set: 'orphan',     hp: 65,  speed: 0.95, dmg: 10, weapon: 'board', behavior: 'melee',  atk: { prep: .48, act: .10, rec: .55, reach: 112, ty: 26 }, heavyDmg: 16 },
   fury_batter:     { label: 'Fury',     set: 'fury',       hp: 65,  speed: 0.95, dmg: 10, weapon: 'bat',   behavior: 'melee',  atk: { prep: .45, act: .10, rec: .55, reach: 120, ty: 26 }, heavyDmg: 18, unarmedSet: 'fury_nobat' },
   fury_flanker:    { label: 'Fury',     set: 'fury_hood',  hp: 42,  speed: 1.15, dmg: 9,  weapon: 'bat',   behavior: 'melee',  atk: { prep: .40, act: .10, rec: .45, reach: 112, ty: 24 }, heavyDmg: 14, flank: true, unarmedSet: 'fury_hood_nobat' },
-  fury_veteran:    { label: 'Veterano', set: 'fury',       hp: 145, speed: 1.0,  dmg: 12, weapon: 'bat',   behavior: 'melee',  atk: { prep: .42, act: .10, rec: .50, reach: 125, ty: 28 }, heavyDmg: 18, elite: true, scale: 1.1, unarmedSet: 'fury_nobat' },
+  fury_veteran:    { label: 'Veterano', set: 'fury_boss',       hp: 145, speed: 1.0,  dmg: 12, weapon: 'bat',   behavior: 'melee',  atk: { prep: .42, act: .10, rec: .50, reach: 125, ty: 28 }, heavyDmg: 18, elite: true, scale: 1.1, unarmedSet: 'fury_nobat' },
   lizzie_blocker:  { label: 'Lizzie',   set: 'lizzie_b',   hp: 55,  speed: 1.0,  dmg: 6,  weapon: null,    behavior: 'block',  atk: { prep: .45, act: .12, rec: .50, reach: 85,  ty: 26, kd: true } },
   lizzie_shooter:  { label: 'Lizzie',   set: 'lizzie',     hp: 42,  speed: 0.9,  dmg: 12, weapon: null,    behavior: 'shoot',  atk: { prep: .95, act: .05, rec: 1.4, reach: 900, ty: 22 } },
   punk_grappler:   { label: 'Punk',     set: 'punk',       hp: 90,  speed: 0.9,  dmg: 4,  weapon: null,    behavior: 'grab',   atk: { prep: .50, act: .14, rec: .70, reach: 70,  ty: 22, lunge: 90 }, scale: 1.06 },
   punk_brawler:    { label: 'Punk',     set: 'punk',       hp: 55,  speed: 1.0,  dmg: 9,  weapon: null,    behavior: 'melee',  atk: { prep: .40, act: .09, rec: .45, reach: 86,  ty: 24 } },
-  punk_leader:     { label: 'Capo Punks', set: 'punk',     hp: 240, speed: 1.0,  dmg: 12, weapon: null,    behavior: 'melee',  atk: { prep: .44, act: .10, rec: .48, reach: 95,  ty: 28 }, elite: true, scale: 1.12, pushCombo: true },
+  punk_leader:     { label: 'Capo Punks', set: 'punk_boss',     hp: 240, speed: 1.0,  dmg: 12, weapon: null,    behavior: 'melee',  atk: { prep: .44, act: .10, rec: .48, reach: 95,  ty: 28 }, elite: true, scale: 1.12, pushCombo: true },
   rogue_brawler:   { label: 'Rogue',    set: 'rogue',      hp: 55,  speed: 1.0,  dmg: 9,  weapon: null,    behavior: 'melee',  atk: { prep: .40, act: .10, rec: .45, reach: 86,  ty: 24 } },
   rogue_bottle:    { label: 'Rogue',    set: 'rogue',      hp: 42,  speed: 0.95, dmg: 12, weapon: null,    behavior: 'throw',  atk: { prep: .70, act: .08, rec: .90, reach: 520, ty: 40 } },
   police_pursuer:  { label: 'Polizia',  set: 'police',     hp: 70,  speed: 1.2,  dmg: 6,  weapon: null,    behavior: 'pursue', atk: { prep: .42, act: .14, rec: .55, reach: 92,  ty: 26, lunge: 120, kd: true } },
@@ -2150,7 +2150,7 @@ var W = window.W;
   // C3
   S.dlg_c3_orphans = { cine: 'dlg_c3_orphans', steps: seq(
     [['players', 'hide'], ['caption', 'Un incendio sui binari ferma il treno. Da qui si va a piedi, nel cuore del Bronx.']], line(AFTER_C1, 160, 62, Y, 1, 20),
-    [['npc', 'orphan', 'orphan', 860, Y, -1, 'Sully'], ['npc', 'or2', 'orphan', 950, 540, -1], ['npc', 'or3', 'orphan', 980, 630, -1],
+    [['npc', 'orphan', 'sully', 860, Y, -1, 'Sully'], ['npc', 'or2', 'orphan', 950, 540, -1], ['npc', 'or3', 'orphan', 980, 630, -1],
      ['say', 'orphan', 'State attraversando il nostro territorio.'],
      ['say', 'orphan', 'Al raduno noi non ci hanno nemmeno invitati. Ma qui comandiamo noi.'],
      ['choice', 'swan', ['Ci serve soltanto un passaggio.', 'Non siamo venuti a cercarvi. Lasciateci andare.']],
@@ -2205,7 +2205,7 @@ var W = window.W;
     ['clip', 'v_ajax_cuffs'], ['caption', 'Era una poliziotta in borghese: una manetta al polso di Ajax, l\'altra alla panchina. Arrivano le volanti. Ajax resta indietro.'], ['fade', 'out', 1], ['clearNpcs'], ['caption', 'Snow e Cowboy, poco lontano, vedono le luci delle volanti.'], ['say', 'snow', 'Per lui non possiamo fare niente. Union Square.'], ['flag', 'ajax_arrested']] };
   S.dlg_c5_welcome = { cine: 'dlg_c5_welcome', steps: seq(
     [['players', 'hide']], line(['vermin', 'cochise', 'rembrandt'], 260, 80, Y, 1, 18),
-    [['npc', 'lz1', 'lizzie', 760, 560, -1], ['npc', 'lz2', 'lizzie_b', 860, 620, -1], ['npc', 'lz3', 'lizzie', 960, 540, -1],
+    [['npc', 'lz1', 'lizzie', 760, 560, -1], ['npc', 'lz2', 'lizzie_boss', 860, 620, -1], ['npc', 'lz3', 'lizzie', 960, 540, -1],
      ['say', 'lz1', 'Qui potete riposarvi. Fuori vi stanno cercando tutti.'], ['say', 'vermin', 'Finalmente una festa, stanotte.'],
      ['face', 'rembrandt', -1], ['say', 'rembrandt', 'Cochise… hanno chiuso la porta.'], ['clearNpcs']]) };
   S.cine_lizzies_trap = { cine: 'cine_lizzies_trap', letterbox: false, steps: [
@@ -2260,7 +2260,7 @@ var W = window.W;
   S.cine_bottles = { cine: 'cine_bottles', steps: [
     ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'],
     ['npc', 'hearse', 'hearse', 1600, 600, -1], ['move', 'hearse', 1080, null, 1.6], ['wait', 1.7],
-    ['npc', 'luther', 'luther', 960, 598, -1], ['raise', 'luther', 30], ['npc', 'rg1', 'rogue', 1250, 640, -1],
+    ['npc', 'luther', 'luther', 960, 598, -1], ['raise', 'luther', 30], ['pose', 'luther', 'bottles'], ['npc', 'rg1', 'rogue', 1250, 640, -1],
     ['caption', 'Il carro funebre dei Rogues, coperto di graffiti, si ferma. Luther si sporge dal finestrino, tre bottiglie vuote infilate tra le dita.'],
     ['clip', 'v_luther_bottles'], ['say', 'luther', 'Warriors... venite fuori a giocare!'], ['sfx', 'bottle'], ['wait', 0.4], ['sfx', 'bottle'], ['say', 'swan', 'Finisce sulla spiaggia.'],
     ['clearNpcs'], ['npc', 'hearse', 'hearse', 1080, 600, -1], ['move', 'hearse', 1700, null, 1.4], ['wait', 1.3], ['clearNpcs'], ['flag', 'rogues_arrived']] };
@@ -2274,7 +2274,7 @@ var W = window.W;
      ['say', 'swan', 'Sappiamo chi ha sparato. Perché l\'hai fatto?'], ['say', 'luther', 'Nessun motivo. Mi piacciono queste cose.'],
      ['say', 'swan', 'Niente pistole. Tu e io, con i coltelli.'],
      ['caption', 'Luther accetta. Poi, all\'ultimo, tira fuori la pistola e la punta.'], ['pose', 'luther', 'gun_aim'], ['clip', 'v_duel'], ['wait', 0.5],
-     ['caption', 'Swan è più veloce: il coltello gli si pianta nel polso.'], ['sfx', 'swing'], ['sfx', 'hit'], ['shake', 8],
+     ['caption', 'Swan è più veloce: il coltello gli si pianta nel polso.'], ['pose', 'luther', 'knifehit'], ['sfx', 'swing'], ['sfx', 'hit'], ['shake', 8],
      ['caption', 'Il colpo parte a vuoto, nella sabbia. La pistola cade: Luther è disarmato.'], ['sfx', 'shot'], ['flash'], ['pose', 'luther', 'down'], ['flag', 'luther_disarmed']]) };
   S.cine_riffs_arrival = { cine: 'cine_riffs_arrival', steps: [
     ['clip', 'v_riffs_beach'],
@@ -2989,8 +2989,11 @@ W.Render = (function () {
 
   // ---- pixel art approvata (Raccolta 04): set per personaggio, pose con ripieghi dichiarati
   // Mercy dall'alba dei tunnel in poi porta la giacca di jeans rubata (nel film copriva il gesso al polso dell'attrice)
+  // set vecchi che hanno un equivalente fra le figure nuove: si usano quelle (i disarmati restano nello stesso set, pose nobat_*)
+  var SET_ALIAS = { turnbull_b: 'turnbull', fury_hood: 'fury', lizzie_b: 'lizzie_boss', fury_nobat: 'fury', fury_hood_nobat: 'fury', turnbull_fast: 'turnbull', fury_boss: 'fury', punk_boss: 'punk', lizzie_boss: 'lizzie', sully: 'orphan' };
+  function aiSet(id) { var A = W.ATLAS_AI && W.ATLAS_AI.sets; if (!A) return id; var seen = 0; while (!A[id] && SET_ALIAS[id] && seen++ < 3) id = SET_ALIAS[id]; return id; }
   function setOf(a) {
-    var id = setOfBase(a), w = a.world;
+    var id0 = setOfBase(a), id = aiSet(id0), w = a.world; a._nobat = /_nobat$/.test(id0) && id !== id0;
     if (id === 'mercy' && w && w.flags && w.flags.mercy_jacket && W.ATLAS_PX && W.ATLAS_PX.sets.mercy_giacca) return 'mercy_giacca';
     return id;
   }
@@ -3051,6 +3054,8 @@ W.Render = (function () {
     var sel = pickPose(a);
     // Ajax senza gilet dopo la sfida al capo dei Furies: pose novest_* quando ci sono
     if (a.char && a.char.id === 'ajax' && a.world && a.world.flags && a.world.flags.ajax_novest && set.frames['novest_' + sel.p]) sel.p = 'novest_' + sel.p;
+    if (a._nobat && set.frames['nobat_' + sel.p]) sel.p = 'nobat_' + sel.p;
+    if (sel.p === 'swing' && !set.frames.swing && set.frames.board_swing) sel.p = 'board_swing';   // Orphans con l'asse
     var al = POSE_ALIAS[sid] && POSE_ALIAS[sid][sel.p];
     var list = set.frames[sel.p] || (sel.alt && set.frames[sel.alt]) || (al && set.frames[al]), fake = null;
     if (sel.armed && set.frames[sel.p]) sel.batArc = false;   // posa con l'arma vera: niente mazza disegnata sopra

@@ -91,7 +91,7 @@ var W = window.W;
   // C3
   S.dlg_c3_orphans = { cine: 'dlg_c3_orphans', steps: seq(
     [['players', 'hide'], ['caption', 'Un incendio sui binari ferma il treno. Da qui si va a piedi, nel cuore del Bronx.']], line(AFTER_C1, 160, 62, Y, 1, 20),
-    [['npc', 'orphan', 'orphan', 860, Y, -1, 'Sully'], ['npc', 'or2', 'orphan', 950, 540, -1], ['npc', 'or3', 'orphan', 980, 630, -1],
+    [['npc', 'orphan', 'sully', 860, Y, -1, 'Sully'], ['npc', 'or2', 'orphan', 950, 540, -1], ['npc', 'or3', 'orphan', 980, 630, -1],
      ['say', 'orphan', 'State attraversando il nostro territorio.'],
      ['say', 'orphan', 'Al raduno noi non ci hanno nemmeno invitati. Ma qui comandiamo noi.'],
      ['choice', 'swan', ['Ci serve soltanto un passaggio.', 'Non siamo venuti a cercarvi. Lasciateci andare.']],
@@ -146,7 +146,7 @@ var W = window.W;
     ['clip', 'v_ajax_cuffs'], ['caption', 'Era una poliziotta in borghese: una manetta al polso di Ajax, l\'altra alla panchina. Arrivano le volanti. Ajax resta indietro.'], ['fade', 'out', 1], ['clearNpcs'], ['caption', 'Snow e Cowboy, poco lontano, vedono le luci delle volanti.'], ['say', 'snow', 'Per lui non possiamo fare niente. Union Square.'], ['flag', 'ajax_arrested']] };
   S.dlg_c5_welcome = { cine: 'dlg_c5_welcome', steps: seq(
     [['players', 'hide']], line(['vermin', 'cochise', 'rembrandt'], 260, 80, Y, 1, 18),
-    [['npc', 'lz1', 'lizzie', 760, 560, -1], ['npc', 'lz2', 'lizzie_b', 860, 620, -1], ['npc', 'lz3', 'lizzie', 960, 540, -1],
+    [['npc', 'lz1', 'lizzie', 760, 560, -1], ['npc', 'lz2', 'lizzie_boss', 860, 620, -1], ['npc', 'lz3', 'lizzie', 960, 540, -1],
      ['say', 'lz1', 'Qui potete riposarvi. Fuori vi stanno cercando tutti.'], ['say', 'vermin', 'Finalmente una festa, stanotte.'],
      ['face', 'rembrandt', -1], ['say', 'rembrandt', 'Cochise… hanno chiuso la porta.'], ['clearNpcs']]) };
   S.cine_lizzies_trap = { cine: 'cine_lizzies_trap', letterbox: false, steps: [
@@ -201,7 +201,7 @@ var W = window.W;
   S.cine_bottles = { cine: 'cine_bottles', steps: [
     ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'], ['wait', 0.5], ['sfx', 'bottle'],
     ['npc', 'hearse', 'hearse', 1600, 600, -1], ['move', 'hearse', 1080, null, 1.6], ['wait', 1.7],
-    ['npc', 'luther', 'luther', 960, 598, -1], ['raise', 'luther', 30], ['npc', 'rg1', 'rogue', 1250, 640, -1],
+    ['npc', 'luther', 'luther', 960, 598, -1], ['raise', 'luther', 30], ['pose', 'luther', 'bottles'], ['npc', 'rg1', 'rogue', 1250, 640, -1],
     ['caption', 'Il carro funebre dei Rogues, coperto di graffiti, si ferma. Luther si sporge dal finestrino, tre bottiglie vuote infilate tra le dita.'],
     ['clip', 'v_luther_bottles'], ['say', 'luther', 'Warriors... venite fuori a giocare!'], ['sfx', 'bottle'], ['wait', 0.4], ['sfx', 'bottle'], ['say', 'swan', 'Finisce sulla spiaggia.'],
     ['clearNpcs'], ['npc', 'hearse', 'hearse', 1080, 600, -1], ['move', 'hearse', 1700, null, 1.4], ['wait', 1.3], ['clearNpcs'], ['flag', 'rogues_arrived']] };
@@ -215,7 +215,7 @@ var W = window.W;
      ['say', 'swan', 'Sappiamo chi ha sparato. Perché l\'hai fatto?'], ['say', 'luther', 'Nessun motivo. Mi piacciono queste cose.'],
      ['say', 'swan', 'Niente pistole. Tu e io, con i coltelli.'],
      ['caption', 'Luther accetta. Poi, all\'ultimo, tira fuori la pistola e la punta.'], ['pose', 'luther', 'gun_aim'], ['clip', 'v_duel'], ['wait', 0.5],
-     ['caption', 'Swan è più veloce: il coltello gli si pianta nel polso.'], ['sfx', 'swing'], ['sfx', 'hit'], ['shake', 8],
+     ['caption', 'Swan è più veloce: il coltello gli si pianta nel polso.'], ['pose', 'luther', 'knifehit'], ['sfx', 'swing'], ['sfx', 'hit'], ['shake', 8],
      ['caption', 'Il colpo parte a vuoto, nella sabbia. La pistola cade: Luther è disarmato.'], ['sfx', 'shot'], ['flash'], ['pose', 'luther', 'down'], ['flag', 'luther_disarmed']]) };
   S.cine_riffs_arrival = { cine: 'cine_riffs_arrival', steps: [
     ['clip', 'v_riffs_beach'],

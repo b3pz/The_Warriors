@@ -81,18 +81,18 @@ W.statMods = function (c) {
 // 15 archetipi (docs/CAST.md). behavior: melee, charge, grab, shoot, throw, pursue, block.
 // set = set di sprite pixel art (tools/pixel_frames.json). HP e danni: COMBAT_AND_SYSTEMS.md.
 W.ENEMIES = {
-  turnbull_rusher: { label: 'Turnbull', set: 'turnbull',   hp: 55,  speed: 1.25, dmg: 9,  weapon: null,    behavior: 'charge', atk: { prep: .45, act: .16, rec: .55, reach: 95,  ty: 26, lunge: 170 } },
+  turnbull_rusher: { label: 'Turnbull', set: 'turnbull_fast',   hp: 55,  speed: 1.25, dmg: 9,  weapon: null,    behavior: 'charge', atk: { prep: .45, act: .16, rec: .55, reach: 95,  ty: 26, lunge: 170 } },
   turnbull_heavy:  { label: 'Turnbull', set: 'turnbull_b', hp: 90,  speed: 0.8,  dmg: 14, weapon: null,    behavior: 'melee',  atk: { prep: .58, act: .12, rec: .60, reach: 112, ty: 30, kd: true }, scale: 1.08 },
   orphan_brawler:  { label: 'Orphan',   set: 'orphan',     hp: 55,  speed: 1.05, dmg: 8,  weapon: null,    behavior: 'melee',  atk: { prep: .36, act: .09, rec: .42, reach: 82,  ty: 24 }, yield: true },
   orphan_board:    { label: 'Orphan',   set: 'orphan',     hp: 65,  speed: 0.95, dmg: 10, weapon: 'board', behavior: 'melee',  atk: { prep: .48, act: .10, rec: .55, reach: 112, ty: 26 }, heavyDmg: 16 },
   fury_batter:     { label: 'Fury',     set: 'fury',       hp: 65,  speed: 0.95, dmg: 10, weapon: 'bat',   behavior: 'melee',  atk: { prep: .45, act: .10, rec: .55, reach: 120, ty: 26 }, heavyDmg: 18, unarmedSet: 'fury_nobat' },
   fury_flanker:    { label: 'Fury',     set: 'fury_hood',  hp: 42,  speed: 1.15, dmg: 9,  weapon: 'bat',   behavior: 'melee',  atk: { prep: .40, act: .10, rec: .45, reach: 112, ty: 24 }, heavyDmg: 14, flank: true, unarmedSet: 'fury_hood_nobat' },
-  fury_veteran:    { label: 'Veterano', set: 'fury',       hp: 145, speed: 1.0,  dmg: 12, weapon: 'bat',   behavior: 'melee',  atk: { prep: .42, act: .10, rec: .50, reach: 125, ty: 28 }, heavyDmg: 18, elite: true, scale: 1.1, unarmedSet: 'fury_nobat' },
+  fury_veteran:    { label: 'Veterano', set: 'fury_boss',       hp: 145, speed: 1.0,  dmg: 12, weapon: 'bat',   behavior: 'melee',  atk: { prep: .42, act: .10, rec: .50, reach: 125, ty: 28 }, heavyDmg: 18, elite: true, scale: 1.1, unarmedSet: 'fury_nobat' },
   lizzie_blocker:  { label: 'Lizzie',   set: 'lizzie_b',   hp: 55,  speed: 1.0,  dmg: 6,  weapon: null,    behavior: 'block',  atk: { prep: .45, act: .12, rec: .50, reach: 85,  ty: 26, kd: true } },
   lizzie_shooter:  { label: 'Lizzie',   set: 'lizzie',     hp: 42,  speed: 0.9,  dmg: 12, weapon: null,    behavior: 'shoot',  atk: { prep: .95, act: .05, rec: 1.4, reach: 900, ty: 22 } },
   punk_grappler:   { label: 'Punk',     set: 'punk',       hp: 90,  speed: 0.9,  dmg: 4,  weapon: null,    behavior: 'grab',   atk: { prep: .50, act: .14, rec: .70, reach: 70,  ty: 22, lunge: 90 }, scale: 1.06 },
   punk_brawler:    { label: 'Punk',     set: 'punk',       hp: 55,  speed: 1.0,  dmg: 9,  weapon: null,    behavior: 'melee',  atk: { prep: .40, act: .09, rec: .45, reach: 86,  ty: 24 } },
-  punk_leader:     { label: 'Capo Punks', set: 'punk',     hp: 240, speed: 1.0,  dmg: 12, weapon: null,    behavior: 'melee',  atk: { prep: .44, act: .10, rec: .48, reach: 95,  ty: 28 }, elite: true, scale: 1.12, pushCombo: true },
+  punk_leader:     { label: 'Capo Punks', set: 'punk_boss',     hp: 240, speed: 1.0,  dmg: 12, weapon: null,    behavior: 'melee',  atk: { prep: .44, act: .10, rec: .48, reach: 95,  ty: 28 }, elite: true, scale: 1.12, pushCombo: true },
   rogue_brawler:   { label: 'Rogue',    set: 'rogue',      hp: 55,  speed: 1.0,  dmg: 9,  weapon: null,    behavior: 'melee',  atk: { prep: .40, act: .10, rec: .45, reach: 86,  ty: 24 } },
   rogue_bottle:    { label: 'Rogue',    set: 'rogue',      hp: 42,  speed: 0.95, dmg: 12, weapon: null,    behavior: 'throw',  atk: { prep: .70, act: .08, rec: .90, reach: 520, ty: 40 } },
   police_pursuer:  { label: 'Polizia',  set: 'police',     hp: 70,  speed: 1.2,  dmg: 6,  weapon: null,    behavior: 'pursue', atk: { prep: .42, act: .14, rec: .55, reach: 92,  ty: 26, lunge: 120, kd: true } },
