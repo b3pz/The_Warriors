@@ -802,7 +802,7 @@ var W = window.W;
   var idleT = 0, IDLE_DEMO = 20, DEMO_LEN = 45;
   function startCinema() { W.AutoPilot.start('cinema'); newRun({ mode: 'cpu', difficulty: 'facile' }, null, 0); game.msg = { text: 'Cinema: la storia si gioca da sola · Esc per uscire', t: 4 }; }
   // demo a rotazione: ogni volta una banda diversa, con la sua presentazione e la sua rissa
-  var DEMOS = [['furies', 'C4-02'], ['punks', 'C6-03'], ['turnbull', 'C2-02'], ['lizzies', 'C5-03'], ['rogues', 'C8-01'], ['orphans', 'C1-03']], demoI = Math.floor(Math.random() * 6);
+  var DEMOS = [['furies', 'C4-02'], ['punks', 'C6-03'], ['turnbull', 'C2-02'], ['lizzies', 'C5-03'], ['rogues', 'C8-01'], ['orphans', 'C3-02']], demoI = Math.floor(Math.random() * 6);
   function startDemo() {
     var d = DEMOS[demoI++ % DEMOS.length], idx = W.areaIndex(d[1]); if (idx < 0) return;
     W.AutoPilot.start('demo'); newRun({ mode: 'cpu', difficulty: 'normale' }, null, idx);
