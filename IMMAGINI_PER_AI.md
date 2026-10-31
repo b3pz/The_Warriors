@@ -591,129 +591,116 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 
 ### 7. Ritratti (mezzo busto, tre quarti verso destra, sfondo magenta)
 
-451. `assets/incoming/ritratti/idle_1.png` → ritratto di idle_1
-452. `assets/incoming/ritratti/punch_1.png` → ritratto di punch_1
-453. `assets/incoming/ritratti/kick_1.png` → ritratto di kick_1
-454. `assets/incoming/ritratti/heavy_1.png` → ritratto di heavy_1
-455. `assets/incoming/ritratti/jump_1.png` → ritratto di jump_1
-456. `assets/incoming/ritratti/jumpkick_1.png` → ritratto di jumpkick_1
-457. `assets/incoming/ritratti/hurt_1.png` → ritratto di hurt_1
-458. `assets/incoming/ritratti/down_1.png` → ritratto di down_1
-459. `assets/incoming/ritratti/getup_1.png` → ritratto di getup_1
-460. `assets/incoming/ritratti/grab_1.png` → ritratto di grab_1
-461. `assets/incoming/ritratti/throw_1.png` → ritratto di throw_1
-462. `assets/incoming/ritratti/dodge_1.png` → ritratto di dodge_1
-463. `assets/incoming/ritratti/pipe_swing_1.png` → ritratto di pipe_swing_1
-464. `assets/incoming/ritratti/revive_1.png` → ritratto di revive_1
-465. `assets/incoming/ritratti/sit_1.png` → ritratto di sit_1
-466. `assets/incoming/ritratti/swan.png` → ritratto di swan
-467. `assets/incoming/ritratti/ajax.png` → ritratto di ajax
-468. `assets/incoming/ritratti/snow.png` → ritratto di snow
-469. `assets/incoming/ritratti/cowboy.png` → ritratto di cowboy
-470. `assets/incoming/ritratti/cochise.png` → ritratto di cochise
-471. `assets/incoming/ritratti/vermin.png` → ritratto di vermin
-472. `assets/incoming/ritratti/rembrandt.png` → ritratto di rembrandt
-473. `assets/incoming/ritratti/fox.png` → ritratto di fox
-474. `assets/incoming/ritratti/cleon.png` → ritratto di cleon
-475. `assets/incoming/ritratti/mercy.png` → ritratto di mercy
+Un ritratto per personaggio, braccia lungo i fianchi o conserte (non in azione).
+
+451. `assets/incoming/ritratti/swan.png` → ritratto di swan
+452. `assets/incoming/ritratti/ajax.png` → ritratto di ajax
+453. `assets/incoming/ritratti/snow.png` → ritratto di snow
+454. `assets/incoming/ritratti/cowboy.png` → ritratto di cowboy
+455. `assets/incoming/ritratti/cochise.png` → ritratto di cochise
+456. `assets/incoming/ritratti/vermin.png` → ritratto di vermin
+457. `assets/incoming/ritratti/rembrandt.png` → ritratto di rembrandt
+458. `assets/incoming/ritratti/fox.png` → ritratto di fox
+459. `assets/incoming/ritratti/cleon.png` → ritratto di cleon
+460. `assets/incoming/ritratti/mercy.png` → ritratto di mercy
 
 ### 8. Oggetti ed effetti (sfondo magenta, vista laterale)
 
-476. `assets/incoming/oggetti/bus_turnbull.png` → il bus dei Turnbull: vecchio scuolabus americano grigio-verde scuro coperto di graffiti, fari bianco-blu accecanti, vista laterale rivolta a destra, senza persone; riferimento: `riferimenti/luoghi/bus_turnbull.png`
-477. `assets/incoming/oggetti/treno_esterno.png` → vagone della metro anni '70 visto di lato, interamente coperto di graffiti colorati, numero sul fianco, porte aperte; riferimento: `riferimenti/luoghi/treno_graffiti.png`
-478. `assets/incoming/oggetti/auto_rogues.png` → il carro funebre dei Rogues: Cadillac anni '50 nera coperta di graffiti colorati, cromature, vista laterale rivolta a destra; riferimento: `riferimenti/luoghi/auto_rogues.png`, `auto_rogues_coney.png`
-479. `assets/incoming/oggetti/auto_orphans_fuoco.png` → auto_orphans_fuoco (auto in fiamme)
-480. `assets/incoming/oggetti/tornello.png` → tornello
-481. `assets/incoming/oggetti/transenna.png` → transenna
-482. `assets/incoming/oggetti/panchina.png` → panchina
-483. `assets/incoming/oggetti/cestino.png` → cestino
-484. `assets/incoming/oggetti/cassa.png` → cassa
-485. `assets/incoming/oggetti/bidone.png` → bidone
-486. `assets/incoming/oggetti/porta_gabinetto.png` → porta_gabinetto
-487. `assets/incoming/oggetti/lavandino.png` → lavandino
-488. `assets/incoming/oggetti/giradischi.png` → giradischi
-489. `assets/incoming/oggetti/sedia.png` → sedia
-490. `assets/incoming/oggetti/bomboletta.png` → bomboletta
-491. `assets/incoming/oggetti/coltello.png` → coltello
-492. `assets/incoming/oggetti/pistola.png` → pistola
-493. `assets/incoming/oggetti/bottiglia.png` → bottiglia
-494. `assets/incoming/oggetti/mazza.png` → mazza
-495. `assets/incoming/oggetti/tubo.png` → tubo
-496. `assets/incoming/oggetti/asse.png` → asse
-497. `assets/incoming/oggetti/manganello.png` → manganello
-498. `assets/incoming/oggetti/fx_spruzzo.png` → fx_spruzzo
-499. `assets/incoming/oggetti/fx_scintille.png` → fx_scintille
-500. `assets/incoming/oggetti/fx_polvere.png` → fx_polvere
-501. `assets/incoming/oggetti/fx_fuoco.png` → fx_fuoco
-502. `assets/incoming/oggetti/fx_vetro.png` → fx_vetro
-503. `assets/incoming/oggetti/fx_sparo.png` → fx_sparo
+461. `assets/incoming/oggetti/bus_turnbull.png` → il bus dei Turnbull: vecchio scuolabus americano grigio-verde scuro coperto di graffiti, fari bianco-blu accecanti, vista laterale rivolta a destra, senza persone; riferimento: `riferimenti/luoghi/bus_turnbull.png`
+462. `assets/incoming/oggetti/treno_esterno.png` → vagone della metro anni '70 visto di lato, interamente coperto di graffiti colorati, numero sul fianco, porte aperte; riferimento: `riferimenti/luoghi/treno_graffiti.png`
+463. `assets/incoming/oggetti/auto_rogues.png` → il carro funebre dei Rogues: Cadillac anni '50 nera coperta di graffiti colorati, cromature, vista laterale rivolta a destra; riferimento: `riferimenti/luoghi/auto_rogues.png`, `auto_rogues_coney.png`
+464. `assets/incoming/oggetti/auto_orphans_fuoco.png` → auto_orphans_fuoco (auto in fiamme)
+465. `assets/incoming/oggetti/tornello.png` → tornello
+466. `assets/incoming/oggetti/transenna.png` → transenna
+467. `assets/incoming/oggetti/panchina.png` → panchina
+468. `assets/incoming/oggetti/cestino.png` → cestino
+469. `assets/incoming/oggetti/cassa.png` → cassa
+470. `assets/incoming/oggetti/bidone.png` → bidone
+471. `assets/incoming/oggetti/porta_gabinetto.png` → porta_gabinetto
+472. `assets/incoming/oggetti/lavandino.png` → lavandino
+473. `assets/incoming/oggetti/giradischi.png` → giradischi
+474. `assets/incoming/oggetti/sedia.png` → sedia
+475. `assets/incoming/oggetti/bomboletta.png` → bomboletta
+476. `assets/incoming/oggetti/coltello.png` → coltello
+477. `assets/incoming/oggetti/pistola.png` → pistola
+478. `assets/incoming/oggetti/bottiglia.png` → bottiglia
+479. `assets/incoming/oggetti/mazza.png` → mazza
+480. `assets/incoming/oggetti/tubo.png` → tubo
+481. `assets/incoming/oggetti/asse.png` → asse
+482. `assets/incoming/oggetti/manganello.png` → manganello
+483. `assets/incoming/oggetti/fx_spruzzo.png` → fx_spruzzo
+484. `assets/incoming/oggetti/fx_scintille.png` → fx_scintille
+485. `assets/incoming/oggetti/fx_polvere.png` → fx_polvere
+486. `assets/incoming/oggetti/fx_fuoco.png` → fx_fuoco
+487. `assets/incoming/oggetti/fx_vetro.png` → fx_vetro
+488. `assets/incoming/oggetti/fx_sparo.png` → fx_sparo
 
 ### 9. Extra: Mercy combattente (solo modalità Arcade)
 
 Mercy diventa giocabile nell'Arcade quando si trovano tutte le W di Rembrandt. Stesso modello di `modelli/mercy.png` (top rosa, gonna a fiori rosso scuro con lo spacco, sandali col tacco), stesse regole delle altre pose: allega il modello e chiedi «lo stesso personaggio di questa immagine, nella posa: …». Non è una lottatrice: movimenti rapidi e sporchi, da strada.
 
-504. `assets/incoming/personaggi/mercy/punch_1.png` → mercy, schiaffo-pugno rapido: braccio destro teso in avanti, busto ruotato
-505. `assets/incoming/personaggi/mercy/kick_1.png` → mercy, calcio frontale basso con il tacco, gonna che si apre sullo spacco
-506. `assets/incoming/personaggi/mercy/heavy_1.png` → mercy, spinta a due mani in avanti con tutto il peso del corpo
-507. `assets/incoming/personaggi/mercy/hurt_1.png` → mercy, colpita: testa all'indietro, braccia a proteggersi
-508. `assets/incoming/personaggi/mercy/down_1.png` → mercy, a terra, sdraiata su un fianco
-509. `assets/incoming/personaggi/mercy/getup_1.png` → mercy, si rialza: un ginocchio a terra, una mano sul pavimento
+489. `assets/incoming/personaggi/mercy/punch_1.png` → mercy, schiaffo-pugno rapido: braccio destro teso in avanti, busto ruotato
+490. `assets/incoming/personaggi/mercy/kick_1.png` → mercy, calcio frontale basso con il tacco, gonna che si apre sullo spacco
+491. `assets/incoming/personaggi/mercy/heavy_1.png` → mercy, spinta a due mani in avanti con tutto il peso del corpo
+492. `assets/incoming/personaggi/mercy/hurt_1.png` → mercy, colpita: testa all'indietro, braccia a proteggersi
+493. `assets/incoming/personaggi/mercy/down_1.png` → mercy, a terra, sdraiata su un fianco
+494. `assets/incoming/personaggi/mercy/getup_1.png` → mercy, si rialza: un ginocchio a terra, una mano sul pavimento
 
 ### 10. Corsa a 4 tempi per i Warriors
 
 Oggi la corsa ha solo 2 disegni (`run_1`, `run_2`) e non è fluida. Servono i due tempi intermedi, con lo stesso modello e la stessa inclinazione del busto delle prime due.
 
-510. `assets/incoming/personaggi/swan/run_3.png` → swan, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-511. `assets/incoming/personaggi/swan/run_4.png` → swan, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-512. `assets/incoming/personaggi/ajax/run_3.png` → ajax, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-513. `assets/incoming/personaggi/ajax/run_4.png` → ajax, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-514. `assets/incoming/personaggi/snow/run_3.png` → snow, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-515. `assets/incoming/personaggi/snow/run_4.png` → snow, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-516. `assets/incoming/personaggi/cowboy/run_3.png` → cowboy, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-517. `assets/incoming/personaggi/cowboy/run_4.png` → cowboy, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-518. `assets/incoming/personaggi/cochise/run_3.png` → cochise, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-519. `assets/incoming/personaggi/cochise/run_4.png` → cochise, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-520. `assets/incoming/personaggi/vermin/run_3.png` → vermin, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-521. `assets/incoming/personaggi/vermin/run_4.png` → vermin, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-522. `assets/incoming/personaggi/rembrandt/run_3.png` → rembrandt, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-523. `assets/incoming/personaggi/rembrandt/run_4.png` → rembrandt, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-524. `assets/incoming/personaggi/fox/run_3.png` → fox, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-525. `assets/incoming/personaggi/fox/run_4.png` → fox, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-526. `assets/incoming/personaggi/cleon/run_3.png` → cleon, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
-527. `assets/incoming/personaggi/cleon/run_4.png` → cleon, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+495. `assets/incoming/personaggi/swan/run_3.png` → swan, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+496. `assets/incoming/personaggi/swan/run_4.png` → swan, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+497. `assets/incoming/personaggi/ajax/run_3.png` → ajax, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+498. `assets/incoming/personaggi/ajax/run_4.png` → ajax, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+499. `assets/incoming/personaggi/snow/run_3.png` → snow, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+500. `assets/incoming/personaggi/snow/run_4.png` → snow, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+501. `assets/incoming/personaggi/cowboy/run_3.png` → cowboy, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+502. `assets/incoming/personaggi/cowboy/run_4.png` → cowboy, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+503. `assets/incoming/personaggi/cochise/run_3.png` → cochise, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+504. `assets/incoming/personaggi/cochise/run_4.png` → cochise, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+505. `assets/incoming/personaggi/vermin/run_3.png` → vermin, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+506. `assets/incoming/personaggi/vermin/run_4.png` → vermin, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+507. `assets/incoming/personaggi/rembrandt/run_3.png` → rembrandt, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+508. `assets/incoming/personaggi/rembrandt/run_4.png` → rembrandt, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+509. `assets/incoming/personaggi/fox/run_3.png` → fox, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+510. `assets/incoming/personaggi/fox/run_4.png` → fox, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+511. `assets/incoming/personaggi/cleon/run_3.png` → cleon, corsa, busto in avanti, gamba destra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
+512. `assets/incoming/personaggi/cleon/run_4.png` → cleon, corsa, busto in avanti, gamba sinistra a terra sotto il corpo, l'altra che passa dietro (tempo intermedio)
 
 ### 11. Loghi delle bande (presentazione delle bande)
 
 Quando una banda entra in scena per la prima volta il gioco si ferma su di lei e mostra il suo logo. **Eccezione alla regola del testo:** il logo contiene il nome della banda come nel film. Copia forma, colori e scritta del logo com'è nella mappa delle bande (`riferimenti/mappe/`), ridisegnato in pixel art pulita, su sfondo magenta, 1024×1024, centrato.
 
-528. `assets/incoming/oggetti/logo_turnbull.png` → logo dei Turnbull A.C.'s: testa di toro viola con le corna in un cerchio arancione, scritta TURNBULL AC'S
-529. `assets/incoming/oggetti/logo_orphans.png` → logo dei Orphans: scritta ORPHANS
-530. `assets/incoming/oggetti/logo_furies.png` → logo dei Baseball Furies: il loro logo con la scritta FURIES
-531. `assets/incoming/oggetti/logo_lizzies.png` → logo dei Lizzies: scritta corsiva rosa LIZZIES
-532. `assets/incoming/oggetti/logo_punks.png` → logo dei Punks: scritta PUNKS
-533. `assets/incoming/oggetti/logo_rogues.png` → logo dei Rogues: il loro logo con la scritta ROGUES
+513. `assets/incoming/oggetti/logo_turnbull.png` → logo dei Turnbull A.C.'s: testa di toro viola con le corna in un cerchio arancione, scritta TURNBULL AC'S
+514. `assets/incoming/oggetti/logo_orphans.png` → logo dei Orphans: scritta ORPHANS
+515. `assets/incoming/oggetti/logo_furies.png` → logo dei Baseball Furies: il loro logo con la scritta FURIES
+516. `assets/incoming/oggetti/logo_lizzies.png` → logo dei Lizzies: scritta corsiva rosa LIZZIES
+517. `assets/incoming/oggetti/logo_punks.png` → logo dei Punks: scritta PUNKS
+518. `assets/incoming/oggetti/logo_rogues.png` → logo dei Rogues: il loro logo con la scritta ROGUES
 
 ### 12. Fury senza mazza
 
 Quando un Fury viene disarmato deve restare senza mazza in tutte le pose. Stesso modello di `modelli/fury.png`, mani vuote.
 
-534. `assets/incoming/personaggi/fury/nobat_idle_1.png` → fury, in guardia a mani nude, pugni alzati
-535. `assets/incoming/personaggi/fury/nobat_walk_1.png` → fury, camminata a mani nude, gamba destra avanti
-536. `assets/incoming/personaggi/fury/nobat_walk_2.png` → fury, camminata a mani nude, passaggio
-537. `assets/incoming/personaggi/fury/nobat_walk_3.png` → fury, camminata a mani nude, gamba sinistra avanti
-538. `assets/incoming/personaggi/fury/nobat_walk_4.png` → fury, camminata a mani nude, passaggio
+519. `assets/incoming/personaggi/fury/nobat_idle_1.png` → fury, in guardia a mani nude, pugni alzati
+520. `assets/incoming/personaggi/fury/nobat_walk_1.png` → fury, camminata a mani nude, gamba destra avanti
+521. `assets/incoming/personaggi/fury/nobat_walk_2.png` → fury, camminata a mani nude, passaggio
+522. `assets/incoming/personaggi/fury/nobat_walk_3.png` → fury, camminata a mani nude, gamba sinistra avanti
+523. `assets/incoming/personaggi/fury/nobat_walk_4.png` → fury, camminata a mani nude, passaggio
 
 ### 13. Presentazione delle bande (illustrazioni)
 
 Quando una banda entra in scena per la prima volta il gioco mostra un'illustrazione «da cinema»: zoom sulla banda, tutto nero intorno, poi nome e logo. Modello: `assets/incoming/scene/intro_furies.png` (già fatta, approvata): **i Warriors di spalle in primo piano a sinistra**, con l'emblema sul gilet ben visibile, **la banda rivale schierata a destra** (sempre nel terzo destro dell'immagine, a figura intera), luce dei lampioni, atmosfera notturna. Formato 1536×1024, stesso stile pixel art. Niente scritte.
 
-539. `assets/incoming/scene/intro_turnbull.png` → di spalle otto Warriors (Swan in testa, senza Cleon); a destra i Turnbull A.C.'s: skinhead con gilet di jeans senza maniche, jeans scuri e anfibi, ammassati davanti e sopra il loro vecchio scuolabus giallo sporco, in una strada del Bronx di notte; riferimento `riferimenti/luoghi/bus_turnbull.png`
-540. `assets/incoming/scene/intro_orphans.png` → di spalle otto Warriors con Swan in testa; a destra gli Orphans: ragazzi con magliette sdrucite e jeans, Sully davanti con la giacca di jeans, in una strada di Tremont con palazzi di mattoni e un'auto vecchia; riferimento `riferimenti/luoghi/strada_orphans.png`
-541. `assets/incoming/scene/intro_lizzies.png` → di spalle solo Vermin, Cochise e Rembrandt; a destra le Lizzies: ragazze anni '70 con giacche e pantaloni a zampa, la loro capa davanti, nel loro appartamento in penombra rosa e viola, una con la pistola abbassata; riferimento `modelli/lizzie.png`, `modelli/lizzie_boss.png`
-542. `assets/incoming/scene/intro_punks.png` → di spalle Swan, Snow, Cowboy, Vermin, Cochise e Rembrandt, con Mercy (giacca di jeans); a destra i Punks: salopette di jeans, magliette a righe, pattini a rotelle, il capo davanti, nel bagno della stazione di Union Square con piastrelle bianche e porte verdi; riferimento `riferimenti/luoghi/bagno_union_square.png`
-543. `assets/incoming/scene/intro_rogues.png` → di spalle Swan, Snow, Cowboy, Vermin, Cochise e Rembrandt, con Mercy (giacca di jeans); a destra i Rogues: gilet di pelle nera, Luther davanti con la fascia nei capelli, accanto al loro carro funebre nero coperto di graffiti, a Coney Island all'alba; riferimento `riferimenti/luoghi/auto_rogues_coney.png`
+524. `assets/incoming/scene/intro_turnbull.png` → di spalle otto Warriors (Swan in testa, senza Cleon); a destra i Turnbull A.C.'s: skinhead con gilet di jeans senza maniche, jeans scuri e anfibi, ammassati davanti e sopra il loro vecchio bus coperto di graffiti (com'è in `riferimenti/luoghi/bus_turnbull.png`), in una strada del Bronx di notte; riferimento `riferimenti/luoghi/bus_turnbull.png`
+525. `assets/incoming/scene/intro_orphans.png` → di spalle otto Warriors con Swan in testa; a destra gli Orphans: ragazzi con magliette sdrucite e jeans, Sully davanti con la giacca di jeans, in una strada di Tremont con palazzi di mattoni e un'auto vecchia; riferimento `riferimenti/luoghi/strada_orphans.png`
+526. `assets/incoming/scene/intro_lizzies.png` → di spalle solo Vermin, Cochise e Rembrandt; a destra le Lizzies: ragazze anni '70 con giacche e pantaloni a zampa, la loro capa davanti, nel loro appartamento in penombra rosa e viola, una con la pistola abbassata; riferimento `modelli/lizzie.png`, `modelli/lizzie_boss.png`
+527. `assets/incoming/scene/intro_punks.png` → di spalle Swan, Snow, Cowboy, Vermin, Cochise e Rembrandt, con Mercy (giacca di jeans); a destra i Punks: salopette di jeans, magliette a righe, pattini a rotelle, il capo davanti, nel bagno della stazione di Union Square con piastrelle bianche e porte verdi; riferimento `riferimenti/luoghi/bagno_union_square.png`
+528. `assets/incoming/scene/intro_rogues.png` → di spalle Swan, Snow, Cowboy, Vermin, Cochise e Rembrandt, con Mercy (giacca di jeans); a destra i Rogues: gilet di pelle nera, Luther davanti con la fascia nei capelli, accanto al loro carro funebre nero coperto di graffiti, a Coney Island all'alba; riferimento `riferimenti/luoghi/auto_rogues_coney.png`
 
 ## Fine
 
-In tutto 543 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
+In tutto 528 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
 
