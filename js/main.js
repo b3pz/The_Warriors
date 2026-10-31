@@ -22,6 +22,7 @@ var W = window.W;
     return null;
   }
   function writeSave(data) {
+    if (W.AutoPilot && W.AutoPilot.active) return;   // cinema e demo non salvano
     var s = storage(); if (!s) { game.msg = { text: 'Salvataggio non disponibile: la partita continua senza salvare', t: 4 }; return; }
     try {
       var json = JSON.stringify(data); JSON.parse(json);
@@ -30,7 +31,7 @@ var W = window.W;
     } catch (e) { game.msg = { text: 'Salvataggio non riuscito', t: 4 }; }
   }
   function unlocks() { var s = storage(); try { return (s && JSON.parse(s.getItem(UNLOCK_KEY))) || ['P0']; } catch (e) { return ['P0']; } }
-  function unlock(ch) { var u = unlocks(); if (u.indexOf(ch) < 0) { u.push(ch); var s = storage(); if (s) try { s.setItem(UNLOCK_KEY, JSON.stringify(u)); } catch (e) {} } }
+  function unlock(ch) { if (W.AutoPilot && W.AutoPilot.active) return; var u = unlocks(); if (u.indexOf(ch) < 0) { u.push(ch); var s = storage(); if (s) try { s.setItem(UNLOCK_KEY, JSON.stringify(u)); } catch (e) {} } }
   // ------------------------------------------------------------------ comandi rimappabili (warriors-keys-v1)
   var KEYS_KEY = 'warriors-keys-v1', DEFAULT_KEYS = JSON.parse(JSON.stringify(W.Input.LAYOUTS));
   var ACTION_NAMES = { up: 'Su', down: 'Giù', left: 'Sinistra', right: 'Destra', light: 'Colpo leggero', heavy: 'Colpo pesante', jump: 'Salto', dodge: 'Schivata', interact: 'Interazione · presa · parla', fury: 'Furia', throw: 'Lancia arma' };
@@ -180,6 +181,7 @@ var W = window.W;
     R.reset(); game.state = 'play';
   }
   function areaFinished() {
+    if (W.AutoPilot && W.AutoPilot.isDemo()) { endDemo(); return; }
     if (game.run.arcade) { arcadeFinished(); return; }
     var w = game.world, run = game.run, def = W.CAMPAIGN[run.areaIdx];
     saveRecords();
@@ -371,7 +373,7 @@ var W = window.W;
   function endCampaign() {
     var w = game.world, s = w.stats;
     game.result = { time: s.time, damageTaken: s.damageTaken, maxCombo: s.maxCombo, kos: s.kos, retries: s.retries, assisted: s.assisted, score: w.score[0] + w.score[1] };
-    var st = storage(); if (st) try { st.removeItem(SAVE_KEY); } catch (e) {}
+    var st = storage(); if (st && !(W.AutoPilot && W.AutoPilot.active)) try { st.removeItem(SAVE_KEY); } catch (e) {}
     game.state = 'credits'; game.credits = 0; game.menuIdx = 0;
   }
 
@@ -469,6 +471,7 @@ var W = window.W;
       var sv = loadSave();
       if (sv) it.push({ label: 'Continua · ' + sv.area + ' ' + (W.CAMPAIGN[W.areaIndex(sv.area)] || {}).name, act: function () { newRun({ mode: sv.mode, difficulty: sv.difficulty }, sv); } });
       it.push({ label: 'Nuova storia', act: function () { game.state = 'select'; game.sel = { step: 0, mode: 'solo', difficulty: 'normale', start: 0 }; } });
+      it.push({ label: 'Cinema · guarda tutta la storia', act: function () { startCinema(); } });
       if (unlocks().length > 1) it.push({ label: 'Capitoli', act: function () { game.state = 'chapters'; game.menuIdx = 0; } });
       if (arcStages().length) it.push({ label: 'Arcade · risse fino a 4', act: function () { game.state = 'arcade'; game.menuIdx = 0; } });
       it.push({ label: 'Extra · graffiti ' + W.Tags.count() + '/' + W.Tags.total, act: function () { game.state = 'extra'; game.gal = 0; } });
@@ -532,7 +535,8 @@ var W = window.W;
   var DIFFS = ['facile', 'normale', 'difficile'];
 
   function onKey(code) {
-    W.Audio.unlock();
+    W.Audio.unlock(); idleT = 0;
+    if (W.AutoPilot.isDemo() && !onKey.fromPilot) { endDemo(); return; }
     // assegnazione di un tasto: il prossimo tasto premuto (tranne Esc) diventa quello dell'azione
     if (game.state === 'keys' && game.binding) {
       if (code !== 'Escape') { bindKey(game.keyLayout, game.binding, code); game.msg = { text: ACTION_NAMES[game.binding] + ': ' + keyLabel(code), t: 1.6 }; }
@@ -793,15 +797,36 @@ var W = window.W;
     var dt = Math.min(C.MAX_ACCUM, (ts - last) / 1000 || 0); last = ts;
     tick(dt);
   }
+  // ---- cinema e demo (js/autopilot.js)
+  var idleT = 0, IDLE_DEMO = 25, DEMO_LEN = 45;
+  function startCinema() { W.AutoPilot.start('cinema'); newRun({ mode: 'cpu', difficulty: 'facile' }, null, 0); game.msg = { text: 'Cinema: la storia si gioca da sola · Esc per uscire', t: 4 }; }
+  function startDemo() {
+    var pool = W.CAMPAIGN.map(function (a, i) { return { a: a, i: i }; }).filter(function (q) { return ['arena', 'escape'].indexOf(q.a.kind) >= 0 && !q.a.thread && q.a.ch !== 'P0' && (!W.BG_AI || W.BG_AI[q.a.id]); });
+    if (!pool.length) return;
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    W.AutoPilot.start('demo'); newRun({ mode: 'cpu', difficulty: 'normale' }, null, pick.i);
+  }
+  function pilotKey(k) { onKey.fromPilot = true; try { onKey(k); } finally { onKey.fromPilot = false; } }
+  function drawPilotTag() {
+    ctx.setTransform(1, 0, 0, 1, 0, 0); var demo = W.AutoPilot.isDemo();
+    if (demo) { ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(0, C.VIEW_H - 64, C.VIEW_W, 64); if (Math.floor(simTime * 2) % 2) txt('DEMO · PREMI UN TASTO', C.VIEW_W / 2, C.VIEW_H - 22, 30, '#e8322a', 'center', 700); }
+    else { ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(C.VIEW_W - 250, C.VIEW_H - 40, 250, 40); txt('CINEMA · Esc per uscire', C.VIEW_W - 18, C.VIEW_H - 14, 16, '#f2d23c', 'right', 600); }
+  }
+  function endDemo() { W.AutoPilot.stop(); game.state = 'title'; game.comic = null; idleT = 0; }
   function tick(dt) {
     pollMenuPad();
+    if (W.AutoPilot.active) {
+      if (game.state === 'menu' || game.state === 'title') W.AutoPilot.stop();
+      else { W.AutoPilot.drive(game, pilotKey, dt); if (W.AutoPilot.isDemo() && (W.AutoPilot.t > DEMO_LEN || game.state === 'gameover')) endDemo(); }
+    }
+    if ((game.state === 'title' || game.state === 'menu') && !W.AutoPilot.active) { idleT += dt; if (idleT > IDLE_DEMO) { idleT = 0; startDemo(); } } else idleT = 0;
     if (game.state !== 'play' || (game.world && game.world.area && game.world.area.scene && game.world.area.scene.choice)) W.Touch.navTick(simTime, onKey);
     W.Touch.update(simTime);
     if (game.state === 'play') {
       acc += dt;
       while (acc >= C.STEP) { simTime += C.STEP; W.Input.setTime(simTime); stepPlay(C.STEP); acc -= C.STEP; if (game.state !== 'play') { acc = 0; break; } }
     } else { acc = 0; simTime += dt; W.Input.setTime(simTime); }
-    if (!W.QA_NODRAW) draw(dt);   // i test possono saltare il disegno (canvas lento senza GPU)
+    if (!W.QA_NODRAW) { draw(dt); if (W.AutoPilot.active && game.state !== 'pause') drawPilotTag(); }   // i test possono saltare il disegno (canvas lento senza GPU)
     if (game.msg) { game.msg.t -= dt; if (game.msg.t <= 0) game.msg = null; }
   }
   function stepPlay(dt) {
@@ -926,7 +951,7 @@ var W = window.W;
       if (a === 'pause') { onKey('Escape'); return; }
       if (game.state !== 'play' || sceneOn) { if (a === 'light') onKey('Enter'); else if (a === 'interact' && game.state !== 'play') onKey('Escape'); else if (a === 'interact' && sceneOn) onKey('Enter'); }
     };
-    cv.addEventListener('pointerdown', function () { W.Audio.unlock(); if (game.state === 'title') onKey('Enter'); });
+    cv.addEventListener('pointerdown', function () { W.Audio.unlock(); idleT = 0; if (W.AutoPilot.isDemo()) { endDemo(); return; } if (game.state === 'title') onKey('Enter'); });
     // pausa su perdita di visibilità: danni e timer fermi
     document.addEventListener('visibilitychange', function () { if (document.hidden) { if (game.state === 'play') { game.state = 'pause'; game.menuIdx = 0; } W.Audio.suspend(); } });
     window.addEventListener('gamepaddisconnected', function () { if (game.state === 'play') { game.state = 'pause'; game.menuIdx = 0; game.msg = { text: 'Controller scollegato', t: 3 }; } });

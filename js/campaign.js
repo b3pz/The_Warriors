@@ -243,7 +243,7 @@ var W = window.W;
     return {
       total: ids.length, ids: ids,
       has: function (id) { return !!got[id]; },
-      add: function (id) { if (got[id]) return false; got[id] = Date.now(); save(); return true; },
+      add: function (id) { if (W.AutoPilot && W.AutoPilot.active) return false; if (got[id]) return false; got[id] = Date.now(); save(); return true; },
       count: function () { return ids.filter(function (i) { return got[i]; }).length; },
       // sblocchi: metà dei graffiti = galleria; tutti = Mercy nell'Arcade
       gallery: function () { return this.count() >= Math.ceil(ids.length / 2); },

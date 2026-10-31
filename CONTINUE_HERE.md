@@ -111,3 +111,9 @@ Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source,
 - Collezionabili: `W.TAG_SPOTS` in campaign.js (11 muri + cimitero automatico = 12), salvati in localStorage `warriors_tags` (`W.Tags`). Interazione in areas.js (`tagSpot`, `sprayTag`), disegno in render.js (`drawWallTag`: muretto nel parco, pilone sotto il molo). Menu Extra: elenco, galleria (con 6 W), Mercy giocabile nell'Arcade (con 12 W; `W.MERCY_FIGHTER`, pose sostitutive `POSE_ALIAS` finché non arrivano le pose 504–509).
 - Suoni registrati: `assets/incoming/suoni/` (nomi per evento o file del pacchetto Kenney «Impact Sounds», CC0) → `assets/sfx/` + `js/suoni_auto.js`; audio.js li usa al posto dei sintetizzati, con varianti casuali.
 - Controller: `W.Pad` in input.js normalizza tutto sulla disposizione standard; profilo PlayStation Classic (mini PSX: tasti in altro ordine, croce sugli assi) e ripiego generico; il gioco usa l'n-esimo controller collegato, qualunque indice gli dia il browser.
+
+## Cinema e demo (31 ottobre)
+
+- `js/autopilot.js` (`W.AutoPilot`): la CPU guida il giocatore 1 con la stessa logica del test della campagna; dialoghi al ritmo di lettura; nessuno resta a terra.
+- Menu «Cinema · guarda tutta la storia»: tutta la campagna fino ai titoli (circa 15 minuti), niente salvataggi, sblocchi, W o punteggi (`writeSave`, `unlock`, `W.Tags.add` non fanno niente col pilota attivo). Esc → pausa → Menu principale per uscire.
+- Demo: 25 s fermi su titolo o menu → un'arena o una fuga a caso, al massimo 45 s; un tasto, un tocco o il controller la chiude.
