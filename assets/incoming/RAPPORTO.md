@@ -14,6 +14,7 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **orphan**: nel gioco con 9 immagini (board_swing, down, hurt, idle, punch, walk)
 - **rembrandt**: nel gioco con 25 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pinned_spray, pipe_swing, punch, revive, run, sit, spray, throw, walk)
 - **snow**: nel gioco con 23 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pipe_swing, punch, revive, run, sit, throw, walk)
+- **sully**: nel gioco con 4 immagini (idle, walk)
 - **swan**: nel gioco con 26 immagini (bat_swing, bat_walk, dodge, down, getup, grab, hand, heavy, hurt, idle, jump, jumpkick, kick, knife, knifethrow, pipe_swing, punch, revive, run, sit, throw, walk)
 - **turnbull**: nel gioco con 11 immagini (charge, down, hang, hurt, idle, punch, roof, walk)
 - **turnbull_fast**: nel gioco con 9 immagini (charge, down, hurt, idle, punch, walk)
