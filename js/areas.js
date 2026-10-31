@@ -85,21 +85,31 @@ var W = window.W;
   AreaRun.prototype.playScene = function (s) { if (s) this.sceneQueue.push(s); };
   // presentazione delle bande: la prima volta che una banda entra in scena il gioco si ferma su di lei, con nome, territorio e logo
   W.GANGS = {
-    turnbull: { name: "TURNBULL A.C.'s", where: 'Gun Hill Road · Bronx', col: '#d8a23a', sets: /^turnbull/ },
-    orphans:  { name: 'THE ORPHANS', where: 'Tremont · Bronx', col: '#9a8f7a', sets: /^(orphan|sully)/ },
-    furies:   { name: 'THE BASEBALL FURIES', where: 'Riverside Park · Manhattan', col: '#e9e4d6', sets: /^fury/ },
-    lizzies:  { name: 'THE LIZZIES', where: 'Union Square · Manhattan', col: '#d84a8a', sets: /^lizzie/ },
-    punks:    { name: 'THE PUNKS', where: 'Union Square · stazione della metro', col: '#5a8ed8', sets: /^punk/ },
-    rogues:   { name: 'THE ROGUES', where: "Hell's Kitchen · Manhattan", col: '#7a7f8a', sets: /^rogue/ }
+    turnbull: { name: "TURNBULL A.C.'s", where: 'Gun Hill Road · Bronx', col: '#d8a23a', sets: /^turnbull/, ch: 'C2', start: 'C2-01' },
+    orphans:  { name: 'THE ORPHANS', where: 'Tremont · Bronx', col: '#9a8f7a', sets: /^(orphan|sully)/, ch: 'C3', start: 'C3-01' },
+    furies:   { name: 'THE BASEBALL FURIES', where: 'Riverside Park · Manhattan', col: '#e9e4d6', sets: /^fury/, ch: 'C4' },
+    lizzies:  { name: 'THE LIZZIES', where: 'Union Square · Manhattan', col: '#d84a8a', sets: /^lizzie/, ch: 'C5' },
+    punks:    { name: 'THE PUNKS', where: 'Union Square · stazione della metro', col: '#5a8ed8', sets: /^punk/, ch: 'C6' },
+    rogues:   { name: 'THE ROGUES', where: "Hell's Kitchen · Manhattan", col: '#7a7f8a', sets: /^rogue/, ch: 'C8', start: 'C8-01' }
   };
   function gangOf(set) { for (var g in W.GANGS) if (W.GANGS[g].sets.test(set || '')) return g; return null; }
+  W.gangIntroScene = function (g, focus) {
+    return { cine: 'intro_' + g, intro: g, focus: focus || null, letterbox: false, steps: [['sfx', 'horn'], ['shake', 6], ['wait', W.ART_AI && W.ART_AI.scene && W.ART_AI.scene['intro_' + g] ? 5 : 3.2]] };
+  };
   AreaRun.prototype.checkGangIntro = function () {
-    var w = this.world; if (this.scene || this.sceneQueue.length) return;
+    var w = this.world, def = this.def;
+    // all'inizio dell'area: bande che si presentano con una scena (Turnbull sul bus, Orphans in strada, Rogues sul carro) o presentazione forzata (demo)
+    if (!this._introStart) {
+      this._introStart = true;
+      var forced = w.flags.forceIntro; delete w.flags.forceIntro;
+      for (var gs in W.GANGS) if ((forced === gs || W.GANGS[gs].start === def.id) && !w.flags['intro_' + gs]) { w.flags['intro_' + gs] = true; this.sceneQueue.unshift(W.gangIntroScene(gs)); }
+    }
+    if (this.scene || this.sceneQueue.length) return;
     for (var i = 0; i < w.enemies.length; i++) {
       var e = w.enemies[i]; if (!e.alive() || !e.onScreen() || e.x < w.cam.x + 160 || e.x > w.cam.x + C.VIEW_W - 160) continue;
-      var g = gangOf(e.def.set); if (!g || w.flags['intro_' + g]) continue;
+      var g = gangOf(e.def.set); if (!g || w.flags['intro_' + g] || (W.GANGS[g].ch !== def.ch && !def.arcade)) continue;   // ogni banda si presenta nel suo capitolo
       w.flags['intro_' + g] = true;
-      this.playScene({ cine: 'intro_' + g, intro: g, focus: e, letterbox: false, steps: [['sfx', 'horn'], ['shake', 6], ['wait', W.ART_AI && W.ART_AI.scene && W.ART_AI.scene['intro_' + g] ? 5 : 3.2]] });
+      this.playScene(W.gangIntroScene(g, e));
       return;
     }
   };

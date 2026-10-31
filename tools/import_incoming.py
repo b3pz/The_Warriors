@@ -263,7 +263,7 @@ def do_sfx():
     return out
 
 
-VIDEO_IDS = ['v_radio_dj', 'v_wonder_wheel', 'v_beach_dawn', 'v_cyrus_shot', 'v_luther_bottles', 'v_furies_bats', 'v_conclave', 'v_train_night', 'v_duel',
+VIDEO_IDS = ['v_attract', 'v_radio_dj', 'v_wonder_wheel', 'v_beach_dawn', 'v_cyrus_shot', 'v_luther_bottles', 'v_furies_bats', 'v_conclave', 'v_train_night', 'v_duel',
              'v_riffs_order', 'v_turnbull_bus', 'v_car_fire', 'v_ajax_cuffs', 'v_lizzies_lock', 'v_punks_skates', 'v_rembrandt_tag', 'v_train_dawn', 'v_riffs_beach']
 
 

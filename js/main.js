@@ -536,6 +536,7 @@ var W = window.W;
 
   function onKey(code) {
     W.Audio.unlock(); idleT = 0;
+    if (game.state === 'attract') { endAttract(false); return; }
     if (W.AutoPilot.isDemo() && !onKey.fromPilot) { endDemo(); return; }
     // assegnazione di un tasto: il prossimo tasto premuto (tranne Esc) diventa quello dell'azione
     if (game.state === 'keys' && game.binding) {
@@ -798,13 +799,56 @@ var W = window.W;
     tick(dt);
   }
   // ---- cinema e demo (js/autopilot.js)
-  var idleT = 0, IDLE_DEMO = 25, DEMO_LEN = 45;
+  var idleT = 0, IDLE_DEMO = 20, DEMO_LEN = 45;
   function startCinema() { W.AutoPilot.start('cinema'); newRun({ mode: 'cpu', difficulty: 'facile' }, null, 0); game.msg = { text: 'Cinema: la storia si gioca da sola · Esc per uscire', t: 4 }; }
+  // demo a rotazione: ogni volta una banda diversa, con la sua presentazione e la sua rissa
+  var DEMOS = [['furies', 'C4-02'], ['punks', 'C6-03'], ['turnbull', 'C2-02'], ['lizzies', 'C5-03'], ['rogues', 'C8-01'], ['orphans', 'C1-03']], demoI = Math.floor(Math.random() * 6);
   function startDemo() {
-    var pool = W.CAMPAIGN.map(function (a, i) { return { a: a, i: i }; }).filter(function (q) { return ['arena', 'escape'].indexOf(q.a.kind) >= 0 && !q.a.thread && q.a.ch !== 'P0' && (!W.BG_AI || W.BG_AI[q.a.id]); });
-    if (!pool.length) return;
-    var pick = pool[Math.floor(Math.random() * pool.length)];
-    W.AutoPilot.start('demo'); newRun({ mode: 'cpu', difficulty: 'normale' }, null, pick.i);
+    var d = DEMOS[demoI++ % DEMOS.length], idx = W.areaIndex(d[1]); if (idx < 0) return;
+    W.AutoPilot.start('demo'); newRun({ mode: 'cpu', difficulty: 'normale' }, null, idx);
+    game.world.flags.forceIntro = d[0];
+  }
+  // presentazione animata «anni '90»: le illustrazioni della storia con zoom lenti, didascalie e il tema; poi una demo
+  var ATTRACT = [['cine_cyrus', 'Cento bande. Una notte di tregua.'], ['cine_accusation', 'Poi uno sparo. Cyrus è morto.'], ['radio_dj', 'E la radio dà la colpa ai Warriors.'],
+    ['intro_furies', 'Trenta miglia di città nemica.'], ['cine_lizzies_trap', 'Ogni banda di New York li cerca.'], ['cine_swan_mercy', 'Nessun posto dove nascondersi.'],
+    ['cine_bottles', 'E alla fine della notte, qualcuno li aspetta.'], ['cine_epilogue', 'Fino all\'alba. Fino a casa.']];
+  var SHOT = 4.4;
+  function attractShots() { return ATTRACT.filter(function (a) { return R.sceneArt(a[0]); }); }
+  function startAttract() {
+    if (W.VIDEOS && W.VIDEOS.v_attract) { game.attract = { t: 0, clip: W.ClipPlayer.open(typeof W.VIDEOS.v_attract === 'string' ? W.VIDEOS.v_attract : W.VIDEOS.v_attract.src) }; game.state = 'attract'; return; }
+    if (attractShots().length < 3) { startDemo(); return; }
+    game.attract = { t: 0 }; game.state = 'attract';
+  }
+  function endAttract(toDemo) { if (game.attract && game.attract.clip) game.attract.clip.close(); game.attract = null; game.state = 'title'; idleT = 0; if (toDemo) startDemo(); }
+  function drawAttract(dt) {
+    var A = game.attract; A.t += dt;
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    if (A.clip) {
+      var v = A.clip.v; if (A.clip.ready()) { var k = Math.max(C.VIEW_W / (v.videoWidth || 1280), C.VIEW_H / (v.videoHeight || 720)); ctx.drawImage(v, (C.VIEW_W - v.videoWidth * k) / 2, (C.VIEW_H - v.videoHeight * k) / 2, v.videoWidth * k, v.videoHeight * k); }
+      if (A.clip.ended() || A.t > 120) endAttract(true);
+      return;
+    }
+    var L = attractShots(), n = L.length, total = n * SHOT + 5, i = Math.floor(A.t / SHOT);
+    if (A.t > total) { endAttract(true); return; }
+    if (i < n) {
+      var lt = A.t - i * SHOT, im = R.sceneArt(L[i][0]), dir = i % 2 ? -1 : 1, z = 1.06 + 0.1 * (lt / SHOT);
+      var iw = C.VIEW_W * z, ih = iw * im.height / im.width; if (ih < C.VIEW_H * z) { ih = C.VIEW_H * z; iw = ih * im.width / im.height; }
+      var ox = (C.VIEW_W - iw) / 2 + dir * (lt / SHOT - 0.5) * (iw - C.VIEW_W) * 0.8, oy = (C.VIEW_H - ih) / 2;
+      ctx.save(); ctx.globalAlpha = Math.min(1, lt / 0.6, (SHOT - lt) / 0.5); ctx.imageSmoothingEnabled = false; ctx.drawImage(im, ox, oy, iw, ih); ctx.restore();
+      var vg = ctx.createRadialGradient(640, 360, 280, 640, 360, 820); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,0.7)'); ctx.fillStyle = vg; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+      // didascalia che si scrive a macchina
+      var cap = L[i][1], nch = Math.min(cap.length, Math.floor(Math.max(0, lt - 0.5) * 28)), ca = Math.min(1, (SHOT - lt) / 0.4);
+      ctx.save(); ctx.globalAlpha = ca; ctx.font = '38px "Permanent Marker", sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#000'; ctx.fillText(cap.slice(0, nch), C.VIEW_W / 2 + 3, C.VIEW_H - 96); ctx.fillStyle = '#f4efe2'; ctx.fillText(cap.slice(0, nch), C.VIEW_W / 2, C.VIEW_H - 99); ctx.restore();
+    } else {
+      // cartello finale: emblema e titolo
+      var ft = A.t - n * SHOT, fa = Math.min(1, ft / 0.8);
+      ctx.save(); ctx.globalAlpha = fa;
+      if (emblem.ok) { var eh = 230, ew = emblem.width * eh / emblem.height; ctx.drawImage(emblem, (C.VIEW_W - ew) / 2, 120, ew, eh); }
+      txt('THE WARRIORS', C.VIEW_W / 2, 450, 76, '#d62828', 'center', 700); txt('NIGHT RUN', C.VIEW_W / 2, 510, 34, '#f4efe2', 'center', 700);
+      if (Math.floor(ft * 2) % 2) txt('PREMI INVIO', C.VIEW_W / 2, 600, 22, '#f2d23c', 'center', 600);
+      ctx.restore();
+    }
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, 52); ctx.fillRect(0, C.VIEW_H - 52, C.VIEW_W, 52);
   }
   function pilotKey(k) { onKey.fromPilot = true; try { onKey(k); } finally { onKey.fromPilot = false; } }
   function drawPilotTag() {
@@ -819,7 +863,7 @@ var W = window.W;
       if (game.state === 'menu' || game.state === 'title') W.AutoPilot.stop();
       else { W.AutoPilot.drive(game, pilotKey, dt); if (W.AutoPilot.isDemo() && (W.AutoPilot.t > DEMO_LEN || game.state === 'gameover')) endDemo(); }
     }
-    if ((game.state === 'title' || game.state === 'menu') && !W.AutoPilot.active) { idleT += dt; if (idleT > IDLE_DEMO) { idleT = 0; startDemo(); } } else idleT = 0;
+    if ((game.state === 'title' || game.state === 'menu') && !W.AutoPilot.active) { idleT += dt; if (idleT > IDLE_DEMO) { idleT = 0; startAttract(); } } else if (game.state !== 'attract') idleT = 0;   // come nei giochi da sala: presentazione, poi una demo, poi di nuovo il titolo
     if (game.state !== 'play' || (game.world && game.world.area && game.world.area.scene && game.world.area.scene.choice)) W.Touch.navTick(simTime, onKey);
     W.Touch.update(simTime);
     if (game.state === 'play') {
@@ -878,7 +922,7 @@ var W = window.W;
   }
   function draw(dt) {
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys', 'arcade', 'extra', 'gallery'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'menu' }); }
+    if (['title', 'menu', 'select', 'chapters', 'howto', 'options', 'keys', 'arcade', 'extra', 'gallery', 'attract'].indexOf(game.state) >= 0) { W.Audio.setMood('tension'); W.Audio.setAmbience('city'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'menu' }); }
     if (game.state === 'gameover') { W.Audio.setMood('radio'); W.Audio.radio(true); if (W.Music) W.Music.update({ screen: 'gameover' }); }
     if (game.state === 'credits' || game.state === 'result') { W.Audio.setMood('dawn'); W.Audio.setAmbience('beach'); W.Audio.radio(false); if (W.Music) W.Music.update({ screen: 'credits' }); }
     if (game.state === 'title') drawTitle();
@@ -895,6 +939,7 @@ var W = window.W;
     else if (game.state === 'select') drawSelect();
     else if (game.state === 'party') drawParty();
     else if (game.state === 'howto') drawHowto();
+    else if (game.state === 'attract') drawAttract(dt);
     else if (game.state === 'extra') drawExtra();
     else if (game.state === 'gallery') drawGallery();
     else if (game.state === 'credits') drawCredits(dt);
@@ -951,7 +996,7 @@ var W = window.W;
       if (a === 'pause') { onKey('Escape'); return; }
       if (game.state !== 'play' || sceneOn) { if (a === 'light') onKey('Enter'); else if (a === 'interact' && game.state !== 'play') onKey('Escape'); else if (a === 'interact' && sceneOn) onKey('Enter'); }
     };
-    cv.addEventListener('pointerdown', function () { W.Audio.unlock(); idleT = 0; if (W.AutoPilot.isDemo()) { endDemo(); return; } if (game.state === 'title') onKey('Enter'); });
+    cv.addEventListener('pointerdown', function () { W.Audio.unlock(); idleT = 0; if (game.state === 'attract') { endAttract(false); return; } if (W.AutoPilot.isDemo()) { endDemo(); return; } if (game.state === 'title') onKey('Enter'); });
     // pausa su perdita di visibilità: danni e timer fermi
     document.addEventListener('visibilitychange', function () { if (document.hidden) { if (game.state === 'play') { game.state = 'pause'; game.menuIdx = 0; } W.Audio.suspend(); } });
     window.addEventListener('gamepaddisconnected', function () { if (game.state === 'play') { game.state = 'pause'; game.menuIdx = 0; game.msg = { text: 'Controller scollegato', t: 3 }; } });

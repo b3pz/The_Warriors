@@ -125,3 +125,5 @@ Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source,
 - Presentazione delle bande (`W.GANGS` in areas.js, `drawGangIntro` in render.js): alla prima apparizione di Turnbull, Orphans, Furies, Lizzies, Punks e Rogues il gioco si ferma su di loro con nome, territorio e logo (`oggetti/logo_<banda>.png`, punti 528–533). Invio la chiude; nella demo resta.
 - Telecamera: con due giocatori troppo distanti resta al centro fra i due (prima rincorreva l'uno e l'altro e tremava).
 - Set vecchi mappati sulle figure nuove (`SET_ALIAS` in render.js); Fury disarmato: pose `nobat_*` chieste a ChatGPT (534–538).
+- Schermata iniziale come nei giochi da sala: 20 s fermi → presentazione (`drawAttract` in main.js: illustrazioni delle scene con zoom, didascalie a macchina, cartello finale; se esiste `v_attract` usa il video) → demo di una banda a rotazione (`DEMOS`, con la sua presentazione) → titolo.
+- Presentazioni delle bande anche all'inizio delle aree dove la banda si presenta con una scena (Turnbull C2-01, Orphans C3-01, Rogues C8-01) e ogni banda solo nel suo capitolo (`W.GANGS[g].ch`, `start`).

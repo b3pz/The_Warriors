@@ -42,6 +42,10 @@ Divieti: come per le immagini, non toccare niente fuori da `assets/incoming/`.
 17. `v_train_dawn.mp4` · **6 s** · Una metropolitana sopraelevata che corre nella prima luce del mattino verso Coney Island, cielo rosa e arancio pallido, palazzi bassi, il sole che sorge dietro. Riferimento: `riferimenti/luoghi/treno_graffiti.png`.
 18. `v_riffs_beach.mp4` · **6 s** · La spiaggia all'alba: una lunga fila di figure in tuniche avanza lentamente in controluce verso la riva, sagome nere sul cielo rosa. Nessun volto.
 
+## Facoltativo: la presentazione della schermata iniziale
+
+19. `v_attract.mp4` · **20–60 s** · Come nei giochi da sala degli anni '90: se nessuno tocca niente sul menu parte una presentazione. Oggi il gioco la monta da solo con le illustrazioni delle scene; se c'è questo video, usa il video. Montaggio dei momenti del film nell'ordine: il raduno di notte, lo sparo in silhouette, la DJ al microfono, i Furies con le mazze, il treno che corre, la spiaggia all'alba. Stesse regole delle altre clip (niente volti dei protagonisti, niente scritte). Si può comporre unendo più clip da 5–10 secondi.
+
 ## Fine
 
 In tutto 18 video. Ogni sessione riparte dal primo video dell'elenco che non esiste ancora.
