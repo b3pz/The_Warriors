@@ -65,4 +65,4 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **fondale P0-02**: nel gioco (1 pezzi, 1280×720)
 - **fondale P0-03**: nel gioco (1 pezzi, 1280×720)
 - **fondale P0-04**: nel gioco (1 pezzi, 1280×720)
-- scene: cine_accusation, cine_ajax_arrest, cine_bottles, cine_cyrus, cine_disarm, cine_epilogue, cine_furies_appear, cine_lizzies_trap, cine_swan_mercy, radio_dj, talk_c7_couple
+- scene: cine_accusation, cine_ajax_arrest, cine_bottles, cine_cyrus, cine_disarm, cine_epilogue, cine_furies_appear, cine_lizzies_trap, cine_swan_mercy, intro_furies, radio_dj, talk_c7_couple

@@ -99,7 +99,7 @@ var W = window.W;
       var e = w.enemies[i]; if (!e.alive() || !e.onScreen() || e.x < w.cam.x + 160 || e.x > w.cam.x + C.VIEW_W - 160) continue;
       var g = gangOf(e.def.set); if (!g || w.flags['intro_' + g]) continue;
       w.flags['intro_' + g] = true;
-      this.playScene({ cine: 'intro_' + g, intro: g, focus: e, letterbox: false, steps: [['sfx', 'horn'], ['shake', 6], ['wait', 3.2]] });
+      this.playScene({ cine: 'intro_' + g, intro: g, focus: e, letterbox: false, steps: [['sfx', 'horn'], ['shake', 6], ['wait', W.ART_AI && W.ART_AI.scene && W.ART_AI.scene['intro_' + g] ? 5 : 3.2]] });
       return;
     }
   };

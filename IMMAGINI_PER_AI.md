@@ -703,7 +703,17 @@ Quando un Fury viene disarmato deve restare senza mazza in tutte le pose. Stesso
 537. `assets/incoming/personaggi/fury/nobat_walk_3.png` → fury, camminata a mani nude, gamba sinistra avanti
 538. `assets/incoming/personaggi/fury/nobat_walk_4.png` → fury, camminata a mani nude, passaggio
 
+### 13. Presentazione delle bande (illustrazioni)
+
+Quando una banda entra in scena per la prima volta il gioco mostra un'illustrazione «da cinema»: zoom sulla banda, tutto nero intorno, poi nome e logo. Modello: `assets/incoming/scene/intro_furies.png` (già fatta, approvata): **i Warriors di spalle in primo piano a sinistra**, con l'emblema sul gilet ben visibile, **la banda rivale schierata a destra** (sempre nel terzo destro dell'immagine, a figura intera), luce dei lampioni, atmosfera notturna. Formato 1536×1024, stesso stile pixel art. Niente scritte.
+
+539. `assets/incoming/scene/intro_turnbull.png` → di spalle otto Warriors (Swan in testa, senza Cleon); a destra i Turnbull A.C.'s: skinhead con gilet di jeans senza maniche, jeans scuri e anfibi, ammassati davanti e sopra il loro vecchio scuolabus giallo sporco, in una strada del Bronx di notte; riferimento `riferimenti/luoghi/bus_turnbull.png`
+540. `assets/incoming/scene/intro_orphans.png` → di spalle otto Warriors con Swan in testa; a destra gli Orphans: ragazzi con magliette sdrucite e jeans, Sully davanti con la giacca di jeans, in una strada di Tremont con palazzi di mattoni e un'auto vecchia; riferimento `riferimenti/luoghi/strada_orphans.png`
+541. `assets/incoming/scene/intro_lizzies.png` → di spalle solo Vermin, Cochise e Rembrandt; a destra le Lizzies: ragazze anni '70 con giacche e pantaloni a zampa, la loro capa davanti, nel loro appartamento in penombra rosa e viola, una con la pistola abbassata; riferimento `modelli/lizzie.png`, `modelli/lizzie_boss.png`
+542. `assets/incoming/scene/intro_punks.png` → di spalle Swan, Snow, Cowboy, Vermin, Cochise e Rembrandt, con Mercy (giacca di jeans); a destra i Punks: salopette di jeans, magliette a righe, pattini a rotelle, il capo davanti, nel bagno della stazione di Union Square con piastrelle bianche e porte verdi; riferimento `riferimenti/luoghi/bagno_union_square.png`
+543. `assets/incoming/scene/intro_rogues.png` → di spalle Swan, Snow, Cowboy, Vermin, Cochise e Rembrandt, con Mercy (giacca di jeans); a destra i Rogues: gilet di pelle nera, Luther davanti con la fascia nei capelli, accanto al loro carro funebre nero coperto di graffiti, a Coney Island all'alba; riferimento `riferimenti/luoghi/auto_rogues_coney.png`
+
 ## Fine
 
-In tutto 538 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
+In tutto 543 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
 
