@@ -1118,5 +1118,5 @@ W.Render = (function () {
     if (!(ui && ui.noHud)) drawHud(w, ui);
   }
 
-  return { pxImage: function (id) { return PX[id]; }, toggleSprites: function () { useSprites = !useSprites; }, init: init, frame: frame, opts: opts, COL: COL, ctx: function () { return ctx; }, reset: function () { fx = []; seenEvents = {}; } };
+  return { pxImage: function (id) { return PX[id]; }, bgAi: function (id) { var im = BGAI[id]; return im && im.ok && W.BG_AI[id] ? { img: im, w: W.BG_AI[id].w } : null; }, toggleSprites: function () { useSprites = !useSprites; }, init: init, frame: frame, opts: opts, COL: COL, ctx: function () { return ctx; }, reset: function () { fx = []; seenEvents = {}; } };
 })();

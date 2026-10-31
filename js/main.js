@@ -197,14 +197,17 @@ var W = window.W;
   function nextPanel(next) {
     var c = document.createElement('canvas'); c.width = C.VIEW_W; c.height = C.VIEW_H;
     var g = c.getContext('2d'), fake = { def: next, width: next.width || 1920, floor: [680 - (next.depth || 200), 680] };
-    try { if (W.Scenery) { var save = ctx; ctx = g; W.Scenery.draw(g, fake, Math.max(0, (fake.width - C.VIEW_W) * 0.15)); ctx = save; } } catch (e) {}
+    // fondale nuovo dell'area (immagini integrate) se c'è, altrimenti quello disegnato dal codice
+    var bga = W.Render.bgAi && W.Render.bgAi(next.id), ox = Math.max(0, (fake.width - C.VIEW_W) * 0.15);
+    if (bga) g.drawImage(bga.img, Math.min(Math.max(0, bga.w - C.VIEW_W), ox), 0, C.VIEW_W, C.VIEW_H, 0, 0, C.VIEW_W, C.VIEW_H);
+    else try { if (W.Scenery) { var save = ctx; ctx = g; W.Scenery.draw(g, fake, ox); ctx = save; } } catch (e) {}
     var who = game.run && game.run.arcade ? game.run.chars.slice() : next.thread ? W.THREADS[next.thread].members.slice() : poolFor(next).slice(0, 5);
     if (!(game.run && game.run.arcade) && !next.thread && next.mercy && who.indexOf('mercy') < 0) who.push('mercy');
     who = who.filter(function (id) { return !(id === 'ajax' && game.world.flags.ajax_arrested && !game.run.arcade); });
     var save2 = ctx; ctx = g;
     who.forEach(function (id, i) {
       var n = who.length, px = n === 1 ? 640 : 330 + i * (620 / (n - 1));
-      drawPortrait(id, px, fake.floor[0] + (fake.floor[1] - fake.floor[0]) * (0.45 + 0.14 * (i % 2)), 1.7, true);
+      drawPortrait(id, px, 702 - 18 * (i % 2), 1.15, true);   // piedi in basso: la vignetta mostra la fascia bassa del fondale
     });
     ctx = save2;
     return c;
