@@ -11,6 +11,7 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **fury_boss**: nel gioco con 10 immagini (down, hurt, idle, punch, swing, walk, windup)
 - **mercy**: nel gioco con 11 immagini (cover, hair, hand, idle, jump, run, sit, walk)
 - **mercy_giacca**: nel gioco con 9 immagini (hair, hand, idle, run, sit, walk)
+- **orphan**: nel gioco con 9 immagini (board_swing, down, hurt, idle, punch, walk)
 - **rembrandt**: nel gioco con 25 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pinned_spray, pipe_swing, punch, revive, run, sit, spray, throw, walk)
 - **snow**: nel gioco con 23 immagini (bat_swing, bat_walk, dodge, down, getup, grab, heavy, hurt, idle, jump, jumpkick, kick, pipe_swing, punch, revive, run, sit, throw, walk)
 - **swan**: nel gioco con 26 immagini (bat_swing, bat_walk, dodge, down, getup, grab, hand, heavy, hurt, idle, jump, jumpkick, kick, knife, knifethrow, pipe_swing, punch, revive, run, sit, throw, walk)
