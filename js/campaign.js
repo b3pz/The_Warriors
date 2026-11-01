@@ -232,8 +232,8 @@ var W = window.W;
   // ------------------------------------------------------------------ la W di Rembrandt (collezionabili)
   // Come al cimitero nel film: dove passano i Warriors, Rembrandt lascia la W rossa sopra le scritte delle altre bande.
   // Un punto per area (posizione in frazione della larghezza), solo dove Rembrandt è nel gruppo. Il cimitero conta da solo (scena del film).
-  W.TAG_SPOTS = { 'C1-03': 0.5, 'C2-01': 0.46, 'C2-03': 0.62, 'C2-04': 0.4, 'C3-03': 0.55, 'C3-04': 0.68,
-    'C6-01': 0.5, 'C6-04': 0.35, 'C7-01': 0.6, 'C8-01': 0.42, 'C8-02': 0.66 };
+  W.TAG_SPOTS = { 'C2-02': 0.35, 'C2-01': 0.46, 'C2-03': 0.62, 'C2-04': 0.4, 'C3-03': 0.55, 'C3-04': 0.68,
+    'C6-01': 0.5, 'C6-04': 0.35, 'C7-01': 0.6, 'C8-01': 0.42, 'C5-02': 0.3 };   // ogni W su un muro vero del fondale (vicolo, appartamento delle Lizzies)
   W.TAG_AUTO = { 'C1-04': 'cemetery_tag' };
   W.Tags = (function () {
     var KEY = 'warriors_tags', got = {};

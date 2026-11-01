@@ -28,6 +28,7 @@ W.Render = (function () {
     if (W.BG_AI) for (var ba in W.BG_AI) BGAI[ba] = loadImg(W.BG_AI[ba].file);
     if (W.ART_AI && W.ART_AI.scene) for (var sa in W.ART_AI.scene) ARTSC[sa] = loadImg(W.ART_AI.scene[sa]);
     if (W.ART_AI && W.ART_AI.object) for (var lo in W.ART_AI.object) if (/^logo_/.test(lo)) LOGOS[W.ART_AI.object[lo]] = loadImg(W.ART_AI.object[lo]);
+    if (W.ART_AI && W.ART_AI.object) for (var ob in W.ART_AI.object) if (!/^logo_/.test(ob)) OBJIMG[ob] = loadImg(W.ART_AI.object[ob]);   // oggetti caricati subito: niente forme finte nei primi istanti
     if (W.BG_PX) for (var bk in W.BG_PX) BGPX[bk] = loadImg(W.BG_PX[bk].file);
     var A = W.USE_ILLUSTRATED ? W.ATLAS : null; if (!A) return;
     for (var sid in A.sets) for (var fn in A.sets[sid].frames) { var f = A.sets[sid].frames[fn]; if (!IMG[f.file]) IMG[f.file] = loadImg(f.file); }
@@ -400,8 +401,26 @@ W.Render = (function () {
 
   // ------------------------------------------------------------------ oggetti
   // ostacoli bassi: transenne (strada), tornelli (metro), siepi (parco), fuoco
+  var LOW_AI = false;
   function drawLowSeg(p, cx, y, t) {
     var x = p.x0 - cx + (y - p.y0) * 0.12;
+    // con i fondali nuovi: fuoco, transenne e tornelli disegnati da ChatGPT invece delle forme fatte col codice
+    var oname = p.kind === 'fire' ? 'fx_fuoco' : p.style === 'turnstile' ? 'tornello' : (p.style === 'barrier' || p.style === 'hedge') ? 'transenna' : null;
+    var oim = oname && LOW_AI && objImg(oname);
+    if (oim) {
+      if (p.kind === 'fire') {
+        var fw = 92, fl = 1 + 0.08 * Math.sin(t * 11 + y * 0.7) + 0.05 * Math.sin(t * 23 + y), fhh = fw * oim.height / oim.width * fl;
+        var gl = ctx.createRadialGradient(x + 14, y - 20, 4, x + 14, y - 20, 90); gl.addColorStop(0, 'rgba(255,150,50,0.22)'); gl.addColorStop(1, 'rgba(255,150,50,0)');
+        ctx.fillStyle = gl; ctx.fillRect(x - 80, y - 110, 190, 140);
+        ctx.save(); ctx.imageSmoothingEnabled = false; ctx.drawImage(oim, x + 14 - fw / 2, y + 4 - fhh, fw, fhh); ctx.restore();
+        return;
+      }
+      if (Math.round((y - p.y0 - 10) / 26) % 2) return;   // un oggetto ogni due tratti: non si accavallano
+      var ow = p.style === 'turnstile' ? 86 : 96, oh = ow * oim.height / oim.width;
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(x + 13, y + 1, ow * 0.45, 6, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.save(); ctx.imageSmoothingEnabled = false; ctx.drawImage(oim, x + 13 - ow / 2, y + 4 - oh, ow, oh); ctx.restore();
+      return;
+    }
     if (p.kind === 'fire') {
       for (var k = 0; k < 4; k++) {
         var fx = x + 10 + k * 20 + Math.sin(t * 9 + k + y) * 4, fh = 30 + Math.sin(t * 13 + k * 2 + y) * 10;
@@ -1249,8 +1268,9 @@ W.Render = (function () {
     var x = Math.round(tg.x - w.cam.x), y = ar.floor[0] - 36, t = w.time, bg = ar.def.bg || ''; if (x < -200 || x > C.VIEW_W + 200) return;
     ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     // dove il fondale non ha un muro (parco, spiaggia sotto il molo) la W va su un muretto di pietra o su un pilone di legno
-    var fy = ar.floor[0] + 14;
-    if (/park/.test(bg)) {
+    var fy = ar.floor[0] + 14, aiBg = W.BG_AI && W.BG_AI[ar.def.id];
+    if (aiBg) { /* il muro c'è già nel fondale */ }
+    else if (/park/.test(bg)) {
       ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(x - 16, fy, 120, 10, 0, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = '#6f7178'; ctx.fillRect(x - 126, fy - 150, 220, 150); ctx.fillStyle = '#5b5d63'; ctx.fillRect(x - 126, fy - 158, 220, 12);
       ctx.strokeStyle = 'rgba(40,40,46,0.55)'; ctx.lineWidth = 2;
@@ -1285,7 +1305,7 @@ W.Render = (function () {
     var a = w.area && w.area.def; if (!a || (w.area.scene && (a.kind === 'scene' || a.kind === 'epilogue'))) return;
     var bg = a.bg || '', cx = w.cam.x * 1.35, H = C.VIEW_H, t = w.time, kind;
     if (/street|alley|harbor/.test(bg)) kind = 'street'; else if (/park/.test(bg)) kind = 'park'; else if (/metro/.test(bg)) kind = 'metro';
-    else if (/coney|boardwalk/.test(bg)) kind = 'coney'; else return;
+    else if (/coney|boardwalk/.test(bg) && !(W.BG_AI && W.BG_AI[a.id])) kind = 'coney'; else return;   // a Coney Island e in spiaggia i pali neri sembravano croci
     var step = kind === 'metro' ? 760 : 680;
     for (var gx = Math.floor((cx - 200) / step) * step; gx < cx + C.VIEW_W + 200; gx += step) {
       var r = hsh(gx * 0.37 + a.id.length), x = gx + r * 220 - cx, v = Math.floor(r * 3);
@@ -1361,6 +1381,7 @@ W.Render = (function () {
     var list = [];
     w.props.forEach(function (p) {
       if (p.kind === 'lamp') return;
+      LOW_AI = !!(W.BG_AI && w.area && W.BG_AI[w.area.def.id]);
       if (p.kind === 'low' || p.kind === 'fire') { for (var yy = p.y0 + 10; yy <= p.y1; yy += 26) (function (y) { list.push({ y: y, d: function () { drawLowSeg(p, cx, y, w.time); } }); })(yy); return; }
       list.push({ y: p.y1, d: function () { drawProp(p, cx); } });
     });
