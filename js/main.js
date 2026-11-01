@@ -946,9 +946,9 @@ var W = window.W;
       if (ft > 2.2) {
         var fa = Math.min(1, (ft - 2.2) / 0.8);
         ctx.save(); ctx.globalAlpha = fa * 0.82; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); ctx.globalAlpha = fa;
-        if (emblem.ok) { var eh = 170, ew = emblem.width * eh / emblem.height; ctx.drawImage(emblem, (C.VIEW_W - ew) / 2, 66, ew, eh); }
-        filmLogo(C.VIEW_W / 2, 492, 540, 76); txt('CONEY ISLAND · LA STRADA DI CASA', C.VIEW_W / 2, 536, 24, '#f4efe2', 'center', 600);
-        if (Math.floor(ft * 2) % 2) txt('PREMI INVIO', C.VIEW_W / 2, 600, 22, '#f2d23c', 'center', 600);
+        
+        filmLogo(C.VIEW_W / 2, 430, 620, 76); txt('CONEY ISLAND · LA STRADA DI CASA', C.VIEW_W / 2, 482, 24, '#f4efe2', 'center', 600);
+        if (Math.floor(ft * 2) % 2) txt('PREMI INVIO', C.VIEW_W / 2, 560, 22, '#f2d23c', 'center', 600);
         ctx.restore();
       }
       if (ft > 7.5) endAttract(true);
@@ -1027,12 +1027,12 @@ var W = window.W;
       var cap = L[i][1], nch = Math.min(cap.length, Math.floor(Math.max(0, lt - 0.5) * 28)), ca = Math.min(1, (SHOT - lt) / 0.4);
       ctx.save(); ctx.globalAlpha = ca; ctx.font = '38px "Permanent Marker", sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#000'; ctx.fillText(cap.slice(0, nch), C.VIEW_W / 2 + 3, C.VIEW_H - 96); ctx.fillStyle = '#f4efe2'; ctx.fillText(cap.slice(0, nch), C.VIEW_W / 2, C.VIEW_H - 99); ctx.restore();
     } else {
-      // cartello finale: emblema e titolo
+      // cartello finale: logo del film e titolo
       var ft = A.t - n * SHOT, fa = Math.min(1, ft / 0.8);
       ctx.save(); ctx.globalAlpha = fa;
-      if (emblem.ok) { var eh = 170, ew = emblem.width * eh / emblem.height; ctx.drawImage(emblem, (C.VIEW_W - ew) / 2, 66, ew, eh); }
-      filmLogo(C.VIEW_W / 2, 492, 540, 76); txt('NIGHT RUN', C.VIEW_W / 2, 540, 34, '#f4efe2', 'center', 700);
-      if (Math.floor(ft * 2) % 2) txt('PREMI INVIO', C.VIEW_W / 2, 600, 22, '#f2d23c', 'center', 600);
+      
+      filmLogo(C.VIEW_W / 2, 430, 620, 76); txt('NIGHT RUN', C.VIEW_W / 2, 486, 34, '#f4efe2', 'center', 700);
+      if (Math.floor(ft * 2) % 2) txt('PREMI INVIO', C.VIEW_W / 2, 560, 22, '#f2d23c', 'center', 600);
       ctx.restore();
     }
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, 52); ctx.fillRect(0, C.VIEW_H - 52, C.VIEW_W, 52);
@@ -1125,7 +1125,6 @@ var W = window.W;
     if (game.state === 'title') drawTitle();
     else if (game.state === 'menu') {
       backdrop(1);
-      if (emblem.ok) { var eh = 118, ew = emblem.width * eh / emblem.height; ctx.drawImage(emblem, 82, 30, ew, eh); }
       txt('NIGHT RUN', 80, 200, 56, '#ffffff', 'left', 700);
       ctx.fillStyle = '#d62828'; ctx.fillRect(82, 226, 72, 5);
       drawList(menuItems(), 82, 320, 'left');
