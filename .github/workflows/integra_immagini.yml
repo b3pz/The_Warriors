@@ -30,5 +30,13 @@ jobs:
           git add -A assets/sprites_ai assets/backgrounds_ai assets/scenes_ai assets/portraits_ai assets/objects_ai js/atlas_ai.js js/art_ai.js js/musiche_auto.js js/videos_auto.js js/suoni_auto.js assets/music assets/video assets/sfx assets/incoming/RAPPORTO.md assets/.import_cache.json || true
           if git diff --cached --quiet; then echo "niente di nuovo"; exit 0; fi
           git commit -m "Immagini integrate nel gioco (automatico)"
-          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && exit 0; sleep 5; done
+          # se nel frattempo main è cambiato (due caricamenti ravvicinati), si riparte da main e si rifà l'integrazione (con la cache è rapida)
+          for i in 1 2 3 4; do
+            git push origin HEAD:main && exit 0
+            sleep $((i * 5)); git fetch -q origin main; git reset -q --hard origin/main
+            python tools/import_incoming.py
+            git add -A assets/sprites_ai assets/backgrounds_ai assets/scenes_ai assets/portraits_ai assets/objects_ai js/atlas_ai.js js/art_ai.js js/musiche_auto.js js/videos_auto.js js/suoni_auto.js assets/music assets/video assets/sfx assets/incoming/RAPPORTO.md assets/.import_cache.json || true
+            if git diff --cached --quiet; then echo "già integrato da un'altra esecuzione"; exit 0; fi
+            git commit -q -m "Immagini integrate nel gioco (automatico)"
+          done
           exit 1
