@@ -401,7 +401,9 @@ W.Render = (function () {
 
   // ------------------------------------------------------------------ oggetti
   // ostacoli bassi: transenne (strada), tornelli (metro), siepi (parco), fuoco
-  var LOW_AI = false;
+  var LOW_AI = false, ASC = 1;
+  // stanze ravvicinate (spriteScale): anche oggetti e armi a terra crescono come i personaggi, dal loro punto d'appoggio
+  function scaledAt(x, y, fn) { if (ASC === 1) { fn(); return; } ctx.save(); ctx.translate(x, y); ctx.scale(ASC, ASC); ctx.translate(-x, -y); fn(); ctx.restore(); }
   function drawLowSeg(p, cx, y, t) {
     var x = p.x0 - cx + (y - p.y0) * 0.12;
     // con i fondali nuovi: fuoco, transenne e tornelli disegnati da ChatGPT invece delle forme fatte col codice
@@ -1382,11 +1384,11 @@ W.Render = (function () {
     var list = [];
     w.props.forEach(function (p) {
       if (p.kind === 'lamp') return;
-      LOW_AI = !!(W.BG_AI && w.area && W.BG_AI[w.area.def.id]);
+      LOW_AI = !!(W.BG_AI && w.area && W.BG_AI[w.area.def.id]); ASC = (w.area && w.area.def.spriteScale) || 1;
       if (p.kind === 'low' || p.kind === 'fire') { for (var yy = p.y0 + 10; yy <= p.y1; yy += 26) (function (y) { list.push({ y: y, d: function () { drawLowSeg(p, cx, y, w.time); } }); })(yy); return; }
-      list.push({ y: p.y1, d: function () { drawProp(p, cx); } });
+      list.push({ y: p.y1, d: function () { scaledAt((p.x0 + p.x1) / 2 - cx, p.y1, function () { drawProp(p, cx); }); } });
     });
-    w.items.forEach(function (it) { list.push({ y: it.y - 1, d: function () { drawItem(it, cx, w.time); } }); });
+    w.items.forEach(function (it) { list.push({ y: it.y - 1, d: function () { scaledAt(it.x - cx, it.y, function () { drawItem(it, cx, w.time); }); } }); });
     w.enemies.forEach(function (e) { e.isEnemy = true; list.push({ y: e.y, d: function () { drawFigure(e, cx, w); } }); });
     w.players.forEach(function (p) { if (p.hidden) return; list.push({ y: p.y + 0.5, d: function () { drawFigure(p, cx, w); if (!(w.area && w.area.scene)) drawSlotMarker(p, cx, w); } }); });
     w.npcs.forEach(function (n) { if (n.hidden) return; list.push({ y: n.y, d: function () { if (n.set === 'tagstone') { drawTagStone(n, cx, w.time); return; } if (n.vehicle) { drawHearse(n, cx); return; } drawPixel(n, cx, w); if (n.skates) drawSkates(n, cx); } }); });
@@ -1446,7 +1448,23 @@ W.Render = (function () {
     } }); }
         if (w.area && w.area.def.mark && !w.area.markReached) { var mk = w.area.def.mark; ctx.strokeStyle = 'rgba(242,193,78,' + (0.5 + 0.3 * Math.sin(w.time * 4)) + ')'; ctx.lineWidth = 4; ctx.beginPath(); ctx.ellipse(mk.x - cx, mk.y, 50, 14, 0, 0, Math.PI * 2); ctx.stroke(); }
     if (w.area && w.area.def.radioProp) { var rp = w.area.def.radioProp, smashed = w.area.radioSmashed; list.push({ y: rp.y, d: function () {
-      var rx = rp.x - cx; ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(rx - 34, rp.y - 4, 70, 8);
+      var rx = rp.x - cx, gim = objImg('giradischi'), rs = (w.area.def.spriteScale || 1);
+      if (rp.bgBox && W.BG_AI && W.BG_AI[w.area.def.id]) {
+        // il giradischi è già nel fondale: note che escono finché suona, poi buio e schegge quando lo spacchi
+        var bx0 = rp.bgBox[0] - cx, by0 = rp.bgBox[1], bw0 = rp.bgBox[2] - rp.bgBox[0], bh0 = rp.bgBox[3] - rp.bgBox[1];
+        if (!smashed) { for (var nn = 0; nn < 2; nn++) { var nt3 = (w.time * 1.6 + nn * 0.5) % 1; ctx.fillStyle = 'rgba(255,220,160,' + (1 - nt3) + ')'; ctx.font = '700 26px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('♪', bx0 + bw0 * (0.3 + nn * 0.35), by0 - 6 - nt3 * 50); } }
+        else { ctx.fillStyle = 'rgba(8,4,4,0.72)'; ctx.fillRect(bx0 + 6, by0 + 10, bw0 - 12, bh0 * 0.55); ctx.strokeStyle = 'rgba(230,200,160,0.5)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(bx0 + 30, by0 + 20); ctx.lineTo(bx0 + 90, by0 + 60); ctx.lineTo(bx0 + 70, by0 + 90); ctx.moveTo(bx0 + 150, by0 + 30); ctx.lineTo(bx0 + 120, by0 + 80); ctx.stroke(); }
+        return;
+      }
+      if (gim) {
+        var gw = 150 * rs, gh = gw * gim.height / gim.width;
+        ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(rx, rp.y, gw * 0.45, 8, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.save(); ctx.imageSmoothingEnabled = false; if (smashed) { ctx.translate(rx, rp.y); ctx.rotate(0.18); ctx.translate(-rx, -rp.y); ctx.filter = 'brightness(0.45)'; }
+        ctx.drawImage(gim, rx - gw / 2, rp.y + 4 - gh, gw, gh); ctx.restore(); ctx.filter = 'none';
+        if (!smashed) { var nt2 = (w.time * 2) % 1; ctx.fillStyle = 'rgba(255,220,160,' + (1 - nt2) + ')'; ctx.font = '700 22px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('♪', rx + gw * 0.3, rp.y - gh - 10 - nt2 * 30); }
+        return;
+      }
+      ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(rx - 34, rp.y - 4, 70, 8);
       ctx.fillStyle = smashed ? '#2a1a10' : '#5a3a22'; ctx.fillRect(rx - 30, rp.y - 70, 60, 66);
       if (!smashed) { ctx.fillStyle = '#c9a227'; ctx.fillRect(rx - 22, rp.y - 60, 44, 14); ctx.fillStyle = '#1a1008'; ctx.beginPath(); ctx.arc(rx - 10, rp.y - 28, 9, 0, Math.PI * 2); ctx.arc(rx + 12, rp.y - 28, 9, 0, Math.PI * 2); ctx.fill();
         var nt = (w.time * 2) % 1; ctx.fillStyle = 'rgba(255,220,160,' + (1 - nt) + ')'; ctx.font = '700 18px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('♪', rx + 20, rp.y - 80 - nt * 30); }

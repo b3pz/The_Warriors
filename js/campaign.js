@@ -333,7 +333,7 @@ var W = window.W;
     { id: 'C5-02', ch: 'C5', kind: 'traversal', name: 'L\'appartamento', bg: 'interior', width: 1280, depth: 170, spriteScale: 1.5, party: ['vermin', 'cochise', 'rembrandt'], present: ['vermin', 'cochise', 'rembrandt'], peace: true,
       enter: 'dlg_c5_welcome', objective: 'Entra nella stanza', exitInteract: { x: 1100, y: 560, label: 'Entra nella stanza' } },
     { id: 'C5-03', ch: 'C5', kind: 'escape', name: 'La trappola', bg: 'interior', width: 1920, depth: 170, spriteScale: 1.5, party: ['vermin', 'cochise', 'rembrandt'], objective: 'Sfonda la porta chiusa a chiave',
-      enter: 'cine_lizzies_trap', timer: 55, timerEasy: 70, panel: { x: 1700, y: 560, hits: 3 }, radioProp: { x: 420, y: 520 },
+      enter: 'cine_lizzies_trap', timer: 55, timerEasy: 70, panel: { x: 1700, y: 560, hits: 3 }, radioProp: { x: 900, y: 530, bgBox: [780, 270, 1024, 446] },
       props: [{ kind: 'crate', x0: 700, x1: 760, y0: 540, y1: 566, solid: true, cover: true }, { kind: 'crate', x0: 1180, x1: 1240, y0: 610, y1: 636, solid: true, cover: true }],
       stationed: { solo: [['lizzie_blocker', 1500, 600], ['lizzie_shooter', 1300, 530]], duo: [['lizzie_blocker', 1500, 600], ['lizzie_blocker', 1600, 540], ['lizzie_shooter', 1300, 530], ['lizzie_shooter', 1100, 650]] } },
     { id: 'C5-04', ch: 'C5', kind: 'traversal', name: 'Sotterraneo', bg: 'metro_b', width: 1920, depth: 170, party: ['swan'], mercy: 'player2', peace: true,
