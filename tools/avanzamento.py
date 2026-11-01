@@ -14,10 +14,10 @@ for p in items:
     elif t == 'personaggi': g = 'Mercy' if parts[3].startswith('mercy') else ('Warriors, pose di base e speciali' if parts[3] in W9 else 'Bande e personaggi')
     else: g = {'fondali': 'Fondali', 'oggetti': 'Oggetti, veicoli ed effetti', 'ritratti': 'Ritratti'}.get(t, 'Illustrazioni delle scene')
     tot[g] += 1
-    if os.path.exists(p):
+    if os.path.exists(p) or os.path.exists(p[:-4] + '.jpg'):
         done[g] += 1
         if t == 'personaggi': sets_done.setdefault(parts[3], 0); sets_done[parts[3]] += 1
-miss = [p for p in items if not os.path.exists(p)]
+miss = [p for p in items if not (os.path.exists(p) or os.path.exists(p[:-4] + '.jpg'))]
 print(f'{len(items) - len(miss)} su {len(items)}; prossimo: {items.index(miss[0]) + 1 if miss else "-"} {miss[0] if miss else ""}')
 for g in order: print(f'{g}: {done[g]}/{tot[g]}')
 print('personaggi con immagini:', ', '.join(f'{k} {v}' for k, v in sorted(sets_done.items())))

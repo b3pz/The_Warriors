@@ -2,6 +2,13 @@
 
 Questo file è scritto per un assistente AI con generazione di immagini e accesso in scrittura a questo repository (b3pz/The_Warriors). Se sei quell'assistente: leggilo tutto, poi lavora da solo seguendo l'elenco, senza chiedere conferma per ogni immagine.
 
+## Dove siamo (aggiornato al 2 novembre)
+
+- Fatte **531 su 560**. Si riparte dalla **531**. Le voci mancanti sono: 531–532 (due scene del film), 534–560 (capitolo zero: fondali PQ-02/03/04, i Boppers, il loro capo, gli Hi-Hats, il logo e le due scene).
+- **Prima di tutto leggi `assets/incoming/modelli/RIFARE.md`**: lì ci sono le immagini da rifare, perché sono arrivate rotte.
+- Il gioco ora comincia dal **capitolo zero**, una settimana prima del raduno: i Boppers di Harlem coprono con scritte viola le W rosse dei Warriors sul lungomare di Coney Island. Cleon allena Rembrandt, il nuovo arrivato, poi i Warriors cacciano i Boppers fino al molo e un Riff porta l'invito di Cyrus. Il fondale PQ-01 c'è già (il lungomare con le W coperte): usalo come riferimento di luce e stile per PQ-02/03/04.
+- **I Boppers** (voci 540–555) sono una delle bande del raduno nel film: gilet viola lucido, cappello a tesa larga. Crea per primo `bopper/idle_1.png`, poi le altre pose allegandolo come modello. Lo stesso vale per `bopper_boss` e `hihat`.
+
 ## Il gioco
 
 The Warriors · Night Run è un beat 'em up a scorrimento laterale nel browser. New York, una sola notte del 1979: la banda dei Warriors viene accusata di un omicidio che non ha commesso e deve attraversare la città dal Bronx a Coney Island, inseguita da tutte le altre bande. L'autore del gioco detiene la licenza. Grafica approvata: pixel art 16-bit (vedi `assets/source/raccolta_04/` per lo stile di riferimento, se riesci ad aprire le immagini).
@@ -14,7 +21,7 @@ The Warriors · Night Run è un beat 'em up a scorrimento laterale nel browser. 
 1. Prendi dall'**elenco di lavoro** (sotto) le immagini nell'ordine dato.
 2. **Salta** ogni file che esiste già nel repository (controlla il percorso prima di generare).
 3. Genera ogni immagine rispettando lo **stile** e le **regole tecniche**.
-4. Carica i file nel percorso indicato, **solo dentro `assets/incoming/`**. Raggruppa 5–20 immagini per commit, messaggio `Immagini in arrivo: <cosa>`. Se non puoi scrivere su `main`, apri una pull request con lo stesso titolo. Va benissimo: la pull request viene unita e integrata da sola in pochi minuti, non serve chiedere niente all'utente. Continua subito con le immagini successive (in una nuova pull request).
+4. Carica i file nel percorso indicato, **solo dentro `assets/incoming/`**. Personaggi e oggetti: 5–20 immagini per commit. Fondali e scene: una per commit. messaggio `Immagini in arrivo: <cosa>`. Se non puoi scrivere su `main`, apri una pull request con lo stesso titolo. Va benissimo: la pull request viene unita e integrata da sola in pochi minuti, non serve chiedere niente all'utente. Continua subito con le immagini successive (in una nuova pull request).
 5. Quando finisci la sessione, scrivi all'utente l'elenco dei file caricati e il punto dell'elenco a cui sei arrivato. Alla sessione successiva riparti dal primo file che non esiste ancora, senza chiedere.
 
 Divieti:
@@ -35,6 +42,8 @@ Divieti:
 - **Coerenza**: lo stesso personaggio deve essere identico in tutte le pose (capelli, vestiti, colori, corporatura). Ogni posa si genera allegando il modello approvato `assets/incoming/modelli/<set>.png` e chiedendo «lo stesso personaggio di questa immagine, nella posa: …». Se una posa non somiglia al modello, rigenerala prima di caricarla.
 - **Fondali e scene**: orizzontali **1536×1024**, nessun personaggio nei fondali. Nei fondali il pavimento calpestabile (marciapiede, banchina, sentiero) occupa la fascia bassa, dal 65% dell'altezza fino al fondo, piatto e libero. I pezzi `_b`, `_c` di un fondale continuano verso destra il pezzo precedente: stessa luce, stessa linea del pavimento.
 - Formato PNG. Nome del file esattamente come nell'elenco.
+- **File grandi (fondali e scene): carica un'immagine per commit.** Tre immagini caricate insieme sono arrivate troncate e inutilizzabili. Se il caricamento di un PNG fallisce o si interrompe, salvala in **JPG** con lo stesso nome e l'estensione `.jpg` (es. `scene/dlg_c4_ajax.jpg`): va bene lo stesso.
+- Dopo ogni caricamento controlla che il file nel repository abbia una dimensione sensata e si apra. Se è rotto, ricaricalo.
 
 ## Materiale di riferimento fornito dall'autore
 
