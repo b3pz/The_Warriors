@@ -289,6 +289,11 @@ var W = window.W;
       var s = this.queue.shift();
       var x = s[1] === 'R' ? w.cam.x + C.VIEW_W + 60 : w.cam.x - 60;
       var e = new W.Enemy(w, s[0], x, Math.max(this.floor[0] + 10, Math.min(this.floor[1] - 6, s[2]))); e.face = s[1] === 'R' ? -1 : 1;
+      // entrate diverse per banda: i Furies scavalcano la recinzione, i Turnbull saltano giù dall'alto, i Punks arrivano pattinando
+      var set0 = e.def.set || '';
+      if (/^fury/.test(set0)) { e.entry = 'vault'; e.x = s[1] === 'R' ? w.cam.x + C.VIEW_W - 140 - w.rng() * 90 : w.cam.x + 140 + w.rng() * 90; e.entryY = e.y; e.y = this.floor[0] - 4; }
+      else if (/^turnbull/.test(set0) && this.kind !== 'escape') { e.entry = 'drop'; e.x = s[1] === 'R' ? w.cam.x + C.VIEW_W - 150 - w.rng() * 80 : w.cam.x + 150 + w.rng() * 80; e.z = 340; }
+      else if (/^punk/.test(set0)) e.entry = 'skate';
       w.enemies.push(e); onField++; req.push(e);
       if (e.weapon && !w.flags.firstBat) w.flags.firstBat = this.t;
     }

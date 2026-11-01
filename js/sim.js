@@ -530,8 +530,23 @@ var W = window.W;
     this.st += dt; this.anim += dt; if (this.protect > 0) this.protect -= dt;
     switch (this.state) {
       case 'enter': {
-        // entrata visibile: cammina dentro lo schermo prima di poter attaccare
+        if (this.entry === 'vault') {
+          // salto della recinzione: arco dal fondo del sentiero alla sua corsia
+          var vk = Math.min(1, this.st / 0.75); this.entryAir = vk < 1;
+          this.y = (this.entryY0 === undefined ? (this.entryY0 = this.y) : this.entryY0) + (this.entryY - this.entryY0) * vk;
+          this.z = Math.sin(vk * Math.PI) * 120; this.x += this.face * 60 * dt;
+          if (vk >= 1) { this.z = 0; this.entry = null; this.entryAir = false; w.emit('land', { x: this.x, y: this.y }); this.setState('approach'); }
+          break;
+        }
+        if (this.entry === 'drop') {
+          // giù dall'alto (dal bus): cade, atterra, polvere
+          this.vz = (this.vz || 0) - 1500 * dt; this.z = Math.max(0, this.z + this.vz * dt); this.entryAir = this.z > 0;
+          if (this.z <= 0) { this.entry = null; this.entryAir = false; this.vz = 0; w.emit('land', { x: this.x, y: this.y, heavy: true }); this.setState('approach'); }
+          break;
+        }
+        // entrata visibile: cammina dentro lo schermo prima di poter attaccare (i Punks pattinano, molto più veloci)
         var c = w.cam.x, inX = clamp(this.x, c + 90, c + C.VIEW_W - 90);
+        if (this.entry === 'skate') { this.x += sign(inX - this.x) * Math.min(Math.abs(inX - this.x), 520 * dt); }
         this.x += sign(inX - this.x) * Math.min(Math.abs(inX - this.x), 200 * dt);
         this.face = sign(inX - this.x || -this.face);
         if (Math.abs(inX - this.x) < 2 || this.st > 3) this.setState('approach');
@@ -708,6 +723,8 @@ var W = window.W;
       from.fury = Math.min(100, from.fury + C.FURY_GAIN_KO);
       this.world.score[from.cpu ? 0 : from.slot] += this.def.elite ? 1500 : 300;
       this.world.stats.kos++;
+      var others = this.world.enemies.some(function (o) { return o !== this && o.alive() && o.hp > 0; }, this);
+      this.world.emit('enemyko', { x: this.x, y: this.y, elite: !!this.def.elite, last: !others });
     }
   };
   Enemy.prototype.disarm = function () {

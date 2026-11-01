@@ -93,6 +93,7 @@ W.Audio = (function () {
     line: function () {},
     trainwarn: function () { var t = ac.currentTime; for (var i = 0; i < 3; i++) tone('square', 880, 880, 0.12, 0.06, sfx, t + i * 0.3); },
     skate: function () { burst(1.8, 0.12, 'bandpass', 900, 0.6); },
+    land: function (e) { burst(e.heavy ? 0.2 : 0.12, e.heavy ? 0.7 : 0.4, 'lowpass', 300, 1); },
     spray: function () { burst(0.7, 0.5, 'highpass', 4200, 0.5); },
     flashfx: function () {}, shakefx: function () {}
   };

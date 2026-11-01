@@ -91,7 +91,7 @@ W.Render = (function () {
       var moving = Math.abs(a.x - (a.lx === undefined ? a.x : a.lx)) + Math.abs(a.y - (a.ly === undefined ? a.y : a.ly)) > 0.3;
       a.lx = a.x; a.ly = a.y;
       switch (st) {
-        case 'enter': case 'approach': return moving ? (a.def.set === 'punk' ? { p: 'skate', alt: 'walk', i: wf } : a.def.behavior === 'charge' && a.charging ? { p: 'charge', alt: 'walk', i: wf } : { p: 'walk', i: wf }) : { p: 'idle' };
+        case 'enter': case 'approach': if (a.entryAir) return { p: 'jump', alt: 'walk' }; return moving ? (a.def.set === 'punk' ? { p: 'skate', alt: 'walk', i: wf } : a.def.behavior === 'charge' && a.charging ? { p: 'charge', alt: 'walk', i: wf } : { p: 'walk', i: wf }) : { p: 'idle' };
         case 'atk':
           var bh = a.def.behavior, ws = bh === 'shoot' ? 'gun_shoot' : bh === 'throw' ? 'bottle_throw' : a.def.weapon === 'baton' ? 'baton_swing' : bh === 'charge' ? 'charge' : 'swing';
           if (ph === 'prep') return { p: bh === 'shoot' ? 'gun_aim' : a.att.spec.heavy ? 'windup' : 'idle', alt: 'idle', lean: -0.06 };
@@ -582,12 +582,30 @@ W.Render = (function () {
       if (e.type === 'flashfx' && opts.flash) flash = 0.5;
       if (e.type === 'shakefx' && opts.shake) shake = e.amt || 8;
       if (e.type === 'revive') fx.push({ k: 'text', x: e.x, y: e.y - 190, t: 0, s: 'IN PIEDI', col: '#7fd18a' });
+      if (e.type === 'enemyko') { for (var dk = 0; dk < 7; dk++) fx.push({ k: 'dust', x: e.x + (Math.random() - 0.5) * 90, y: e.y + 4, vx: (Math.random() - 0.5) * 160, t: 0, r: 10 + Math.random() * 14 }); if (opts.shake) shake = Math.max(shake, e.elite ? 14 : 8); }
+      if (e.type === 'land') { for (var dl = 0; dl < (e.heavy ? 8 : 5); dl++) fx.push({ k: 'dust', x: e.x + (Math.random() - 0.5) * 70, y: e.y + 4, vx: (Math.random() - 0.5) * 220, t: 0, r: 9 + Math.random() * 12 }); if (e.heavy && opts.shake) shake = Math.max(shake, 7); }
+      if (e.type === 'lastko') { fx.push({ k: 'ko', x: e.x, y: e.y - 200, t: 0 }); if (opts.flash) flash = 0.35; }
+      if (e.type === 'hit' && e.target === 'enemy') { for (var dp = 0; dp < (e.heavy ? 5 : 2); dp++) fx.push({ k: 'chip', x: e.x + (Math.random() - 0.5) * 30, y: e.y - (e.z || 60), vx: (Math.random() - 0.5) * 420, vy: -150 - Math.random() * 260, t: 0 }); }
     }
     w.events.length = 0;
   }
   function drawFx(cx, dt) {
     for (var i = fx.length - 1; i >= 0; i--) {
       var f = fx[i]; f.t += dt;
+      if (f.k === 'dust') {
+        var da = Math.max(0, 1 - f.t / 0.7); ctx.fillStyle = 'rgba(190,175,150,' + 0.45 * da + ')'; ctx.beginPath(); ctx.ellipse(f.x + f.vx * f.t - cx, f.y - f.t * 26, f.r * (1 + f.t * 2.2), f.r * 0.6 * (1 + f.t * 1.5), 0, 0, Math.PI * 2); ctx.fill();
+        if (f.t > 0.7) fx.splice(i, 1); continue;
+      }
+      if (f.k === 'chip') {
+        var cxp = f.x + f.vx * f.t - cx, cyp = f.y + f.vy * f.t + 900 * f.t * f.t; ctx.fillStyle = 'rgba(255,240,200,' + Math.max(0, 1 - f.t / 0.4) + ')'; ctx.fillRect(cxp, cyp, 4, 4);
+        if (f.t > 0.4) fx.splice(i, 1); continue;
+      }
+      if (f.k === 'ko') {
+        var ks = Math.min(1, f.t / 0.15), ka = Math.max(0, Math.min(1, (1.3 - f.t) / 0.3));
+        ctx.save(); ctx.globalAlpha = ka; ctx.translate(f.x - cx, f.y - f.t * 20); ctx.rotate(-0.08); ctx.scale(0.6 + 0.5 * ks, 0.6 + 0.5 * ks);
+        ctx.font = '72px "Permanent Marker", sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#000'; ctx.fillText('K.O.', 5, 5); ctx.fillStyle = '#e8322a'; ctx.fillText('K.O.', 0, 0); ctx.restore();
+        if (f.t > 1.3) fx.splice(i, 1); continue;
+      }
       if (f.k === 'spark') {
         var r = (f.big ? 34 : 22) * (0.5 + f.t * 6), a = Math.max(0, 1 - f.t / 0.18);
         ctx.strokeStyle = f.col; ctx.globalAlpha = a; ctx.lineWidth = f.big ? 5 : 3;
@@ -604,6 +622,82 @@ W.Render = (function () {
 
   // ------------------------------------------------------------------ HUD
   function bar(x, y, w, h, v, col, back) { ctx.fillStyle = back; ctx.fillRect(x, y, w, h); ctx.fillStyle = col; ctx.fillRect(x, y, w * Math.max(0, Math.min(1, v)), h); ctx.strokeStyle = 'rgba(0,0,0,0.6)'; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h); }
+  // ---- HUD: scheda del giocatore in stile graffiti (ritratto, vita con scia del danno, furia a tacche, arma, combo)
+  var PORTRAITS = {};
+  function portraitOf(id) {
+    var src = W.ART_AI && W.ART_AI.portrait && W.ART_AI.portrait[id]; if (!src) return null;
+    var im = PORTRAITS[id] || (PORTRAITS[id] = loadImg(src)); return im.ok ? im : null;
+  }
+  function slant(x, y, w, h, k) { ctx.beginPath(); ctx.moveTo(x + k, y); ctx.lineTo(x + w + k, y); ctx.lineTo(x + w, y + h); ctx.lineTo(x, y + h); ctx.closePath(); }
+  function weaponIcon(type, x, y, col) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(-0.6); ctx.fillStyle = col; ctx.strokeStyle = '#000'; ctx.lineWidth = 2;
+    if (type === 'bat') { ctx.beginPath(); ctx.moveTo(-14, -2); ctx.lineTo(14, -5); ctx.lineTo(14, 5); ctx.lineTo(-14, 2); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+    else if (type === 'pipe') { ctx.fillRect(-15, -3, 30, 6); ctx.strokeRect(-15, -3, 30, 6); ctx.fillRect(10, -5, 6, 10); }
+    else if (type === 'knife') { ctx.beginPath(); ctx.moveTo(-12, -3); ctx.lineTo(14, 0); ctx.lineTo(-12, 3); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.fillStyle = '#3a2a1a'; ctx.fillRect(-18, -3, 7, 6); }
+    else { ctx.fillRect(-15, -4, 30, 8); ctx.strokeRect(-15, -4, 30, 8); }
+    ctx.restore();
+  }
+  function drawPlayerCard(w, p, x, y, bw, col) {
+    var hpR = Math.max(0, p.hp / p.maxhp);
+    if (p.hpLag === undefined || p.hpLag < hpR) p.hpLag = hpR; else p.hpLag = Math.max(hpR, p.hpLag - 0.35 / 60);
+    if (p.hp < (p._lastHp || p.hp)) p.hitFlash = 0.25; p._lastHp = p.hp; p.hitFlash = Math.max(0, (p.hitFlash || 0) - 1 / 60);
+    // fondo inclinato con bordo del colore del giocatore
+    ctx.fillStyle = 'rgba(6,7,12,0.78)'; slant(x - 8, y - 10, bw - 6, 86, 10); ctx.fill();
+    ctx.fillStyle = col; slant(x - 8, y + 72, bw - 6, 4, 2); ctx.fill();
+    // ritratto (o la testa della figura) in una cornice
+    var pim = portraitOf(p.char.id), px = x - 2, py = y - 4, ps = 66;
+    ctx.fillStyle = '#000'; ctx.fillRect(px - 2, py - 2, ps + 4, ps + 4); ctx.fillStyle = col; ctx.fillRect(px - 2, py + ps - 2, ps + 4, 4);
+    if (pim) { var sw = pim.width * 0.5, sh = sw; ctx.save(); ctx.beginPath(); ctx.rect(px, py, ps, ps); ctx.clip(); ctx.imageSmoothingEnabled = false; ctx.drawImage(pim, pim.width * 0.25, pim.height * 0.02, sw, sh, px, py, ps, ps); ctx.restore(); }
+    else { ctx.fillStyle = '#22252e'; ctx.fillRect(px, py, ps, ps); ctx.fillStyle = col; ctx.font = '34px "Permanent Marker", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(p.char.name[0], px + ps / 2, py + 46); }
+    if (p.hitFlash > 0) { ctx.fillStyle = 'rgba(255,60,40,' + p.hitFlash * 2.4 + ')'; ctx.fillRect(px, py, ps, ps); }
+    if (p.state === 'ko' || p.out) { ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(px, py, ps, ps); ctx.fillStyle = '#e8322a'; ctx.font = '22px "Permanent Marker", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(p.out ? 'FUORI' : 'A TERRA', px + ps / 2, py + 40); }
+    var tx = x + ps + 10, tw = bw - ps - 30;
+    // nome a pennarello
+    ctx.textAlign = 'left'; ctx.font = '22px "Permanent Marker", sans-serif'; ctx.fillStyle = '#000'; ctx.fillText(p.char.name.toUpperCase(), tx + 2, y + 16); ctx.fillStyle = COL.ink; ctx.fillText(p.char.name.toUpperCase(), tx, y + 14);
+    ctx.font = '600 12px "Oswald", sans-serif'; ctx.fillStyle = col; ctx.textAlign = 'right'; ctx.fillText(p.cpu ? 'CPU' : (p.slot === 0 ? 'G1' : 'G' + (p.slot + 1)), tx + tw, y + 12);
+    // vita: barra inclinata, scia bianca del danno, pulsa quando è bassa
+    var hy = y + 22, hh = 14, low = hpR < 0.3 && Math.floor(w.time * 5) % 2;
+    ctx.fillStyle = '#1a0c0c'; slant(tx, hy, tw, hh, 6); ctx.fill();
+    ctx.save(); slant(tx, hy, tw, hh, 6); ctx.clip();
+    ctx.fillStyle = '#f4efe2'; ctx.fillRect(tx, hy, (tw + 6) * p.hpLag, hh);
+    var hg = ctx.createLinearGradient(0, hy, 0, hy + hh); hg.addColorStop(0, low ? '#ffb08a' : '#ef4a3a'); hg.addColorStop(1, low ? '#ff6a3a' : '#a8221a');
+    ctx.fillStyle = hg; ctx.fillRect(tx, hy, (tw + 6) * hpR, hh);
+    ctx.fillStyle = 'rgba(255,255,255,0.18)'; ctx.fillRect(tx, hy, tw + 6, 3);
+    ctx.restore(); ctx.strokeStyle = '#000'; ctx.lineWidth = 2; slant(tx, hy, tw, hh, 6); ctx.stroke();
+    // furia a 5 tacche; piena = lampeggia con il tasto
+    var fy = y + 42, seg = 5, sgw = 22, full = p.fury >= 100;
+    for (var si = 0; si < seg; si++) {
+      var fv = Math.max(0, Math.min(1, p.fury / 100 * seg - si));
+      ctx.fillStyle = '#2b2410'; slant(tx + si * (sgw + 4), fy, sgw, 8, 3); ctx.fill();
+      if (fv > 0) { ctx.fillStyle = full ? (Math.floor(w.time * 8) % 2 ? '#fff4c0' : '#ffb21e') : '#d9a321'; ctx.save(); slant(tx + si * (sgw + 4), fy, sgw, 8, 3); ctx.clip(); ctx.fillRect(tx + si * (sgw + 4), fy, (sgw + 3) * fv, 8); ctx.restore(); }
+    }
+    ctx.font = '600 12px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = full ? '#ffd36a' : COL.dim;
+    ctx.fillText(full ? 'FURIA PRONTA' : 'FURIA', tx, y + 66);
+    // arma impugnata: icona e colpi rimasti
+    if (p.weapon) {
+      var wd = W.WEAPONS[p.weapon.type], wx = tx + seg * (sgw + 4) + 18;
+      weaponIcon(p.weapon.type, wx, fy + 4, wd.color || '#c9a26a');
+      for (var d = 0; d < wd.dur; d++) { ctx.fillStyle = d < p.weapon.dur ? (wd.color || '#c9a26a') : '#333'; ctx.fillRect(wx + 22 + d * 7, fy + 2, 5, 5); }
+    }
+    // combo a fumetto sotto la scheda
+    if (p.combo >= 3 && p.comboT > 0) {
+      var ca = Math.min(1, p.comboT / 0.4), cs = 1 + Math.max(0, (p.comboT - 0.95)) * 1.6;
+      ctx.save(); ctx.globalAlpha = ca; ctx.translate(x + 40, y + 108); ctx.rotate(-0.06); ctx.scale(cs, cs);
+      ctx.font = '30px "Permanent Marker", sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = '#000'; ctx.fillText(p.combo + ' COLPI!', 2, 2); ctx.fillStyle = p.combo >= 10 ? '#ffd36a' : '#f4efe2'; ctx.fillText(p.combo + ' COLPI!', 0, 0); ctx.restore();
+    }
+  }
+  // barra del capo in basso, con il nome: Veterano dei Furies, capo dei Punks, Luther…
+  function drawBossBar(w) {
+    var b = null; w.enemies.forEach(function (e) { if (e.alive() && e.def.elite && e.onScreen() && (!b || e.hp > b.hp)) b = e; });
+    if (!b) return;
+    var r = Math.max(0, b.hp / b.maxhp || b.hp / b.def.hp); if (b.hpLag === undefined || b.hpLag < r) b.hpLag = r; else b.hpLag = Math.max(r, b.hpLag - 0.3 / 60);
+    var bx = 240, by = C.VIEW_H - 54, bw2 = C.VIEW_W - 480, bh = 16;
+    ctx.fillStyle = 'rgba(6,7,12,0.8)'; slant(bx - 14, by - 30, bw2 + 20, 56, 10); ctx.fill();
+    ctx.font = '22px "Permanent Marker", sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = '#e8322a'; ctx.fillText((b.def.label || 'CAPO').toUpperCase(), bx, by - 6);
+    ctx.fillStyle = '#1a0c0c'; slant(bx, by, bw2, bh, 8); ctx.fill();
+    ctx.save(); slant(bx, by, bw2, bh, 8); ctx.clip(); ctx.fillStyle = '#f4efe2'; ctx.fillRect(bx, by, (bw2 + 8) * b.hpLag, bh); ctx.fillStyle = '#c81e1e'; ctx.fillRect(bx, by, (bw2 + 8) * r, bh); ctx.restore();
+    ctx.strokeStyle = '#000'; ctx.lineWidth = 2; slant(bx, by, bw2, bh, 8); ctx.stroke();
+  }
   function drawHud(w, ui) {
     if (w.area && w.area.scene) { drawScene(w, w.area.scene, ui); return; }
     var ar0 = w.area;
@@ -628,22 +722,7 @@ W.Render = (function () {
     for (var i = 0; i < w.players.length; i++) {
       var np = w.players.length, bw = np >= 4 ? 290 : 312, p = w.players[i], x = 24 + i * (bw + 18), y = 22, col = SLOT_COL(p.slot);
       if (p.state === 'held' && !p.cpu) { ctx.fillStyle = '#ffd36a'; ctx.font = '700 20px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillText(p.char.id === 'rembrandt' ? ui.keyFor(p, 'interact') + ': BOMBOLETTA NEGLI OCCHI' : 'PREMI PIÙ VOLTE ' + ui.keyFor(p, 'light') + ' PER LIBERARTI', p.x - w.cam.x, p.y - 220); }
-      ctx.fillStyle = 'rgba(8,10,16,0.72)'; ctx.fillRect(x - 8, y - 8, bw, 82);
-      ctx.fillStyle = col; ctx.beginPath();
-      slotShape(p.slot, x + 9, y + 8, 9); ctx.fill();
-      ctx.fillStyle = COL.ink; ctx.font = '600 20px "Oswald", sans-serif'; ctx.textAlign = 'left';
-      ctx.fillText(p.char.name.toUpperCase() + (p.cpu ? '  ·  CPU' : ''), x + 26, y + 16);
-      ctx.font = '500 14px "Oswald", sans-serif'; ctx.fillStyle = COL.dim; ctx.textAlign = 'right';
-      ctx.fillText(Math.ceil(p.hp) + '/' + p.maxhp, x + bw - 16, y + 15); ctx.textAlign = 'left';
-      bar(x, y + 24, bw - 16, 14, p.hp / p.maxhp, p.hp / p.maxhp < 0.3 ? '#ff7a4a' : COL.hp, COL.hpBack);
-      bar(x, y + 44, 180, 8, p.fury / 100, p.fury >= 100 ? (Math.floor(w.time * 6) % 2 ? '#fff0b0' : COL.fury) : COL.fury, '#2b2410');
-      ctx.fillStyle = COL.dim; ctx.font = '500 13px "Oswald", sans-serif';
-      ctx.fillText(p.fury >= 100 ? 'FURIA PRONTA' : 'FURIA', x, y + 68);
-      if (p.weapon) {
-        var def = W.WEAPONS[p.weapon.type];
-        ctx.fillStyle = COL.ink; ctx.fillText(def.name.toUpperCase(), x + 192, y + 52);
-        for (var d = 0; d < def.dur; d++) { ctx.fillStyle = d < p.weapon.dur ? def.color : '#333'; ctx.fillRect(x + 192 + d * 10, y + 58, 8, 8); }
-      }
+      drawPlayerCard(w, p, x, y, bw, col);
 
       var pr = !p.cpu && w.promptFor(p);
       if (pr && p.state !== 'ko') {
@@ -655,6 +734,11 @@ W.Render = (function () {
         ctx.fillText(pr, px - tw / 2 + 36, py);
       }
     }
+    drawBossBar(w);
+    // tentativi rimasti e W trovate, piccoli in alto a destra
+    var tries = ui.tries ? ui.tries() : null;
+    if (tries !== null && tries !== undefined && tries < 50) { ctx.textAlign = 'right'; ctx.font = '600 14px "Oswald", sans-serif'; ctx.fillStyle = COL.dim; ctx.fillText('TENTATIVI', C.VIEW_W - 24, 30); for (var tq = 0; tq < tries; tq++) { ctx.fillStyle = '#e8322a'; ctx.fillRect(C.VIEW_W - 34 - tq * 16, 38, 10, 10); } }
+    if (W.Tags && !(w.area && w.area.def.arcade)) { ctx.textAlign = 'right'; ctx.font = '18px "Permanent Marker", sans-serif'; ctx.fillStyle = '#e8322a'; ctx.fillText('W ' + W.Tags.count() + '/' + W.Tags.total, C.VIEW_W - 24, 72); }
     // niente punteggio a schermo durante il gioco: resta nel resoconto finale
     // obiettivo
     var ar = w.area;
@@ -1049,6 +1133,25 @@ W.Render = (function () {
         ctx.save(); ctx.scale(1, 0.32); ctx.fillStyle = mg; ctx.fillRect(mx - 300, my / 0.32 - 300, 600, 600); ctx.restore();
       }
     }
+    // gente lontana sullo sfondo: sagome che passano sul marciapiede di fondo (in metro aspettano il treno)
+    var crowdK = /street|alley|harbor|coney|boardwalk/.test(w.area.def.bg || '') ? 'walk' : /metro/.test(w.area.def.bg || '') ? 'wait' : null;
+    if (crowdK && !(w.area.def.kind === 'scene')) {
+      var aw = w.area.def.width || 2000;
+      for (i = 0; i < 4; i++) {
+        var spd = crowdK === 'walk' ? (i % 2 ? -1 : 1) * (26 + i * 7) : 0, base = hsh(i * 13 + aw) * aw;
+        var wx = ((base + t * spd) % aw + aw) % aw - cx; if (wx < -40 || wx > C.VIEW_W + 40) continue;
+        var wy = fl[0] - 6 - (i % 2) * 8, hgt = 64 + (i % 3) * 6, ph = Math.sin(t * 6 + i) * (spd ? 1 : 0);
+        ctx.fillStyle = 'rgba(8,8,14,0.55)';
+        ctx.beginPath(); ctx.arc(wx, wy - hgt + 7, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.fillRect(wx - 7, wy - hgt + 13, 14, hgt * 0.45);
+        ctx.fillRect(wx - 5 + ph * 4, wy - hgt * 0.42, 4, hgt * 0.42); ctx.fillRect(wx + 1 - ph * 4, wy - hgt * 0.42, 4, hgt * 0.42);
+      }
+    }
+    // fari di un'auto che passa sulla strada di fondo, ogni tanto
+    if (/street|alley/.test(w.area.def.bg || '')) {
+      var cp = (t % 17) / 17;
+      if (cp < 0.18) { var hx = -300 + cp / 0.18 * (C.VIEW_W + 600), hg2 = ctx.createRadialGradient(hx, fl[0] - 30, 4, hx, fl[0] - 30, 240); hg2.addColorStop(0, 'rgba(255,240,200,0.22)'); hg2.addColorStop(1, 'rgba(255,240,200,0)'); ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = hg2; ctx.fillRect(hx - 240, fl[0] - 270, 480, 360); ctx.restore(); }
+    }
     if (K.gulls) {
       ctx.strokeStyle = 'rgba(40,30,40,0.7)'; ctx.lineWidth = 2;
       for (i = 0; i < 4; i++) {
@@ -1093,6 +1196,45 @@ W.Render = (function () {
       g.addColorStop(0, 'rgba(216,35,28,' + a + ')'); g.addColorStop(1, 'rgba(216,35,28,0)'); ctx.fillStyle = g; ctx.fillRect(x - 110, y - 150, 190, 180);
     }
     ctx.restore();
+  }
+  // ---- primo piano: oggetti scuri che passano davanti alla telecamera (più veloci del gioco), danno profondità a ogni livello
+  function drawForeground(w) {
+    var a = w.area && w.area.def; if (!a || (w.area.scene && (a.kind === 'scene' || a.kind === 'epilogue'))) return;
+    var bg = a.bg || '', cx = w.cam.x * 1.35, H = C.VIEW_H, t = w.time, kind;
+    if (/street|alley|harbor/.test(bg)) kind = 'street'; else if (/park/.test(bg)) kind = 'park'; else if (/metro/.test(bg)) kind = 'metro';
+    else if (/coney|boardwalk/.test(bg)) kind = 'coney'; else return;
+    var step = kind === 'metro' ? 760 : 680;
+    for (var gx = Math.floor((cx - 200) / step) * step; gx < cx + C.VIEW_W + 200; gx += step) {
+      var r = hsh(gx * 0.37 + a.id.length), x = gx + r * 220 - cx, v = Math.floor(r * 3);
+      ctx.save();
+      if (kind === 'metro') {
+        // colonna d'acciaio della banchina con rivetti
+        ctx.fillStyle = '#07080b'; ctx.fillRect(x - 26, 0, 52, H); ctx.fillStyle = '#121419'; ctx.fillRect(x - 34, 0, 10, H); ctx.fillRect(x + 24, 0, 10, H);
+        ctx.fillStyle = 'rgba(200,190,160,0.10)'; for (var ry = 20; ry < H; ry += 46) { ctx.fillRect(x - 31, ry, 4, 4); ctx.fillRect(x + 27, ry, 4, 4); }
+      } else if (kind === 'park') {
+        if (v === 0) { ctx.fillStyle = '#05070a'; ctx.beginPath(); ctx.moveTo(x - 40, H); ctx.quadraticCurveTo(x - 20, H - 260, x - 30, -20); ctx.lineTo(x + 40, -20); ctx.quadraticCurveTo(x + 30, H - 260, x + 52, H); ctx.fill(); }
+        else if (v === 1) { // lampione del parco, in ghisa
+          ctx.fillStyle = '#05060a'; ctx.fillRect(x - 7, 40, 14, H); ctx.fillRect(x - 18, H - 30, 36, 30); ctx.fillRect(x - 13, 60, 26, 10);
+          ctx.beginPath(); ctx.moveTo(x - 16, 40); ctx.lineTo(x + 16, 40); ctx.lineTo(x + 10, 0); ctx.lineTo(x - 10, 0); ctx.fill();
+          var pg = ctx.createRadialGradient(x, 18, 3, x, 18, 120); pg.addColorStop(0, 'rgba(255,220,150,0.22)'); pg.addColorStop(1, 'rgba(255,220,150,0)'); ctx.fillStyle = pg; ctx.fillRect(x - 120, -100, 240, 240);
+        } else { // paletto di pietra
+          ctx.fillStyle = '#07080a'; ctx.fillRect(x - 20, H - 120, 40, 120); ctx.beginPath(); ctx.arc(x, H - 120, 20, Math.PI, 0); ctx.fill();
+        }
+      } else if (kind === 'coney') {
+        ctx.fillStyle = '#0a0705'; ctx.fillRect(x - 30, H - 210, 60, 210); ctx.fillStyle = '#140e09'; ctx.fillRect(x - 30, H - 210, 60, 12); ctx.fillRect(x - 160, H - 150, 320, 14);
+      } else {
+        if (v === 0) { // lampione
+          ctx.fillStyle = '#06070a'; ctx.fillRect(x - 9, -10, 18, H + 10); ctx.fillRect(x - 22, H - 40, 44, 40);
+          var lg = ctx.createRadialGradient(x, 30, 4, x, 30, 140); lg.addColorStop(0, 'rgba(255,214,140,0.20)'); lg.addColorStop(1, 'rgba(255,214,140,0)'); ctx.fillStyle = lg; ctx.fillRect(x - 140, -110, 280, 280);
+        } else if (v === 1) { // idrante
+          ctx.fillStyle = '#0b0606'; ctx.fillRect(x - 22, H - 110, 44, 110); ctx.beginPath(); ctx.arc(x, H - 110, 24, Math.PI, 0); ctx.fill(); ctx.fillRect(x - 36, H - 82, 72, 18);
+        } else { // cassetta dei giornali
+          ctx.fillStyle = '#060707'; ctx.fillRect(x - 30, H - 130, 60, 92); ctx.fillRect(x - 24, H - 38, 8, 38); ctx.fillRect(x + 16, H - 38, 8, 38);
+          ctx.fillStyle = 'rgba(200,190,160,0.10)'; ctx.fillRect(x - 22, H - 118, 44, 30);
+        }
+      }
+      ctx.restore();
+    }
   }
   // sopra la scena: neon che respirano, tubi al neon che sfarfallano, luce di un treno che passa, fumo nell'appartamento, lampeggianti della polizia
   function drawAmbientOver(w) {
@@ -1221,6 +1363,7 @@ W.Render = (function () {
     list.sort(function (a, b) { return a.y - b.y; });
     for (var i = 0; i < list.length; i++) list[i].d();
     drawAmbientOver(w);
+    drawForeground(w);
     drawFx(cx, dt);
     if (flash > 0) { ctx.fillStyle = 'rgba(255,230,160,' + flash + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); flash -= dt; }
     grade(w);

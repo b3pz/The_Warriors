@@ -57,6 +57,7 @@ var W = window.W;
   function keyLabel(code) { if (KEYNAME[code]) return KEYNAME[code]; if (code.indexOf('Key') === 0) return code.slice(3); if (code.indexOf('Numpad') === 0) return 'Num' + code.slice(6); return code; }
   var TOUCH_NAMES = { light: 'COLPO', heavy: 'COLPO tenuto premuto', jump: 'SALTO', dodge: 'SCHIVA', interact: 'AZIONE', fury: 'FURIA', throw: 'LANCIA' };
   var ui = {
+    tries: function () { return game.run && !game.run.arcade && !(W.AutoPilot && W.AutoPilot.active) ? game.run.triesLeft : null; },
     keyFor: function (p, a) { var d = p.device; if (W.Touch && W.Touch.active()) return TOUCH_NAMES[a] ? TOUCH_NAMES[a].slice(0, 2) : '•'; if (!d || !d.layout) return 'B'; return keyLabel(W.Input.LAYOUTS[d.layout][a][0]); },
     tutorialText: function (t) {
       var p = game.world.players[0], lay = p.device && p.device.layout ? W.Input.LAYOUTS[p.device.layout] : W.Input.LAYOUTS.solo;
@@ -877,7 +878,17 @@ var W = window.W;
   function stepPlay(dt) {
     var w = game.world;
     for (var i = 0; i < w.players.length; i++) { var d = w.players[i].device; if (d) { d.poll(); if (d.edge.pause) { game.state = 'pause'; game.menuIdx = 0; return; } } }
-    w.step(dt);
+    // sensazione dei colpi: un attimo di fermo sui colpi a segno, rallentatore quando cade l'ultimo nemico
+    if (w.hitstop > 0) { w.hitstop -= dt; } else {
+      var sc0 = w.slowmo > 0 ? 0.32 : 1; if (w.slowmo > 0) w.slowmo -= dt;
+      var n0 = w.events.length;
+      w.step(dt * sc0);
+      for (var ei = n0; ei < w.events.length; ei++) {
+        var ev = w.events[ei];
+        if (ev.type === 'hit') w.hitstop = Math.max(w.hitstop || 0, ev.target === 'player' ? 0.05 : ev.heavy ? 0.085 : 0.035);
+        if (ev.type === 'enemyko') { w.hitstop = Math.max(w.hitstop || 0, ev.elite ? 0.2 : 0.11); if (ev.last && !(w.area && w.area.kind === 'training')) { w.slowmo = 0.75; w.emit('lastko', { x: ev.x, y: ev.y }); } }
+      }
+    }
     W.Audio.consume(w.events);
     mixFor(w);
     if (w.failed) {

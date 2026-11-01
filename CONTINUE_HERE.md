@@ -127,3 +127,12 @@ Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source,
 - Set vecchi mappati sulle figure nuove (`SET_ALIAS` in render.js); Fury disarmato: pose `nobat_*` chieste a ChatGPT (534–538).
 - Schermata iniziale come nei giochi da sala: 20 s fermi → presentazione (`drawAttract` in main.js: illustrazioni delle scene con zoom, didascalie a macchina, cartello finale; se esiste `v_attract` usa il video) → demo di una banda a rotazione (`DEMOS`, con la sua presentazione) → titolo.
 - Presentazioni delle bande anche all'inizio delle aree dove la banda si presenta con una scena (Turnbull C2-01, Orphans C3-01, Rogues C8-01) e ogni banda solo nel suo capitolo (`W.GANGS[g].ch`, `start`).
+
+## Rifiniture «da gioco finito» (1 novembre, notte)
+
+- Colpi: fermo d'impatto (`w.hitstop` in main.js stepPlay), rallentatore sull'ultimo nemico (`w.slowmo`, evento `lastko` → timbro «K.O.»), polvere e schegge (render.js `dust`, `chip`).
+- HUD in stile graffiti (`drawPlayerCard`): ritratto, vita inclinata con scia del danno, furia a 5 tacche, icona dell'arma, combo «N COLPI!»; barra del capo (`drawBossBar`); tentativi e W in alto a destra.
+- Primo piano (`drawForeground`): lampioni, idranti, cassette dei giornali, tronchi, colonne della metro, pali del lungomare.
+- Entrate: Furies scavalcano (vault), Turnbull cadono dall'alto (drop, polvere), Punks pattinano veloci.
+- Sfondo vivo: sagome di passanti, fari di auto che passano.
+- Più risse fedeli: Turnbull giù dal bus (C2-01) e all'inseguimento (C2-03), seconda ondata di Furies (C4-02), ondata in più di Punks (C6-03). Ondata del capo dei Furies più leggera in due.

@@ -296,11 +296,12 @@ var W = window.W;
       enter: 'cine_swan_leads', objective: 'Scavalca il cancello: la metro è di là', exitInteract: { x: 1150, y: 560, label: 'Scavalca il cancello' }, exitScene: 'cine_cemetery_tag' },
 
     { id: 'C2-01', ch: 'C2', kind: 'traversal', name: 'Isolato del Bronx', bg: 'street', width: 2560, depth: 220, party: AFTER_C1, present: AFTER_C1, chapterCard: true,
-      enter: 'dlg_c2_bus', objective: 'Trova l\'accesso alla metro', busBg: true },
+      enter: 'dlg_c2_bus', objective: 'Trova l\'accesso alla metro', busBg: true,
+      waves: [{ trigger: 1100, objective: 'I Turnbull saltano giù dal bus', solo: [['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 640], ['turnbull_heavy', 'L', 600]], duo: [['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 640], ['turnbull_heavy', 'L', 600], ['turnbull_rusher', 'L', 520], ['turnbull_heavy', 'R', 620]], onClear: { solo: [['drink', 1, 600]], duo: [['drink', 1, 600], ['snack', -1, 620]] } }] },
     { id: 'C2-02', ch: 'C2', kind: 'escape', name: 'La strada del bus', bg: 'alley', width: 1920, depth: 190, party: AFTER_C1, objective: 'Il bus dei Turnbull pattuglia la strada: passagli davanti e arriva al cancello',
       enter: 'dlg_c2_alley', timer: 45, timerEasy: 60, bus: true, exitLabel: 'Apri il cancello', exitInteract: { x: 1820, y: 580, label: 'Apri il cancello' } },
     { id: 'C2-03', ch: 'C2', kind: 'escape', name: 'Corsa alle scale', bg: 'street_b', width: 3840, depth: 230, party: AFTER_C1, objective: 'Raggiungi le scale della metro',
-      enter: 'dlg_c2_run', timer: 70, timerEasy: 85, bus: true, barriers: [900, 1700, 2500, 3200] },
+      enter: 'dlg_c2_run', timer: 70, timerEasy: 85, bus: true, barriers: [900, 1700, 2500, 3200], pursuers: { solo: { turnbull_rusher: 2 }, duo: { turnbull_rusher: 3 } } },
     { id: 'C2-04', ch: 'C2', kind: 'escape', name: 'Stazione sopraelevata del Bronx', bg: 'metro', width: 1920, depth: 200, party: AFTER_C1, objective: 'Sali sul treno', timer: 25, exitScene: 'cine_train_escape' },
 
     { id: 'C3-01', ch: 'C3', kind: 'scene', name: 'Strada degli Orphans', bg: 'street', width: 1280, depth: 200, party: AFTER_C1, chapterCard: true, scenes: ['dlg_c3_orphans'] },
@@ -317,14 +318,15 @@ var W = window.W;
       tutorial: [{ flag: 'firstBat', until: 9, text: 'Disarmo: pesante ({heavy}) mentre il Fury si riprende dallo swing, oppure presa ({interact}); poi {interact} raccoglie la mazza' }],
       props: [{ kind: 'bench', x0: 640, x1: 790, y0: 466, y1: 488, solid: true, cover: true }, { kind: 'bench', x0: 1500, x1: 1650, y0: 640, y1: 662, solid: true, cover: true },
         { kind: 'bin', x0: 1120, x1: 1160, y0: 468, y1: 492, solid: true, use: true, label: 'Apri il cestino', contents: { solo: ['drink'], duo: ['drink', 'drink'] } }],
-      waves: [{ trigger: 520, objective: 'Respingi i Furies', solo: [['fury_batter', 'R', 520], ['fury_flanker', 'R', 610], ['fury_batter', 'L', 600]], duo: [['fury_batter', 'R', 520], ['fury_flanker', 'R', 610], ['fury_batter', 'L', 600], ['fury_batter', 'R', 660], ['fury_flanker', 'L', 480]] }] },
+      waves: [{ trigger: 520, objective: 'Respingi i Furies', solo: [['fury_batter', 'R', 520], ['fury_flanker', 'R', 610], ['fury_batter', 'L', 600]], duo: [['fury_batter', 'R', 520], ['fury_flanker', 'R', 610], ['fury_batter', 'L', 600], ['fury_batter', 'R', 660], ['fury_flanker', 'L', 480]] },
+        { trigger: 1500, objective: 'Altri Furies dal sentiero', solo: [['fury_flanker', 'R', 560], ['fury_batter', 'R', 640], ['fury_flanker', 'L', 600]], duo: [['fury_flanker', 'R', 560], ['fury_batter', 'R', 640], ['fury_flanker', 'L', 600], ['fury_batter', 'L', 520], ['fury_batter', 'R', 600]], onClear: { solo: [['snack', 1, 560], ['drink', -1, 600]], duo: [['snack', -1, 560], ['snack', 1, 600], ['drink', 1, 640]] } }] },
     { id: 'C4-03', ch: 'C4', kind: 'arena', name: 'Radura', bg: 'park_b', width: 2560, depth: 240, party: C4G, objective: 'Raggiungi la radura',
       props: [{ kind: 'bench', x0: 900, x1: 1050, y0: 456, y1: 478, solid: true, cover: true }, { kind: 'bench', x0: 1900, x1: 2050, y0: 456, y1: 478, solid: true, cover: true }],
       items: [{ kind: 'kit', x: 1560, y: 672 }],
       waves: [
         { trigger: 380, objective: 'Ondata A', solo: [['fury_batter', 'R', 520], ['fury_batter', 'L', 620], ['fury_flanker', 'R', 600]], duo: [['fury_batter', 'R', 520], ['fury_batter', 'L', 620], ['fury_flanker', 'R', 600], ['fury_batter', 'R', 660], ['fury_flanker', 'L', 500]],
           onClear: { solo: [['snack', 1, 560]], duo: [['snack', -1, 560], ['snack', 1, 600]] } },
-        { trigger: 1500, objective: 'Il capo dei Furies', boss: true, preScene: 'dlg_c4_ajax', preIf: 'ajax', preIfRoster: true, solo: [['fury_veteran', 'R', 560], ['fury_batter', 'L', 600]], duo: [['fury_veteran', 'R', 560], ['fury_batter', 'L', 600], ['fury_batter', 'R', 640]] }] },
+        { trigger: 1500, objective: 'Il capo dei Furies', boss: true, preScene: 'dlg_c4_ajax', preIf: 'ajax', preIfRoster: true, solo: [['fury_veteran', 'R', 560], ['fury_batter', 'L', 600]], duo: [['fury_veteran', 'R', 560], ['fury_batter', 'L', 600]] }] },
     { id: 'C4-04', ch: 'C4', kind: 'scene', name: 'Il bivio', bg: 'park', width: 1280, depth: 200, party: C4G, scenes: ['cine_ajax_stays'] },
 
     { id: 'C5-01', ch: 'C5', kind: 'scene', name: 'La panchina', bg: 'park_b', width: 1280, depth: 200, party: ['snow', 'cowboy'], chapterCard: true, scenes: ['cine_ajax_arrest'] },
@@ -346,6 +348,7 @@ var W = window.W;
     { id: 'C6-03', ch: 'C6', kind: 'arena', name: 'Il bagno', bg: 'interior', width: 1920, depth: 170, party: FINAL6, objective: 'Il capo dei Punks', enter: 'cine_bathroom_chaos',
       waves: [
         { trigger: 260, objective: 'Escono tutti dai bagni', dropIf: 'skater_down', solo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580]], duo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580], ['punk_brawler', 'R', 650], ['punk_grappler', 'L', 600]], onClear: { solo: [['snack', 1, 600]], duo: [['snack', 1, 600], ['drink', -1, 620]] } },
+        { trigger: 640, objective: 'Altri Punks sui pattini', solo: [['punk_grappler', 'R', 560], ['punk_brawler', 'L', 620]], duo: [['punk_grappler', 'R', 560], ['punk_brawler', 'L', 620], ['punk_brawler', 'R', 640], ['punk_grappler', 'L', 580]] },
         { trigger: 1000, objective: 'Capo Punks', boss: true, solo: [['punk_leader', 'R', 600], ['punk_brawler', 'L', 620]], duo: [['punk_leader', 'R', 600], ['punk_brawler', 'L', 620], ['punk_brawler', 'R', 560]] }] },
     { id: 'C6-04', ch: 'C6', kind: 'traversal', name: 'Banchina', bg: 'metro', width: 1280, depth: 180, party: FINAL6, present: FINAL6, mercy: 'npc', peace: true,
       objective: 'Sali sul treno', exitScene: 'cine_truth_reaches_riffs' },
