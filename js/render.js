@@ -370,7 +370,20 @@ W.Render = (function () {
       ctx.fillStyle = Math.floor(y / 26) % 2 ? '#f2f2f2' : '#e0522d'; ctx.fillRect(x - 3, y - 26, 32, 8);
     }
   }
+  // oggetti disegnati da ChatGPT (oggetti/<nome>.png) al posto di quelli fatti col codice, appoggiati sulla linea di base
+  var OBJ_FOR = { bench: 'panchina', bin: 'cestino', crate: 'cassa', barrel: 'bidone', barrier: 'transenna', turnstile: 'tornello', sink: 'lavandino', chair: 'sedia' };
+  var OBJIMG = {};
+  function objImg(name) { var src = W.ART_AI && W.ART_AI.object && W.ART_AI.object[name]; if (!src) return null; var im = OBJIMG[name] || (OBJIMG[name] = loadImg(src)); return im.ok ? im : null; }
+  function drawObjProp(p, cx) {
+    var im = objImg(OBJ_FOR[p.kind] || p.kind); if (!im) return false;
+    var wdt = Math.max(60, p.x1 - p.x0) * (p.kind === 'barrier' ? 2.6 : p.kind === 'bin' ? 1.6 : 1.15), hgt = wdt * im.height / im.width;
+    var x = (p.x0 + p.x1) / 2 - cx - wdt / 2, y = p.y1 + 4 - hgt;
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(x + wdt / 2, p.y1 + 2, wdt * 0.48, 8, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.save(); ctx.imageSmoothingEnabled = false; if (p.broken) ctx.globalAlpha = 0.5; ctx.drawImage(im, x, y, wdt, hgt); ctx.restore();
+    return true;
+  }
   function drawProp(p, cx) {
+    if (drawObjProp(p, cx)) return;
     if (p.kind === 'barrier') {
       var bx0 = p.x0 - cx, hh = p.y1 - p.y0;
       ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(bx0 - 4, p.y1 - 4, 34, 8);
