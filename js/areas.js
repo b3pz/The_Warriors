@@ -206,6 +206,9 @@ var W = window.W;
   AreaRun.prototype.tryExitInteract = function () {
     var def = this.def, w = this.world;
     if (def.busDrops) {
+      // il cancello si apre solo quando il bus ha scaricato tutti i suoi skinhead e li hai messi giù tutti
+      var dropped = this.busDropped || 0, tot2 = this.busTotal || 6, up = w.enemies.filter(function (e) { return e.busDrop && e.alive() && e.hp > 0; }).length;
+      if (dropped < tot2 || up) { this.objective = 'Il bus dei Turnbull non molla: resisti e stendili tutti (' + (dropped - up) + ' / ' + tot2 + ')'; return; }
       var gx = def.exitInteract.x, near = w.enemies.filter(function (e) { return e.alive() && e.hp > 0 && Math.abs(e.x - gx) < 330; });
       if (near.length) { this.objective = 'Hai i Turnbull addosso: liberati di loro prima di spaccare la catena'; return; }
       // il cancello è chiuso con una catena: va spaccata a colpi, mentre il bus continua a girare
@@ -341,6 +344,10 @@ var W = window.W;
     // pericolo di percorso: corsia superiore, lampeggi e clacson prima del passaggio
     // il bus dei Turnbull è imprevedibile: a ogni passaggio sceglie a caso la corsia in alto o quella in basso
     var b = this.bus;
+    if (this.def.busDrops && !this.finishing) {
+      var up0 = w.enemies.filter(function (e) { return e.busDrop && e.alive() && e.hp > 0; }).length, dr0 = this.busDropped || 0, tt0 = this.busTotal || (typeof this.def.busDrops.total === 'object' ? this.def.busDrops.total.solo : this.def.busDrops.total);
+      this.objective = dr0 >= tt0 && !up0 ? (this.lockHits ? 'Spacca la catena del cancello: ' + this.lockHits + ' / ' + (this.def.busDrops.lockHits || 6) : 'Via libera: corri al cancello e spacca la catena') : 'Il bus dei Turnbull non molla: stendi gli skinhead che scendono (' + (dr0 - up0) + ' / ' + tt0 + ')';
+    }
     var lane = b.kind === 'train' ? [this.floor[1] - 46, this.floor[1]] : b.low ? [this.floor[1] - 60, this.floor[1]] : [this.floor[0], this.floor[0] + 60];
     b.lane = lane; b.t -= dt;
     if (b.phase === 'idle' && b.t <= 0) { if (b.kind !== 'train') { b.low = w.rng() < 0.5; lane = b.low ? [this.floor[1] - 60, this.floor[1]] : [this.floor[0], this.floor[0] + 60]; b.lane = lane; } b.phase = 'warn'; b.t = b.kind === 'train' ? 1.8 : 1.4; w.emit(b.kind === 'train' ? 'trainwarn' : 'horn', {}); }
@@ -367,14 +374,15 @@ var W = window.W;
           // dal bus saltano giù gli skinhead, davanti e dietro di te
           var duo2 = w.players.filter(function (p) { return !p.cpu || p.qaHuman; }).length > 1;
           var alive = w.enemies.filter(function (e) { return e.alive() && e.busDrop; }).length;
-          var n = Math.min((duo2 ? bd.duo : bd.solo), bd.maxAlive - alive, bd.total - (this.busDropped || 0));
+          var tot = typeof bd.total === 'object' ? (duo2 ? bd.total.duo : bd.total.solo) : bd.total; this.busTotal = tot;
+          var mA = typeof bd.maxAlive === 'object' ? (duo2 ? bd.maxAlive.duo : bd.maxAlive.solo) : bd.maxAlive;
+          var n = Math.min((duo2 ? bd.duo : bd.solo), mA - alive, tot - (this.busDropped || 0));
           for (var k = 0; k < n; k++) {
             var side = (k + (this.busDropped || 0)) % 2 ? -1 : 1, fy = this.floor[0] + 30 + w.rng() * (this.floor[1] - this.floor[0] - 50);
             var e2 = new W.Enemy(w, (this.busDropped || 0) % 4 === 3 ? 'turnbull_heavy' : 'turnbull_rusher', Math.max(80, Math.min(this.def.width - 80, w.cam.x + C.VIEW_W / 2 + side * (260 + w.rng() * 180))), fy);
             e2.face = -side; e2.entry = 'drop'; e2.z = 340; e2.busDrop = true; e2.pursuer = true; w.enemies.push(e2);
             this.busDropped = (this.busDropped || 0) + 1;
           }
-          if (n > 0) this.objective = 'I Turnbull saltano giù dal bus! Attirali sulla strada quando passa';
         }
       }
     }

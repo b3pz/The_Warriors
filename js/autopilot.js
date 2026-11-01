@@ -20,7 +20,7 @@ W.AutoPilot = (function () {
       orig.call(this, dt);
       var c = this.cpuCtl, a = w.area; if (!a) return;
       if (a.kind === 'training' && !a.trainDone) return;
-      if (enemiesUp && !(a.kind === 'escape' && !a.fighting)) return;
+      if (enemiesUp && !(a.kind === 'escape' && !a.fighting && !a.def.busDrops)) return;
       var target = null, ints = a.interactions ? a.interactions() : [];
       var talk = ints.filter(function (i) { return !i.exit && /Parla/.test(i.label); })[0];
       var needNpc = a.def.needTalk && !a.talked[a.def.needTalk] && w.npcs.filter(function (n) { return n.id === a.def.needTalk; })[0];

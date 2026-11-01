@@ -37,7 +37,7 @@ fs.mkdirSync(out, { recursive: true });
           orig.call(this, dt);
           const c = this.cpuCtl, a = w.area;
           if (a.kind === 'training' && !a.trainDone) return;
-          if (enemiesUp && !(a.kind === 'escape' && !a.fighting)) return;
+          if (enemiesUp && !(a.kind === 'escape' && !a.fighting && !a.def.busDrops)) return;
           let target = null;
           const ints = a.interactions ? a.interactions() : [];
           const talk = ints.find(i => !i.exit && /Parla/.test(i.label));
