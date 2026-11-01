@@ -582,7 +582,7 @@ Ogni riga: percorso del file → cosa disegnare. Il prompt per un personaggio è
 443. `assets/incoming/scene/cine_ajax_arrest.png` → Ajax ammanettato a terra vicino a una panchina, luci blu delle volanti
 444. `assets/incoming/scene/cine_lizzies_trap.png` → le Lizzies con le pistole davanti a una porta chiusa, tre Warriors in trappola
 445. `assets/incoming/scene/cine_swan_mercy.png` → Swan e Mercy che camminano in un tunnel della metro
-446. `assets/incoming/scene/talk_c7_couple.png` → sul treno all'alba Mercy si sistema i capelli e Swan le ferma la mano; di fronte una coppia elegante
+446. `assets/incoming/scene/talk_c7_couple.png` → sul treno all'alba Swan e Mercy seduti vicini ma senza toccarsi; Mercy si sistema i capelli e Swan le ferma la mano; di fronte **due coppie** di ragazzi di ritorno dal ballo (loro in giacca bianca/crema con camicia a ruches, lei con vestito verde e perle, l'altra con camicetta a fiori lilla spalle scoperte); riferimento `riferimenti/luoghi/treno_coppie.png`
 447. `assets/incoming/scene/cine_bottles.png` → Luther sporto dal finestrino del carro funebre dei Rogues coperto di graffiti, a Coney Island all'alba, tre bottiglie vuote infilate tra le dita, giacca blu con cappuccio e fascia sulla fronte; riferimento: `riferimenti/luther_4.png`, `riferimenti/luoghi/auto_rogues_coney.png`
 448. `assets/incoming/scene/cine_disarm.png` → sulla spiaggia all'alba il coltello di Swan colpisce il braccio di Luther, la pistola cade
 449. `assets/incoming/scene/cine_epilogue.png` → i Warriors e Mercy camminano sulla spiaggia di Coney Island all'alba

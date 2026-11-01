@@ -190,7 +190,7 @@ var W = window.W;
     ['clip', 'v_train_dawn'],
     ['say', 'mercy', 'È quasi giorno.'], ['say', 'swan', 'Sì.'], ['say', 'mercy', 'Non sembra la stessa città.']] };
   S.talk_c7_couple = { cine: 'cine_train_dawn', letterbox: false, steps: [
-    ['caption', 'Alla fermata sale una coppia di ragazzi ben vestiti, di ritorno da una festa. Si siedono di fronte.'], ['wait', 0.4],
+    ['caption', 'Alla fermata salgono due coppie di ragazzi in abito da sera, di ritorno dal ballo. Si siedono di fronte e li fissano.'], ['wait', 0.4],
     ['caption', 'Mercy si accorge dei suoi capelli, della giacca sporca. Prova a sistemarsi.'],
     ['caption', 'Swan le prende la mano e la ferma. Piano. Non c\'è niente da sistemare.'], ['flag', 'mercy_dignity']] };
   S.cine_home_arrival = { cine: 'cine_home_arrival', steps: seq(
