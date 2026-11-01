@@ -27,6 +27,7 @@ W.Render = (function () {
     if (P) for (var ps in P.sets) PX[ps] = loadImg(P.sets[ps].file);
     if (W.BG_AI) for (var ba in W.BG_AI) BGAI[ba] = loadImg(W.BG_AI[ba].file);
     if (W.ART_AI && W.ART_AI.scene) for (var sa in W.ART_AI.scene) ARTSC[sa] = loadImg(W.ART_AI.scene[sa]);
+    if (W.ART_AI && W.ART_AI.object) for (var lo in W.ART_AI.object) if (/^logo_/.test(lo)) LOGOS[W.ART_AI.object[lo]] = loadImg(W.ART_AI.object[lo]);
     if (W.BG_PX) for (var bk in W.BG_PX) BGPX[bk] = loadImg(W.BG_PX[bk].file);
     var A = W.USE_ILLUSTRATED ? W.ATLAS : null; if (!A) return;
     for (var sid in A.sets) for (var fn in A.sets[sid].frames) { var f = A.sets[sid].frames[fn]; if (!IMG[f.file]) IMG[f.file] = loadImg(f.file); }
@@ -975,7 +976,7 @@ W.Render = (function () {
     if (t > 0.6) { ctx.save(); ctx.globalAlpha = Math.min(1, (t - 0.6) / 0.3); ctx.font = '600 24px "Oswald", sans-serif'; ctx.fillStyle = '#f2d23c'; ctx.textAlign = 'left'; ctx.fillText(g.where.toUpperCase(), 70, by0 ? by0 + 172 : 300); ctx.restore(); }
     // logo della banda (immagine nuova, se c'è)
     var lp = W.ART_AI && W.ART_AI.object && W.ART_AI.object['logo_' + sc.def.intro];
-    if (lp) { var im = LOGOS[lp] || (LOGOS[lp] = loadImg(lp)); if (im.ok) { var ls = Math.min(1, Math.max(0, (t - 0.45) / 0.3)), lh = 210 * (0.6 + 0.4 * ls); ctx.save(); ctx.globalAlpha = ls; ctx.drawImage(im, C.VIEW_W - 60 - lh * im.width / im.height, 60, lh * im.width / im.height, lh); ctx.restore(); } }
+    if (lp) { var im = LOGOS[lp] || (LOGOS[lp] = loadImg(lp)); if (im.ok) { var ls = Math.min(1, Math.max(0, (t - 0.45) / 0.3)), lh = (by0 ? 190 : 210) * (0.6 + 0.4 * ls); ctx.save(); ctx.globalAlpha = ls; var lw = lh * im.width / im.height, ly = by0 ? Math.min(C.VIEW_H - 70 - lh, by0 + 150 - lh) : 60; ctx.drawImage(im, C.VIEW_W - 50 - lw, ly, lw, lh); ctx.restore(); } }
     if (t > 1) { ctx.globalAlpha = 0.7; ctx.font = '500 14px "Oswald", sans-serif'; ctx.fillStyle = '#fff'; ctx.textAlign = 'right'; ctx.fillText('Invio per continuare', C.VIEW_W - 24, C.VIEW_H - 18); ctx.globalAlpha = 1; }
   }
   function drawScene(w, sc, ui) {
