@@ -67,4 +67,4 @@ Aggiornato a ogni caricamento in `assets/incoming/`.
 - **fondale P0-04**: nel gioco (1 pezzi, 1280×720)
 - scene: cine_accusation, cine_ajax_arrest, cine_bottles, cine_cyrus, cine_disarm, cine_epilogue, cine_furies_appear, cine_lizzies_trap, cine_swan_mercy, intro_furies, radio_dj, talk_c7_couple
 - ritratti: ajax, cleon, cochise, cowboy, fox, mercy, rembrandt, snow, swan, vermin
-- oggetti: auto_orphans_fuoco, auto_rogues, bidone, bus_turnbull, cassa, cestino, panchina, tornello, transenna, treno_esterno
+- oggetti: auto_orphans_fuoco, auto_rogues, bidone, bomboletta, bus_turnbull, cassa, cestino, giradischi, lavandino, panchina, porta_gabinetto, sedia, tornello, transenna, treno_esterno
