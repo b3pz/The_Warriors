@@ -41,7 +41,7 @@ var W = window.W;
     ['say', 'cleon', 'Osservate. E ricordatevi perché siamo qui.'] ] };
   // Come nel film: la polizia non è tra la folla; durante il discorso le volanti arrivano e si fermano ai bordi del parco, al buio.
   S.cine_cyrus = { cine: 'cine_cyrus', steps: seq(
-    [['players', 'hide'], ['clip', 'v_conclave'], ['crowd', 'cr', ['riff', 'punk', 'turnbull', 'rogue', 'lizzie', 'riff', 'fury_hood', 'turnbull_b', 'lizzie_b', 'rogue'], 120, 1160, 600, 690, 22, 1]],
+    [['players', 'hide'], ['clip', 'v_conclave'], ['crowd', 'cr', ['riff', 'punk', 'turnbull', 'rogue', 'lizzie', 'riff', 'fury_hood_nobat', 'turnbull_b', 'lizzie_b', 'rogue'], 120, 1160, 600, 690, 22, 1]],
     line(ALL9, 140, 46, 640, 1),
     [['npc', 'cyrus', 'cyrus', 760, 470, -1], ['npc', 'luther', 'luther', 1010, 540, -1], ['npc', 'masai', 'masai', 860, 492, -1],
      ['caption', 'Van Cortlandt Park, nel Bronx. Cento bande, nove delegati disarmati per ognuna, ascoltano Cyrus dei Gramercy Riffs. Per una notte, nessuno combatte.'],
@@ -287,7 +287,7 @@ var W = window.W;
     { id: 'P0-04', ch: 'P0', kind: 'scene', name: 'Partenza', bg: 'metro_b', width: 1280, depth: 200, party: ALL9, scenes: ['cine_departure'] },
 
     { id: 'C1-01', ch: 'C1', kind: 'traversal', name: 'Il raduno', bg: 'park_b', width: 1920, depth: 180, party: ALL9, present: ALL9, peace: true, chapterCard: true,
-      enter: 'dlg_c1_arrival', objective: 'Raggiungi il vostro posto fra le delegazioni', crowd: ['riff', 'punk', 'turnbull', 'rogue', 'lizzie', 'riff', 'fury_hood'] },   // gli Orphans al raduno non c'erano: non erano stati invitati
+      enter: 'dlg_c1_arrival', objective: 'Raggiungi il vostro posto fra le delegazioni', crowd: ['riff', 'punk', 'turnbull', 'rogue', 'lizzie', 'riff', 'fury_hood_nobat'] },   // gli Orphans al raduno non c'erano: non erano stati invitati
     { id: 'C1-02', ch: 'C1', kind: 'scene', name: 'Il discorso', bg: 'park', width: 1280, depth: 200, party: ALL9, scenes: ['cine_cyrus', 'cine_accusation', 'radio_hunt'] },
     { id: 'C1-03', ch: 'C1', kind: 'escape', name: 'Fuga dal parco', bg: 'park', width: 2560, depth: 190, party: AFTER_C1, objective: 'Scappa: supera la strettoia',
       waves: [{ trigger: 900, objective: 'Supera il cordone della polizia', solo: [['police_pursuer', 'R', 560], ['police_pursuer', 'R', 620]], duo: [['police_pursuer', 'R', 560], ['police_pursuer', 'R', 620], ['police_pursuer', 'L', 600]] }],
