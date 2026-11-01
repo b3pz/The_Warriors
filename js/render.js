@@ -1006,16 +1006,21 @@ W.Render = (function () {
   var LOGOS = {};
   // con l'illustrazione della banda (scene/intro_<banda>): cinema puro. Immagine intera, poi zoom lento sulla banda a destra,
   // un'iride nera che si chiude su di loro, e nome e logo che entrano
+  // dove sta la banda in ciascuna illustrazione (frazione della larghezza e dell'altezza) e quanto stringere lo zoom
+  // [centro della banda in larghezza, dove iniziano le teste in altezza, zoom finale]
+  W.INTRO_FOCUS = { turnbull: [0.82, 0.0, 1.35], orphans: [0.83, 0.27, 1.85], furies: [0.79, 0.29, 1.65], lizzies: [0.77, 0.16, 1.55], punks: [0.64, 0.27, 1.5], rogues: [0.82, 0.32, 1.85] };
   function drawGangIntroArt(im, g, sc) {
-    var t = sc.age || 0, z = Math.min(1, t / 2.2), ez = z * z * (3 - 2 * z);
-    var fx = 0.74, fy = 0.46, S = 1 + 0.4 * ez, iw = C.VIEW_W * S, ih = iw * im.height / im.width;
+    var t = sc.age || 0, z = Math.min(1, t / 2.6), ez = z * z * (3 - 2 * z), F = W.INTRO_FOCUS[sc.def.intro] || [0.74, 0.46, 1.4];
+    var fx = F[0], fy = F[1], S = 1 + (F[2] - 1) * ez + Math.max(0, t - 2.6) * 0.025, iw = C.VIEW_W * S, ih = iw * im.height / im.width;
     if (ih < C.VIEW_H * S) { ih = C.VIEW_H * S; iw = ih * im.width / im.height; }
-    var ox = C.VIEW_W / 2 - fx * iw + (fx - 0.5) * iw * (1 - ez) , oy = C.VIEW_H / 2 - fy * ih;
+    // la camera parte dall'immagine intera e finisce con la banda poco sopra il centro (sotto c'è la fascia col nome)
+    var tx = C.VIEW_W * 0.58, ox = tx - fx * iw, oy = 76 - fy * ih;   // le teste appena sotto la banda nera in alto
+    if (ez < 1) { var ox0 = (C.VIEW_W - iw) / 2, oy0 = (C.VIEW_H - ih) / 2; ox = ox0 + (ox - ox0) * ez; oy = oy0 + (oy - oy0) * ez; }
     ox = Math.min(0, Math.max(C.VIEW_W - iw, ox)); oy = Math.min(0, Math.max(C.VIEW_H - ih, oy));
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
     ctx.save(); ctx.globalAlpha = Math.min(1, t / 0.35); ctx.imageSmoothingEnabled = false; ctx.drawImage(im, ox, oy, iw, ih); ctx.restore();
     // iride: il buio si stringe attorno al punto della banda
-    var cxp = ox + fx * iw, cyp = oy + fy * ih, r = 900 - 520 * ez;
+    var cxp = ox + fx * iw, cyp = Math.min(C.VIEW_H * 0.45, oy + fy * ih + 170), r = 900 - 430 * ez;
     var ir = ctx.createRadialGradient(cxp, cyp, r * 0.55, cxp, cyp, r);
     ir.addColorStop(0, 'rgba(0,0,0,0)'); ir.addColorStop(1, 'rgba(0,0,0,0.96)');
     ctx.fillStyle = ir; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
@@ -1057,7 +1062,7 @@ W.Render = (function () {
     if (t > 0.6) { ctx.save(); ctx.globalAlpha = Math.min(1, (t - 0.6) / 0.3); ctx.font = '600 24px "Oswald", sans-serif'; ctx.fillStyle = '#f2d23c'; ctx.textAlign = 'left'; ctx.fillText(g.where.toUpperCase(), 70, by0 ? by0 + 172 : 300); ctx.restore(); }
     // logo della banda (immagine nuova, se c'è)
     var lp = W.ART_AI && W.ART_AI.object && W.ART_AI.object['logo_' + sc.def.intro];
-    if (lp) { var im = LOGOS[lp] || (LOGOS[lp] = loadImg(lp)); if (im.ok) { var ls = Math.min(1, Math.max(0, (t - 0.45) / 0.3)), lh = (by0 ? 190 : 210) * (0.6 + 0.4 * ls); ctx.save(); ctx.globalAlpha = ls; var lw = lh * im.width / im.height, ly = by0 ? Math.min(C.VIEW_H - 70 - lh, by0 + 150 - lh) : 60; ctx.drawImage(im, C.VIEW_W - 50 - lw, ly, lw, lh); ctx.restore(); } }
+    if (lp) { var im = LOGOS[lp] || (LOGOS[lp] = loadImg(lp)); if (im.ok) { var ls = Math.min(1, Math.max(0, (t - 0.45) / 0.3)), lh = Math.min(by0 ? 190 : 210, 340 * im.height / im.width) * (0.6 + 0.4 * ls); ctx.save(); ctx.globalAlpha = ls; var lw = lh * im.width / im.height, ly = by0 ? Math.min(C.VIEW_H - 70 - lh, by0 + 150 - lh) : 60; ctx.drawImage(im, C.VIEW_W - 50 - lw, ly, lw, lh); ctx.restore(); } }
     if (t > 1) { ctx.globalAlpha = 0.7; ctx.font = '500 14px "Oswald", sans-serif'; ctx.fillStyle = '#fff'; ctx.textAlign = 'right'; ctx.fillText('Invio per continuare', C.VIEW_W - 24, C.VIEW_H - 18); ctx.globalAlpha = 1; }
   }
   function drawScene(w, sc, ui) {

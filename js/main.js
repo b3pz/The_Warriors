@@ -492,6 +492,7 @@ var W = window.W;
       var ar = game.world.area, items = [{ label: 'Riprendi', act: function () { game.state = 'play'; W.Audio.resume(); } }];
       if (ar && ar.scene) items.push({ label: 'Salta scena', act: function () { ar.scene.skip(); game.state = 'play'; } });
       if (ar && ar.kind === 'training' && !ar.trainDone) items.push({ label: 'Salta allenamento', act: function () { ar.stepIdx = ar.def.steps.length; game.state = 'play'; } });
+      items.push({ label: 'La storia finora', act: function () { game.state = 'story'; game.storyIdx = null; } });
       items.push({ label: 'Ricomincia dal checkpoint', act: function () { retry(false); } });
       items.push({ label: (game.world.debug ? 'Nascondi' : 'Mostra') + ' debug (F3)', act: function () { game.world.debug = !game.world.debug; } });
       items.push({ label: 'Menu principale', act: function () { game.state = 'menu'; game.menuIdx = 0; } });
@@ -560,6 +561,7 @@ var W = window.W;
       if (back) { game.state = 'pause'; game.menuIdx = 0; }
       return;
     }
+    if (game.state === 'story') { var nS = storyChapters().length; if (game.storyIdx === null) game.storyIdx = nS - 1; if (up || left) game.storyIdx = Math.max(0, game.storyIdx - 1); if (down || right) game.storyIdx = Math.min(nS - 1, game.storyIdx + 1); if (back || ok) { game.state = 'pause'; game.menuIdx = 0; } return; }
     if (game.state === 'howto') { if (ok || back) game.state = 'menu'; return; }
     if (game.state === 'extra') { if (back) { game.state = 'menu'; game.menuIdx = 0; } else if (ok && W.Tags.gallery() && galleryList().length) { game.state = 'gallery'; game.gal = 0; } return; }
     if (game.state === 'gallery') { var gl = galleryList().length; if (back || (ok && false)) game.state = 'extra'; if (right || down) game.gal = (game.gal + 1) % gl; if (left || up) game.gal = (game.gal + gl - 1) % gl; if (ok) game.gal = (game.gal + 1) % gl; return; }
@@ -785,6 +787,37 @@ var W = window.W;
     ctx.restore();
     if (t > 1.2) drawList(menuItems(), C.VIEW_W / 2, 470);
   }
+  // «La storia finora» (menu di pausa): i capitoli già giocati, raccontati come nel film; niente anticipazioni sui successivi
+  var STORY = {
+    P0: ['Coney Island', 'bg:P0-01', 'Sera a Coney Island. I Warriors si ritrovano sul lungomare: Cyrus ha convocato tutte le bande della città al raduno nel Bronx. Nove uomini, disarmati, come chiede la tregua.'],
+    C1: ['Il raduno', 'cine_cyrus', 'Nel parco del Bronx, davanti a cento bande, Cyrus dei Riffs propone di unirsi: insieme sarebbero più della polizia. Poi uno sparo. Cyrus cade, e Luther dei Rogues accusa i Warriors. Cleon resta nella folla. Swan prende il comando.'],
+    C2: ['Braccati', 'radio_dj', 'La radio annuncia la caccia: tutte le bande cercano i Warriors. Nel territorio dei Turnbull A.C.\'s il loro bus non li molla, fino alla stazione sopraelevata e al treno.'],
+    C3: ['Territorio nemico', 'bg:C3-02', 'Un incendio sui binari ferma il treno a Tremont. Gli Orphans non sanno nemmeno della tregua, ma non vogliono intrusi. Mercy li provoca; una molotov, e il gruppo scappa verso la metro.'],
+    C4: ['Baseball Furies', 'cine_furies_appear', 'A Riverside Park spuntano i Baseball Furies, con le facce dipinte e le mazze. Si combatte nel parco. Ajax non vuole più scappare.'],
+    C5: ['La banda divisa', 'cine_ajax_arrest', 'Il gruppo si divide. Ajax finisce in manette su una panchina; Vermin, Cochise e Rembrandt entrano nell\'appartamento delle Lizzies e scoprono troppo tardi che è una trappola.'],
+    C6: ['Union Square', 'cine_swan_mercy', 'A Union Square i Warriors si ritrovano. Nei bagni della stazione li aspettano i Punks, sui pattini.'],
+    C7: ['L\'ultimo treno', 'talk_c7_couple', 'All\'alba, l\'ultimo treno verso Coney Island. Dai finestrini la città si schiarisce. Casa non è come la ricordavano.'],
+    C8: ['Coney Island', 'cine_bottles', 'Coney Island, di nuovo. Sul lungomare il carro funebre dei Rogues e il tintinnio delle bottiglie: Luther li ha seguiti fino a casa.']
+  };
+  var STORY_ORDER = ['P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'];
+  function storyChapters() { var ch = game.world && game.world.area && game.world.area.def.ch, i = Math.max(0, STORY_ORDER.indexOf(ch)); return STORY_ORDER.slice(0, i + 1); }
+  function wrapLines(s2, maxW, size) { ctx.font = '400 ' + size + 'px "Oswald", sans-serif'; var wd = s2.split(' '), out = [], cur = ''; wd.forEach(function (w2) { var t2 = cur ? cur + ' ' + w2 : w2; if (ctx.measureText(t2).width > maxW && cur) { out.push(cur); cur = w2; } else cur = t2; }); if (cur) out.push(cur); return out; }
+  function drawStory() {
+    var L = storyChapters(); if (game.storyIdx === null || game.storyIdx >= L.length) game.storyIdx = L.length - 1;
+    var key = L[game.storyIdx], st = STORY[key];
+    ctx.fillStyle = 'rgba(4,5,10,0.92)'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    txt('LA STORIA FINORA', 70, 92, 40, '#d62828', 'left', 700);
+    // elenco dei capitoli raggiunti
+    L.forEach(function (k, i) { var sel = i === game.storyIdx, y = 150 + i * 46; if (sel) { ctx.fillStyle = 'rgba(214,40,40,0.25)'; ctx.fillRect(56, y - 30, 330, 42); } txt((k === 'P0' ? 'Prologo' : 'Cap. ' + k.slice(1)) + ' · ' + STORY[k][0], 70, y, 20, sel ? '#f2d23c' : '#c9c4b8', 'left', 600); });
+    // illustrazione e racconto
+    var bgA = /^bg:/.test(st[1]) && R.bgAi(st[1].slice(3)), im = bgA ? bgA.img : R.sceneArt(st[1]), bx = 430, by = 120, bw = 790, bh = 380;
+    ctx.fillStyle = '#000'; ctx.fillRect(bx, by, bw, bh);
+    if (im) { var k2 = Math.max(bw / im.width, bh / im.height), iw = im.width * k2, ih = im.height * k2; ctx.save(); ctx.beginPath(); ctx.rect(bx, by, bw, bh); ctx.clip(); ctx.imageSmoothingEnabled = false; ctx.drawImage(im, bx + (bw - iw) / 2, by + (bh - ih) / 2, iw, ih); ctx.restore(); }
+    ctx.strokeStyle = '#d62828'; ctx.lineWidth = 3; ctx.strokeRect(bx, by, bw, bh);
+    txt((key === 'P0' ? 'PROLOGO' : 'CAPITOLO ' + key.slice(1)) + ' · ' + st[0].toUpperCase(), bx, by + bh + 44, 26, '#f4efe2', 'left', 700);
+    wrapLines(st[2], bw, 20).forEach(function (ln, i) { txt(ln, bx, by + bh + 80 + i * 28, 20, '#c9c4b8', 'left', 400); });
+    txt('↑ ↓ cambia capitolo · Esc o Invio: torna alla pausa', 70, C.VIEW_H - 30, 15, R.COL.dim, 'left', 400);
+  }
   function overlay(title, items, sub) {
     ctx.fillStyle = 'rgba(4,5,10,0.78)'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
     txt(title, C.VIEW_W / 2, 220, 56, '#d62828', 'center', 700);
@@ -870,8 +903,12 @@ var W = window.W;
       ctx.save(); ctx.beginPath(); ctx.arc(pt[0], pt[1], R2, 0, Math.PI * 2); ctx.clip();
       ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
       if (art) {
-        var z = 1.12 + 0.18 * ease(k2), iw = C.VIEW_W * z, ih = iw * art.height / art.width; if (ih < C.VIEW_H * z) { ih = C.VIEW_H * z; iw = ih * art.width / art.height; }
-        ctx.imageSmoothingEnabled = false; ctx.drawImage(art, (C.VIEW_W - iw) / 2 + (0.5 - k2) * 40, (C.VIEW_H - ih) * 0.46, iw, ih);
+        // zoom verso la banda (stesso punto della presentazione in partita)
+        var F = (W.INTRO_FOCUS && W.INTRO_FOCUS[G[0]]) || [0.75, 0.45, 1.5], ek = ease(k2 * 1.25);
+        var z = 1.05 + (F[2] - 1.05) * ek, iw = C.VIEW_W * z, ih = iw * art.height / art.width; if (ih < C.VIEW_H * z) { ih = C.VIEW_H * z; iw = ih * art.width / art.height; }
+        var ox = (C.VIEW_W - iw) / 2, oy = (C.VIEW_H - ih) / 2, ox1 = C.VIEW_W * 0.58 - F[0] * iw, oy1 = 76 - F[1] * ih;
+        ox += (ox1 - ox) * ek; oy += (oy1 - oy) * ek; ox = Math.min(0, Math.max(C.VIEW_W - iw, ox)); oy = Math.min(0, Math.max(C.VIEW_H - ih, oy));
+        ctx.imageSmoothingEnabled = false; ctx.drawImage(art, ox, oy, iw, ih);
       } else if (logo) {
         if (gangMap.ok) { ctx.globalAlpha = 0.35; mapView(G[1], G[2], 4.2 + k2); ctx.globalAlpha = 1; }
         var lh = 360, lw = lh * logo.width / logo.height; ctx.drawImage(logo, (C.VIEW_W - lw) / 2, 110 - k2 * 10, lw, lh);
@@ -885,7 +922,7 @@ var W = window.W;
         ctx.font = '60px "Permanent Marker", sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = '#000'; ctx.fillText(gd.name, 44, 82); ctx.fillStyle = '#fff'; ctx.fillText(gd.name, 40, 78);
         ctx.restore();
         if (tt > 0.5) { ctx.save(); ctx.globalAlpha = Math.min(1, (tt - 0.5) / 0.3); txt(gd.where.toUpperCase(), 72, 652, 24, '#f2d23c', 'left', 600); ctx.restore(); }
-        if (logo && art) { var ls = ease((tt - 0.3) / 0.4), lh2 = 180 * (0.6 + 0.4 * ls), lw2 = lh2 * logo.width / logo.height; ctx.save(); ctx.globalAlpha = ls; ctx.drawImage(logo, C.VIEW_W - 50 - lw2, 640 - lh2, lw2, lh2); ctx.restore(); }
+        if (logo && art) { var ls = ease((tt - 0.3) / 0.4), lh2 = Math.min(180, 340 * logo.height / logo.width) * (0.6 + 0.4 * ls), lw2 = lh2 * logo.width / logo.height; ctx.save(); ctx.globalAlpha = ls; ctx.drawImage(logo, C.VIEW_W - 50 - lw2, 640 - lh2, lw2, lh2); ctx.restore(); }
       }
     }
     // dissolvenza al nero prima della banda successiva
@@ -894,7 +931,7 @@ var W = window.W;
   var attractN = 0;
   function startAttract() {
     // si alternano: la storia (trailer) e la rassegna delle bande sulla cartina
-    if (attractN++ % 2 === 1 && gangMap.ok) { game.attract = { t: 0, tour: true }; game.state = 'attract'; return; }
+    if (attractN++ % 2 === 0 && gangMap.ok) { game.attract = { t: 0, tour: true }; game.state = 'attract'; return; }
     if (W.VIDEOS && W.VIDEOS.v_attract) { game.attract = { t: 0, clip: W.ClipPlayer.open(typeof W.VIDEOS.v_attract === 'string' ? W.VIDEOS.v_attract : W.VIDEOS.v_attract.src) }; game.state = 'attract'; return; }
     if (attractShots().length < 3) { startDemo(); return; }
     game.attract = { t: 0 }; game.state = 'attract';
@@ -1051,6 +1088,7 @@ var W = window.W;
     else if (game.world) {
       R.frame(game.world, game.state === 'play' ? dt : 0, ui);
       if (game.state === 'pause') overlay('PAUSA', menuItems());
+      if (game.state === 'story') drawStory();
       if (game.state === 'fail') {
         var left = game.run.triesLeft, tl = left === 1 ? 'Ultimo tentativo per questo capitolo' : 'Tentativi rimasti in questo capitolo: ' + left;
         overlay('A TERRA', menuItems(), (game.world.failReasonShown ? game.world.failReasonShown + ' · ' : '') + tl + (game.fails >= 2 ? ' · puoi riprovare con salute piena' : ''));
