@@ -256,6 +256,70 @@ var W = window.W;
     ctx.strokeStyle = '#111'; ctx.lineWidth = 2; ctx.strokeRect(x + 12, y + h - 44, tw, 32); ctx.fillStyle = '#111'; ctx.textAlign = 'left'; ctx.fillText(lbl, x + 24, y + h - 21);
     ctx.restore();
   }
+  // ---- percorso del gruppo sulla mappa, area per area (anche quando la banda si divide)
+  var THREAD_GOAL = { swan: [[180, 470], [268, 600]], park: [[96, 362], [120, 420]], lizzies: [[250, 548]] };
+  var ROUTE = null;
+  function routeData() {
+    if (ROUTE) return ROUTE;
+    var order = ['P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'], A = W.CAMPAIGN, byCh = {};
+    A.forEach(function (a, i) { if (!a.thread) (byCh[a.ch] = byCh[a.ch] || []).push(i); });
+    var pts = [], lastCommon = MAP_PT.P0, thr = {}, thrCount = {};
+    A.forEach(function (a, i) { if (a.thread) thrCount[a.thread] = (thrCount[a.thread] || 0) + 1; });
+    A.forEach(function (a, i) {
+      if (a.thread) {
+        var t = thr[a.thread] || (thr[a.thread] = { n: 0, from: lastCommon }), goals = THREAD_GOAL[a.thread] || [MAP_PT[a.ch]], f = ++t.n / thrCount[a.thread];
+        var seg = Math.min(goals.length - 1, Math.floor(f * goals.length - 1e-6)), g0 = seg ? goals[seg - 1] : t.from, g1 = goals[seg], ff = f * goals.length - seg;
+        pts[i] = { p: [g0[0] + (g1[0] - g0[0]) * ff, g0[1] + (g1[1] - g0[1]) * ff], thread: a.thread };
+        return;
+      }
+      var list = byCh[a.ch], j = list.indexOf(i), ci = order.indexOf(a.ch), from = ci > 0 ? MAP_PT[order[ci - 1]] : MAP_PT.P0, to = MAP_PT[a.ch];
+      var f2 = a.ch === 'P0' ? 0 : (j + 1) / list.length, p2 = [from[0] + (to[0] - from[0]) * f2, from[1] + (to[1] - from[1]) * f2];
+      if (a.ch === 'P0') p2 = [MAP_PT.P0[0] - 30 + j * 20, MAP_PT.P0[1] - 6 * j];
+      pts[i] = { p: p2, thread: null }; lastCommon = p2;
+    });
+    ROUTE = pts; return pts;
+  }
+  function drawRoute(x, y, w, h, idx, k) {
+    if (!gangMap.ok) return;
+    var R0 = routeData(), e = k * k * (3 - 2 * k), segs = [], last = {}, lastC = null, cur = R0[idx] && R0[idx].p;
+    for (var i = 0; i <= idx && i < R0.length; i++) {
+      var q = R0[i], now = i === idx;
+      if (q.thread) { var fr = last[q.thread] || lastC; if (fr) segs.push([fr, q.p, now]); last[q.thread] = q.p; continue; }
+      var open = Object.keys(last);
+      if (open.length) { open.forEach(function (t) { segs.push([last[t], q.p, now]); }); last = {}; }   // il gruppo si riunisce
+      else if (lastC) segs.push([lastC, q.p, now]);
+      lastC = q.p;
+    }
+    // inquadratura: tutto il percorso fatto, con margine
+    var xs = [], ys = []; segs.forEach(function (sg) { xs.push(sg[0][0], sg[1][0]); ys.push(sg[0][1], sg[1][1]); }); if (cur) { xs.push(cur[0]); ys.push(cur[1]); }
+    if (!xs.length) { xs = [MAP_PT.P0[0]]; ys = [MAP_PT.P0[1]]; }
+    var bx0 = Math.min.apply(null, xs) - 90, bx1 = Math.max.apply(null, xs) + 90, by0 = Math.min.apply(null, ys) - 90, by1 = Math.max.apply(null, ys) + 90;
+    var sc = Math.min(w / Math.max(300, bx1 - bx0), h / Math.max(300 * h / w, by1 - by0)), vw = w / sc, vh = h / sc;
+    var mx = Math.max(0, Math.min(gangMap.width - vw, (bx0 + bx1) / 2 - vw / 2)), my = Math.max(0, Math.min(gangMap.height - vh, (by0 + by1) / 2 - vh / 2));
+    if (vw > gangMap.width) mx = (gangMap.width - vw) / 2; if (vh > gangMap.height) my = (gangMap.height - vh) / 2;
+    ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip(); ctx.fillStyle = '#d9cfb4'; ctx.fillRect(x, y, w, h);
+    ctx.drawImage(gangMap, mx, my, vw, vh, x, y, w, h);
+    var P = function (q) { return [x + (q[0] - mx) * sc, y + (q[1] - my) * sc]; };
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    [['#111', 10], ['#d62828', 5]].forEach(function (st) {
+      ctx.strokeStyle = st[0]; ctx.lineWidth = st[1];
+      segs.forEach(function (sg) { var a = P(sg[0]), b = P(sg[1]), f = sg[2] ? e : 1; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f); ctx.stroke(); });
+    });
+    // tappe già fatte
+    for (var j = 0; j < idx && j < R0.length; j++) { var d = P(R0[j].p); ctx.fillStyle = '#d62828'; ctx.strokeStyle = '#111'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(d[0], d[1], 4.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
+    if (cur && e > 0.9) { var pc = P(cur), pulse = 1 + 0.15 * Math.sin(performance.now() / 160); ctx.fillStyle = '#f2d23c'; ctx.strokeStyle = '#111'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(pc[0], pc[1], 9 * pulse, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
+    ctx.restore();
+    var nm = W.CAMPAIGN[idx] ? W.CAMPAIGN[idx].name.toUpperCase() : '';
+    ctx.save(); ctx.font = '700 16px "Oswald", sans-serif'; var tw = ctx.measureText(nm).width + 20;
+    ctx.fillStyle = '#111'; ctx.fillRect(x + 10 + 4, y + h - 38 + 4, tw, 28); ctx.fillStyle = '#f2d23c'; ctx.fillRect(x + 10, y + h - 38, tw, 28); ctx.strokeStyle = '#111'; ctx.lineWidth = 2; ctx.strokeRect(x + 10, y + h - 38, tw, 28);
+    ctx.fillStyle = '#111'; ctx.textAlign = 'left'; ctx.fillText(nm, x + 20, y + h - 18); ctx.restore();
+  }
+  function mapPanel(c, x, y, w, h, t0) {
+    var kk = pop(c.t, t0); if (kk <= 0 || c.idx < 0) return;
+    ctx.save(); ctx.globalAlpha = kk; ctx.translate(0, (1 - kk) * -40);
+    ctx.fillStyle = '#111'; ctx.fillRect(x + 7, y + 7, w, h); ctx.fillRect(x - 5, y - 5, w + 10, h + 10);
+    drawRoute(x, y, w, h, c.idx, Math.min(1, Math.max(0, (c.t - t0 - 0.2) / 0.9))); ctx.restore();
+  }
   function drawMap(x, y, w, h, ch, k) {
     if (gangMap.ok) { drawGangMap(x, y, w, h, ch, k); return; }
     ctx.save(); ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
@@ -294,7 +358,7 @@ var W = window.W;
       sub = next.where;
     }
     var nxt = null; try { nxt = nextPanel(next); } catch (e) {}
-    game.comic = { img: snap, next: nxt, t: 0, cap: cap, sub: sub, then: then, tilt: (Math.random() - 0.5) * 0.05, thread: next.thread, ch: next.ch,
+    game.comic = { img: snap, next: nxt, t: 0, cap: cap, sub: sub, then: then, tilt: (Math.random() - 0.5) * 0.05, thread: next.thread, ch: next.ch, idx: W.CAMPAIGN.indexOf(next),
       layout: next.thread ? 'thread' : newCh ? 'chapter' : 'step', dur: next.thread ? 3.8 : newCh ? 4.4 : 2.4 };
     game.state = 'comic'; W.Audio.ui();
   }
@@ -355,18 +419,21 @@ var W = window.W;
       inkPanel(c.img, 40 - (1 - k1) * 300, 40, 620, 330, 1, 1, -0.015);
       k2 = pop(t, 0.45); if (k2 > 0) { ctx.save(); ctx.globalAlpha = k2; ctx.translate(0, (1 - k2) * -60);
         ctx.fillStyle = '#111'; ctx.fillRect(700 + 7, 40 + 7, 540, 330); ctx.fillRect(700 - 5, 40 - 5, 550, 340);
-        drawMap(700, 40, 540, 330, c.ch, Math.min(1, Math.max(0, (t - 0.7) / 0.9))); ctx.restore(); }
+        if (c.idx >= 0 && gangMap.ok) drawRoute(700, 40, 540, 330, c.idx, Math.min(1, Math.max(0, (t - 0.7) / 0.9))); else drawMap(700, 40, 540, 330, c.ch, Math.min(1, Math.max(0, (t - 0.7) / 0.9))); ctx.restore(); }
       k3 = pop(t, 1.0); if (k3 > 0) { ctx.save(); ctx.globalAlpha = k3; inkPanel(c.next, 40 + (1 - k3) * 400, 410, 1200, 270, 0.25, 0, 0.008, 0.82); ctx.restore(); }
       if (t > 1.5) { ctx.save(); ctx.globalAlpha = Math.min(1, (t - 1.5) / 0.2); caption(c.sub.toUpperCase(), 70, 392, 30); caption(c.cap, 90, 628, 20, '#fff6d8', 0.01); ctx.restore(); }
     } else if (c.layout === 'thread') {
       inkPanel(c.next || c.img, 60 - (1 - k1) * 200, 30, 1160, 400, 1, 0.3, 0.01, 0.8);
       if (t > 0.3) { ctx.save(); ctx.globalAlpha = Math.min(1, (t - 0.3) / 0.2); caption(c.cap.toUpperCase(), 90, 52, 30); if (c.sub) caption(c.sub, 104, 120, 20, '#fff6d8', -0.01); ctx.restore(); }
       if (t > 0.5) drawThreadBoard(c, Math.min(1, (t - 0.5) / 0.3));
+      mapPanel(c, 1000, 44, 205, 370, 0.6);
     } else {
       // due vignette: l'ultimo istante e il posto dove si arriva
-      inkPanel(c.img, 50 - (1 - k1) * 200, 70, 640, 400, 1, 1, -0.02);
-      k2 = pop(t, 0.5); if (k2 > 0) { ctx.save(); ctx.globalAlpha = k2; inkPanel(c.next, 600 + (1 - k2) * 300, 250, 630, 400, 1, 0.25, 0.015, 0.8); ctx.restore(); }
-      if (t > 0.8) { ctx.save(); ctx.globalAlpha = Math.min(1, (t - 0.8) / 0.2); caption(c.cap.toUpperCase(), 640, 210, 28); ctx.restore(); }
+      // due vignette a sinistra e, a destra, la mappa con tutto il percorso fatto fin qui
+      inkPanel(c.img, 40 - (1 - k1) * 200, 50, 560, 330, 1, 1, -0.02);
+      k2 = pop(t, 0.5); if (k2 > 0) { ctx.save(); ctx.globalAlpha = k2; inkPanel(c.next, 300 + (1 - k2) * 300, 300, 570, 370, 1, 0.25, 0.015, 0.8); ctx.restore(); }
+      mapPanel(c, 915, 40, 325, 620, 0.25);
+      if (t > 0.8) { ctx.save(); ctx.globalAlpha = Math.min(1, (t - 0.8) / 0.2); caption(c.cap.toUpperCase(), 320, 258, 28); ctx.restore(); }
     }
     if (t > 1) { ctx.globalAlpha = 0.6; txt('Invio o tocco per continuare', C.VIEW_W - 30, C.VIEW_H - 14, 13, '#111', 'right', 500); ctx.globalAlpha = 1; }
     if (c.t > c.dur) { game.comic = null; c.then(); }
