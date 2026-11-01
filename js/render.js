@@ -1414,7 +1414,16 @@ W.Render = (function () {
         ctx.fillStyle = '#5a5f66'; ctx.fillRect(0, ty - 18, C.VIEW_W, 3); ctx.fillRect(0, ty - 6, C.VIEW_W, 3);
         if (tr.phase === 'warn') { var bl = Math.floor(w.time * 6) % 2; ctx.fillStyle = bl ? '#fff3c4' : '#6a5a2a'; ctx.beginPath(); ctx.arc(30, tr.lane[0] - 20, 8, 0, Math.PI * 2); ctx.fill(); }
         if (tr.phase === 'pass') {
-          var bx2 = tr.x - cx;
+          var bx2 = tr.x - cx, tim = objImg('treno_esterno');
+          if (tim) {
+            // il vagone disegnato da ChatGPT: tre carrozze agganciate, la testa (con il fanale) davanti; vibra un po' sui binari
+            var th = 270, tw2 = tim.width * th / tim.height, jig = Math.sin(w.time * 40) * 1.5;
+            ctx.save(); ctx.imageSmoothingEnabled = false;
+            for (var car = 0; car < 3; car++) ctx.drawImage(tim, bx2 + 930 - tw2 * (car + 1) - car * 6, ty + 6 - th + jig, tw2, th);
+            var fl = ctx.createRadialGradient(bx2 + 930, ty - 80, 4, bx2 + 930, ty - 80, 160); fl.addColorStop(0, 'rgba(255,240,180,0.55)'); fl.addColorStop(1, 'rgba(255,240,180,0)');
+            ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = fl; ctx.fillRect(bx2 + 770, ty - 240, 330, 320); ctx.restore();
+            return;
+          }
           ctx.fillStyle = '#8b9399'; ctx.fillRect(bx2, ty - 190, 900, 186);
           ctx.fillStyle = '#5c646a'; for (var c2 = 0; c2 < 4; c2++) ctx.fillRect(bx2 + c2 * 225, ty - 190, 6, 186);
           ctx.fillStyle = '#1d2226'; for (var wi = 0; wi < 12; wi++) ctx.fillRect(bx2 + 20 + wi * 74, ty - 165, 52, 46);
