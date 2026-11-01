@@ -618,7 +618,7 @@ var W = window.W;
     var tx = t.x + side * dist, ty = t.y + yOff;
     if (bh === 'block' && this.guardX !== undefined && !wantsToken) { tx = this.guardX; ty = t.y; }
     var dx = tx - this.x, dy = ty - this.y;
-    var sp = this.def.speed * (this.disarmed ? 1.05 : 1);
+    var sp = this.def.speed * (this.disarmed ? 1.05 : 1) * (this.speedMul || 1);
     var mvx = Math.abs(dx) > 8 ? sign(dx) * 170 * sp : 0, mvy = Math.abs(dy) > 6 ? sign(dy) * 115 * sp : 0;
     this.x += mvx * dt; this.y += mvy * dt;
     // separazione morbida fra nemici (collider morbidi attore/attore)
@@ -719,6 +719,13 @@ var W = window.W;
   };
   Enemy.prototype.damage = function (dmg, from, quiet) {
     var was = this.hp; this.hp = Math.max(0, this.hp - dmg);
+    // capi banda: a metà salute chiamano rinforzi e diventano più veloci (seconda fase)
+    var ph = this.def.phase2;
+    if (ph && !this.phased && this.hp > 0 && this.hp <= this.maxhp * ph.at) {
+      this.phased = true; this.speedMul = ph.speed || 1.15; var w0 = this.world, me = this;
+      (ph.adds || []).forEach(function (ad) { var ex = w0.cam.x + (ad[1] === 'R' ? 1280 + 60 : -60); var e = new W.Enemy(w0, ad[0], ex, Math.max(w0.area.floor[0] + 10, Math.min(w0.area.floor[1] - 6, me.y + (w0.rng() - 0.5) * 80))); e.face = ad[1] === 'R' ? -1 : 1; if (/^punk/.test(e.def.set || '')) e.entry = 'skate'; w0.enemies.push(e); });
+      w0.emit('bossphase', { x: this.x, y: this.y, say: ph.say });
+    }
     if (was > 0 && this.hp <= 0 && from && from.isPlayer) {
       from.fury = Math.min(100, from.fury + C.FURY_GAIN_KO);
       this.world.score[from.cpu ? 0 : from.slot] += this.def.elite ? 1500 : 300;

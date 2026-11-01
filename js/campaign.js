@@ -22,7 +22,7 @@ var W = window.W;
 
   // P0
   S.dlg_p0_welcome = { cine: 'dlg_p0_welcome', letterbox: false, steps: [
-    ['wheel', 4.5, 'Coney Island, Brooklyn. Quella notte.'],
+    ['wheel', 4.5, 'Una settimana dopo. Coney Island, la sera del raduno.'],
     ['say', 'cleon', 'Cyrus vuole nove per banda, disarmati. Siamo nove. Nessuno resta a casa.'],
     ['say', 'swan', 'Facciamo il viaggio, ascoltiamo e torniamo a casa.'],
     ['say', 'ajax', 'Disarmati nel Bronx. Bella idea.'] ] };
@@ -34,6 +34,30 @@ var W = window.W;
   S.cine_departure = { cine: 'cine_departure', steps: seq(
     [['players', 'hide']], line(ALL9, 260, 90, Y, 1, 22),
     [['wait', 0.6], ['moveAll', 900, 4.2], ['wait', 2.4], ['fade', 'out', 1.2], ['clearNpcs'], ['sfx', 'train'], ['clip', 'v_train_night'], ['title', 'THE WARRIORS', 'Night Run', 3.2], ['flag', 'departed_coney']]) };
+
+  // PQ · capitolo zero: una settimana prima del raduno. I Boppers di Harlem provano a prendersi il lungomare; i Warriors li ricacciano,
+  // Rembrandt è appena entrato nella banda, e alla fine un Riff porta l'invito di Cyrus.
+  S.dlg_pq_open = { cine: 'dlg_pq_open', letterbox: false, steps: [
+    ['wheel', 4.5, 'Coney Island, Brooklyn. Una settimana prima del raduno.'],
+    ['say', 'cleon', 'Stanotte qualcuno ha coperto le nostre W sul lungomare. Viola. Boppers.'],
+    ['say', 'swan', 'Da Harlem fino a Coney Island per fare i graffiti. Vogliono vedere cosa facciamo.'],
+    ['say', 'cleon', 'Allora glielo facciamo vedere. Ma prima il ragazzo nuovo impara a stare in piedi.']] };
+  S.talk_pq_fox = { cine: 'talk_pq_fox', letterbox: false, steps: [['say', 'fox', 'Sono arrivati con la metro, una dozzina. Si sono piazzati sotto la sopraelevata.'], ['say', 'fox', 'Hanno lasciato le loro scritte su tutti i nostri muri.']] };
+  S.talk_pq_ajax = { cine: 'talk_pq_ajax', letterbox: false, steps: [['say', 'ajax', 'Una dozzina? Bastiamo io e Cowboy.'], ['say', 'cowboy', 'Lasciami fuori dalle tue scommesse.']] };
+  S.talk_pq_rembrandt = { cine: 'talk_pq_rembrandt', letterbox: false, steps: [['say', 'rembrandt', 'Le rifaccio io, le W. Più grandi di prima.'], ['say', 'swan', 'Prima te le guadagni. Poi le dipingi.']] };
+  S.dlg_pq_el = { cine: 'dlg_pq_el', letterbox: false, mood: 'fight', steps: [
+    ['say', 'swan', 'Eccoli. Sotto i binari.'], ['say', 'cleon', 'Nessuno si fa male più del necessario. Li vogliamo sul treno del ritorno, non all\'ospedale.']] };
+  S.dlg_pq_run = { cine: 'dlg_pq_run', letterbox: false, steps: [['caption', 'Le sirene. Qualcuno ha chiamato la polizia: i Boppers scappano verso il luna park, i Warriors dietro.'], ['say', 'snow', 'Il loro capo è andato verso il molo.']] };
+  S.dlg_pq_pier = { cine: 'dlg_pq_pier', letterbox: false, mood: 'fight', steps: [['say', 'cleon', 'Questo è il nostro molo. Questa è la nostra spiaggia.'], ['say', 'cleon', 'Tu e i tuoi tornate a Harlem stanotte. E non tornate più.']] };
+  S.cine_pq_invite = { cine: 'cine_pq_invite', steps: seq(
+    [['players', 'hide']], line(['cleon', 'swan', 'ajax', 'snow', 'cowboy', 'cochise', 'vermin', 'rembrandt', 'fox'], 260, 80, Y, 1, 18),
+    [['caption', 'I Boppers se ne vanno con la prima metro. All\'alba, sul lungomare, arriva un ragazzo in tunica: un Riff, da Manhattan.'],
+     ['npc', 'riffmsg', 'riff', 1300, 600, -1], ['move', 'riffmsg', 1020, null, 1.6],
+     ['say', 'riffmsg', 'Cyrus vuole parlare a tutte le bande della città. Fra una settimana, Van Cortlandt Park.'],
+     ['say', 'riffmsg', 'Nove per banda. Disarmati. Tregua per tutti.'],
+     ['say', 'ajax', 'Disarmati nel Bronx?'], ['say', 'cleon', 'Ci andiamo. Se Cyrus parla, voglio sentire cosa dice.'],
+     ['say', 'rembrandt', 'Posso venire anch\'io?'], ['say', 'cleon', 'Sei dei nostri, adesso. Nove. Contati.'],
+     ['move', 'riffmsg', 1400, null, 1.4], ['fade', 'out', 1], ['clearNpcs'], ['flag', 'conclave_invite']]) };
 
   // C1
   S.dlg_c1_arrival = { cine: 'dlg_c1_arrival', letterbox: false, steps: [
@@ -373,7 +397,7 @@ var W = window.W;
   ];
 
   W.CHAPTERS = {
-    P0: 'Prologo · Coney Island', C1: 'Capitolo 1 · Il raduno', C2: 'Capitolo 2 · Braccati', C3: 'Capitolo 3 · Territorio nemico', C4: 'Capitolo 4 · Baseball Furies',
+    PQ: 'Capitolo zero · Una settimana prima', P0: 'Prologo · Coney Island', C1: 'Capitolo 1 · Il raduno', C2: 'Capitolo 2 · Braccati', C3: 'Capitolo 3 · Territorio nemico', C4: 'Capitolo 4 · Baseball Furies',
     C5: 'Capitolo 5 · La banda divisa', C6: 'Capitolo 6 · Union Square', C7: 'Capitolo 7 · L\'ultimo treno', C8: 'Capitolo 8 · Coney Island'
   };
   // ostacoli dei corridoi: pochi, credibili per il luogo; si saltano, si aggirano o si sfondano
@@ -382,7 +406,7 @@ var W = window.W;
     'C1-04': { lowStyle: 'grave', obstacles: [['low', 520, 0, 0.45], ['low', 820, 0.5, 1]] },
     'C2-01': { lowStyle: 'barrier', obstacles: [['crate', 760, 0.05, 0.4], ['low', 1300, 0, 0.6], ['crate', 1850, 0.6, 1, 'snack'], ['low', 2200, 0.35, 1]] },
     'C3-02': { lowStyle: 'barrier', obstacles: [['fire', 700, 0, 0.45], ['fire', 1150, 0.5, 1], ['fire', 1700, 0, 0.6], ['low', 2100, 0.2, 1]] },
-    'C2-03': { lowStyle: 'barrier', obstacles: [['low', 2100, 0, 1], ['crate', 2850, 0.3, 0.7, 'drink']] },
+    'C2-03': { lowStyle: 'barrier', obstacles: [['low', 2100, 0, 0.6], ['crate', 2850, 0.3, 0.7, 'drink']] },
     'C2-04': { lowStyle: 'turnstile', train: true, obstacles: [['low', 560, 0, 0.75]] },
     'C3-03': { lowStyle: 'barrier', obstacles: [['fire', 880, 0.25, 1], ['low', 1650, 0, 0.75], ['crate', 2100, 0, 0.35, 'snack']] },
     'C3-04': { lowStyle: 'turnstile', train: true, obstacles: [['low', 520, 0, 0.75], ['fire', 1200, 0, 0.45]] },
@@ -393,7 +417,58 @@ var W = window.W;
     'C6-04': { lowStyle: 'turnstile', train: true, obstacles: [] },
     'C8-01': { lowStyle: 'barrier', obstacles: [['low', 900, 0, 1], ['crate', 1400, 0.5, 0.9, 'snack']] }
   };
+  // ---- capitolo zero, prima del prologo: le aree nuove; l'allenamento con Cleon si sposta qui (è Rembrandt, il nuovo, a imparare)
+  var PQ = [
+    { id: 'PQ-01', ch: 'PQ', kind: 'traversal', name: 'Il territorio', bg: 'coney_b', bgAs: 'P0-03', width: 1280, depth: 200, party: ['cleon', 'swan'], present: ['ajax', 'snow', 'cowboy', 'cochise', 'vermin', 'rembrandt', 'fox'], peace: true,
+      enter: 'dlg_pq_open', chapterCard: true, objective: 'Senti da Fox cos\'è successo, poi raggiungi l\'uscita',
+      talks: [{ who: 'fox', x: 760, y: 600, scene: 'talk_pq_fox' }, { who: 'ajax', x: 520, y: 620, scene: 'talk_pq_ajax' }, { who: 'rembrandt', x: 980, y: 560, scene: 'talk_pq_rembrandt' }], needTalk: 'fox' },
+    { id: 'PQ-02', ch: 'PQ', kind: 'arena', name: 'Sotto la sopraelevata', bg: 'coney_b', bgAs: 'P0-02', width: 1280, depth: 210, party: ['cleon', 'swan', 'ajax', 'snow'], objective: 'Caccia i Boppers dal lungomare', enter: 'dlg_pq_el',
+      waves: [{ trigger: 200, objective: 'I Boppers sotto i binari', solo: [['bopper_brawler', 'R', 560], ['bopper_brawler', 'R', 640], ['bopper_brawler', 'L', 600]], duo: [['bopper_brawler', 'R', 560], ['bopper_brawler', 'R', 640], ['bopper_brawler', 'L', 600], ['bopper_heavy', 'R', 590], ['bopper_brawler', 'L', 520]] },
+        { trigger: 500, objective: 'Arrivano gli altri', solo: [['bopper_heavy', 'R', 600], ['bopper_brawler', 'L', 560], ['bopper_brawler', 'R', 660]], duo: [['bopper_heavy', 'R', 600], ['bopper_brawler', 'L', 560], ['bopper_brawler', 'R', 660], ['bopper_heavy', 'L', 620], ['bopper_brawler', 'R', 540]], onClear: { solo: [['drink', 1, 600]], duo: [['drink', 1, 600], ['snack', -1, 620]] } },
+        { trigger: 800, objective: 'L\'ultimo gruppo', solo: [['bopper_brawler', 'L', 600], ['bopper_heavy', 'R', 560], ['bopper_brawler', 'R', 650], ['bopper_brawler', 'L', 520]], duo: [['bopper_brawler', 'L', 600], ['bopper_heavy', 'R', 560], ['bopper_brawler', 'R', 650], ['bopper_brawler', 'L', 520], ['bopper_heavy', 'L', 640], ['bopper_brawler', 'R', 580]] }] },
+    { id: 'PQ-03', ch: 'PQ', kind: 'escape', name: 'Il luna park chiuso', bg: 'coney', bgAs: 'P0-01', width: 1280, depth: 170, party: ['cleon', 'swan', 'ajax', 'snow'], objective: 'Via dalla polizia, verso il molo', enter: 'dlg_pq_run',
+      timer: 45, timerEasy: 60, pursuers: { solo: { police_pursuer: 2 }, duo: { police_pursuer: 3 } },
+      waves: [{ trigger: 560, objective: 'Boppers in fuga ti si parano davanti', solo: [['bopper_brawler', 'R', 600], ['bopper_brawler', 'R', 540]], duo: [['bopper_brawler', 'R', 600], ['bopper_brawler', 'R', 540], ['bopper_heavy', 'R', 640]] }] },
+    { id: 'PQ-04', ch: 'PQ', kind: 'arena', name: 'Il molo', bg: 'coney_b', bgAs: 'P0-03', width: 1280, depth: 210, party: ['cleon', 'swan', 'ajax', 'snow'], objective: 'Il capo dei Boppers', enter: 'dlg_pq_pier', exitScene: 'cine_pq_invite',
+      waves: [{ trigger: 200, objective: 'La sua scorta', solo: [['bopper_brawler', 'R', 560], ['bopper_heavy', 'R', 640]], duo: [['bopper_brawler', 'R', 560], ['bopper_heavy', 'R', 640], ['bopper_brawler', 'L', 600], ['bopper_brawler', 'L', 520]] },
+        { trigger: 600, objective: 'Capo Boppers', boss: true, solo: [['bopper_boss', 'R', 600], ['bopper_brawler', 'L', 620]], duo: [['bopper_boss', 'R', 600], ['bopper_brawler', 'L', 620], ['bopper_heavy', 'R', 560]] }] }
+  ];
+  var trainA = A.filter(function (a) { return a.kind === 'training' && a.ch === 'P0'; });
+  trainA.forEach(function (a) { A.splice(A.indexOf(a), 1); a.ch = 'PQ'; });
+  A.splice.apply(A, [0, 0, PQ[0]].concat(trainA).concat(PQ.slice(1)));
   A.forEach(function (a) { var o = OBST[a.id]; if (o) for (var k in o) a[k] = o[k]; });
+
+  // più gioco nei livelli: ondate in più, fedeli a quello che succede nel film in quel punto (si aggiungono a quelle esistenti, in ordine di posizione)
+  var W2 = function (trig, obj, solo, duo, extra) { var w = { trigger: trig, objective: obj, solo: solo, duo: duo }; if (extra) for (var k in extra) w[k] = extra[k]; return w; };
+  // bande del raduno che si vedono solo di passaggio lungo la strada: tutta la città cerca i Warriors
+  var CAMEOS = {
+    'C4-01': { set: 'bopper', n: 3, x: 1500, text: 'I Boppers di Harlem guardano dal muretto. Si ricordano di Coney Island, ma stanotte la caccia è dei Furies.' },
+    'C5-05': { set: 'hihat', n: 3, x: 1150, text: 'Gli Hi-Hats di SoHo, dall\'altro lato della strada. Guardano e non si muovono.' },
+    'C6-01': { set: 'hihat', n: 2, x: 1450, text: 'Altri Hi-Hats sulla banchina: tengono d\'occhio chi passa.' }
+  };
+  A.forEach(function (a) { if (CAMEOS[a.id]) a.cameo = CAMEOS[a.id]; });
+  var EXTRA_WAVES = {
+    // la fuga dal raduno: nel parco la polizia carica tutte le bande
+    'C1-03': [W2(1700, 'La polizia chiude il parco: apriti la strada', [['police_pursuer', 'R', 600], ['police_pursuer', 'L', 560], ['police_pursuer', 'R', 650]], [['police_pursuer', 'R', 600], ['police_pursuer', 'L', 560], ['police_pursuer', 'R', 650], ['police_pursuer', 'L', 640], ['police_pursuer', 'R', 540]])],
+    // il territorio dei Turnbull: scendono a gruppi dal bus
+    'C2-01': [W2(1900, 'Altri Turnbull dall\'angolo', [['turnbull_rusher', 'R', 560], ['turnbull_heavy', 'R', 640], ['turnbull_rusher', 'L', 600]], [['turnbull_rusher', 'R', 560], ['turnbull_heavy', 'R', 640], ['turnbull_rusher', 'L', 600], ['turnbull_rusher', 'L', 520], ['turnbull_heavy', 'R', 580]])],
+    'C2-03': [W2(1300, 'I Turnbull vi tagliano la strada', [['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 640], ['turnbull_heavy', 'R', 600]], [['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 640], ['turnbull_heavy', 'R', 600], ['turnbull_rusher', 'L', 620]], { onClear: { solo: [['snack', 1, 600]], duo: [['snack', 1, 600], ['drink', -1, 620]] } }),
+              W2(2900, 'Ultimo blocco prima delle scale', [['turnbull_heavy', 'R', 600], ['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 660]], [['turnbull_heavy', 'R', 600], ['turnbull_rusher', 'R', 560], ['turnbull_rusher', 'R', 660], ['turnbull_rusher', 'R', 520]], { onClear: { solo: [['drink', -1, 600]], duo: [['drink', -1, 600], ['snack', -1, 640]] } })],
+    // gli Orphans «tornano armati»: prima della molotov ci provano davvero
+    'C3-02': [W2(700, 'Gli Orphans tornano con le assi', [['orphan_board', 'R', 560], ['orphan_brawler', 'R', 640], ['orphan_brawler', 'L', 600]], [['orphan_board', 'R', 560], ['orphan_brawler', 'R', 640], ['orphan_brawler', 'L', 600], ['orphan_brawler', 'R', 590]], { onClear: { solo: [['drink', 1, 600]], duo: [['drink', 1, 600], ['snack', -1, 620]] } })],
+    'C3-03': [W2(900, 'Gli Orphans non mollano', [['orphan_brawler', 'R', 600], ['orphan_board', 'L', 560], ['orphan_brawler', 'R', 660]], [['orphan_brawler', 'R', 600], ['orphan_board', 'L', 560], ['orphan_brawler', 'R', 660], ['orphan_brawler', 'L', 640]], { onClear: { solo: [['snack', 1, 600]], duo: [['snack', 1, 600], ['drink', -1, 620]] } }),
+              W2(1900, 'Sully e i suoi all\'ultimo incrocio', [['orphan_board', 'R', 580], ['orphan_brawler', 'L', 600], ['orphan_brawler', 'R', 540]], [['orphan_board', 'R', 580], ['orphan_brawler', 'L', 600], ['orphan_brawler', 'R', 540], ['orphan_board', 'L', 520]], { onClear: { solo: [['drink', 1, 600]], duo: [['drink', 1, 600], ['snack', -1, 640]] } })],
+    // la rissa con la polizia alla 96ª Strada, come nel film
+    'C3-04': [W2(800, 'La polizia sulla banchina', [['police_pursuer', 'R', 560], ['police_pursuer', 'L', 600]], [['police_pursuer', 'R', 560], ['police_pursuer', 'R', 620], ['police_pursuer', 'L', 600], ['police_pursuer', 'L', 540]], { onClear: { solo: [['drink', 1, 600]], duo: [['drink', 1, 600], ['snack', -1, 620]] } })],
+    // l'inseguimento dei Furies nel parco
+    'C4-01': [W2(1100, 'I Furies vi raggiungono', [['fury_flanker', 'R', 560], ['fury_batter', 'L', 620]], [['fury_flanker', 'R', 560], ['fury_batter', 'L', 620], ['fury_flanker', 'R', 640], ['fury_batter', 'L', 540]])],
+    'C4-02': [W2(2150, 'I Furies vi chiudono dai due lati', [['fury_batter', 'L', 560], ['fury_batter', 'R', 620], ['fury_flanker', 'R', 520], ['fury_flanker', 'L', 640]], [['fury_batter', 'L', 560], ['fury_batter', 'R', 620], ['fury_flanker', 'R', 520], ['fury_flanker', 'L', 640], ['fury_batter', 'R', 580], ['fury_flanker', 'L', 600]])],
+    // la trappola delle Lizzies: prima di arrivare alla porta escono dalle altre stanze
+    'C5-03': [W2(1000, 'Le Lizzies escono dalle stanze', [['lizzie_blocker', 'R', 560], ['lizzie_shooter', 'R', 620], ['lizzie_blocker', 'L', 600]], [['lizzie_blocker', 'R', 560], ['lizzie_shooter', 'R', 620], ['lizzie_blocker', 'L', 600], ['lizzie_shooter', 'L', 540], ['lizzie_blocker', 'R', 650]])],
+    // i Punks: una seconda squadra arriva sui pattini dalla stazione
+    'C6-03': [W2(820, 'Altri Punks dalla stazione', [['punk_brawler', 'L', 560], ['punk_grappler', 'R', 620], ['punk_brawler', 'R', 660]], [['punk_brawler', 'L', 560], ['punk_grappler', 'R', 620], ['punk_brawler', 'R', 660], ['punk_grappler', 'L', 600], ['punk_brawler', 'R', 540]])]
+  };
+  A.forEach(function (a) { var ex = EXTRA_WAVES[a.id]; if (!ex) return; a.waves = (a.waves || []).concat(ex).sort(function (p, q) { return p.trigger - q.trigger; }); if (a.timer) { a.timer += 15 * ex.length; if (a.timerEasy) a.timerEasy += 20 * ex.length; } });
 
   // luce e musica per area: sera al prologo, notte, alba sul treno e a Coney Island
   A.forEach(function (a) {
@@ -431,7 +506,7 @@ var W = window.W;
     C7: ['Sta arrivando la luce. La notte più lunga della città sta finendo.', 'E un treno corre verso il mare.'],
     C8: ['Buongiorno, città. Da Coney Island ci dicono che i ragazzi sono arrivati.', 'Ma non sono gli unici, laggiù. Qualcuno li stava aspettando.']
   };
-  W.NPC_NAMES.dj = 'La DJ';
+  W.NPC_NAMES.dj = 'La DJ'; W.NPC_NAMES.riffmsg = 'Un Riff';
 
   // risse non presenti nel film: restano solo nell'Arcade
   W.ARCADE_EXTRA = [

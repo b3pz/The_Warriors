@@ -30,7 +30,7 @@ var W = window.W;
       s.setItem(SAVE_KEY, json);
     } catch (e) { game.msg = { text: 'Salvataggio non riuscito', t: 4 }; }
   }
-  function unlocks() { var s = storage(); try { return (s && JSON.parse(s.getItem(UNLOCK_KEY))) || ['P0']; } catch (e) { return ['P0']; } }
+  function unlocks() { var s = storage(); try { return (s && JSON.parse(s.getItem(UNLOCK_KEY))) || ['PQ', 'P0']; } catch (e) { return ['PQ', 'P0']; } }
   function unlock(ch) { if (W.AutoPilot && W.AutoPilot.active) return; var u = unlocks(); if (u.indexOf(ch) < 0) { u.push(ch); var s = storage(); if (s) try { s.setItem(UNLOCK_KEY, JSON.stringify(u)); } catch (e) {} } }
   // ------------------------------------------------------------------ comandi rimappabili (warriors-keys-v1)
   var KEYS_KEY = 'warriors-keys-v1', DEFAULT_KEYS = JSON.parse(JSON.stringify(W.Input.LAYOUTS));
@@ -84,7 +84,7 @@ var W = window.W;
     if (fromSave) { w.score = fromSave.score.slice(); w.flags = fromSave.flags || {}; w.stats.retries = fromSave.retries || 0; w.stats.assisted = !!fromSave.assisted; w.stats.time = fromSave.time || 0; w.stats.kos = fromSave.kos || 0; }
     else if (startArea0) {
       // capitolo scelto: rimuovi chi è già uscito dalla storia prima di quel capitolo
-      var ch = W.CAMPAIGN[startArea0].ch, order = ['P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'];
+      var ch = W.CAMPAIGN[startArea0].ch, order = ['PQ', 'P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'];
       for (var k in W.OUT_AFTER) if (order.indexOf(k) < order.indexOf(ch)) run.roster = run.roster.filter(function (id) { return W.OUT_AFTER[k].indexOf(id) < 0; });
     }
     prepareArea();
@@ -196,13 +196,13 @@ var W = window.W;
   }
   // ------------------------------------------------------------------ transizione a fumetto
   // L'ultimo fotogramma dell'area diventa una vignetta inchiostrata con retino; la didascalia annuncia il luogo successivo.
-  var COMIC_LEAD = { P0: 'Coney Island, quella sera.', C1: 'Van Cortlandt Park, Bronx.', C2: 'Le strade del Bronx.', C3: 'Territorio degli Orphans.', C4: 'Riverside Park, Manhattan.', C5: 'La banda si divide.', C6: 'Union Square.', C7: 'L\'ultimo treno.', C8: 'Coney Island, all\'alba.' };
+  var COMIC_LEAD = { PQ: 'Coney Island, una settimana prima.', P0: 'Coney Island, la sera del raduno.', C1: 'Van Cortlandt Park, Bronx.', C2: 'Le strade del Bronx.', C3: 'Territorio degli Orphans.', C4: 'Riverside Park, Manhattan.', C5: 'La banda si divide.', C6: 'Union Square.', C7: 'L\'ultimo treno.', C8: 'Coney Island, all\'alba.' };
   // vignetta del luogo successivo: il fondale disegnato con il gruppo in posa
   function nextPanel(next) {
     var c = document.createElement('canvas'); c.width = C.VIEW_W; c.height = C.VIEW_H;
     var g = c.getContext('2d'), fake = { def: next, width: next.width || 1920, floor: [680 - (next.depth || 200), 680] };
     // fondale nuovo dell'area (immagini integrate) se c'è, altrimenti quello disegnato dal codice
-    var bga = W.Render.bgAi && W.Render.bgAi(next.id), ox = Math.max(0, (fake.width - C.VIEW_W) * 0.15);
+    var bga = W.Render.bgAi && (W.Render.bgAi(next.id) || (next.bgAs && W.Render.bgAi(next.bgAs))), ox = Math.max(0, (fake.width - C.VIEW_W) * 0.15);
     if (bga) g.drawImage(bga.img, Math.min(Math.max(0, bga.w - C.VIEW_W), ox), 0, C.VIEW_W, C.VIEW_H, 0, 0, C.VIEW_W, C.VIEW_H);
     else try { if (W.Scenery) { var save = ctx; ctx = g; W.Scenery.draw(g, fake, ox); ctx = save; } } catch (e) {}
     var who = game.run && game.run.arcade ? game.run.chars.slice() : next.thread ? W.THREADS[next.thread].members.slice() : poolFor(next).slice(0, 5);
@@ -228,10 +228,10 @@ var W = window.W;
   // mappa delle bande fornita dall'autore (assets/menu/mappa_bande.jpg, 1080×1097): coordinate delle tappe sull'immagine
   var gangMap = new Image(); gangMap.ok = false; gangMap.onload = function () { gangMap.ok = true; };
   gangMap.src = (W.ASSET_DATA && W.ASSET_DATA['menu/mappa_bande.jpg']) || 'assets/menu/mappa_bande.jpg';
-  var MAP_PT = { P0: [700, 1035], C1: [190, 48], C2: [432, 52], C3: [412, 196], C4: [96, 362], C5: [250, 548], C6: [268, 600], C7: [455, 820], C8: [700, 1035] };
-  var MAP_NAME = { P0: 'Coney Island', C1: 'Van Cortlandt Park', C2: 'Territorio dei Turnbull', C3: 'Gli Orphans', C4: 'Riverside Park', C5: 'Divisi', C6: 'Union Square', C7: 'L\'ultimo treno', C8: 'Coney Island' };
+  var MAP_PT = { PQ: [700, 1035], P0: [700, 1035], C1: [190, 48], C2: [432, 52], C3: [412, 196], C4: [96, 362], C5: [250, 548], C6: [268, 600], C7: [455, 820], C8: [700, 1035] };
+  var MAP_NAME = { PQ: 'Coney Island', P0: 'Coney Island', C1: 'Van Cortlandt Park', C2: 'Territorio dei Turnbull', C3: 'Gli Orphans', C4: 'Riverside Park', C5: 'Divisi', C6: 'Union Square', C7: 'L\'ultimo treno', C8: 'Coney Island' };
   function drawGangMap(x, y, w, h, ch, k) {
-    var order = ['P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'], idx = Math.max(0, order.indexOf(ch));
+    var order = ['PQ', 'P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'], idx = Math.max(0, order.indexOf(ch));
     var sc = 1.15, vw = w / sc, vh = h / sc, from = MAP_PT[order[Math.max(0, idx - 1)]], to = MAP_PT[order[idx]];
     var e = k * k * (3 - 2 * k), cx = from[0] + (to[0] - from[0]) * e, cy = from[1] + (to[1] - from[1]) * e;
     var mx = Math.max(0, Math.min(gangMap.width - vw, cx - vw / 2)), my = Math.max(0, Math.min(gangMap.height - vh, cy - vh / 2));
@@ -261,7 +261,7 @@ var W = window.W;
   var ROUTE = null;
   function routeData() {
     if (ROUTE) return ROUTE;
-    var order = ['P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'], A = W.CAMPAIGN, byCh = {};
+    var order = ['PQ', 'P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'], A = W.CAMPAIGN, byCh = {};
     A.forEach(function (a, i) { if (!a.thread) (byCh[a.ch] = byCh[a.ch] || []).push(i); });
     var pts = [], lastCommon = MAP_PT.P0, thr = {}, thrCount = {};
     A.forEach(function (a, i) { if (a.thread) thrCount[a.thread] = (thrCount[a.thread] || 0) + 1; });
@@ -273,8 +273,8 @@ var W = window.W;
         return;
       }
       var list = byCh[a.ch], j = list.indexOf(i), ci = order.indexOf(a.ch), from = ci > 0 ? MAP_PT[order[ci - 1]] : MAP_PT.P0, to = MAP_PT[a.ch];
-      var f2 = a.ch === 'P0' ? 0 : (j + 1) / list.length, p2 = [from[0] + (to[0] - from[0]) * f2, from[1] + (to[1] - from[1]) * f2];
-      if (a.ch === 'P0') p2 = [MAP_PT.P0[0] - 30 + j * 20, MAP_PT.P0[1] - 6 * j];
+      var f2 = (a.ch === 'P0' || a.ch === 'PQ') ? 0 : (j + 1) / list.length, p2 = [from[0] + (to[0] - from[0]) * f2, from[1] + (to[1] - from[1]) * f2];
+      if (a.ch === 'P0' || a.ch === 'PQ') p2 = [MAP_PT.P0[0] - 40 + j * 16, MAP_PT.P0[1] - 5 * j];
       pts[i] = { p: p2, thread: null }; lastCommon = p2;
     });
     ROUTE = pts; return pts;
@@ -449,7 +449,7 @@ var W = window.W;
   // ------------------------------------------------------------------ arcade
   // Le risse della storia senza scene, da 1 a 4 giocatori (tastiera WASD, tastiera frecce, controller, CPU).
   // risse del film più le tre risse extra (non nel film, solo qui)
-  var ARC_STAGES = ['C4-02', 'C4-03', 'C6-03', 'X-TURNBULL', 'X-ORPHANS', 'X-ROGUES'];
+  var ARC_STAGES = ['PQ-02', 'PQ-04', 'C4-02', 'C4-03', 'C6-03', 'X-TURNBULL', 'X-ORPHANS', 'X-ROGUES'];
   function defById(id) { var i = W.areaIndex(id); if (i >= 0) return W.CAMPAIGN[i]; return (W.ARCADE_EXTRA || []).filter(function (d) { return d.id === id; })[0]; }
   var ARC_DEV = [['off', '—'], ['kb1', 'Tastiera WASD'], ['kb2', 'Tastiera frecce'], ['pad0', 'Controller 1'], ['pad1', 'Controller 2'], ['pad2', 'Controller 3'], ['pad3', 'Controller 4'], ['cpu', 'CPU']];
   var ARC_KEY = 'warriors-arcade-v1';
@@ -858,6 +858,7 @@ var W = window.W;
   }
   // «La storia finora» (menu di pausa): i capitoli già giocati, raccontati come nel film; niente anticipazioni sui successivi
   var STORY = {
+    PQ: ['Una settimana prima', 'bg:P0-02', 'Una settimana prima del raduno i Boppers di Harlem coprono le W dei Warriors sul lungomare. Cleon allena Rembrandt, il nuovo arrivato, poi i Warriors li cacciano dalla sopraelevata fino al molo. All\'alba un Riff porta l\'invito di Cyrus: nove per banda, disarmati.'],
     P0: ['Coney Island', 'bg:P0-01', 'Sera a Coney Island. I Warriors si ritrovano sul lungomare: Cyrus ha convocato tutte le bande della città al raduno nel Bronx. Nove uomini, disarmati, come chiede la tregua.'],
     C1: ['Il raduno', 'cine_cyrus', 'Nel parco del Bronx, davanti a cento bande, Cyrus dei Riffs propone di unirsi: insieme sarebbero più della polizia. Poi uno sparo. Cyrus cade, e Luther dei Rogues accusa i Warriors. Cleon resta nella folla. Swan prende il comando.'],
     C2: ['Braccati', 'radio_dj', 'La radio annuncia la caccia: tutte le bande cercano i Warriors. Nel territorio dei Turnbull A.C.\'s il loro bus non li molla, fino alla stazione sopraelevata e al treno.'],
@@ -868,7 +869,7 @@ var W = window.W;
     C7: ['L\'ultimo treno', 'talk_c7_couple', 'All\'alba, l\'ultimo treno verso Coney Island. Dai finestrini la città si schiarisce. Casa non è come la ricordavano.'],
     C8: ['Coney Island', 'cine_bottles', 'Coney Island, di nuovo. Sul lungomare il carro funebre dei Rogues e il tintinnio delle bottiglie: Luther li ha seguiti fino a casa.']
   };
-  var STORY_ORDER = ['P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'];
+  var STORY_ORDER = ['PQ', 'P0', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'];
   function storyChapters() { var ch = game.world && game.world.area && game.world.area.def.ch, i = Math.max(0, STORY_ORDER.indexOf(ch)); return STORY_ORDER.slice(0, i + 1); }
   function wrapLines(s2, maxW, size) { ctx.font = '400 ' + size + 'px "Oswald", sans-serif'; var wd = s2.split(' '), out = [], cur = ''; wd.forEach(function (w2) { var t2 = cur ? cur + ' ' + w2 : w2; if (ctx.measureText(t2).width > maxW && cur) { out.push(cur); cur = w2; } else cur = t2; }); if (cur) out.push(cur); return out; }
   function drawStory() {
@@ -877,13 +878,13 @@ var W = window.W;
     ctx.fillStyle = 'rgba(4,5,10,0.92)'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
     txt('LA STORIA FINORA', 70, 92, 40, '#d62828', 'left', 700);
     // elenco dei capitoli raggiunti
-    L.forEach(function (k, i) { var sel = i === game.storyIdx, y = 150 + i * 46; if (sel) { ctx.fillStyle = 'rgba(214,40,40,0.25)'; ctx.fillRect(56, y - 30, 330, 42); } txt((k === 'P0' ? 'Prologo' : 'Cap. ' + k.slice(1)) + ' · ' + STORY[k][0], 70, y, 20, sel ? '#f2d23c' : '#c9c4b8', 'left', 600); });
+    L.forEach(function (k, i) { var sel = i === game.storyIdx, y = 150 + i * 46; if (sel) { ctx.fillStyle = 'rgba(214,40,40,0.25)'; ctx.fillRect(56, y - 30, 330, 42); } txt((k === 'P0' ? 'Prologo' : k === 'PQ' ? 'Cap. zero' : 'Cap. ' + k.slice(1)) + ' · ' + STORY[k][0], 70, y, 20, sel ? '#f2d23c' : '#c9c4b8', 'left', 600); });
     // illustrazione e racconto
     var bgA = /^bg:/.test(st[1]) && R.bgAi(st[1].slice(3)), im = bgA ? bgA.img : R.sceneArt(st[1]), bx = 430, by = 120, bw = 790, bh = 380;
     ctx.fillStyle = '#000'; ctx.fillRect(bx, by, bw, bh);
     if (im) { var k2 = Math.max(bw / im.width, bh / im.height), iw = im.width * k2, ih = im.height * k2; ctx.save(); ctx.beginPath(); ctx.rect(bx, by, bw, bh); ctx.clip(); ctx.imageSmoothingEnabled = false; ctx.drawImage(im, bx + (bw - iw) / 2, by + (bh - ih) / 2, iw, ih); ctx.restore(); }
     ctx.strokeStyle = '#d62828'; ctx.lineWidth = 3; ctx.strokeRect(bx, by, bw, bh);
-    txt((key === 'P0' ? 'PROLOGO' : 'CAPITOLO ' + key.slice(1)) + ' · ' + st[0].toUpperCase(), bx, by + bh + 44, 26, '#f4efe2', 'left', 700);
+    txt((key === 'P0' ? 'PROLOGO' : key === 'PQ' ? 'CAPITOLO ZERO' : 'CAPITOLO ' + key.slice(1)) + ' · ' + st[0].toUpperCase(), bx, by + bh + 44, 26, '#f4efe2', 'left', 700);
     wrapLines(st[2], bw, 20).forEach(function (ln, i) { txt(ln, bx, by + bh + 80 + i * 28, 20, '#c9c4b8', 'left', 400); });
     txt('↑ ↓ cambia capitolo · Esc o Invio: torna alla pausa', 70, C.VIEW_H - 30, 15, R.COL.dim, 'left', 400);
   }

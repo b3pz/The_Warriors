@@ -96,6 +96,9 @@ Tutti i Warriors portano un gilet di pelle marrone-rossiccio senza maniche, con 
 | `police_woman` | poliziotta in borghese seduta su una panchina, aria innocua |
 | `cyrus` | carismatico capo dei Riffs e della banda più grande della città: capelli neri pettinati all'indietro, lunga veste a quadri marrone e rame aperta su una camicia nera, pantaloni neri; braccia aperte mentre parla dal palco |
 | `riff` | membro di una banda disciplinata in tenuta da arti marziali |
+| `bopper` | membro dei Boppers di Harlem (una delle bande del raduno nel film): gilet viola lucido sopra la camicia, cappello a tesa larga viola o nero, pantaloni scuri, scarpe lucide; aria da strada, sicuro di sé |
+| `bopper_boss` | il capo dei Boppers: come sopra ma più grosso, giacca lunga viola, cappello con la piuma, catena d'oro |
+| `hihat` | uno degli Hi-Hats di SoHo (banda del raduno nel film): trucco bianco da mimo sul viso, bombetta nera, maglia a righe orizzontali bianche e nere, bretelle; si vede solo di passaggio |
 | `masai` | luogotenente dei Riffs, tenuta da arti marziali scura, sguardo duro |
 
 ## Fase 0: il modello di ogni personaggio (prima delle sue pose)
@@ -707,7 +710,38 @@ Quando una banda entra in scena per la prima volta il gioco mostra un'illustrazi
 531. `assets/incoming/scene/dlg_c4_ajax.png` → Riverside Park di notte: Ajax a torso nudo, il gilet buttato a terra, sorride e va incontro a mani nude al capo dei Baseball Furies che alza la mazza; altri Furies dietro sotto il lampione
 532. `assets/incoming/scene/cine_rembrandt_cut.png` → nell'appartamento delle Lizzies in penombra rosa e viola: una Lizzie con un coltello, Rembrandt si tiene il braccio ferito (taglio sulla manica, niente sangue in vista), Cochise lo tira via verso la porta chiusa
 
+### Capitolo zero (una settimana prima del raduno) e bande di passaggio
+
+533. `assets/incoming/fondali/PQ-01_a.png` → il lungomare di legno di Coney Island di notte, chioschi chiusi con le saracinesche, sui muri le W rosse dei Warriors coperte da scritte viola fresche; luce: notte, lampioni; un solo pezzo, 1280×720 come le altre aree da una schermata
+534. `assets/incoming/fondali/PQ-02_a.png` → sotto la ferrovia sopraelevata di Coney Island di notte: piloni di ferro, binari in alto, luce dei lampioni a strisce tra le travi, cartacce, scritte viola sui piloni; luce: notte; un solo pezzo, 1280×720 come le altre aree da una schermata
+535. `assets/incoming/fondali/PQ-03_a.png` → il luna park di Coney Island chiuso, di notte: giostre ferme, la Wonder Wheel spenta in fondo, recinzioni, insegne spente; luce: notte; un solo pezzo, 1280×720 come le altre aree da una schermata
+536. `assets/incoming/fondali/PQ-04_a.png` → il molo di legno di Coney Island di notte, verso la fine del molo, lampioni, il mare nero e le luci lontane; luce: notte; un solo pezzo, 1280×720 come le altre aree da una schermata
+537. `assets/incoming/personaggi/bopper/idle_1.png` → bopper, in guardia, fermo, pugni alzati
+538. `assets/incoming/personaggi/bopper/walk_1.png` → bopper, camminata, fotogramma 1 di 4: gamba destra avanti
+539. `assets/incoming/personaggi/bopper/walk_2.png` → bopper, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+540. `assets/incoming/personaggi/bopper/walk_3.png` → bopper, camminata, fotogramma 3 di 4: gamba sinistra avanti
+541. `assets/incoming/personaggi/bopper/walk_4.png` → bopper, camminata, fotogramma 4 di 4: passaggio
+542. `assets/incoming/personaggi/bopper/punch_1.png` → bopper, pugno diretto a braccio teso
+543. `assets/incoming/personaggi/bopper/hurt_1.png` → bopper, colpito, testa all'indietro, smorfia
+544. `assets/incoming/personaggi/bopper/down_1.png` → bopper, a terra, sdraiato sulla schiena (figura orizzontale)
+545. `assets/incoming/personaggi/bopper_boss/idle_1.png` → bopper_boss, in guardia, fermo, pugni alzati
+546. `assets/incoming/personaggi/bopper_boss/walk_1.png` → bopper_boss, camminata, fotogramma 1 di 4: gamba destra avanti
+547. `assets/incoming/personaggi/bopper_boss/walk_2.png` → bopper_boss, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+548. `assets/incoming/personaggi/bopper_boss/walk_3.png` → bopper_boss, camminata, fotogramma 3 di 4: gamba sinistra avanti
+549. `assets/incoming/personaggi/bopper_boss/walk_4.png` → bopper_boss, camminata, fotogramma 4 di 4: passaggio
+550. `assets/incoming/personaggi/bopper_boss/punch_1.png` → bopper_boss, pugno diretto a braccio teso
+551. `assets/incoming/personaggi/bopper_boss/hurt_1.png` → bopper_boss, colpito, testa all'indietro, smorfia
+552. `assets/incoming/personaggi/bopper_boss/down_1.png` → bopper_boss, a terra, sdraiato sulla schiena (figura orizzontale)
+553. `assets/incoming/personaggi/hihat/idle_1.png` → hihat, in piedi tranquillo, braccia lungo i fianchi, guarda verso sinistra (non in guardia)
+554. `assets/incoming/personaggi/hihat/walk_1.png` → hihat, camminata, fotogramma 1 di 4: gamba destra avanti
+555. `assets/incoming/personaggi/hihat/walk_2.png` → hihat, camminata, fotogramma 2 di 4: gambe vicine, passaggio
+556. `assets/incoming/personaggi/hihat/walk_3.png` → hihat, camminata, fotogramma 3 di 4: gamba sinistra avanti
+557. `assets/incoming/personaggi/hihat/walk_4.png` → hihat, camminata, fotogramma 4 di 4: passaggio
+558. `assets/incoming/oggetti/logo_boppers.png` → logo dei Boppers: scritta BOPPERS viola con un cappello a tesa larga, stile toppa da gilet anni '70, sfondo magenta
+559. `assets/incoming/scene/intro_boppers.png` → di spalle i Warriors (Cleon in testa, con Swan, Ajax e Snow); a destra i Boppers sotto la sopraelevata di Coney Island di notte, gilet viola e cappelli, il loro capo davanti; formato 1536×1024 come le altre entrate delle bande
+560. `assets/incoming/scene/cine_pq_invite.png` → all'alba sul lungomare di Coney Island: un ragazzo dei Riffs in lunga tunica consegna l'invito; davanti a lui Cleon, Swan e gli altri Warriors di spalle; cielo rosa
+
 ## Fine
 
-In tutto 532 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
+In tutto 560 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
 

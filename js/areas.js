@@ -59,6 +59,8 @@ var W = window.W;
     if (def.mercy === 'npc' || (def.mercy === 'player2' && !world.players.some(function (p) { return p.char.id === 'mercy'; }))) {
       var m = new W.Npc(world, 'mercy', 'mercy', 80, mid + 50, 1); m.follow = lead; m.followOff = 0; m.keep = true; this.mercyNpc = m; world.npcs.push(m);
     }
+    // bande del raduno «di passaggio»: guardano da lontano, non combattono (solo se ChatGPT ha già disegnato i loro personaggi)
+    if (def.cameo && W.ATLAS_AI && W.ATLAS_AI.sets[def.cameo.set]) for (var cm = 0; cm < (def.cameo.n || 3); cm++) { var cmn = new W.Npc(world, 'cameo' + cm, def.cameo.set, def.cameo.x + cm * 70, f[0] + 4 + (cm % 2) * 10, -1); cmn.name = ''; cmn.crowd = true; cmn.keep = true; cmn.cameo = true; world.npcs.push(cmn); }
     if (def.crowd) for (var c = 0; c < 14; c++) { var cn = new W.Npc(world, 'cw' + c, def.crowd[c % def.crowd.length], 500 + c * 95, f[0] + 6 + (c % 3) * 12, c % 2 ? 1 : -1); cn.name = ''; cn.crowd = true; cn.keep = true; world.npcs.push(cn); }
     if (def.watcher) { var wt = new W.Npc(world, 'watch', def.watcher, def.width - 260, f[0] + 20, -1); wt.name = 'Capo Punks'; wt.keep = true; world.npcs.push(wt); }
     if (def.kind === 'training') this.setupTraining();
@@ -85,6 +87,7 @@ var W = window.W;
   AreaRun.prototype.playScene = function (s) { if (s) this.sceneQueue.push(s); };
   // presentazione delle bande: la prima volta che una banda entra in scena il gioco si ferma su di lei, con nome, territorio e logo
   W.GANGS = {
+    boppers:  { name: 'THE BOPPERS', where: 'Harlem · Manhattan', col: '#8a4fc0', sets: /^bopper/, ch: 'PQ', start: 'PQ-02' },
     turnbull: { name: "TURNBULL A.C.'s", where: 'Gun Hill Road · Bronx', col: '#d8a23a', sets: /^turnbull/, ch: 'C2', start: 'C2-01' },
     orphans:  { name: 'THE ORPHANS', where: 'Tremont · Bronx', col: '#9a8f7a', sets: /^(orphan|sully)/, ch: 'C3', start: 'C3-01' },
     furies:   { name: 'THE BASEBALL FURIES', where: 'Riverside Park · Manhattan', col: '#e9e4d6', sets: /^fury/, ch: 'C4' },
@@ -234,6 +237,7 @@ var W = window.W;
 
   AreaRun.prototype.step = function (w, dt) {
     this.t += dt; this.banner.t += dt;
+    if (this.def.cameo && !this.cameoShown && w.npcs.some(function (n) { return n.cameo; }) && w.players.some(function (p) { return Math.abs(p.x - this.def.cameo.x) < 520; }, this)) { this.cameoShown = true; this.tagToast = { text: this.def.cameo.text, t: 0 }; }
     if (this.tagAnim) { this.tagAnim.t += dt; if (this.tagAnim.t > 2.2) this.tagAnim = null; }
     if (this.tagToast) { this.tagToast.t += dt; if (this.tagToast.t > 4) this.tagToast = null; }
     if (W.TAG_AUTO && W.TAG_AUTO[this.def.id] && !this.def.arcade && this.world.flags[W.TAG_AUTO[this.def.id]] && W.Tags.add(this.def.id)) this.tagToast = { text: 'La W dei Warriors · ' + W.Tags.count() + ' / ' + W.Tags.total, t: 0 };
@@ -257,7 +261,7 @@ var W = window.W;
     this.stepWaves(w, dt, duo);
     // fuga: timer, inseguitori, bus
     if (this.timer !== null && !this.finishing) {
-      this.timer -= dt;
+      if (!this.fighting) this.timer -= dt;   // durante una rissa il tempo si ferma: si combatte, poi si riparte
       if (this.timer <= 0) { this.timer = 0; w.failed = true; w.failReason = 'Tempo scaduto'; }
     }
     if (this.pursuerType) this.stepPursuers(w, dt);
@@ -283,7 +287,7 @@ var W = window.W;
   };
 
   AreaRun.prototype.stepWaves = function (w, dt, duo) {
-    var def = this.def; if (!def.waves) return;
+    var def = this.def, self0 = this; if (!def.waves) return;
     if (!this.fighting && this.waveIdx < def.waves.length) {
       var wave = def.waves[this.waveIdx];
       var lead = Math.max.apply(null, w.players.map(function (p) { return p.out ? 0 : p.x; }));
@@ -298,16 +302,22 @@ var W = window.W;
     }
     if (!this.fighting) return;
     var req = w.enemies.filter(function (e) { return e.alive() && !e.pursuer && !e.stationed; });
+    // un nemico della rissa rimasto bloccato lontano (dietro un ostacolo) rientra dal bordo dello schermo
+    req.forEach(function (e) { var near = Math.min.apply(null, w.players.filter(function (p) { return !p.out; }).map(function (p) { return Math.abs(p.x - e.x); }).concat([1e9])); var prog = (e._lastNear === undefined || near < e._lastNear - 2); if (prog) e._lastNear = near; e._farT = (near > 420 && !prog) ? (e._farT || 0) + dt : 0; if (e._farT > 4) { var px = w.players[0].x, sd = e.x < px ? -1 : 1; e.x = Math.max(60, Math.min(self0.def.width - 60, px + sd * 380)); e._farT = 0; e._lastNear = undefined; } });
     var onField = w.enemies.filter(function (e) { return e.alive(); }).length;
     var max = C.MAX_ON_FIELD[duo ? 1 : 0];
     while (this.queue.length && onField < max) {
       var s = this.queue.shift();
-      var x = s[1] === 'R' ? w.cam.x + C.VIEW_W + 60 : w.cam.x - 60;
-      var e = new W.Enemy(w, s[0], x, Math.max(this.floor[0] + 10, Math.min(this.floor[1] - 6, s[2]))); e.face = s[1] === 'R' ? -1 : 1;
+      var side = s[1];
+      // chi entra da un lato chiuso da un ostacolo a tutta profondità (che i nemici non saltano) entra dall'altro
+      var blockedSide = function (sd) { var xs = sd === 'R' ? w.cam.x + C.VIEW_W + 60 : w.cam.x - 60, lead = w.players[0].x, fl = self0.floor; return w.props.some(function (pr) { return pr.solid && pr.low && pr.y0 <= fl[0] + 12 && pr.y1 >= fl[1] - 12 && ((pr.x0 > Math.min(xs, lead) && pr.x0 < Math.max(xs, lead))); }); };
+      if (blockedSide(side) && !blockedSide(side === 'R' ? 'L' : 'R')) side = side === 'R' ? 'L' : 'R';
+      var x = side === 'R' ? w.cam.x + C.VIEW_W + 60 : w.cam.x - 60;
+      var e = new W.Enemy(w, s[0], x, Math.max(this.floor[0] + 10, Math.min(this.floor[1] - 6, s[2]))); e.face = side === 'R' ? -1 : 1;
       // entrate diverse per banda: i Furies scavalcano la recinzione, i Turnbull saltano giù dall'alto, i Punks arrivano pattinando
       var set0 = e.def.set || '';
-      if (/^fury/.test(set0)) { e.entry = 'vault'; e.x = s[1] === 'R' ? w.cam.x + C.VIEW_W - 140 - w.rng() * 90 : w.cam.x + 140 + w.rng() * 90; e.entryY = e.y; e.y = this.floor[0] - 4; }
-      else if (/^turnbull/.test(set0) && this.kind !== 'escape') { e.entry = 'drop'; e.x = s[1] === 'R' ? w.cam.x + C.VIEW_W - 150 - w.rng() * 80 : w.cam.x + 150 + w.rng() * 80; e.z = 340; }
+      if (/^fury/.test(set0)) { e.entry = 'vault'; e.x = side === 'R' ? w.cam.x + C.VIEW_W - 140 - w.rng() * 90 : w.cam.x + 140 + w.rng() * 90; e.entryY = e.y; e.y = this.floor[0] - 4; }
+      else if (/^turnbull/.test(set0) && this.kind !== 'escape') { e.entry = 'drop'; e.x = side === 'R' ? w.cam.x + C.VIEW_W - 150 - w.rng() * 80 : w.cam.x + 150 + w.rng() * 80; e.z = 340; }
       else if (/^punk/.test(set0)) e.entry = 'skate';
       w.enemies.push(e); onField++; req.push(e);
       if (e.weapon && !w.flags.firstBat) w.flags.firstBat = this.t;

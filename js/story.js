@@ -152,7 +152,7 @@ var W = window.W;
       if (this.video.el.ended()) { this.skip(); }
       return;
     }
-    if (this.clip) { var cp = this.clip; cp.t += dt; if (cp.el.ended() || (cp.t > 6 && !cp.el.ready()) || cp.t > 40) this.endClip(); return; }
+    if (this.clip) { var cp = this.clip; cp.t += dt; if (cp.el.ended() || (cp.t > 6 && !cp.el.ready()) || cp.t > 16) this.endClip(); return; }
     if (this.line) { this.lineT += dt; return; }
     if (this.choice) return;
     if (this.wait > 0) { this.wait -= dt; return; }

@@ -76,7 +76,7 @@ W.Render = (function () {
   // ---- pixel art approvata (Raccolta 04): set per personaggio, pose con ripieghi dichiarati
   // Mercy dall'alba dei tunnel in poi porta la giacca di jeans rubata (nel film copriva il gesso al polso dell'attrice)
   // set vecchi che hanno un equivalente fra le figure nuove: si usano quelle (i disarmati restano nello stesso set, pose nobat_*)
-  var SET_ALIAS = { turnbull_b: 'turnbull', fury_hood: 'fury', lizzie_b: 'lizzie_boss', fury_nobat: 'fury', fury_hood_nobat: 'fury', turnbull_fast: 'turnbull', fury_boss: 'fury', punk_boss: 'punk', lizzie_boss: 'lizzie', sully: 'orphan' };
+  var SET_ALIAS = { bopper_boss: 'bopper', bopper: 'orphan', hihat: 'civilian', turnbull_b: 'turnbull', fury_hood: 'fury', lizzie_b: 'lizzie_boss', fury_nobat: 'fury', fury_hood_nobat: 'fury', turnbull_fast: 'turnbull', fury_boss: 'fury', punk_boss: 'punk', lizzie_boss: 'lizzie', sully: 'orphan' };
   function aiSet(id) { var A = W.ATLAS_AI && W.ATLAS_AI.sets; if (!A) return id; var seen = 0; while (!A[id] && SET_ALIAS[id] && seen++ < 3) id = SET_ALIAS[id]; return id; }
   function setOf(a) {
     var id0 = setOfBase(a), id = aiSet(id0), w = a.world; a._nobat = /_nobat$/.test(id0) && id !== id0;
@@ -347,7 +347,7 @@ W.Render = (function () {
   function drawBg(w) {
     var a = w.area.def, cx = w.cam.x;
     var bd = W.BG_PX && W.BG_PX[a.bg], bi = BGPX[a.bg];
-    var ba = W.BG_AI && W.BG_AI[a.id], bai = BGAI[a.id];
+    var bk = (W.BG_AI && W.BG_AI[a.id]) ? a.id : (a.bgAs || a.id), ba = W.BG_AI && W.BG_AI[bk], bai = BGAI[bk];   // bgAs: fondale di un'altra area finché il suo non c'è
     if (ba && bai && bai.ok) {
       // fondale integrato dalle immagini nuove: già in scala e allineato al pavimento dell'area
       ctx.drawImage(bai, Math.max(0, Math.min(ba.w - C.VIEW_W, cx)), 0, C.VIEW_W, C.VIEW_H, 0, 0, C.VIEW_W, C.VIEW_H);
@@ -678,6 +678,7 @@ W.Render = (function () {
       if (e.type === 'flashfx' && opts.flash) flash = 0.5;
       if (e.type === 'shakefx' && opts.shake) shake = e.amt || 8;
       if (e.type === 'revive') fx.push({ k: 'text', x: e.x, y: e.y - 190, t: 0, s: 'IN PIEDI', col: '#7fd18a' });
+      if (e.type === 'bossphase') { fx.push({ k: 'text', x: e.x, y: e.y - 230, t: 0, s: (e.say || 'RINFORZI!').toUpperCase(), col: '#ff5a3c' }); if (opts.shake) shake = Math.max(shake, 12); }
       if (e.type === 'bushit') { fx.push({ k: 'text', x: e.x, y: e.y - 190, t: 0, s: 'TRAVOLTO!', col: '#f2d23c' }); if (opts.shake) shake = Math.max(shake, 12); }
       if (e.type === 'enemyko') { for (var dk = 0; dk < 7; dk++) fx.push({ k: 'dust', x: e.x + (Math.random() - 0.5) * 90, y: e.y + 4, vx: (Math.random() - 0.5) * 160, t: 0, r: 10 + Math.random() * 14 }); if (opts.shake) shake = Math.max(shake, e.elite ? 14 : 8); }
       if (e.type === 'land') { for (var dl = 0; dl < (e.heavy ? 8 : 5); dl++) fx.push({ k: 'dust', x: e.x + (Math.random() - 0.5) * 70, y: e.y + 4, vx: (Math.random() - 0.5) * 220, t: 0, r: 9 + Math.random() * 12 }); if (e.heavy && opts.shake) shake = Math.max(shake, 7); }
@@ -1169,7 +1170,7 @@ W.Render = (function () {
     a.def.stalls.forEach(function (sx, i) {
       var checked = st && st.phase !== 'hide' && (i < st.target || (i === st.target && st.checking > 0 && i !== st.stall && st.checking < 0.7));
       var mine = st && st.stall === i;
-      if (W.BG_AI && W.BG_AI[a.def.id] && BGAI[a.def.id] && BGAI[a.def.id].ok) {
+      if (W.BG_AI && (W.BG_AI[a.def.id] || W.BG_AI[a.def.bgAs])) {
         // le porte sono già nel fondale: si disegna solo la porta che il Punk spalanca (e un filo di luce su quella dove sei)
         list.push({ y: f[0] - 2, d: function () {
           var x = sx - cx, dt = 166, db = 456, hw = 88;
@@ -1283,7 +1284,7 @@ W.Render = (function () {
     var x = Math.round(tg.x - w.cam.x), y = ar.floor[0] - 36, t = w.time, bg = ar.def.bg || ''; if (x < -200 || x > C.VIEW_W + 200) return;
     ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     // dove il fondale non ha un muro (parco, spiaggia sotto il molo) la W va su un muretto di pietra o su un pilone di legno
-    var fy = ar.floor[0] + 14, aiBg = W.BG_AI && W.BG_AI[ar.def.id];
+    var fy = ar.floor[0] + 14, aiBg = W.BG_AI && (W.BG_AI[ar.def.id] || W.BG_AI[ar.def.bgAs]);
     if (aiBg) { /* il muro c'è già nel fondale */ }
     else if (/park/.test(bg)) {
       ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(x - 16, fy, 120, 10, 0, 0, Math.PI * 2); ctx.fill();
@@ -1320,7 +1321,7 @@ W.Render = (function () {
     var a = w.area && w.area.def; if (!a || (w.area.scene && (a.kind === 'scene' || a.kind === 'epilogue'))) return;
     var bg = a.bg || '', cx = w.cam.x * 1.35, H = C.VIEW_H, t = w.time, kind;
     if (/street|alley|harbor/.test(bg)) kind = 'street'; else if (/park/.test(bg)) kind = 'park'; else if (/metro/.test(bg)) kind = 'metro';
-    else if (/coney|boardwalk/.test(bg) && !(W.BG_AI && W.BG_AI[a.id])) kind = 'coney'; else return;   // a Coney Island e in spiaggia i pali neri sembravano croci
+    else if (/coney|boardwalk/.test(bg) && !(W.BG_AI && (W.BG_AI[a.id] || W.BG_AI[a.bgAs]))) kind = 'coney'; else return;   // a Coney Island e in spiaggia i pali neri sembravano croci
     var step = kind === 'metro' ? 760 : 680;
     for (var gx = Math.floor((cx - 200) / step) * step; gx < cx + C.VIEW_W + 200; gx += step) {
       var r = hsh(gx * 0.37 + a.id.length), x = gx + r * 220 - cx, v = Math.floor(r * 3);
@@ -1396,7 +1397,7 @@ W.Render = (function () {
     var list = [];
     w.props.forEach(function (p) {
       if (p.kind === 'lamp') return;
-      LOW_AI = !!(W.BG_AI && w.area && W.BG_AI[w.area.def.id]); ASC = (w.area && w.area.def.spriteScale) || 1;
+      LOW_AI = !!(W.BG_AI && w.area && (W.BG_AI[w.area.def.id] || W.BG_AI[w.area.def.bgAs])); ASC = (w.area && w.area.def.spriteScale) || 1;
       if (p.kind === 'low' || p.kind === 'fire') { for (var yy = p.y0 + 10; yy <= p.y1; yy += 26) (function (y) { list.push({ y: y, d: function () { drawLowSeg(p, cx, y, w.time); } }); })(yy); return; }
       list.push({ y: p.y1, d: function () { scaledAt((p.x0 + p.x1) / 2 - cx, p.y1, function () { drawProp(p, cx); }); } });
     });

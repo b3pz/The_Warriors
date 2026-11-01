@@ -70,6 +70,10 @@ Il gioco è a 1280 × 720. Il pavimento comincia alla riga indicata e arriva in 
 
 | Area | Nome | Ambiente | Luce | Misura | Pavimento da y |
 |---|---|---|---|---|---|
+| PQ-01 | Il territorio | Coney Island | notte | 1280 × 720 | 480 |
+| PQ-02 | Sotto la sopraelevata | Coney Island | notte | 1280 × 720 | 470 |
+| PQ-03 | Il luna park chiuso | Coney Island | notte | 1280 × 720 | 510 |
+| PQ-04 | Il molo | Coney Island | notte | 1280 × 720 | 470 |
 | P0-01 | Il ritrovo | Coney Island | sera | 1280 × 720 | 510 |
 | P0-02 | Allenamento | Coney Island | sera | 1280 × 720 | 470 |
 | P0-03 | Verso l'uscita | Coney Island | sera | 1280 × 720 | 480 |

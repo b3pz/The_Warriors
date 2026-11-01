@@ -137,3 +137,10 @@ Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source,
 - Sfondo vivo: sagome di passanti, fari di auto che passano.
 - Più risse fedeli: Turnbull giù dal bus (C2-01) e all'inseguimento (C2-03), seconda ondata di Furies (C4-02), ondata in più di Punks (C6-03). Ondata del capo dei Furies più leggera in due.
 - Effetti sonori registrati: 40 suoni dal pacchetto Kenney «Impact Sounds» (licenza CC0, in assets/incoming/suoni/kenney con il file di licenza) → assets/sfx (pugni, mazze, metallo, bottiglie, vetri, cadute, atterraggi, raccolta).
+
+## 1 novembre, sera: gioco più lungo
+- **Capitolo zero «Una settimana prima»** (PQ-01…PQ-04, prima del prologo): i Boppers di Harlem coprono le W sul lungomare; allenamento con Cleon (spostato qui), rissa sotto la sopraelevata, fuga nel luna park, capo dei Boppers sul molo, poi un Riff porta l'invito di Cyrus. Finché ChatGPT non disegna Boppers e fondali (voci 533–560 di IMMAGINI_PER_AI.md) si usano gli sprite degli Orphans e i fondali di Coney del prologo (`bgAs`).
+- **Ondate in più** in C1-03, C2-01, C2-03, C3-02, C3-03 (Orphans), C3-04 (polizia alla 96ª), C4-01, C4-02, C5-03 (Lizzies), C6-03 (`EXTRA_WAVES` in campaign.js). Il timer delle fughe si ferma durante le risse. I nemici non entrano dal lato chiuso da un ostacolo a tutta profondità.
+- **Seconda fase dei capi** (`phase2` in config.js): Veterano dei Furies, capo dei Punks, capo dei Boppers chiamano rinforzi a metà salute e accelerano.
+- **Bande di passaggio** (`CAMEOS`): Boppers in C4-01, Hi-Hats in C5-05 e C6-01; compaiono solo quando ci sono i loro sprite.
+- Morte di Fox mostrata (passo di scena `train`), regole del nascondiglio nei bagni, passo `art` per cambiare illustrazione a metà scena.

@@ -162,7 +162,7 @@ def do_characters():
 def area_table():
     """Larghezza e riga del pavimento di ogni area (tabella in docs/SPRITE_MANCANTI.md)."""
     t = {}
-    for m in re.finditer(r'^\| ((?:P0|C\d)-\d\d) \| [^|]+ \| [^|]+ \| [^|]+ \| (\d+) × 720 \| (\d+) \|$', (ROOT / 'docs' / 'SPRITE_MANCANTI.md').read_text(encoding='utf-8'), re.M):
+    for m in re.finditer(r'^\| ((?:P0|PQ|C\d)-\d\d) \| [^|]+ \| [^|]+ \| [^|]+ \| (\d+) × 720 \| (\d+) \|$', (ROOT / 'docs' / 'SPRITE_MANCANTI.md').read_text(encoding='utf-8'), re.M):
         t[m.group(1)] = (int(m.group(2)), int(m.group(3)))
     return t
 
@@ -173,7 +173,7 @@ def do_backgrounds():
     if not base.exists(): return bg
     areas = area_table(); groups = {}
     for f in sorted(base.glob('*.png')) + sorted(base.glob('*.jpg')):
-        m = re.match(r'^((?:P0|C\d)-\d\d)_([abc])$', f.stem)
+        m = re.match(r'^((?:P0|PQ|C\d)-\d\d)_([abc])$', f.stem)
         if not m or m.group(1) not in areas: report.append(f'- scartato `{f.relative_to(INC)}`: nome non nel formato `<area>_a.png` (es. `C4-02_a.png`)'); continue
         groups.setdefault(m.group(1), []).append((m.group(2), f))
     for aid, pieces in sorted(groups.items()):
