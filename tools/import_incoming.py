@@ -94,6 +94,13 @@ def feet_x(im):
     return int(sum(xs) / len(xs)) if xs else w // 2
 
 
+def hips_x(im):
+    """Centro del bacino (fascia al 38–58% dell'altezza): per la corsa, dove i piedi cambiano a ogni passo."""
+    w, h = im.size; a = im.getchannel('A').load()
+    xs = [x for y in range(int(h * 0.38), int(h * 0.58)) for x in range(w) if a[x, y] > 0]
+    return int(sum(xs) / len(xs)) if xs else w // 2
+
+
 def pack(frames, max_w=2048):
     x = y = row_h = 0; placed = []; W = 0
     for f in frames:
@@ -132,13 +139,16 @@ def do_characters():
         if ref is None: continue
         s = TARGET_H / ref.size[1]
         order = sorted(imgs.keys()); frames = []; meta = []
+        # i fotogrammi della corsa hanno tutti la stessa altezza (se l'AI ne disegna uno più grande, il ciclo «pulsa»)
+        runs = sorted(imgs[k].size[1] for k in imgs if k[0] == 'run'); run_h = runs[len(runs) // 2] if runs else None
         for k in order:
-            im = imgs[k]; size = (max(1, round(im.size[0] * s)), max(1, round(im.size[1] * s)))
+            im = imgs[k]; sk = s * (run_h / im.size[1] if k[0] == 'run' and run_h else 1)
+            size = (max(1, round(im.size[0] * sk)), max(1, round(im.size[1] * sk)))
             if size[1] > TARGET_H * 1.6 or size[0] > TARGET_H * 2.6:
                 report.append(f'- attenzione `{sd.name}/{k[0]}_{k[1]}`: molto più grande della posa idle (scala diversa?)')
             px_ = pixelize(im, size); frames.append(px_)
             lying = k[0].startswith(('down', 'pinned', 'arrest', 'sit'))
-            meta.append((k, px_.size[0] // 2 if lying else feet_x(px_), px_.size[1]))
+            meta.append((k, px_.size[0] // 2 if lying else hips_x(px_) if k[0] == 'run' else feet_x(px_), px_.size[1]))
         sheet, placed = pack(frames)
         sheet.save(out_dir / f'{sd.name}.png')
         fr = {}
