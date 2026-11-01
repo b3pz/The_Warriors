@@ -43,6 +43,7 @@ W.Audio = (function () {
     switch (e.type) {
       case 'hit': return e.weapon ? (e.weaponType === 'pipe' ? 'hit_metal' : 'hit_weapon') : (e.heavy ? 'hit_heavy' : 'hit_light');
       case 'break': return 'break';
+      case 'enemyko': return 'ko';
       default: return e.type;
     }
   }

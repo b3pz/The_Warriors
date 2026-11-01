@@ -263,7 +263,7 @@ SFX_RULES = [
     ('hit_weapon', ['hit_weapon', 'impactwood', 'impactplank', 'mazza']), ('hit_metal', ['hit_metal', 'impactmetal', 'tubo']),
     ('bottle', ['bottle', 'impactglass_light', 'impactglass_medium', 'bottiglia']), ('break', ['break', 'impactglass_heavy', 'rottura', 'vetro']),
     ('ko', ['ko', 'impactsoft_heavy', 'caduta']), ('throw', ['throw', 'impactsoft_medium', 'lancio']), ('swing', ['swing', 'whoosh', 'fendente']),
-    ('pickup', ['pickup', 'raccogli']), ('shot', ['shot', 'gunshot', 'sparo']), ('siren', ['siren', 'sirena']), ('train', ['train', 'subway', 'treno', 'metro']),
+    ('pickup', ['pickup', 'raccogli', 'impacttin']), ('land', ['land', 'atterra', 'impactgeneric_light']), ('shot', ['shot', 'gunshot', 'sparo']), ('siren', ['siren', 'sirena']), ('train', ['train', 'subway', 'treno', 'metro']),
     ('skate', ['skate', 'roller', 'pattini']), ('spray', ['spray', 'bomboletta']), ('fire', ['fire', 'fuoco', 'fiamme']), ('open', ['door', 'porta'])]
 
 

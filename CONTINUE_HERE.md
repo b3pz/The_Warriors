@@ -136,3 +136,4 @@ Salvare ogni lotto su GitHub e aggiornare questo checkpoint. Distinguere source,
 - Entrate: Furies scavalcano (vault), Turnbull cadono dall'alto (drop, polvere), Punks pattinano veloci.
 - Sfondo vivo: sagome di passanti, fari di auto che passano.
 - Più risse fedeli: Turnbull giù dal bus (C2-01) e all'inseguimento (C2-03), seconda ondata di Furies (C4-02), ondata in più di Punks (C6-03). Ondata del capo dei Furies più leggera in due.
+- Effetti sonori registrati: 40 suoni dal pacchetto Kenney «Impact Sounds» (licenza CC0, in assets/incoming/suoni/kenney con il file di licenza) → assets/sfx (pugni, mazze, metallo, bottiglie, vetri, cadute, atterraggi, raccolta).

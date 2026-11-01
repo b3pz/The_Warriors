@@ -4384,7 +4384,7 @@ W.Render = (function () {
 'use strict';
 // Generato da tools/import_incoming.py dai suoni in assets/incoming/: non modificare a mano.
 window.W = window.W || {};
-W.SFX_AUTO = {};
+W.SFX_AUTO = {"bottle": ["assets/sfx/bottle_1.mp3", "assets/sfx/bottle_2.mp3", "assets/sfx/bottle_3.mp3", "assets/sfx/bottle_4.mp3", "assets/sfx/bottle_5.mp3"], "break": ["assets/sfx/break_1.mp3", "assets/sfx/break_2.mp3", "assets/sfx/break_3.mp3"], "hit_heavy": ["assets/sfx/hit_heavy_1.mp3", "assets/sfx/hit_heavy_2.mp3", "assets/sfx/hit_heavy_3.mp3", "assets/sfx/hit_heavy_4.mp3", "assets/sfx/hit_heavy_5.mp3"], "hit_light": ["assets/sfx/hit_light_1.mp3", "assets/sfx/hit_light_2.mp3", "assets/sfx/hit_light_3.mp3", "assets/sfx/hit_light_4.mp3", "assets/sfx/hit_light_5.mp3"], "hit_metal": ["assets/sfx/hit_metal_1.mp3", "assets/sfx/hit_metal_2.mp3", "assets/sfx/hit_metal_3.mp3"], "hit_weapon": ["assets/sfx/hit_weapon_1.mp3", "assets/sfx/hit_weapon_2.mp3", "assets/sfx/hit_weapon_3.mp3", "assets/sfx/hit_weapon_4.mp3", "assets/sfx/hit_weapon_5.mp3", "assets/sfx/hit_weapon_6.mp3"], "ko": ["assets/sfx/ko_1.mp3", "assets/sfx/ko_2.mp3", "assets/sfx/ko_3.mp3", "assets/sfx/ko_4.mp3", "assets/sfx/ko_5.mp3"], "land": ["assets/sfx/land_1.mp3", "assets/sfx/land_2.mp3", "assets/sfx/land_3.mp3"], "pickup": ["assets/sfx/pickup_1.mp3", "assets/sfx/pickup_2.mp3"], "throw": ["assets/sfx/throw_1.mp3", "assets/sfx/throw_2.mp3", "assets/sfx/throw_3.mp3"]};
 
 </script>
 <script>
@@ -4433,6 +4433,7 @@ W.Audio = (function () {
     switch (e.type) {
       case 'hit': return e.weapon ? (e.weaponType === 'pipe' ? 'hit_metal' : 'hit_weapon') : (e.heavy ? 'hit_heavy' : 'hit_light');
       case 'break': return 'break';
+      case 'enemyko': return 'ko';
       default: return e.type;
     }
   }
