@@ -130,10 +130,64 @@ W.Render = (function () {
   // pose sostitutive per chi non ha ancora le pose di lotta (Mercy nell'Arcade)
   var POSE_ALIAS = { mercy: { punch: 'hand', heavy: 'hand', kick: 'run', jumpkick: 'jump', hurt: 'cover', dodge: 'run', grab: 'hand', throw: 'hand' } };
   POSE_ALIAS.mercy_giacca = POSE_ALIAS.mercy;
+  // Trucco dei Baseball Furies: nel film ognuno ha la faccia dipinta di un colore diverso (bianco, giallo, blu, rosso, nero,
+  // alcuni a metà). Le tavole li hanno quasi tutti gialli o senza trucco: la faccia (sotto la visiera, dal lato dello sguardo)
+  // viene ridipinta per ogni Fury. Il capo ha il trucco a due colori.
+  var FURY_PAINT = { white: [235, 235, 230], blue: [60, 110, 215], red: [200, 40, 40], black: [48, 48, 54], yellow: [236, 200, 40] };
+  var FURY_CYCLE = ['white', 'yellow', 'blue', 'red', 'black'], furyN = 0, PAINTED = {};
+  function hsv(r, g, b) { var mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, h = 0; if (d) { if (mx === r) h = ((g - b) / d) % 6; else if (mx === g) h = (b - r) / d + 2; else h = (r - g) / d + 4; h *= 60; if (h < 0) h += 360; } return [h, mx ? d / mx : 0, mx / 255]; }
+  function paintedSheet(sid, im, key) {
+    var ck = sid + '|' + key; if (PAINTED[ck]) return PAINTED[ck];
+    var set = W.ATLAS_PX.sets[sid], parts = key.split('/'), ca = FURY_PAINT[parts[0]], cb = parts[1] ? FURY_PAINT[parts[1]] : null;
+    var c = document.createElement('canvas'); c.width = im.width; c.height = im.height;
+    var g = c.getContext('2d'); g.drawImage(im, 0, 0);
+    var data; try { data = g.getImageData(0, 0, c.width, c.height); } catch (e) { PAINTED[ck] = im; return im; }
+    var d = data.data, W2 = c.width;
+    function px(x, y) { var i = (y * W2 + x) * 4; return i; }
+    function dark(x, y) { var i = px(x, y); return d[i + 3] > 10 && Math.max(d[i], d[i + 1], d[i + 2]) / 255 < 0.25; }
+    for (var pose in set.frames) {
+      if (pose === 'down') continue;
+      set.frames[pose].forEach(function (f) {
+        var x0 = f[0], y0 = f[1], w = f[2], h = f[3], top = -1, x, y;
+        for (y = y0; y < y0 + h * 0.4 && top < 0; y++) { var n = 0; for (x = x0; x < x0 + w; x++) if (dark(x, y)) n++; if (n >= 10) top = y; }
+        if (top < 0) return;
+        var ls = [], rs = [];
+        for (y = top; y < top + 12; y++) { var l = 1e9, r = -1, k = 0; for (x = x0; x < x0 + w; x++) if (dark(x, y)) { k++; if (x < l) l = x; if (x > r) r = x; } if (k >= 10) { ls.push(l); rs.push(r); } }
+        ls.sort(function (p, q) { return p - q; }); rs.sort(function (p, q) { return p - q; });
+        var cl = ls[ls.length >> 1], cr = rs[rs.length >> 1], cx0 = Math.round(cl + (cr - cl) * 0.3), cx1 = cr + 6, mid = (cx0 + cx1) / 2;
+        var cand = {}, V = {};
+        for (y = top + 4; y < Math.min(y0 + h, top + 30); y++) for (x = Math.max(x0, cx0); x < Math.min(x0 + w, cx1); x++) {
+          var i = px(x, y); if (d[i + 3] < 10) continue;
+          var hv = hsv(d[i], d[i + 1], d[i + 2]);
+          if ((hv[0] >= 46 && hv[0] <= 75 && hv[1] > 0.45 && hv[2] > 0.35) || (hv[0] >= 8 && hv[0] < 46 && hv[1] > 0.32 && hv[1] < 0.85 && hv[2] > 0.45)) { cand[x + ',' + y] = 1; V[x + ',' + y] = hv[2]; }
+        }
+        var seen = {}, keep = [];
+        Object.keys(cand).forEach(function (st) {
+          if (seen[st]) return; var comp = [], stack = [st]; seen[st] = 1;
+          while (stack.length) { var q = stack.pop(); comp.push(q); var xy = q.split(','), qx = +xy[0], qy = +xy[1];
+            [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (dd) { var nk = (qx + dd[0]) + ',' + (qy + dd[1]); if (cand[nk] && !seen[nk]) { seen[nk] = 1; stack.push(nk); } }); }
+          var xs = comp.map(function (q) { return +q.split(',')[0]; }), ys = comp.map(function (q) { return +q.split(',')[1]; });
+          var ty = Math.min.apply(null, ys), mx = xs.reduce(function (p, q) { return p + q; }, 0) / xs.length, cw = Math.max.apply(null, xs) - Math.min.apply(null, xs) + 1, chh = Math.max.apply(null, ys) - ty + 1;
+          if (ty <= top + 14 && Math.abs(mx - mid) <= (cx1 - cx0) / 2 - 2 && comp.length >= 12 && cw >= 9 && chh <= cw * 2.2) keep = keep.concat(comp);
+        });
+        if (!keep.length) return;
+        var kx = keep.map(function (q) { return +q.split(',')[0]; }), fmid = (Math.min.apply(null, kx) + Math.max.apply(null, kx)) / 2;
+        keep.forEach(function (q) { var xy = q.split(','), qx = +xy[0], qy = +xy[1], i = px(qx, qy), col = (cb && qx >= fmid) ? cb : ca, v = V[q];
+          for (var j = 0; j < 3; j++) d[i + j] = Math.min(255, col[j] * (0.45 + 0.7 * v)); });
+      });
+    }
+    g.putImageData(data, 0, 0); PAINTED[ck] = c; return c;
+  }
+  function furyPaint(a, sid) {
+    if (!a.isEnemy || (sid !== 'fury' && sid !== 'fury_boss')) return null;
+    if (!a._paint) a._paint = sid === 'fury_boss' ? 'white/red' : FURY_CYCLE[furyN++ % FURY_CYCLE.length];
+    return a._paint;
+  }
   function drawPixel(a, cx, w) {
     var P = W.ATLAS_PX; if (!P || !useSprites) return false;
     var sid = setOf(a), set = P.sets[sid], im = PX[sid];
     if (!set || !im || !im.ok) return false;
+    var paintKey = furyPaint(a, sid); if (paintKey) im = paintedSheet(sid, im, paintKey);
     var sel = pickPose(a);
     // Ajax senza gilet dopo la sfida al capo dei Furies: pose novest_* quando ci sono
     if (a.char && a.char.id === 'ajax' && a.world && a.world.flags && a.world.flags.ajax_novest && set.frames['novest_' + sel.p]) sel.p = 'novest_' + sel.p;
