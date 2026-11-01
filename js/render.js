@@ -19,6 +19,8 @@ W.Render = (function () {
     return im;
   }
   var BGAI = {}, ARTSC = {};
+  // il logo del film, fornito dall'autore (assets/menu/logo_film.png)
+  var R_LOGO = loadImg('menu/logo_film.png');
   function init(canvas) {
     cv = canvas; ctx = cv.getContext('2d');
     var P = W.ATLAS_PX;
@@ -798,8 +800,8 @@ W.Render = (function () {
     var ar0 = w.area;
     if (ar0.st && (ar0.st.phase === 'wait' || ar0.st.phase === 'patrol')) {
       var nz = Math.min(1, ar0.st.noise);
-      ctx.fillStyle = 'rgba(8,10,16,0.8)'; ctx.fillRect(C.VIEW_W / 2 - 160, 130, 320, 44);
-      ctx.fillStyle = COL.ink; ctx.font = '600 15px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText('RUMORE', C.VIEW_W / 2 - 148, 157);
+      ctx.fillStyle = 'rgba(8,10,16,0.8)'; ctx.fillRect(C.VIEW_W / 2 - 160, 130, 320, 66);
+      ctx.fillStyle = COL.ink; ctx.font = '600 15px "Oswald", sans-serif'; ctx.textAlign = 'left'; ctx.fillText('RUMORE', C.VIEW_W / 2 - 148, 157); ctx.font = '500 13px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(233,228,214,0.75)'; ctx.fillText('se si riempie, il Punk ti sente e apre la tua porta', C.VIEW_W / 2, 186); ctx.textAlign = 'left';
       ctx.fillStyle = '#2a2f36'; ctx.fillRect(C.VIEW_W / 2 - 80, 145, 228, 14);
       ctx.fillStyle = nz > 0.7 ? '#e0453a' : nz > 0.4 ? '#e0a83a' : '#8fa0a8'; ctx.fillRect(C.VIEW_W / 2 - 80, 145, 228 * nz, 14);
     }
@@ -1067,7 +1069,8 @@ W.Render = (function () {
   }
   function drawScene(w, sc, ui) {
     if (sc.wheel) { drawWheelShot(sc.wheel); return; }
-    var art = sc.def.cine && ARTSC[sc.def.cine];
+    var art = (sc.artId && ARTSC[sc.artId] && ARTSC[sc.artId].ok) ? ARTSC[sc.artId] : sc.def.cine && ARTSC[sc.def.cine];
+    if (art !== sc.__lastArt) { sc.__lastArt = art; sc.__artT = 0; }
     if (art && art.ok) {
       // illustrazione della scena: copre il palco con gli sprite, lenta zoomata da fumetto
       if (!sc.__artT) sc.__artT = performance.now();
@@ -1086,7 +1089,8 @@ W.Render = (function () {
     if (sc.title) {
       var a = Math.min(1, sc.title.t / 0.5, (sc.title.dur - sc.title.t) / 0.5);
       ctx.globalAlpha = Math.max(0, a); ctx.textAlign = 'center';
-      ctx.fillStyle = '#d62828'; ctx.font = '700 72px "Oswald", sans-serif'; ctx.fillText(sc.title.text.toUpperCase(), C.VIEW_W / 2, 350);
+      if (/^THE WARRIORS$/i.test(sc.title.text) && R_LOGO.ok) { var lw0 = 620, lh0 = lw0 * R_LOGO.height / R_LOGO.width; ctx.drawImage(R_LOGO, (C.VIEW_W - lw0) / 2, 345 - lh0, lw0, lh0); }
+      else { ctx.fillStyle = '#d62828'; ctx.font = '700 72px "Oswald", sans-serif'; ctx.fillText(sc.title.text.toUpperCase(), C.VIEW_W / 2, 350); }
       if (sc.title.sub) { ctx.fillStyle = COL.ink; ctx.font = '500 26px "Oswald", sans-serif'; ctx.fillText(sc.title.sub, C.VIEW_W / 2, 398); }
       ctx.globalAlpha = 1;
     }
@@ -1103,7 +1107,7 @@ W.Render = (function () {
     };
     if (sc.line && !sc.line.who) {
       ctx.font = '700 24px "Oswald", sans-serif';
-      var cl = wrapText(sc.line.text.toUpperCase(), 760), ch = 24 + cl.length * 32;
+      var cl = wrapText((ui && ui.tutorialText ? ui.tutorialText(sc.line.text) : sc.line.text).toUpperCase(), 760), ch = 24 + cl.length * 32;
       ctx.save(); ctx.translate(80, 90); ctx.rotate(-0.015);
       ctx.fillStyle = '#111'; ctx.fillRect(6, 6, 800, ch); ctx.fillStyle = '#f2d23c'; ctx.fillRect(0, 0, 800, ch); ctx.strokeStyle = '#111'; ctx.lineWidth = 3; ctx.strokeRect(0, 0, 800, ch);
       ctx.fillStyle = '#111'; ctx.textAlign = 'left'; cl.forEach(function (l, i) { ctx.fillText(l, 20, 36 + i * 32); });
@@ -1432,6 +1436,10 @@ W.Render = (function () {
         }
       } });
     }
+    if (w.sceneTrain) { var stn = w.sceneTrain; stn.t += 1 / 60; if (stn.t > stn.dur) w.sceneTrain = null; else list.push({ y: stn.y + 30, d: function () {
+      var tim2 = objImg('treno_esterno'); if (!tim2) return; var th3 = 290, tw3 = tim2.width * th3 / tim2.height, kx = stn.t / stn.dur, head = -tw3 + kx * (C.VIEW_W + tw3 * 4);
+      ctx.save(); ctx.imageSmoothingEnabled = false; for (var cr = 0; cr < 4; cr++) ctx.drawImage(tim2, head - tw3 * cr - cr * 6, stn.y - th3 + Math.sin(stn.t * 40) * 1.5, tw3, th3); ctx.restore();
+    } }); }
     if (w.area && w.area.bus && w.area.bus.kind === 'bus' && w.area.bus.phase === 'pass') { var bus = w.area.bus; list.push({ y: bus.lane[1], d: function () {
       var bx = bus.x - cx, by = bus.lane[1], BS = 2;   // in scala con le persone: alto ~1,7 volte un uomo, lungo ~4
       // il bus dei Turnbull: scuolabus vecchio coperto di graffiti, fari accecanti, skinhead sul tetto e aggrappati fuori
@@ -1512,5 +1520,5 @@ W.Render = (function () {
     if (!(ui && ui.noHud)) drawHud(w, ui);
   }
 
-  return { pxImage: function (id) { return PX[id]; }, sceneArt: function (id) { var im = ARTSC[id]; return im && im.ok ? im : null; }, bgAi: function (id) { var im = BGAI[id]; return im && im.ok && W.BG_AI[id] ? { img: im, w: W.BG_AI[id].w } : null; }, toggleSprites: function () { useSprites = !useSprites; }, init: init, frame: frame, opts: opts, COL: COL, ctx: function () { return ctx; }, reset: function () { fx = []; seenEvents = {}; } };
+  return { filmLogo: function () { return R_LOGO.ok ? R_LOGO : null; }, pxImage: function (id) { return PX[id]; }, sceneArt: function (id) { var im = ARTSC[id]; return im && im.ok ? im : null; }, bgAi: function (id) { var im = BGAI[id]; return im && im.ok && W.BG_AI[id] ? { img: im, w: W.BG_AI[id].w } : null; }, toggleSprites: function () { useSprites = !useSprites; }, init: init, frame: frame, opts: opts, COL: COL, ctx: function () { return ctx; }, reset: function () { fx = []; seenEvents = {}; } };
 })();

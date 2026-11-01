@@ -418,8 +418,14 @@ var W = window.W;
     w.players.forEach(function (q) { if (q !== p) { q.hidden = true; q.x = def.stalls[(i + 2) % def.stalls.length]; q.y = p.y; } });
     var others = def.stalls.map(function (x, k) { return k; }).filter(function (k) { return k !== i; });
     w.npcs.filter(function (n) { return !n.crowd && n.id !== 'skater'; }).forEach(function (n, k) { n.hidden = true; n.x = def.stalls[others[k % others.length]]; });
-    st.phase = 'wait'; st.t = 0; this.objective = 'Silenzio. Non muoverti.';
+    st.phase = 'wait'; st.t = 0; this.objective = 'Silenzio: non muoverti e non premere niente';
     w.emit('open', { x: p.x, y: p.y });
+    // le regole, spiegate una volta sola prima che arrivi il Punk
+    if (!w.flags.stealth_rules) { w.flags.stealth_rules = true; this.playScene({ letterbox: false, mood: 'silence', steps: [
+      ['caption', 'Sei chiuso nel gabinetto. Il Punk sui pattini entra e apre le porte una alla volta.'],
+      ['caption', 'NON MUOVERTI: ogni passo o tasto fa rumore e riempie la barra RUMORE. Se si riempie, ti sente e ti scopre.'],
+      ['caption', 'Quando arriva alla TUA porta si volta un attimo: premi {interact} in quel momento e lo stendi per primo. Troppo presto, e ti scopre.'],
+      ['caption', 'Se ti scopre non è finita: si combatte subito, ma i Punks sono uno in più.']] }); }
   };
   AreaRun.prototype.stepStealth = function (w, dt) {
     var st = this.st, def = this.def, sk = this.skater, p = w.players.filter(function (q) { return !q.cpu; })[0] || w.players[0];
@@ -446,7 +452,7 @@ var W = window.W;
           if (st.checking < 1.0 && st.checking > 0.1) { sk.face = 1; st.windowT += dt; this.objective = 'ORA! Premi {interact}'; if (d && d.take('interact')) return this.stealthResult(true); }
           if (st.checking <= 0.1) return this.stealthResult(false, 'Ha aperto la porta');
         } else if (d && d.take('interact')) return this.stealthResult(false, 'Troppo presto');
-        if (st.checking <= 0) { w.emit('open', { x: def.stalls[st.target], y: sk.y }); st.target++; this.objective = 'Silenzio. Non muoverti.'; }
+        if (st.checking <= 0) { w.emit('open', { x: def.stalls[st.target], y: sk.y }); st.target++; this.objective = 'Silenzio: non muoverti e non premere niente'; }
       } else {
         var dx = tx - sk.x; sk.face = dx > 0 ? 1 : -1;
         sk.x += Math.max(-260 * dt, Math.min(260 * dt, dx)); // scivola sui pattini

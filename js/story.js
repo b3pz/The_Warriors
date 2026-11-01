@@ -196,6 +196,12 @@ var W = window.W;
       case 'wheel': if (this.startClip('v_wonder_wheel', c[2])) break; this.wheel = { t: 0, dur: c[1] || 4, cap: c[2] || '' }; this.wait = c[1] || 4; break;   // inquadratura d'apertura: la Wonder Wheel di notte
       case 'title': this.title = { text: c[1], sub: c[2] || '', dur: c[3] || 2.5, t: 0 }; this.wait = c[3] || 2.5; break;
       case 'flash': w.emit('flashfx', {}); break;
+      // cambia l'illustrazione a metà scena (se l'immagine non c'è ancora resta quella di prima): [art, id]
+      case 'art': this.artId = c[1]; this.__artT = 0; break;
+      // un treno vero (il vagone disegnato) che attraversa la scena sui binari in primo piano: [train, y, durata]
+      case 'train': w.sceneTrain = { t: 0, y: c[1] || 700, dur: c[2] || 1.8 }; w.emit('train', {}); break;
+      // fiamme vere a terra in un punto della scena: [fire, x, y]
+      case 'fire': w.props.push({ kind: 'fire', x0: c[1], x1: c[1] + 24, y0: c[2] - 30, y1: c[2], solid: false, sceneFire: true }); w.emit('fire', {}); break;
       case 'shake': w.emit('shakefx', { amt: c[1] || 8 }); break;
       case 'sfx': w.emit(c[1], { x: w.cam.x + 640, y: 560 }); break;
       case 'flag': w.flags[c[1]] = true; break;

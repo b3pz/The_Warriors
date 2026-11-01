@@ -58,7 +58,7 @@ var W = window.W;
     ['clip', 'v_cyrus_shot'], ['pose', 'luther', 'gun_aim'], ['sfx', 'shot'], ['flash'], ['shake', 10], ['pose', 'cyrus', 'down'], ['pose', 'luther', null], ['wait', 0.8],
     ['caption', 'Fox ha visto chi ha sparato: Luther dei Rogues. Luther se ne accorge, prova a colpire anche lui e lo manca.'], ['sfx', 'shot'],
     ['say', 'luther', 'Sono stati loro! Fermate i Warriors!'],
-    ['caption', 'Cleon prova a dire che non sono stati loro. I Riffs lo circondano: non ne esce vivo.'], ['flag', 'cleon_killed'],
+    ['art', 'cine_cleon_down'], ['caption', 'Cleon prova a dire che non sono stati loro. I Riffs lo circondano: non ne esce vivo.'], ['flag', 'cleon_killed'],
     ['moveAll', -380, 1.6, 'crowd'], ['sfx', 'siren'], ['lights', true],
     ['npc', 'pol1', 'police', 1300, 600, -1], ['npc', 'pol2', 'police', 1340, 650, -1], ['move', 'pol1', 1050, null, 1.2], ['move', 'pol2', 1080, null, 1.2],
     ['say', 'swan', 'Via da qui! Non fermatevi!'],
@@ -116,10 +116,16 @@ var W = window.W;
     ['caption', 'Ajax si accorge che qualcuno li segue: è Mercy.'], ['say', 'mercy', 'Aspettate. Vengo con voi. Qui non mi tiene niente.'], ['say', 'swan', 'Non ti aspettiamo.'], ['flag', 'mercy_joined']] };
   S.cine_police_split = { cine: 'cine_police_split', steps: seq(
     [['players', 'hide']], line(['swan', 'mercy', 'ajax', 'snow', 'cowboy', 'fox', 'cochise', 'vermin', 'rembrandt'], 300, 70, Y, 1, 20),
-    [['npc', 'pol1', 'police', -60, 600, 1], ['npc', 'pol2', 'police', -120, 540, 1], ['move', 'pol1', 240, null, 1.2], ['move', 'pol2', 200, null, 1.4],
+    [['npc', 'pol1', 'police', -60, 640, 1], ['npc', 'pol2', 'police', -120, 560, 1], ['move', 'pol1', 250, null, 1.2], ['move', 'pol2', 210, null, 1.4],
      ['sfx', 'siren'], ['say', 'swan', 'Se ci separiamo, ci vediamo a Union Square!'],
-     ['move', 'fox', 160, 660, 1], ['move', 'mercy', 280, 650, 1], ['moveAll', 900, 1.6], ['wait', 1.2],
-     ['caption', 'Nella lotta sulla banchina un agente spinge Fox sui binari. Il treno arriva in quel momento.'], ['flag', 'fox_killed'],
+     // Fox resta indietro a coprire la fuga: l'agente lo spinge giù dalla banchina, proprio mentre arriva il treno
+     ['moveAll', 1600, 1.4], ['remove', 'pol2'],
+     ['move', 'fox', 700, 650, 0.7], ['face', 'fox', -1], ['move', 'pol1', 600, 650, 0.6], ['wait', 0.2],
+     ['pose', 'pol1', 'punch'], ['sfx', 'hit'], ['pose', 'fox', 'hurt'], ['shake', 5], ['wait', 0.35],
+     ['move', 'fox', 760, 706, 0.3], ['pose', 'fox', 'down'], ['pose', 'pol1', null], ['wait', 0.25],
+     ['train', 728, 1.7], ['wait', 0.55], ['remove', 'fox'], ['wait', 1.3],
+     ['caption', 'Fox è rimasto indietro a coprire gli altri. L\'agente lo ha spinto giù dalla banchina, sul treno in arrivo. Fox non c\'è più.'], ['flag', 'fox_killed'],
+     ['move', 'pol1', 1600, null, 1.2],
      ['fade', 'out', 0.8], ['clearNpcs'], ['flag', 'fox_lost'], ['flag', 'party_split']]) };
 
   // C4
@@ -151,7 +157,7 @@ var W = window.W;
      ['face', 'rembrandt', -1], ['say', 'rembrandt', 'Cochise… hanno chiuso la porta.'], ['clearNpcs']]) };
   S.cine_lizzies_trap = { cine: 'cine_lizzies_trap', letterbox: false, steps: [
     ['say', 'lizzie', 'Sappiamo chi siete. Lo sa tutta la città, ormai.'], ['say', 'cochise', 'Ci cercano tutti. Tutti quanti.'],
-    ['clip', 'v_lizzies_lock'], ['caption', 'Una delle Lizzies chiude la porta a chiave. Spunta un coltello, poi una pistola: spara male, ma spara.'], ['caption', 'Una delle Lizzies ferisce Rembrandt al braccio con il coltello.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'],
+    ['clip', 'v_lizzies_lock'], ['caption', 'Una delle Lizzies chiude la porta a chiave. Spunta un coltello, poi una pistola: spara male, ma spara.'], ['art', 'cine_rembrandt_cut'], ['caption', 'Una delle Lizzies ferisce Rembrandt al braccio con il coltello.'], ['say', 'rembrandt', 'Attenti! Hanno le pistole!'],
     ['caption', 'L\'unica via è la porta: sfondala.'], ['flag', 'lizzies_trap']] };
   S.cine_swan_mercy = { cine: 'cine_swan_mercy', letterbox: false, steps: [
     ['caption', 'Swan torna da solo alla 96ª Strada a cercare gli altri. Sulla banchina c\'è Mercy.'],

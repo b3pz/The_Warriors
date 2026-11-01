@@ -700,7 +700,14 @@ Quando una banda entra in scena per la prima volta il gioco mostra un'illustrazi
 527. `assets/incoming/scene/intro_punks.png` → di spalle Swan, Snow, Cowboy, Vermin, Cochise e Rembrandt, con Mercy (giacca di jeans); a destra i Punks: salopette di jeans, magliette a righe, pattini a rotelle, il capo davanti, nel bagno della stazione di Union Square con piastrelle bianche e porte verdi; riferimento `riferimenti/luoghi/bagno_union_square.png`
 528. `assets/incoming/scene/intro_rogues.png` → di spalle Swan, Snow, Cowboy, Vermin, Cochise e Rembrandt, con Mercy (giacca di jeans); a destra i Rogues: gilet di pelle nera, Luther davanti con la fascia nei capelli, accanto al loro carro funebre nero coperto di graffiti, a Coney Island all'alba; riferimento `riferimenti/luoghi/auto_rogues_coney.png`
 
+### Momenti del film da far vedere (non solo raccontare)
+
+529. `assets/incoming/scene/cine_cleon_down.png` → al raduno, subito dopo lo sparo: Cleon (bandana leopardata, gilet dei Warriors) circondato da Riffs in lunghe tuniche che lo spingono giù nella folla; fari bianchi, caos; Cleon visto da dietro o di tre quarti, niente sangue
+530. `assets/incoming/scene/dlg_c3_fire.png` → di notte in una strada di Tremont: Swan di spalle lancia una bottiglia incendiaria accesa verso la vecchia auto degli Orphans; l'auto prende fuoco, gli Orphans arretrano con le braccia davanti alla faccia; luce arancione sull'asfalto bagnato
+531. `assets/incoming/scene/dlg_c4_ajax.png` → Riverside Park di notte: Ajax a torso nudo, il gilet buttato a terra, sorride e va incontro a mani nude al capo dei Baseball Furies che alza la mazza; altri Furies dietro sotto il lampione
+532. `assets/incoming/scene/cine_rembrandt_cut.png` → nell'appartamento delle Lizzies in penombra rosa e viola: una Lizzie con un coltello, Rembrandt si tiene il braccio ferito (taglio sulla manica, niente sangue in vista), Cochise lo tira via verso la porta chiusa
+
 ## Fine
 
-In tutto 528 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
+In tutto 532 immagini. Non devi farle tutte in una volta: ogni sessione riparte dal primo file dell'elenco che non esiste ancora. L'integrazione nel gioco avviene da sola a ogni caricamento.
 
