@@ -27,6 +27,29 @@ GAME_SCALE = 2.2 * 84 / TARGET_H
 POSE_RE = re.compile(r'^([a-z][a-z_]*?)_(\d+)$')
 report = []
 
+# ---- cache: ogni immagine si rielabora solo se è cambiata (impronta del contenuto), così l'integrazione resta veloce
+import hashlib
+CACHE_F = ROOT / 'assets' / '.import_cache.json'
+try: CACHE = json.loads(CACHE_F.read_text())
+except Exception: CACHE = {}
+NEWCACHE = {}
+def digest(files):
+    h = hashlib.sha1()
+    for f in files: h.update(str(f.relative_to(INC)).encode()); h.update(f.read_bytes())
+    return h.hexdigest()
+def cached(key, files, outputs):
+    d = digest(files); NEWCACHE.setdefault(key, {})['d'] = d
+    c = CACHE.get(key)
+    if c and c.get('d') == d and all(o.exists() for o in outputs): NEWCACHE[key] = c; return c
+    return None
+def valid(f):
+    """False se il file è rotto (caricamento non riuscito): viene saltato invece di fermare tutto."""
+    try:
+        with Image.open(f) as im: im.load()
+        return True
+    except Exception:
+        return False
+
 
 def keyed(path):
     """Apre un PNG e rende trasparente lo sfondo magenta (o tiene la trasparenza vera)."""
@@ -90,12 +113,15 @@ def do_characters():
     for sd in sorted(p for p in base.iterdir() if p.is_dir()):
         files = {}
         for f in sorted(sd.glob('*.png')):
+            if not valid(f): continue
             m = POSE_RE.match(f.stem)
             if not m: report.append(f'- scartato `{f.relative_to(INC)}`: nome non nel formato `<posa>_<numero>.png`'); continue
             files[(m.group(1), int(m.group(2)))] = f
         if ('idle', 1) not in files:
             if files: report.append(f'- set `{sd.name}`: in attesa di `idle_1.png` ({len(files)} pose caricate, non ancora nel gioco)')
             continue
+        hit = cached('set:' + sd.name, [files[k] for k in sorted(files)], [out_dir / f'{sd.name}.png'])
+        if hit and 'set' in hit: sets[sd.name] = hit['set']; continue
         imgs = {}
         for k, f in files.items():
             im, how = keyed(f); t = trim(im)
@@ -118,7 +144,7 @@ def do_characters():
         fr = {}
         for (k, ax, ay), (x, y), f in zip(meta, placed, frames):
             fr.setdefault(k[0], []).append([x, y, f.size[0], f.size[1], ax, ay])
-        sets[sd.name] = {'file': f'sprites_ai/{sd.name}.png', 'scale': round(GAME_SCALE, 4), 'frames': fr}
+        sets[sd.name] = {'file': f'sprites_ai/{sd.name}.png', 'scale': round(GAME_SCALE, 4), 'frames': fr}; NEWCACHE['set:' + sd.name]['set'] = sets[sd.name]
         report.append(f'- **{sd.name}**: nel gioco con {len(frames)} immagini ({", ".join(sorted(fr))})')
     return sets
 
@@ -141,6 +167,10 @@ def do_backgrounds():
         if not m or m.group(1) not in areas: report.append(f'- scartato `{f.relative_to(INC)}`: nome non nel formato `<area>_a.png` (es. `C4-02_a.png`)'); continue
         groups.setdefault(m.group(1), []).append((m.group(2), f))
     for aid, pieces in sorted(groups.items()):
+        pieces = [pc for pc in pieces if valid(pc[1])]
+        if not pieces: continue
+        hit = cached('bg:' + aid, [f for _, f in sorted(pieces)], [out_dir / f'{aid}.jpg'])
+        if hit and 'bg' in hit: bg[aid] = hit['bg']; continue
         pieces = [Image.open(f).convert('RGB') for _, f in sorted(pieces)]
         H = 1024; pieces = [p.resize((round(p.size[0] * H / p.size[1]), H), Image.LANCZOS) for p in pieces]
         ov = 48; total = sum(p.size[0] for p in pieces) - ov * (len(pieces) - 1)
@@ -161,7 +191,7 @@ def do_backgrounds():
         bottom = off + img.size[1]
         if bottom < 720: canvas.paste(img.crop((0, img.size[1] - 1, aw, img.size[1])).resize((aw, 720 - bottom)), (0, bottom))
         canvas.save(out_dir / f'{aid}.jpg', quality=88)
-        bg[aid] = {'file': f'backgrounds_ai/{aid}.jpg', 'w': aw, 'h': 720}
+        bg[aid] = {'file': f'backgrounds_ai/{aid}.jpg', 'w': aw, 'h': 720}; NEWCACHE['bg:' + aid]['bg'] = bg[aid]
         report.append(f'- **fondale {aid}**: nel gioco ({len(pieces)} pezzi, {aw}×720)')
     return bg
 
@@ -172,6 +202,9 @@ def do_simple(sub, out_sub, fmt, key=False, max_side=None):
     od = ROOT / 'assets' / out_sub; od.mkdir(parents=True, exist_ok=True)
     for f in sorted(base.glob('*.png')) + sorted(base.glob('*.jpg')):
         if f.name.startswith('.'): continue
+        if not valid(f): continue
+        name = f'{f.stem}.{fmt}'
+        if cached(sub + ':' + f.name, [f], [od / name]): out[f.stem] = f'{out_sub}/{name}'; continue
         if key:
             im, _ = keyed(f); im = trim(im)
             if im is None: continue
@@ -318,6 +351,7 @@ def main():
     (ROOT / 'js' / 'videos_auto.js').write_text(head.replace('dalle immagini', 'dai video') + 'W.VIDEOS_AUTO = ' + json.dumps(videos) + ';\n', encoding='utf-8')
     (ROOT / 'js' / 'musiche_auto.js').write_text(head + 'W.MUSIC_AUTO = ' + json.dumps(tracks) + ';\n', encoding='utf-8')
     (ROOT / 'js' / 'art_ai.js').write_text(head + 'W.BG_AI = ' + json.dumps(bg) + ';\nW.ART_AI = ' + json.dumps(art) + ';\n', encoding='utf-8')
+    CACHE_F.write_text(json.dumps(NEWCACHE, sort_keys=True))
     (INC / 'RAPPORTO.md').write_text('# Rapporto dell\'integrazione automatica\n\nAggiornato a ogni caricamento in `assets/incoming/`.\n\n' + ('\n'.join(report) if report else 'Nessuna immagine da integrare.') + '\n', encoding='utf-8')
     print('\n'.join(report) or 'nessuna immagine')
 
