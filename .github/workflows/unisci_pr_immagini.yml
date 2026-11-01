@@ -1,0 +1,41 @@
+# Se l'AI non può scrivere direttamente su main e apre una pull request, la unisce da sola
+# (solo se tocca esclusivamente assets/incoming/ e i file sono immagini, video o suoni validi), poi avvia l'integrazione.
+name: Unisci le PR delle immagini
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths: ['assets/incoming/**']
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+concurrency:
+  group: unisci-pr-${{ github.event.pull_request.number }}
+jobs:
+  unisci:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR: ${{ github.event.pull_request.number }}
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Solo file in assets/incoming/
+        id: check
+        run: |
+          gh api "repos/$REPO/pulls/$PR/files" --paginate --jq '.[].filename' > files.txt
+          cat files.txt
+          if grep -v '^assets/incoming/' files.txt; then echo "Tocca file fuori da assets/incoming/: non la unisco"; echo ok=no >> $GITHUB_OUTPUT; exit 0; fi
+          if grep -viE '\.(png|jpe?g|webp|mp4|mov|webm|mp3|wav|ogg|m4a|md|txt)$' files.txt; then echo "Tipi di file non previsti: non la unisco"; echo ok=no >> $GITHUB_OUTPUT; exit 0; fi
+          echo ok=yes >> $GITHUB_OUTPUT
+      - name: Unisci in main
+        if: steps.check.outputs.ok == 'yes'
+        run: |
+          for i in 1 2 3 4 5; do
+            if gh api -X PUT "repos/$REPO/pulls/$PR/merge" -f merge_method=squash -f commit_title="$(gh api repos/$REPO/pulls/$PR --jq .title) (#$PR)"; then break; fi
+            sleep 10
+          done
+          gh api -X DELETE "repos/$REPO/git/refs/heads/${{ github.event.pull_request.head.ref }}" || true
+      - name: Avvia l'integrazione nel gioco
+        if: steps.check.outputs.ok == 'yes'
+        run: gh workflow run integra_immagini.yml --repo "$REPO" --ref main

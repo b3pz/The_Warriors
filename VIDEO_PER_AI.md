@@ -17,7 +17,7 @@ Sono brevi inserti dentro le scene del gioco: la scena si ferma, parte la clip, 
 
 ## Dove caricarli
 
-Solo in `assets/incoming/video/`, con il nome esatto dell'elenco (per esempio `assets/incoming/video/v_radio_dj.mp4`). Un video per commit, messaggio `Video in arrivo: <nome>`. Salta i video che esistono già. L'integrazione nel gioco è automatica: il video viene compresso e collegato alla scena giusta; l'esito è in `assets/incoming/RAPPORTO.md`.
+Solo in `assets/incoming/video/`, con il nome esatto dell'elenco (per esempio `assets/incoming/video/v_radio_dj.mp4`). Un video per commit, messaggio `Video in arrivo: <nome>`. Se non puoi scrivere su `main`, apri una pull request con lo stesso titolo: viene unita e integrata da sola. Salta i video che esistono già. L'integrazione nel gioco è automatica: il video viene compresso e collegato alla scena giusta; l'esito è in `assets/incoming/RAPPORTO.md`.
 
 Divieti: come per le immagini, non toccare niente fuori da `assets/incoming/`.
 

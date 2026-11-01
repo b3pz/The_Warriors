@@ -14,7 +14,7 @@ The Warriors · Night Run è un beat 'em up a scorrimento laterale nel browser. 
 1. Prendi dall'**elenco di lavoro** (sotto) le immagini nell'ordine dato.
 2. **Salta** ogni file che esiste già nel repository (controlla il percorso prima di generare).
 3. Genera ogni immagine rispettando lo **stile** e le **regole tecniche**.
-4. Carica i file nel percorso indicato, **solo dentro `assets/incoming/`**. Raggruppa 5–20 immagini per commit, messaggio `Immagini in arrivo: <cosa>`. Se non puoi scrivere su `main`, apri una pull request con lo stesso titolo.
+4. Carica i file nel percorso indicato, **solo dentro `assets/incoming/`**. Raggruppa 5–20 immagini per commit, messaggio `Immagini in arrivo: <cosa>`. Se non puoi scrivere su `main`, apri una pull request con lo stesso titolo. Va benissimo: la pull request viene unita e integrata da sola in pochi minuti, non serve chiedere niente all'utente. Continua subito con le immagini successive (in una nuova pull request).
 5. Quando finisci la sessione, scrivi all'utente l'elenco dei file caricati e il punto dell'elenco a cui sei arrivato. Alla sessione successiva riparti dal primo file che non esiste ancora, senza chiedere.
 
 Divieti:
