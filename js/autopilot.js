@@ -25,8 +25,13 @@ W.AutoPilot = (function () {
       var talk = ints.filter(function (i) { return !i.exit && /Parla/.test(i.label); })[0];
       var needNpc = a.def.needTalk && !a.talked[a.def.needTalk] && w.npcs.filter(function (n) { return n.id === a.def.needTalk; })[0];
       var other = ints.filter(function (i) { return /pannello|Aiuta|Sfonda|Spacca|Nasconditi/.test(i.label); })[0];
+      // nel Cinema si vede tutto: anche i dialoghi facoltativi con i compagni e la W di Rembrandt sul muro
+      var extraTalk = AP.kind === 'cinema' && ints.filter(function (i) { return i.who && !a.talked[i.who]; })[0];
+      var tagInt = AP.kind === 'cinema' && !a._apTagged && ints.filter(function (i) { return /Lascia la W/.test(i.label); })[0];
       if (needNpc) target = { x: needNpc.x, y: needNpc.y };
       else if (a.def.needTalks && a.talkCount < a.def.needTalks && talk) target = talk;
+      else if (extraTalk) target = extraTalk;
+      else if (tagInt) { target = tagInt; if (Math.abs(tagInt.x - this.x) < 75 && Math.abs(tagInt.y - this.y) < 36) a._apTagged = true; }
       else if (other) target = other;
       else if (ints.filter(function (i) { return i.exit; })[0]) target = ints.filter(function (i) { return i.exit; })[0];
       else if (a.def.mark && !a.markReached) target = a.def.mark;
@@ -60,7 +65,8 @@ W.AutoPilot = (function () {
       if (sc.line && sc.lineT > readTime(sc.line.text)) sc.input('confirm');
       return;
     }
-    if (a.kind === 'training' && (a.stepIdx >= 1 || a.t > 12) && !a.trainDone) a.stepIdx = a.def.steps.length;
+    // l'allenamento è solo gioco: nel Cinema e nella demo si salta del tutto
+    if (a.kind === 'training') { if (!a.finishing && a.t > 0.2) a.finish(); return; }
     installBot(w);
     // nel cinema e nella demo nessuno resta a terra: è un film, non una partita
     w.players.forEach(function (p) { if (!p.out && p.hp < p.maxhp * 0.35) p.hp = p.maxhp * 0.35; });

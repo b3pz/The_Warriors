@@ -128,7 +128,7 @@ var W = window.W;
     var def = this.def, w = this.world, self = this, list = [];
     if (def.talks) def.talks.forEach(function (tk) {
       var n = w.npcs.filter(function (q) { return q.id === tk.who; })[0]; if (!n) return;
-      list.push({ x: n.x, y: n.y, label: 'Parla con ' + (n.name || tk.who), fn: function () { self.talkCount += self.talked[tk.who] ? 0 : 1; self.talked[tk.who] = true; self.playScene(W.SCENES[tk.scene || ('talk_' + tk.who)] || { steps: [['caption', '…']] }); if (self.talkCount >= (def.needTalks || 0) && (!def.needTalk || self.talked[def.needTalk]) && !def.exitInteract) w.exitOpen = true; } });
+      list.push({ x: n.x, y: n.y, who: tk.who, label: 'Parla con ' + (n.name || tk.who), fn: function () { self.talkCount += self.talked[tk.who] ? 0 : 1; self.talked[tk.who] = true; self.playScene(W.SCENES[tk.scene || ('talk_' + tk.who)] || { steps: [['caption', '…']] }); if (self.talkCount >= (def.needTalks || 0) && (!def.needTalk || self.talked[def.needTalk]) && !def.exitInteract) w.exitOpen = true; } });
     });
     var tg = this.tagSpot();
     if (tg && !tg.done && !this.tagAnim) list.push({ x: tg.x, y: tg.y, label: w.players.concat(w.npcs).some(function (q) { return (q.char ? q.char.id : q.id) === 'rembrandt' && !q.crowd; }) ? 'Lascia la W di Rembrandt' : 'Lascia la W (bomboletta di Rembrandt)', fn: function (p) { self.sprayTag(p); } });
@@ -169,6 +169,7 @@ var W = window.W;
     this.tagAnim = { t: 0 };
     w.emit('spray', { x: tg.x, y: tg.y });
     var isNew = W.Tags.add(this.def.id);
+    if (W.AutoPilot && W.AutoPilot.active) { this.tagToast = { text: 'La W dei Warriors', t: 0 }; } else
     this.tagToast = { text: (isNew ? 'La W dei Warriors · ' : 'Già fatta · ') + W.Tags.count() + ' / ' + W.Tags.total + (isNew && W.Tags.count() === Math.ceil(W.Tags.total / 2) ? ' · Galleria sbloccata!' : '') + (isNew && W.Tags.count() === W.Tags.total ? ' · Mercy sbloccata nell\'Arcade!' : ''), t: 0 };
     setTimeout(function () { if (self.tagAnim) w.emit('spray', { x: tg.x, y: tg.y }); }, 600);
   };
