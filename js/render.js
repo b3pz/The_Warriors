@@ -206,11 +206,13 @@ W.Render = (function () {
     if (sel.p === 'run' && list === set.frames.run && list.length < 4 && set.frames.walk && set.frames.walk.length >= 4) {
       var ri = (sel.i || 0) % 4; fr = [list[0], set.frames.walk[1], list[1 % list.length], set.frames.walk[3]][ri]; runBob = ri % 2 ? 0 : 5;
     }
-    var k = (set.scale || P.scale) * ((a.isEnemy && a.def.scale) || 1);
+    // spriteScale: stanze col fondale ravvicinato (i bagni), dove porte e lavandini sono disegnati più grandi
+    var aS = (w && w.area && w.area.def.spriteScale) || 1;
+    var k = (set.scale || P.scale) * ((a.isEnemy && a.def.scale) || 1) * aS;
     var x = Math.round(a.x - cx), y = a.y, z = (a.z || 0) + runBob;
     var lying = sel.p === 'down' || fake === 'lie';
     ctx.fillStyle = 'rgba(0,0,0,' + (0.42 - Math.min(0.25, z / 400)) + ')';
-    ctx.beginPath(); ctx.ellipse(x, y, lying ? 64 : 30, 8, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(x, y, (lying ? 64 : 30) * aS, 8 * aS, 0, 0, Math.PI * 2); ctx.fill();
     var alpha = 1;
     if (a.state === 'dead') alpha = Math.max(0, 1 - (a.fade || 0) / 1.2);
     if (a.protect > 0 && Math.floor(w.time * 20) % 2 === 0 && a.state !== 'ko') alpha *= 0.55;
@@ -627,7 +629,7 @@ W.Render = (function () {
     ctx.fillStyle = col; ctx.strokeStyle = '#000'; ctx.lineWidth = 2;
     ctx.beginPath(); slotShape(p.slot, x, y, 8); ctx.closePath(); ctx.fill(); ctx.stroke();
     ctx.font = '600 13px "Oswald", sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(233,228,214,0.8)';
-    ctx.fillText(p.char.name.toUpperCase() + (p.cpu ? ' · CPU' : ''), x, p.y - (p.z || 0) - 200);
+    ctx.fillText(p.char.name.toUpperCase() + (p.cpu ? ' · CPU' : ''), x, p.y - (p.z || 0) - 200 * ((w && w.area && w.area.def.spriteScale) || 1));
     if (p.state === 'ko' && !p.out) {
       var left = Math.max(0, w.diff.revive - p.koT);
       ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(x, p.y - 60, 24, 0, Math.PI * 2); ctx.stroke();
@@ -1123,6 +1125,7 @@ W.Render = (function () {
   }
 
   function drawSkates(n, cx) {
+    if (W.ATLAS_AI && W.ATLAS_AI.sets[aiSet(n.set || 'punk')]) return;   // le tavole nuove dei Punks hanno già i pattini
     var x = n.x - cx, y = n.y;
     ctx.fillStyle = '#d8d0c0'; ctx.fillRect(x - 22, y - 7, 44, 5);
     ctx.fillStyle = '#c0392b'; [-16, -6, 6, 16].forEach(function (o) { ctx.beginPath(); ctx.arc(x + o, y - 1, 3.5, 0, Math.PI * 2); ctx.fill(); });
@@ -1132,6 +1135,18 @@ W.Render = (function () {
     a.def.stalls.forEach(function (sx, i) {
       var checked = st && st.phase !== 'hide' && (i < st.target || (i === st.target && st.checking > 0 && i !== st.stall && st.checking < 0.7));
       var mine = st && st.stall === i;
+      if (W.BG_AI && W.BG_AI[a.def.id] && BGAI[a.def.id] && BGAI[a.def.id].ok) {
+        // le porte sono già nel fondale: si disegna solo la porta che il Punk spalanca (e un filo di luce su quella dove sei)
+        list.push({ y: f[0] - 2, d: function () {
+          var x = sx - cx, dt = 166, db = 456, hw = 88;
+          if (checked) {
+            ctx.fillStyle = '#07090a'; ctx.fillRect(x - hw, dt, hw * 2, db - dt);
+            ctx.fillStyle = 'rgba(255,255,255,0.05)'; ctx.fillRect(x - hw + 30, dt + 120, 50, 60);
+            ctx.fillStyle = '#1f4a34'; ctx.fillRect(x + hw - 4, dt - 4, 26, db - dt + 8); ctx.fillStyle = '#123022'; ctx.fillRect(x + hw + 14, dt - 4, 8, db - dt + 8);
+          } else if (mine) { ctx.strokeStyle = 'rgba(255,230,140,0.35)'; ctx.lineWidth = 3; ctx.strokeRect(x - hw, dt, hw * 2, db - dt); }
+        } });
+        return;
+      }
       list.push({ y: f[0] - 2, d: function () {
         var x = sx - cx - 52, top = f[0] - 210, h = 200;
         ctx.fillStyle = '#20262b'; ctx.fillRect(x - 6, top - 6, 116, h + 6);

@@ -344,8 +344,8 @@ var W = window.W;
     { id: 'C6-01', ch: 'C6', kind: 'traversal', name: 'Union Square', bg: 'metro_b', width: 1920, depth: 180, party: FINAL6, present: FINAL6, mercy: 'npc', peace: true, chapterCard: true,
       enter: 'cine_reunion', objective: 'Raggiungi i bagni', watcher: 'punk' },
     { id: 'C6-02', ch: 'C6', kind: 'stealth', name: 'I bagni', bg: 'interior', width: 1280, depth: 150, party: FINAL6, present: FINAL6, amb: 'interior', mood: 'silence',
-      objective: 'Nasconditi in un gabinetto: avvicinati a una porta e premi {interact}', stalls: [300, 470, 640, 810, 980], enter: 'dlg_c6_bathroom' },
-    { id: 'C6-03', ch: 'C6', kind: 'arena', name: 'Il bagno', bg: 'interior', width: 1920, depth: 170, party: FINAL6, objective: 'Il capo dei Punks', enter: 'cine_bathroom_chaos',
+      objective: 'Nasconditi in un gabinetto: avvicinati a una porta e premi {interact}', stalls: [570, 822, 1087], spriteScale: 1.38, enter: 'dlg_c6_bathroom' },
+    { id: 'C6-03', ch: 'C6', kind: 'arena', name: 'Il bagno', bg: 'interior', width: 1920, depth: 170, spriteScale: 1.38, party: FINAL6, objective: 'Il capo dei Punks', enter: 'cine_bathroom_chaos',
       waves: [
         { trigger: 260, objective: 'Escono tutti dai bagni', dropIf: 'skater_down', solo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580]], duo: [['punk_brawler', 'R', 600], ['punk_brawler', 'L', 620], ['punk_grappler', 'R', 580], ['punk_brawler', 'R', 650], ['punk_grappler', 'L', 600]], onClear: { solo: [['snack', 1, 600]], duo: [['snack', 1, 600], ['drink', -1, 620]] } },
         { trigger: 640, objective: 'Altri Punks sui pattini', solo: [['punk_grappler', 'R', 560], ['punk_brawler', 'L', 620]], duo: [['punk_grappler', 'R', 560], ['punk_brawler', 'L', 620], ['punk_brawler', 'R', 640], ['punk_grappler', 'L', 580]] },
