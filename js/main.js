@@ -816,7 +816,85 @@ var W = window.W;
     ['intro_turnbull', 'Ogni quartiere ha la sua banda.'], ['intro_orphans', 'Ogni strada è un confine.'], ['intro_furies', 'Trenta miglia di città nemica.'], ['intro_punks', 'Fino a Coney Island. Se ci arrivano.']];
   var SHOT = 4.4;
   function attractShots() { return ATTRACT.filter(function (a) { return R.sceneArt(a[0]); }); }
+  // seconda presentazione, alternata alla prima: «le bande di New York» sulla cartina. La camera vola sul logo di ogni banda,
+  // si ferma, e un'iride apre il fermo immagine della banda (zoom cinema), con nome, territorio e logo. Alla fine, Coney Island.
+  var GANG_TOUR = [['turnbull', 470, 100], ['orphans', 395, 190], ['furies', 118, 355], ['lizzies', 262, 553], ['punks', 283, 610], ['rogues', 100, 468]];
+  var WARRIORS_PT = [680, 1030], GT = 5.6, LOGOIMG = {};
+  function gangLogo(g) {
+    var src = W.ART_AI && W.ART_AI.object && W.ART_AI.object['logo_' + g]; if (!src) return null;
+    var im = LOGOIMG[g]; if (!im) { im = LOGOIMG[g] = new Image(); im.ok = false; im.onload = function () { im.ok = true; }; im.src = (W.ASSET_DATA && W.ASSET_DATA[src]) || ('assets/' + src); }
+    return im.ok ? im : null;
+  }
+  function mapView(cx, cy, s) {
+    var vw = C.VIEW_W / s, vh = C.VIEW_H / s;
+    var mx = Math.max(0, Math.min(gangMap.width - vw, cx - vw / 2)), my = Math.max(0, Math.min(gangMap.height - vh, cy - vh / 2));
+    ctx.save(); ctx.imageSmoothingEnabled = true; ctx.drawImage(gangMap, mx, my, vw, vh, 0, 0, C.VIEW_W, C.VIEW_H); ctx.restore();
+    return function (px, py) { return [(px - mx) * s, (py - my) * s]; };
+  }
+  function ease(k) { k = Math.max(0, Math.min(1, k)); return k * k * (3 - 2 * k); }
+  function drawGangTour(A) {
+    var n = GANG_TOUR.length, i = Math.floor(A.t / GT), lt = A.t - i * GT;
+    var vg = function (a) { var g = ctx.createRadialGradient(640, 360, 240, 640, 360, 820); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,' + a + ')'); ctx.fillStyle = g; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); };
+    if (i >= n) {
+      // finale: si vola fino a Coney Island, dove i Warriors sono di casa
+      var ft = A.t - n * GT, prev = GANG_TOUR[n - 1], e = ease(ft / 2.2);
+      var cx = prev[1] + (WARRIORS_PT[0] - prev[1]) * e, cy = prev[2] + (WARRIORS_PT[1] - prev[2]) * e, sc = 2.4 - 0.9 * Math.sin(Math.PI * Math.min(1, ft / 2.2)) * 0.6;
+      if (gangMap.ok) mapView(cx, cy, sc);
+      vg(0.75);
+      if (ft > 2.2) {
+        var fa = Math.min(1, (ft - 2.2) / 0.8);
+        ctx.save(); ctx.globalAlpha = fa * 0.82; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); ctx.globalAlpha = fa;
+        if (emblem.ok) { var eh = 230, ew = emblem.width * eh / emblem.height; ctx.drawImage(emblem, (C.VIEW_W - ew) / 2, 110, ew, eh); }
+        txt('THE WARRIORS', C.VIEW_W / 2, 440, 76, '#d62828', 'center', 700); txt('CONEY ISLAND · LA STRADA DI CASA', C.VIEW_W / 2, 494, 24, '#f4efe2', 'center', 600);
+        if (Math.floor(ft * 2) % 2) txt('PREMI INVIO', C.VIEW_W / 2, 590, 22, '#f2d23c', 'center', 600);
+        ctx.restore();
+      }
+      if (ft > 7.5) endAttract(true);
+      return;
+    }
+    var G = GANG_TOUR[i], from = i ? GANG_TOUR[i - 1] : [null, 540, 548], gd = W.GANGS[G[0]], art = R.sceneArt('intro_' + G[0]), logo = gangLogo(G[0]);
+    // 1) volo sulla cartina fino al logo (con una piccola «salita» tra un quartiere e l'altro)
+    var fly = ease(lt / 1.7), cx2 = from[1] + (G[1] - from[1]) * fly, cy2 = from[2] + (G[2] - from[2]) * fly;
+    var sc2 = (i ? 2.6 : 1.3 + 1.3 * fly) - (i ? 0.9 * Math.sin(Math.PI * Math.min(1, lt / 1.7)) : 0) + (lt > 1.7 ? (lt - 1.7) * 0.35 : 0);
+    var P = gangMap.ok ? mapView(cx2, cy2, sc2) : function () { return [640, 360]; };
+    vg(0.7);
+    var pt = P(G[1], G[2]);
+    // 2) si ferma sul logo: cerchio che pulsa
+    if (lt > 1.5 && lt < 2.6) {
+      var pk = (lt - 1.5) / 1.1, rr = 70 + 30 * Math.sin(pk * Math.PI * 3);
+      ctx.save(); ctx.strokeStyle = 'rgba(214,40,40,' + (0.9 - pk * 0.4) + ')'; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(pt[0], pt[1], rr, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+    }
+    // 3) un'iride si apre dal logo sul fermo immagine della banda
+    if (lt > 2.4) {
+      var ir = ease((lt - 2.4) / 0.7), R2 = 20 + ir * 1500, k2 = Math.max(0, lt - 2.4) / (GT - 2.4);
+      ctx.save(); ctx.beginPath(); ctx.arc(pt[0], pt[1], R2, 0, Math.PI * 2); ctx.clip();
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+      if (art) {
+        var z = 1.12 + 0.18 * ease(k2), iw = C.VIEW_W * z, ih = iw * art.height / art.width; if (ih < C.VIEW_H * z) { ih = C.VIEW_H * z; iw = ih * art.width / art.height; }
+        ctx.imageSmoothingEnabled = false; ctx.drawImage(art, (C.VIEW_W - iw) / 2 + (0.5 - k2) * 40, (C.VIEW_H - ih) * 0.46, iw, ih);
+      } else if (logo) {
+        if (gangMap.ok) { ctx.globalAlpha = 0.35; mapView(G[1], G[2], 4.2 + k2); ctx.globalAlpha = 1; }
+        var lh = 360, lw = lh * logo.width / logo.height; ctx.drawImage(logo, (C.VIEW_W - lw) / 2, 110 - k2 * 10, lw, lh);
+      }
+      vg(0.8); ctx.restore();
+      if (ir >= 1) {
+        // nome a pennarello su fascia rossa, territorio e logo, come nell'entrata in scena
+        var tt = lt - 3.1, ba = Math.min(1, tt / 0.3), bx = -840 + 870 * ease(tt / 0.4);
+        ctx.save(); ctx.globalAlpha = ba; ctx.translate(bx, 486); ctx.rotate(-0.04);
+        ctx.fillStyle = '#000'; ctx.fillRect(14, 14, 820, 120); ctx.fillStyle = '#c81e1e'; ctx.fillRect(0, 0, 820, 120); ctx.fillStyle = gd.col; ctx.fillRect(0, 110, 820, 10);
+        ctx.font = '60px "Permanent Marker", sans-serif'; ctx.textAlign = 'left'; ctx.fillStyle = '#000'; ctx.fillText(gd.name, 44, 82); ctx.fillStyle = '#fff'; ctx.fillText(gd.name, 40, 78);
+        ctx.restore();
+        if (tt > 0.5) { ctx.save(); ctx.globalAlpha = Math.min(1, (tt - 0.5) / 0.3); txt(gd.where.toUpperCase(), 72, 652, 24, '#f2d23c', 'left', 600); ctx.restore(); }
+        if (logo && art) { var ls = ease((tt - 0.3) / 0.4), lh2 = 180 * (0.6 + 0.4 * ls), lw2 = lh2 * logo.width / logo.height; ctx.save(); ctx.globalAlpha = ls; ctx.drawImage(logo, C.VIEW_W - 50 - lw2, 640 - lh2, lw2, lh2); ctx.restore(); }
+      }
+    }
+    // dissolvenza al nero prima della banda successiva
+    if (lt > GT - 0.35) { ctx.fillStyle = 'rgba(0,0,0,' + Math.min(1, (lt - (GT - 0.35)) / 0.35) + ')'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H); }
+  }
+  var attractN = 0;
   function startAttract() {
+    // si alternano: la storia (trailer) e la rassegna delle bande sulla cartina
+    if (attractN++ % 2 === 1 && gangMap.ok) { game.attract = { t: 0, tour: true }; game.state = 'attract'; return; }
     if (W.VIDEOS && W.VIDEOS.v_attract) { game.attract = { t: 0, clip: W.ClipPlayer.open(typeof W.VIDEOS.v_attract === 'string' ? W.VIDEOS.v_attract : W.VIDEOS.v_attract.src) }; game.state = 'attract'; return; }
     if (attractShots().length < 3) { startDemo(); return; }
     game.attract = { t: 0 }; game.state = 'attract';
@@ -825,6 +903,7 @@ var W = window.W;
   function drawAttract(dt) {
     var A = game.attract; A.t += dt;
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, C.VIEW_H);
+    if (A.tour) { drawGangTour(A); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, C.VIEW_W, 52); ctx.fillRect(0, C.VIEW_H - 52, C.VIEW_W, 52); return; }
     if (A.clip) {
       var v = A.clip.v; if (A.clip.ready()) { var k = Math.max(C.VIEW_W / (v.videoWidth || 1280), C.VIEW_H / (v.videoHeight || 720)); ctx.drawImage(v, (C.VIEW_W - v.videoWidth * k) / 2, (C.VIEW_H - v.videoHeight * k) / 2, v.videoWidth * k, v.videoHeight * k); }
       if (A.clip.ended() || A.t > 120) endAttract(true);
