@@ -671,6 +671,7 @@ W.Render = (function () {
       if (e.type === 'flashfx' && opts.flash) flash = 0.5;
       if (e.type === 'shakefx' && opts.shake) shake = e.amt || 8;
       if (e.type === 'revive') fx.push({ k: 'text', x: e.x, y: e.y - 190, t: 0, s: 'IN PIEDI', col: '#7fd18a' });
+      if (e.type === 'bushit') { fx.push({ k: 'text', x: e.x, y: e.y - 190, t: 0, s: 'TRAVOLTO!', col: '#f2d23c' }); if (opts.shake) shake = Math.max(shake, 12); }
       if (e.type === 'enemyko') { for (var dk = 0; dk < 7; dk++) fx.push({ k: 'dust', x: e.x + (Math.random() - 0.5) * 90, y: e.y + 4, vx: (Math.random() - 0.5) * 160, t: 0, r: 10 + Math.random() * 14 }); if (opts.shake) shake = Math.max(shake, e.elite ? 14 : 8); }
       if (e.type === 'land') { for (var dl = 0; dl < (e.heavy ? 8 : 5); dl++) fx.push({ k: 'dust', x: e.x + (Math.random() - 0.5) * 70, y: e.y + 4, vx: (Math.random() - 0.5) * 220, t: 0, r: 9 + Math.random() * 12 }); if (e.heavy && opts.shake) shake = Math.max(shake, 7); }
       if (e.type === 'lastko') { fx.push({ k: 'ko', x: e.x, y: e.y - 200, t: 0 }); if (opts.flash) flash = 0.35; }
