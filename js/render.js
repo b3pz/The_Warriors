@@ -88,6 +88,9 @@ W.Render = (function () {
   }
   function pickPose(a) {
     var st = a.state, m = a.curMove, ph = a.att ? a.att.phase : null, wf = Math.floor(a.anim * (st === 'run' ? 11 : 6));
+    // comparse ferme (folla del raduno, passanti): in piedi a braccia giù, non in guardia. Si usa il passo «a gambe vicine» della camminata,
+    // diverso per ciascuno, con un leggero dondolio; chi è sul palco o in posa resta com'è
+    if (a.npc && !a.pose && st !== 'walk' && (a.crowd || (a.world && a.world.area && (a.world.area.def.peace || a.world.area.def.crowd)))) { var ci = ((a.id || '').length + (a.uid || 0)) % 2 ? 1 : 3; return { p: 'stand', alt: 'walk', i: ci, calm: true }; }
     if (a.npc) return a.pose === 'down' ? { p: 'down' } : a.pose ? { p: a.pose, alt: 'idle' } : (st === 'walk' ? { p: 'walk', i: wf } : { p: 'idle' });
     if (a.isEnemy) {
       var moving = Math.abs(a.x - (a.lx === undefined ? a.x : a.lx)) + Math.abs(a.y - (a.ly === undefined ? a.y : a.ly)) > 0.3;
