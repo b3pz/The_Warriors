@@ -560,6 +560,7 @@ var W = window.W;
       if (ar && ar.scene) items.push({ label: 'Salta scena', act: function () { ar.scene.skip(); game.state = 'play'; } });
       if (ar && ar.kind === 'training' && !ar.trainDone) items.push({ label: 'Salta allenamento', act: function () { ar.stepIdx = ar.def.steps.length; game.state = 'play'; } });
       items.push({ label: 'La storia finora', act: function () { game.state = 'story'; game.storyIdx = null; } });
+      items.push({ label: (isFull() ? 'Esci dallo' : 'Vai a') + ' schermo intero (F9)', act: function () { toggleFull(); } });
       items.push({ label: 'Ricomincia dal checkpoint', act: function () { retry(false); } });
       items.push({ label: (game.world.debug ? 'Nascondi' : 'Mostra') + ' debug (F3)', act: function () { game.world.debug = !game.world.debug; } });
       items.push({ label: 'Menu principale', act: function () { game.state = 'menu'; game.menuIdx = 0; } });
@@ -576,6 +577,7 @@ var W = window.W;
       return f;
     }
     if (game.state === 'options') return [
+      { label: 'Schermo intero', val: function () { return isFull() ? 'sì' : 'no'; }, adj: function () { toggleFull(); }, act: function () { toggleFull(); } },
       { label: 'Effetti', val: function () { return Math.round(options.sfx * 10); }, adj: function (d) { options.sfx = Math.max(0, Math.min(1, options.sfx + d * 0.1)); saveOptions(); } },
       { label: 'Musica e ambiente', val: function () { return Math.round(options.music * 10); }, adj: function (d) { options.music = Math.max(0, Math.min(1, options.music + d * 0.1)); saveOptions(); } },
       { label: 'Scossa schermo', val: function () { return options.shake ? 'sì' : 'no'; }, adj: function () { options.shake = !options.shake; saveOptions(); } },
@@ -726,7 +728,7 @@ var W = window.W;
     } else filmLogo(C.VIEW_W / 2, 300, 700, 96);
     txt('NIGHT RUN', C.VIEW_W / 2, 628, 40, '#ffffff', 'center', 700);
     if (Math.floor(performance.now() / 600) % 2) txt('PREMI INVIO', C.VIEW_W / 2, 676, 22, '#f2c14e', 'center', 600);
-    txt('Versione 0.5 · campagna completa', 24, C.VIEW_H - 16, 14, R.COL.dim, 'left', 400);
+    txt('Versione 0.5 · campagna completa · F9 o doppio clic: schermo intero', 24, C.VIEW_H - 16, 14, R.COL.dim, 'left', 400);
   }
   function drawSelect() {
     backdrop(); var s = game.sel;
@@ -1151,7 +1153,7 @@ var W = window.W;
       }
       txt('Invio: cambia il tasto · Esc: indietro · se il tasto è già usato, le due azioni si scambiano', 82, C.VIEW_H - 24, 15, R.COL.dim, 'left', 400);
     }
-    else if (game.state === 'options') { backdrop(); txt('OPZIONI', C.VIEW_W / 2, 140, 44, R.COL.p1, 'center', 700); drawList(menuItems(), C.VIEW_W / 2, 220); txt('← → regola · Invio apre', C.VIEW_W / 2, 696, 16, R.COL.dim, 'center', 400); }
+    else if (game.state === 'options') { backdrop(); txt('OPZIONI', C.VIEW_W / 2, 110, 44, R.COL.p1, 'center', 700); drawList(menuItems(), C.VIEW_W / 2, 175); txt('← → regola · Invio apre', C.VIEW_W / 2, 708, 16, R.COL.dim, 'center', 400); }
     else if (game.state === 'result') drawResult();
     else if (game.state === 'comic') drawComic(dt);
     else if (game.world) {
@@ -1177,6 +1179,17 @@ var W = window.W;
     if (game.msg) { ctx.fillStyle = 'rgba(8,10,16,0.88)'; ctx.fillRect(C.VIEW_W / 2 - 330, 640, 660, 40); txt(game.msg.text, C.VIEW_W / 2, 667, 18, R.COL.ink, 'center', 400); }
   }
 
+  // schermo intero: tasto F9, doppio clic sul gioco, voce nelle Opzioni e nella pausa
+  function isFull() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+  function toggleFull() {
+    try {
+      if (isFull()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); return; }
+      var el = document.documentElement, rq = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (!rq) { game.msg = { text: 'Schermo intero non disponibile qui: apri il gioco in una scheda a parte', t: 3 }; return; }
+      var pr = rq.call(el, { navigationUI: 'hide' }); if (pr && pr.catch) pr.catch(function () { game.msg = { text: 'Schermo intero bloccato dal browser: apri il gioco in una scheda a parte', t: 3.5 }; });
+    } catch (e) { game.msg = { text: 'Schermo intero non disponibile qui', t: 3 }; }
+  }
+  W.toggleFullscreen = toggleFull;
   function fit() {
     var s = Math.min(window.innerWidth / C.VIEW_W, window.innerHeight / C.VIEW_H);
     cv.style.width = Math.floor(C.VIEW_W * s) + 'px'; cv.style.height = Math.floor(C.VIEW_H * s) + 'px';
@@ -1186,6 +1199,9 @@ var W = window.W;
     cv = document.getElementById('game'); cv.width = C.VIEW_W; cv.height = C.VIEW_H; ctx = cv.getContext('2d');
     R.init(cv); loadKeys(); loadOptions(); fit();
     window.addEventListener('resize', fit);
+    document.addEventListener('fullscreenchange', fit); document.addEventListener('webkitfullscreenchange', fit);
+    cv.addEventListener('dblclick', function (e) { e.preventDefault(); toggleFull(); });
+    window.addEventListener('keydown', function (e) { if (e.code === 'F9' && !e.repeat && game.state !== 'keys') { e.preventDefault(); toggleFull(); } });
     W.Input.onKey(onKey);
     W.Touch.attach(cv);
     // tasti touch fuori dal gioco e nelle scene: OK = Invio, AZIONE = indietro, pausa = Esc
