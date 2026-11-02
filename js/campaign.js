@@ -442,9 +442,9 @@ var W = window.W;
   var W2 = function (trig, obj, solo, duo, extra) { var w = { trigger: trig, objective: obj, solo: solo, duo: duo }; if (extra) for (var k in extra) w[k] = extra[k]; return w; };
   // bande del raduno che si vedono solo di passaggio lungo la strada: tutta la città cerca i Warriors
   var CAMEOS = {
-    'C4-01': { set: 'bopper', n: 3, x: 1500, text: 'I Boppers di Harlem guardano dal muretto. Si ricordano di Coney Island, ma stanotte la caccia è dei Furies.' },
-    'C5-05': { set: 'hihat', n: 3, x: 1150, text: 'Gli Hi-Hats di SoHo, dall\'altro lato della strada. Guardano e non si muovono.' },
-    'C6-01': { set: 'hihat', n: 2, x: 1450, text: 'Altri Hi-Hats sulla banchina: tengono d\'occhio chi passa.' }
+    'C4-01': { set: 'bopper', n: 3, x: 1750, text: 'I Boppers guardano. Non si muovono.' },
+    'C5-05': { set: 'hihat', n: 3, x: 1150, text: 'Gli Hi-Hats di SoHo vi guardano passare.' },
+    'C6-01': { set: 'hihat', n: 2, x: 1450, text: 'Gli Hi-Hats tengono d\'occhio la banchina.' }
   };
   A.forEach(function (a) { if (CAMEOS[a.id]) a.cameo = CAMEOS[a.id]; });
   var EXTRA_WAVES = {

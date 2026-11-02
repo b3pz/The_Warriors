@@ -921,7 +921,7 @@ var W = window.W;
   function attractShots() { return ATTRACT.filter(function (a) { return R.sceneArt(a[0]); }); }
   // seconda presentazione, alternata alla prima: «le bande di New York» sulla cartina. La camera vola sul logo di ogni banda,
   // si ferma, e un'iride apre il fermo immagine della banda (zoom cinema), con nome, territorio e logo. Alla fine, Coney Island.
-  var GANG_TOUR = [['turnbull', 470, 100], ['orphans', 395, 190], ['furies', 118, 355], ['lizzies', 262, 553], ['punks', 283, 610], ['rogues', 100, 468]];
+  var GANG_TOUR = [['boppers', 235, 300], ['turnbull', 470, 100], ['orphans', 395, 190], ['furies', 118, 355], ['lizzies', 262, 553], ['punks', 283, 610], ['rogues', 100, 468]];
   var WARRIORS_PT = [680, 1030], GT = 5.6, LOGOIMG = {};
   function gangLogo(g) {
     var src = W.ART_AI && W.ART_AI.object && W.ART_AI.object['logo_' + g]; if (!src) return null;

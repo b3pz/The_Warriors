@@ -1011,7 +1011,7 @@ W.Render = (function () {
   // un'iride nera che si chiude su di loro, e nome e logo che entrano
   // dove sta la banda in ciascuna illustrazione (frazione della larghezza e dell'altezza) e quanto stringere lo zoom
   // [centro della banda in larghezza, dove iniziano le teste in altezza, zoom finale]
-  W.INTRO_FOCUS = { turnbull: [0.82, 0.0, 1.35], orphans: [0.83, 0.27, 1.85], furies: [0.79, 0.29, 1.65], lizzies: [0.77, 0.16, 1.55], punks: [0.64, 0.27, 1.5], rogues: [0.82, 0.32, 1.85] };
+  W.INTRO_FOCUS = { boppers: [0.71, 0.3, 1.75], turnbull: [0.82, 0.0, 1.35], orphans: [0.83, 0.27, 1.85], furies: [0.79, 0.29, 1.65], lizzies: [0.77, 0.16, 1.55], punks: [0.64, 0.27, 1.5], rogues: [0.82, 0.32, 1.85] };
   function drawGangIntroArt(im, g, sc) {
     var t = sc.age || 0, z = Math.min(1, t / 2.6), ez = z * z * (3 - 2 * z), F = W.INTRO_FOCUS[sc.def.intro] || [0.74, 0.46, 1.4];
     var fx = F[0], fy = F[1], S = 1 + (F[2] - 1) * ez + Math.max(0, t - 2.6) * 0.025, iw = C.VIEW_W * S, ih = iw * im.height / im.width;
