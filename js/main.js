@@ -631,7 +631,7 @@ var W = window.W;
       return;
     }
     if (game.state === 'story') { var nS = storyChapters().length; if (game.storyIdx === null) game.storyIdx = nS - 1; if (up || left) game.storyIdx = Math.max(0, game.storyIdx - 1); if (down || right) game.storyIdx = Math.min(nS - 1, game.storyIdx + 1); if (back || ok) { game.state = 'pause'; game.menuIdx = 0; } return; }
-    if (game.state === 'howto') { if (ok || back) game.state = 'menu'; return; }
+    if (game.state === 'howto') { var hw2 = game.how || (game.how = { i: 0, t: 0 }); if (up || left) { hw2.i = (hw2.i + HOW.length - 1) % HOW.length; hw2.t = 0; hw2.auto = false; W.Audio.ui(); } else if (down || right) { hw2.i = (hw2.i + 1) % HOW.length; hw2.t = 0; hw2.auto = false; W.Audio.ui(); } else if (ok || back) { game.state = 'menu'; game.how = null; } return; }
     if (game.state === 'extra') { if (back) { game.state = 'menu'; game.menuIdx = 0; } else if (ok && W.Tags.gallery() && galleryList().length) { game.state = 'gallery'; game.gal = 0; } return; }
     if (game.state === 'gallery') { var gl = galleryList().length; if (back || (ok && false)) game.state = 'extra'; if (right || down) game.gal = (game.gal + 1) % gl; if (left || up) game.gal = (game.gal + gl - 1) % gl; if (ok) game.gal = (game.gal + 1) % gl; return; }
     if (game.state === 'gameover' && game.gameoverT < 1.2) return;
@@ -802,15 +802,57 @@ var W = window.W;
     txt(g.name, C.VIEW_W / 2, C.VIEW_H - 54, 26, '#fff', 'center', 700);
     txt((game.gal % L.length + 1) + ' / ' + L.length + ' · ← → sfoglia · Esc indietro', C.VIEW_W / 2, C.VIEW_H - 22, 15, R.COL.dim, 'center', 400);
   }
+  // ---- «Come si gioca» con le dimostrazioni: a destra Swan esegue la mossa contro un Punk, in ciclo; ↑ ↓ cambia mossa
+  function howFrame(id, pose, i, x, y, face, sc, alpha) {
+    var P = W.ATLAS_PX, set = P && P.sets[id], im = R.pxImage && R.pxImage(id); if (!set || !im || !im.ok) return;
+    var L = set.frames[pose] || set.frames.idle, fr = L[(i || 0) % L.length], k = sc * (set.scale || P.scale);
+    ctx.save(); ctx.imageSmoothingEnabled = false; if (alpha !== undefined) ctx.globalAlpha = alpha;
+    ctx.translate(Math.round(x), Math.round(y)); ctx.scale(face * k, k); ctx.drawImage(im, fr[0], fr[1], fr[2], fr[3], -fr[4], -fr[5], fr[2], fr[3]); ctx.restore();
+  }
+  function howShadow(x, y, w) { ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.beginPath(); ctx.ellipse(x, y, w || 34, 8, 0, 0, Math.PI * 2); ctx.fill(); }
+  function howHit(x, y, t, big) { if (t < 0 || t > 0.25) return; var r = (big ? 34 : 22) * (1 - t * 2); ctx.save(); ctx.globalAlpha = 1 - t * 4; ctx.fillStyle = '#fff3c4'; ctx.beginPath(); for (var a = 0; a < 10; a++) { var rr = a % 2 ? r * 0.45 : r; ctx.lineTo(x + Math.cos(a * Math.PI / 5) * rr, y + Math.sin(a * Math.PI / 5) * rr); } ctx.fill(); ctx.restore(); }
+  var HOW = [
+    { a: 'move', label: 'Movimento', tip: 'Doppio tocco in avanti per correre.', dur: 3, d: function (t, X, Y) { var run = t > 1.5, k = run ? (t - 1.5) / 1.5 : t / 1.5, x = X - 180 + k * 300; howShadow(x, Y); howFrame('swan', run ? 'run' : 'walk', Math.floor(t * (run ? 11 : 7)), x, Y, 1, 1); return run ? 'CORSA' : 'CAMMINA'; } },
+    { a: 'light', label: 'Colpo leggero', tip: 'Tre colpi in catena se vanno a segno: il terzo butta giù.', dur: 2.6, d: function (t, X, Y) { var n = Math.min(2, Math.floor(t / 0.45)), ph = t - n * 0.45, hit = ph < 0.22 && t < 1.35, ex = X + 70 + (t > 0.9 ? Math.min(60, (t - 0.9) * 200) : 0), down = t > 1.0;
+        howShadow(X - 40, Y); howFrame('swan', hit ? 'punch' : 'idle', 0, X - 40, Y, 1, 1); howShadow(ex, Y); howFrame('punk', down ? 'down' : (hit && ph > 0.06 ? 'hurt' : 'idle'), 0, ex, Y, -1, 1); howHit(X + 50, Y - 120, ph - 0.06); return t < 1.35 ? (n + 1) + ' COLPI' : ''; } },
+    { a: 'heavy', label: 'Colpo pesante', tip: 'Lento ma rompe la guardia; sulla ripresa del nemico lo disarma.', dur: 2.4, d: function (t, X, Y) { var at = t > 0.5 && t < 1.0, fly = Math.max(0, t - 0.65), ex = X + 70 + Math.min(150, fly * 400);
+        howShadow(X - 40, Y); howFrame('swan', at ? 'heavy' : 'idle', 0, X - 40, Y, 1, 1); howShadow(ex, Y); howFrame('punk', t > 0.65 ? (t > 0.9 ? 'down' : 'hurt') : 'idle', 0, ex, Y, -1, 1); howHit(X + 50, Y - 110, t - 0.65, true); return t > 0.65 && t < 1.6 ? 'PESANTE!' : ''; } },
+    { a: 'jump', label: 'Salto · calcio volante', tip: 'Salta le transenne basse. Leggero mentre scendi = calcio volante.', dur: 2.4, d: function (t, X, Y) { var k = Math.min(1, t / 1.0), x = X - 160 + k * 200, z = Math.sin(Math.PI * k) * 140, kick = k > 0.55 && k < 1;
+        howShadow(x, Y, 34 - z / 8); howFrame('swan', t < 1 ? (kick ? 'jumpkick' : 'jump') : 'idle', 0, x, Y - z, 1, 1); howShadow(X + 90, Y); howFrame('punk', t > 0.8 ? (t > 1.1 ? 'down' : 'hurt') : 'idle', 0, X + 90 + (t > 0.8 ? Math.min(80, (t - 0.8) * 250) : 0), Y, -1, 1); howHit(X + 70, Y - 130, t - 0.8); return kick ? 'CALCIO VOLANTE' : ''; } },
+    { a: 'dodge', label: 'Schivata', tip: 'A metà della schivata sei intoccabile: il pugno va a vuoto.', dur: 2.4, d: function (t, X, Y) { var at = t > 0.4 && t < 1.0, dg = t > 0.55 && t < 1.05, sx = X - 40 + (dg ? -Math.sin(Math.PI * (t - 0.55) / 0.5) * 90 : 0);
+        howShadow(sx, Y); if (dg) howFrame('swan', 'dodge', 0, sx + 30, Y, 1, 1, 0.3); howFrame('swan', dg ? 'dodge' : 'idle', 0, sx, Y, 1, 1); howShadow(X + 60, Y); howFrame('punk', at ? 'punch' : 'idle', 0, X + 60, Y, -1, 1); return dg ? 'MANCATO!' : ''; } },
+    { a: 'interact', label: 'Presa e lancio', tip: 'Vicino al nemico: presa. Poi leggero per colpirlo, o direzione + interazione per lanciarlo.', dur: 3, d: function (t, X, Y) { var held = t > 0.4 && t < 1.7, thrown = t >= 1.7, fk = Math.min(1, (t - 1.7) / 0.5), ex = thrown ? X + 40 + fk * 260 : X + 40, ez = thrown ? Math.sin(Math.PI * fk) * 90 : 0;
+        howShadow(X - 30, Y); howFrame('swan', thrown && t < 2 ? 'throw' : held ? 'grab' : 'idle', 0, X - 30, Y, 1, 1); howShadow(ex, Y); howFrame('punk', thrown ? (fk >= 1 ? 'down' : 'hurt') : held ? 'hurt' : 'idle', 0, ex, Y - ez, -1, 1); if (held && t > 0.9 && t < 1.4) howHit(X + 30, Y - 120, (t - 0.9) % 0.25); return held ? 'PRESA' : thrown ? 'LANCIO!' : ''; } },
+    { a: 'fury', label: 'Furia', tip: 'La barra della furia si riempie colpendo: piena, un attacco che butta giù tutti intorno.', dur: 2.6, d: function (t, X, Y) { var on = t > 0.5 && t < 1.2, push = Math.max(0, t - 0.7);
+        if (on) { ctx.save(); ctx.globalAlpha = 0.35 * (1 - (t - 0.5) / 0.7); ctx.fillStyle = '#ffd27a'; ctx.beginPath(); ctx.arc(X, Y - 90, 60 + (t - 0.5) * 400, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+        howShadow(X, Y); howFrame('swan', on ? 'heavy' : 'idle', 0, X, Y, 1, 1); [-1, 1].forEach(function (sd) { var ex = X + sd * (110 + Math.min(150, push * 350)); howShadow(ex, Y); howFrame('punk', t > 0.7 ? (t > 0.95 ? 'down' : 'hurt') : 'idle', 0, ex, Y, -sd, 1); }); return on ? 'FURIA!' : ''; } },
+    { a: 'throw', label: 'Lancia l\'arma', tip: 'Un tubo, una mazza, una bottiglia: si lanciano e colpiscono da lontano.', dur: 2.4, d: function (t, X, Y) { var fl = t > 0.5 && t < 1.0, fk = Math.min(1, Math.max(0, (t - 0.5) / 0.4)), px = X - 10 + fk * 220;
+        howShadow(X - 60, Y); howFrame('swan', t > 0.4 && t < 0.9 ? 'throw' : 'idle', 0, X - 60, Y, 1, 1); if (fl) { ctx.save(); ctx.translate(px, Y - 120); ctx.rotate(t * 18); ctx.fillStyle = '#9aa3a8'; ctx.fillRect(-26, -4, 52, 8); ctx.restore(); }
+        howShadow(X + 180, Y); howFrame('punk', t > 0.9 ? (t > 1.2 ? 'down' : 'hurt') : 'idle', 0, X + 180, Y, -1, 1); howHit(X + 175, Y - 120, t - 0.9); return ''; } }
+  ];
   function drawHowto() {
-    backdrop(); txt('COME SI GIOCA', C.VIEW_W / 2, 90, 40, R.COL.p1, 'center', 700);
+    backdrop(0.5); txt('COME SI GIOCA', 70, 80, 40, R.COL.p1, 'left', 700);
     var L = W.Input.LAYOUTS.solo, k = function (x) { return keyLabel(L[x][0]); };
-    var rows = [['Movimento · doppio tocco = corsa', k('up') + k('left') + k('down') + k('right')], ['Leggero (3 colpi in catena se vanno a segno)', k('light')], ['Pesante · apre la guardia, disarma sulla ripresa', k('heavy')], ['Salto · supera le transenne basse · leggero in discesa = calcio volante', k('jump')], ['Schivata · invulnerabile a metà', k('dodge')], ['Interazione · parla, raccogli, apri, presa, soccorso', k('interact')], ['In presa: leggero colpisce (max 2) · direzione+interazione lancia', k('interact') + ' / ' + k('light')], ['Furia a barra piena', k('fury')], ['Lancia l\'arma impugnata', k('throw')], ['Dialoghi: avanti', 'Invio'], ['Pausa · salta scena · comandi in Opzioni', 'Esc']];
-    rows.forEach(function (r, i) { txt(r[0], 250, 160 + i * 42, 21, R.COL.ink, 'left', 400); txt(r[1], 1030, 160 + i * 42, 21, R.COL.p1, 'right', 600); });
-    txt('Controller: X leggero · Y pesante · A salto · RB schivata · B interazione · LB furia · RT lancio · Start pausa', C.VIEW_W / 2, 650, 17, R.COL.dim, 'center', 400);
-    txt('Telefono: joystick dove appoggi il pollice · COLPO (tienilo premuto = forte) · SALTO · SCHIVA · i tasti AZIONE, FURIA e LANCIA compaiono quando servono', C.VIEW_W / 2, 625, 16, R.COL.dim, 'center', 400);
-    txt('Invio per tornare', C.VIEW_W / 2, 690, 17, R.COL.dim, 'center', 400);
-    txt(game.padName ? 'Controller collegato: ' + game.padName + ' · X conferma, O indietro nei menu' : 'Nessun controller: collegalo e premi un tasto', C.VIEW_W / 2, 600, 16, game.padName ? R.COL.p1 : R.COL.dim, 'center', 500);
+    var keyOf = { move: k('up') + k('left') + k('down') + k('right'), light: k('light'), heavy: k('heavy'), jump: k('jump') + ' poi ' + k('light'), dodge: k('dodge'), interact: k('interact') + ' poi ' + k('light'), fury: k('fury'), throw: k('throw') };
+    var padOf = { move: 'levetta', light: 'X', heavy: 'Y', jump: 'A, poi X', dodge: 'RB', interact: 'B, poi X', fury: 'LB', throw: 'RT' };
+    var hw = game.how || (game.how = { i: 0, t: 0 }); hw.t += 1 / 60; var dm = HOW[hw.i]; if (hw.t > dm.dur + 0.6) { hw.t = 0; if (hw.auto !== false) hw.i = (hw.i + 1) % HOW.length; dm = HOW[hw.i]; }
+    // elenco delle mosse
+    HOW.forEach(function (h, i) { var y = 140 + i * 46, on = i === hw.i; if (on) { ctx.fillStyle = 'rgba(214,40,40,0.28)'; ctx.fillRect(56, y - 30, 420, 42); } txt(h.label, 70, y, 21, on ? '#f2d23c' : R.COL.ink, 'left', on ? 600 : 400); txt(keyOf[h.a], 466, y, 18, on ? '#f2d23c' : R.COL.dim, 'right', 600); });
+    txt('Dialoghi: Invio · Pausa, salta scena, schermo intero: Esc', 70, 140 + HOW.length * 46 + 6, 16, R.COL.dim, 'left', 400);
+    // palco della dimostrazione
+    var bx = 520, by = 110, bw = 700, bh = 420, X = bx + bw / 2, Y = by + bh - 50;
+    ctx.save(); ctx.beginPath(); ctx.rect(bx, by, bw, bh); ctx.clip();
+    var bg = R.bgAi && R.bgAi('PQ-02'); if (bg) ctx.drawImage(bg.img, 120, 40, 1100, 660, bx, by, bw, bh); else { ctx.fillStyle = '#1a1d26'; ctx.fillRect(bx, by, bw, bh); }
+    ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fillRect(bx, by, bw, bh);
+    var tag = dm.d(Math.min(hw.t, dm.dur), X, Y);
+    if (tag) txt(tag, X, by + 70, 30, '#ffd23c', 'center', 700);
+    ctx.restore(); ctx.strokeStyle = '#d62828'; ctx.lineWidth = 3; ctx.strokeRect(bx, by, bw, bh);
+    // tasto grande e spiegazione
+    ctx.fillStyle = '#111'; ctx.fillRect(bx, by + bh + 14, bw, 82); ctx.fillStyle = '#f2d23c'; ctx.fillRect(bx, by + bh + 14, 8, 82);
+    txt(keyOf[dm.a], bx + 26, by + bh + 52, 26, '#f2d23c', 'left', 700); txt('controller: ' + padOf[dm.a], bx + bw - 18, by + bh + 50, 16, R.COL.dim, 'right', 500);
+    txt(dm.tip, bx + 26, by + bh + 82, 17, R.COL.ink, 'left', 400);
+    txt('↑ ↓ scegli la mossa · Invio o Esc per tornare', 70, C.VIEW_H - 24, 15, R.COL.dim, 'left', 400);
+    txt(game.padName ? 'Controller: ' + game.padName : (W.Touch && W.Touch.active() ? 'Telefono: COLPO (tienilo premuto = forte), SALTO, SCHIVA; gli altri tasti compaiono quando servono' : ''), C.VIEW_W - 60, C.VIEW_H - 24, 15, R.COL.dim, 'right', 400);
   }
   var CREDITS = ['THE WARRIORS · NIGHT RUN', '', 'Progetto e storia', 'Giuseppe (b3pz)', '', 'Grafica approvata', 'Raccolta grafica 04', '', 'Motore, livelli e scene', 'Claude', '', 'Dal ritrovo di Coney Island', 'al ritorno all\'alba', '', 'Grazie per aver giocato'];
   function drawCredits(dt) {
