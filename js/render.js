@@ -459,7 +459,9 @@ W.Render = (function () {
   function objImg(name) { var src = W.ART_AI && W.ART_AI.object && W.ART_AI.object[name]; if (!src) return null; var im = OBJIMG[name] || (OBJIMG[name] = loadImg(src)); return im.ok ? im : null; }
   function drawObjProp(p, cx) {
     var im = objImg(OBJ_FOR[p.kind] || p.kind); if (!im) return false;
-    var wdt = Math.max(60, p.x1 - p.x0) * (p.kind === 'barrier' ? 2.6 : p.kind === 'bin' ? 1.6 : 1.15), hgt = wdt * im.height / im.width;
+    // grandezza in proporzione a un uomo (circa 185 px in gioco): panchina e cestino arrivano poco sopra il ginocchio-anca, la cassa al ginocchio
+    var REL = { bench: 0.5, bin: 0.48, crate: 0.42, barrel: 0.55, barrier: 0.55, chair: 0.52, sink: 0.5, turnstile: 0.55 };
+    var hgt = 185 * (REL[p.kind] || 0.5), wdt = hgt * im.width / im.height;
     var x = (p.x0 + p.x1) / 2 - cx - wdt / 2, y = p.y1 + 4 - hgt;
     ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.beginPath(); ctx.ellipse(x + wdt / 2, p.y1 + 2, wdt * 0.48, 8, 0, 0, Math.PI * 2); ctx.fill();
     ctx.save(); ctx.imageSmoothingEnabled = false; if (p.broken) ctx.globalAlpha = 0.5; ctx.drawImage(im, x, y, wdt, hgt); ctx.restore();
