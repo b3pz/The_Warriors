@@ -5,7 +5,7 @@ import base64, pathlib, re
 root = pathlib.Path(__file__).resolve().parent.parent
 html = (root / 'index.html').read_text(encoding='utf-8')
 block = re.search(r'<!--SCRIPTS-->(.*?)<!--/SCRIPTS-->', html, re.S)
-srcs = re.findall(r'src="([^"]+)"', block.group(1))
+srcs = [x.split('?')[0] for x in re.findall(r'src="([^"]+)"', block.group(1))]
 import json, mimetypes
 atlas_files = re.findall(r'"file": "([^"]+)"', ''.join((root / 'js' / n).read_text(encoding='utf-8') for n in ['atlas_px.js', 'backgrounds_px.js', 'atlas_ai.js', 'art_ai.js']))
 # nel file unico solo ritratti e oggetti piccoli: le illustrazioni grandi restano fuori (senza, il gioco usa le scene disegnate) per stare sotto i limiti di GitHub
