@@ -941,14 +941,41 @@ var W = window.W;
 
   // ------------------------------------------------------------------ ciclo
   var last = 0, acc = 0, simTime = 0;
+  // ---- Cinema: tieni premuta la barra spaziatrice (o R2/RT sul controller) per mandare avanti veloce come una videocassetta
+  var FF = { key: false, on: false, t: 0, speed: 4 };
+  function ffPad() { try { var gp = navigator.getGamepads ? navigator.getGamepads() : []; for (var i = 0; i < gp.length; i++) { var g = gp[i]; if (g && g.buttons && ((g.buttons[7] && g.buttons[7].pressed) || (g.buttons[5] && g.buttons[5].pressed && /0cda|classic/i.test(g.id)))) return true; } } catch (e) {} return false; }
+  window.addEventListener('keydown', function (e) { if (e.code === 'Space' && W.AutoPilot.active && W.AutoPilot.kind === 'cinema') { FF.key = true; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+  window.addEventListener('keyup', function (e) { if (e.code === 'Space') { FF.key = false; if (W.AutoPilot.active) { e.preventDefault(); e.stopImmediatePropagation(); } } }, true);
+  window.addEventListener('blur', function () { FF.key = false; });
+  function drawVHS(dt) {
+    FF.t += dt; var t = FF.t, H = C.VIEW_H, Wd = C.VIEW_W;
+    ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // strisce dell'immagine che slittano di lato (il nastro che corre)
+    for (var k = 0; k < 7; k++) { var y = Math.floor(((t * 900 + k * 173) % (H + 80)) - 40), h = 6 + (k % 3) * 5, off = (Math.sin(t * 40 + k) * 18) | 0; try { ctx.drawImage(cv, 0, y, Wd, h, off, y, Wd, h); } catch (e) {} }
+    // banda di disturbo che sale
+    var by = H - ((t * 520) % (H + 160)); var g = ctx.createLinearGradient(0, by - 50, 0, by + 50); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(0.5, 'rgba(230,230,255,0.28)'); g.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = g; ctx.fillRect(0, by - 50, Wd, 100);
+    for (var n = 0; n < 160; n++) { ctx.fillStyle = 'rgba(255,255,255,' + (0.25 + Math.random() * 0.5) + ')'; ctx.fillRect(Math.random() * Wd, by - 30 + Math.random() * 60, 2 + Math.random() * 14, 1.5); }
+    // righe di scansione e colori leggermente sbavati
+    ctx.fillStyle = 'rgba(0,0,0,0.18)'; for (var sy = 0; sy < H; sy += 3) ctx.fillRect(0, sy, Wd, 1);
+    ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = 'rgba(40,0,60,0.10)'; ctx.fillRect(0, 0, Wd, H); ctx.globalCompositeOperation = 'source-over';
+    // scritta del videoregistratore
+    ctx.font = '700 46px "Oswald", monospace'; ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillText('▶▶  x' + FF.speed, 54, 94); ctx.fillStyle = '#e9f0ff'; ctx.fillText('▶▶  x' + FF.speed, 50, 90);
+    ctx.font = '600 24px "Oswald", monospace'; ctx.fillStyle = Math.floor(t * 2) % 2 ? '#e9f0ff' : 'rgba(233,240,255,0.4)'; ctx.fillText('FF', 52, 124);
+    ctx.restore();
+  }
   function loop(ts) {
     requestAnimationFrame(loop);
     var dt = Math.min(C.MAX_ACCUM, (ts - last) / 1000 || 0); last = ts;
-    tick(dt);
+    FF.on = W.AutoPilot.active && W.AutoPilot.kind === 'cinema' && (FF.key || ffPad()) && game.state !== 'pause';
+    var n = FF.on ? FF.speed : 1;
+    if (FF.on && !FF.was) W.Audio.ui && W.Audio.ui(); FF.was = FF.on;
+    for (var i = 0; i < n; i++) { W.__ffSkipDraw = i < n - 1; tick(dt); }
+    W.__ffSkipDraw = false;
+    if (FF.on && !W.QA_NODRAW) drawVHS(dt); else FF.t = 0;
   }
   // ---- cinema e demo (js/autopilot.js)
   var idleT = 0, IDLE_DEMO = 20, DEMO_LEN = 45;
-  function startCinema() { W.AutoPilot.start('cinema'); newRun({ mode: 'cpu', difficulty: 'facile' }, null, 0); game.msg = { text: 'Cinema: la storia si gioca da sola · Esc per uscire', t: 4 }; }
+  function startCinema() { W.AutoPilot.start('cinema'); newRun({ mode: 'cpu', difficulty: 'facile' }, null, 0); game.msg = { text: 'Cinema · tieni premuto Spazio per andare avanti veloce', t: 5 }; }
   // demo a rotazione: ogni volta una banda diversa, con la sua presentazione e la sua rissa
   // niente Lizzies (la trappola è una sorpresa) né Rogues (il finale): le demo non devono rovinare la storia
   var DEMOS = [['furies', 'C4-02'], ['punks', 'C6-03'], ['turnbull', 'C2-02'], ['orphans', 'C3-02']], demoI = Math.floor(Math.random() * 4);
@@ -1086,7 +1113,7 @@ var W = window.W;
   function drawPilotTag() {
     ctx.setTransform(1, 0, 0, 1, 0, 0); var demo = W.AutoPilot.isDemo();
     if (demo) { ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.fillRect(0, C.VIEW_H - 64, C.VIEW_W, 64); if (Math.floor(simTime * 2) % 2) txt('DEMO · PREMI UN TASTO', C.VIEW_W / 2, C.VIEW_H - 22, 30, '#e8322a', 'center', 700); }
-    else { ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(C.VIEW_W - 250, C.VIEW_H - 40, 250, 40); txt('CINEMA · Esc per uscire', C.VIEW_W - 18, C.VIEW_H - 14, 16, '#f2d23c', 'right', 600); }
+    else { ctx.fillStyle = 'rgba(0,0,0,0.5)'; ctx.fillRect(C.VIEW_W - 420, C.VIEW_H - 40, 420, 40); txt('CINEMA · Spazio: avanti veloce · Esc per uscire', C.VIEW_W - 18, C.VIEW_H - 14, 16, '#f2d23c', 'right', 600); }
   }
   function endDemo() { W.AutoPilot.stop(); game.state = 'title'; game.comic = null; idleT = 0; }
   function tick(dt) {
@@ -1102,7 +1129,7 @@ var W = window.W;
       acc += dt;
       while (acc >= C.STEP) { simTime += C.STEP; W.Input.setTime(simTime); stepPlay(C.STEP); acc -= C.STEP; if (game.state !== 'play') { acc = 0; break; } }
     } else { acc = 0; simTime += dt; W.Input.setTime(simTime); }
-    if (!W.QA_NODRAW) { draw(dt); if (W.AutoPilot.active && game.state !== 'pause') drawPilotTag(); }   // i test possono saltare il disegno (canvas lento senza GPU)
+    if (!W.QA_NODRAW && !W.__ffSkipDraw) { draw(dt); if (W.AutoPilot.active && game.state !== 'pause') drawPilotTag(); }   // i test possono saltare il disegno (canvas lento senza GPU)
     if (game.msg) { game.msg.t -= dt; if (game.msg.t <= 0) game.msg = null; }
   }
   function stepPlay(dt) {
